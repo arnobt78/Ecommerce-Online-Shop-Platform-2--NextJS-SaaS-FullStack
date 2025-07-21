@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Remove pnpm-lock.yaml for npm-only workflow",
+			"command": "rm -f pnpm-lock.yaml",
+			"group": "build"
+		}
+	]
+}

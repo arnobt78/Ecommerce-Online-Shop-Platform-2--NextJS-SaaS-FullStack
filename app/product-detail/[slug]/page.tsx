@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { products } from "@/data/products";
-import { ProductDetailLayout } from "@/components/ProductDetail/ProductDetailLayout";
+import { ProductDetailLayout } from "@/components/ProductDetailPage/ProductDetailLayout";
 
 export default async function ProductDetailSlugPage({ params }: { params: { slug: string } }) {
   // Await params to comply with Next.js dynamic route requirements

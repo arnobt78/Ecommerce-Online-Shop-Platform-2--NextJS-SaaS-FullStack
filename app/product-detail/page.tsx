@@ -1,7 +1,7 @@
 
 
 import { Suspense } from "react";
-import { ProductDetailLayout } from "@/components/ProductDetail/ProductDetailLayout";
+import { ProductDetailLayout } from "@/components/ProductDetailPage/ProductDetailLayout";
 
 export default function ProductDetailPage() {
   return (

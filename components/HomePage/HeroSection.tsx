@@ -83,13 +83,15 @@ function HeroLeftContent() {
         <span className="text-gray-700 font-medium text-sm">4.47 | 537 Reviews</span>
       </div>
       {/* Main Heading */}
-      <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
+      <h1 className="text-4xl sm:text-6xl font-bold text-gray-900 leading-tight whitespace-nowrap z-30">
         Never run out of snus again
       </h1>
-      <p className="text-xl md:text-2xl text-gray-900 leading-relaxed max-w-2xl">
-        Choose from huge sortiment of exclusive brands, flavors and strength for best price
-        on market with free shipping.
-      </p>
+      <h3 className="text-2xl sm:text-3xl text-gray-900 leading-relaxed max-w-2xl">
+        Choose from huge sortiment of exclusive<br />
+        brands, flavors and strength<br />
+        for best price on market<br />
+        with free shipping.
+      </h3>
       {/* CTA Button */}
       <Link href="/products">
         <Button

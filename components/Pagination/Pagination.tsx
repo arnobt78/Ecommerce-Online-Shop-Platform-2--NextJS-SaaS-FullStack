@@ -57,14 +57,14 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
 
   return (
     <nav
-      className="flex flex-row items-center gap-2 h-[32px] select-none my-8 px-1 sm:px-0 w-full justify-center"
+      className="flex flex-row items-center gap-2 h-[36px] select-none my-12 sm:my-24 px-1 sm:px-0 w-full justify-center"
       style={{ maxWidth: 372, marginLeft: 'auto', marginRight: 'auto' }}
       aria-label="Pagination"
     >
       {/* Prev button */}
       <button
         className={
-          `w-8 h-8 rounded-[4px] flex items-center justify-center border transition-all relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
+          `w-10 h-10 rounded-[4px] flex items-center justify-center border transition-all relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
           ${currentPage === 1
             ? 'bg-[#919EAB] opacity-50 border-transparent cursor-default'
             : 'bg-white border-[#DFE3E8] hover:border-[#6DF4F9] cursor-pointer hover:scale-[1.1] transition-transform duration-300 ease-in-out'}
@@ -86,7 +86,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
           <button
             key={p}
             className={
-              `w-8 h-8 rounded-[4px] flex items-center justify-center font-bold text-[14px] leading-[20px] transition-all border relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
+              `w-10 h-10 rounded-[4px] flex items-center justify-center font-bold text-[14px] leading-[20px] transition-all border relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
               ${p === currentPage
                 ? 'bg-white border-[#6DF4F9] text-black shadow-sm z-10 cursor-default hover:scale-[1.1] transition-transform duration-300 ease-in-out'
                 : 'bg-white border-[#DFE3E8] text-[#212B36] hover:border-[#6DF4F9] cursor-pointer hover:scale-105 hover:scale-[1.1] transition-transform duration-300 ease-in-out'}
@@ -112,7 +112,7 @@ export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages,
       {/* Next button */}
       <button
         className={
-          `w-8 h-8 rounded-[4px] flex items-center justify-center border transition-all relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
+          `w-10 h-10 rounded-[4px] flex items-center justify-center border transition-all relative hover:scale-[1.1] transition-transform duration-300 ease-in-out
           ${currentPage === totalPages
             ? 'bg-[#919EAB] opacity-50 border-transparent cursor-default'
             : 'bg-white border-[#DFE3E8] hover:border-[#6DF4F9] cursor-pointer  hover:scale-[1.1] transition-transform duration-300 ease-in-out'}

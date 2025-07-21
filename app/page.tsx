@@ -3,7 +3,7 @@
 import HeroSection from "@/components/Home/HeroSection";
 import ProductsSection from "@/components/Home/ProductsSection";
 import FeatureCard from "@/components/FeatureCard";
-import ReviewCard from "@/components/ReviewCard";
+import ReviewCard from "@/components/Review/ReviewCardSection";
 import AnimationsAndStyles from "@/components/Home/AnimationsAndStyles";
 
 export default function Home() {

@@ -12,7 +12,7 @@ export default function ProductsSection() {
         {/* Product Cards List */}
         <div className="flex flex-col items-center w-full">
           {/* ListProductCard fetches and displays products from data/products.ts */}
-          <ListProductCard products={products.slice(0, 6)} />
+          <ListProductCard products={products.slice(0, 10)} />
 
           {/* Show all button */}
           <Link href="/products" passHref legacyBehavior>

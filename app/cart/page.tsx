@@ -23,7 +23,7 @@ import Link from "next/link"
 import { useCart } from "@/context/CartContext"
 // import Header from "@/components/Header"
 // import Footer from "@/components/Footer"
-import CartSummaryDetails from "@/components/Cart/CartSummaryDetails"
+import CartSummaryDetails from "@/components/CartPage/CartPageComponents"
 
 export default function CartPage() {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart()
@@ -101,7 +101,6 @@ export default function CartPage() {
             </Link>
           </div>
         </div>
-        {/* <Footer /> */}
       </div>
     )
   }
@@ -289,19 +288,82 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-4">
-            <CartSummaryDetails
-              totalItems={getTotalItems()}
-              subtotal={getSubtotal()}
-              discount={getDiscount()}
-              shipping={getShipping()}
-              tax={getTax()}
-              total={getTotal()}
-              appliedPromo={appliedPromo}
-              getDiscount={getDiscount}
-              getShipping={getShipping}
-              getTax={getTax}
-              getTotal={getTotal}
-            />
+            <div className="bg-white bg-opacity-80 rounded-2xl shadow-xl border border-gray-200/50 p-8">
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-[#3AF0F7] rounded-full flex items-center justify-center">
+                  <ShoppingBag className="w-5 h-5 text-black" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">Order Summary</h2>
+              </div>
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-gray-700">
+                  <span>Subtotal ({getTotalItems()} {getTotalItems() === 1 ? 'item' : 'items'})</span>
+                  <span className="font-semibold">€{getSubtotal().toFixed(2)}</span>
+                </div>
+                {getShipping() === 0 && (
+                  <div className="flex justify-between items-center text-gray-700">
+                    <span className="flex items-center"><Truck className="w-4 h-4 mr-1" /> Shipping</span>
+                    <span className="text-green-600 font-semibold bg-green-100 px-3 py-1 rounded-full text-sm">Free</span>
+                  </div>
+                )}
+                {getShipping() > 0 && (
+                  <div className="flex justify-between items-center text-gray-700">
+                    <span className="flex items-center"><Truck className="w-4 h-4 mr-1" /> Shipping</span>
+                    <span className="font-semibold">€{getShipping().toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="flex justify-between text-gray-700">
+                  <span>Tax</span>
+                  <span className="font-semibold">€{getTax().toFixed(2)}</span>
+                </div>
+                {getDiscount() > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount</span>
+                    <span>-€{getDiscount().toFixed(2)}</span>
+                  </div>
+                )}
+                <div className="border-t border-gray-200 my-4" />
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-bold text-gray-900">Total</span>
+                  <span className="text-2xl font-bold text-[#3AF0F7]">€{getTotal().toFixed(2)}</span>
+                </div>
+              </div>
+              <Button className="w-full bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] text-black font-semibold text-lg py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center mb-6">
+                <Lock className="w-5 h-5 mr-2" /> Secure Checkout
+              </Button>
+              <div className="space-y-3 mb-6">
+                <div className="flex items-center bg-[#e6fdff] rounded-xl p-3 border border-gray-100">
+                  <Shield className="w-5 h-5 text-[#3AF0F7] mr-3" />
+                  <span className="text-gray-700 font-medium">256-bit SSL Encryption</span>
+                </div>
+                <div className="flex items-center bg-[#e6fdff] rounded-xl p-3 border border-gray-100">
+                  <Truck className="w-5 h-5 text-[#3AF0F7] mr-3" />
+                  <span className="text-gray-700 font-medium">Free shipping on orders over €100</span>
+                </div>
+                <div className="flex items-center bg-[#e6fdff] rounded-xl p-3 border border-gray-100">
+                  <CreditCard className="w-5 h-5 text-[#3AF0F7] mr-3" />
+                  <span className="text-gray-700 font-medium">All major cards accepted</span>
+                </div>
+              </div>
+              <div className="border-t border-gray-200 my-4" />
+              <div>
+                <div className="text-gray-700 font-semibold mb-2">Accepted Payment Methods</div>
+                <div className="flex space-x-3">
+                  <div className="w-14 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+                    <span className="text-white font-bold">VISA</span>
+                  </div>
+                  <div className="w-14 h-10 rounded-lg bg-red-600 flex items-center justify-center">
+                    <span className="text-white font-bold">MC</span>
+                  </div>
+                  <div className="w-14 h-10 rounded-lg bg-blue-400 flex items-center justify-center">
+                    <span className="text-white font-bold">AMEX</span>
+                  </div>
+                  <div className="w-14 h-10 rounded-lg bg-yellow-400 flex items-center justify-center">
+                    <span className="text-white font-bold">PP</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

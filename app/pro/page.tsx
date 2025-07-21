@@ -4,10 +4,10 @@
 import { ChevronDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import Header from "@/components/Header"
+import Navbar from "@/components/Navbar/Navbar"
 import { useEffect, useState, useRef } from "react";
 import { useCart } from "@/context/CartContext";
-import Footer from "@/components/Footer"
+import Footer from "@/components/Footer/FooterSectionLayout"
 
 export default function SnuzzProLanding() {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
@@ -57,7 +57,7 @@ export default function SnuzzProLanding() {
       className="min-h-screen"
     >
       {/* Header: Hide on any screen if cart is open */}
-      {!cartOpen && <Header allProducts={allProducts} noBlur />}
+      {!cartOpen && <Navbar allProducts={allProducts} noBlur />}
 
       {/* Hero Section */}
       <div className="relative w-full bg-transparent">

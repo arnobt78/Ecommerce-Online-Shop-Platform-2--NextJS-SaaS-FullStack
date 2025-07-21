@@ -1,5 +1,45 @@
 import React from "react";
-import ProductQuantityImageOptionCard from "./Purchase/ProductQuantityImageOptionCard";
+
+// ProductQuantityImageOptionCard component (inlined)
+interface ProductQuantityImageOptionCardProps {
+  percent: string;
+  label: string;
+  value: number;
+  description?: string;
+  isSelected: boolean;
+  onSelect?: (value: number) => void;
+}
+/**
+ * ProductQuantityImageOptionCard renders a single can/option for quantity selection.
+ */
+const ProductQuantityImageOptionCard: React.FC<ProductQuantityImageOptionCardProps> = ({ percent, label, value, description, isSelected, onSelect }) => (
+  <button
+    type="button"
+    className={`relative flex flex-col items-center justify-center bg-[#F0F1F1] rounded-[5.8px] shadow focus:outline-none transition-all duration-300 ${isSelected ? 'border-2 border-black/90' : 'border border-transparent'} group`}
+    style={{ width: 86.5, height: 86.5, cursor: onSelect ? 'pointer' : 'default' }}
+    aria-pressed={isSelected}
+    tabIndex={0}
+    onClick={() => onSelect?.(value)}
+  >
+    {/* Discount badge */}
+    <div
+      className="absolute left-1/2 -translate-x-1/2 -top-3 flex flex-row justify-center items-center px-3 py-1 bg-[#EBF5F5] rounded-[6.9px] shadow"
+      style={{ minWidth: 43, height: 17 }}
+    >
+      <span className="text-[10.3px] leading-[13px] font-normal text-black uppercase" style={{ fontFamily: 'Inter, sans-serif' }}>{percent}</span>
+    </div>
+    {/* Can SVG and label, centered */}
+    <div className="relative flex flex-col items-center justify-center w-full grow" style={{height: '60px'}}>
+      <div className="flex items-center justify-center w-full h-full">
+        <CanSVG label={label} />
+      </div>
+    </div>
+    {/* Optionally show description below */}
+    {/* {description && (
+      <span className=" text-xs text-gray-500 group-hover:text-black transition-colors duration-300">{description}</span>
+    )} */}
+  </button>
+);
 
 // Data for each quantity image card
 

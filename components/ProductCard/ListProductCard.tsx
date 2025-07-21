@@ -2,7 +2,61 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import ProductGrid from "@/components/ProductCard/List/ProductGrid";
+// ProductGridEmpty component
+const ProductGridEmpty: React.FC = () => (
+  <div className="col-span-full flex flex-col items-center justify-center w-full min-h-[180px] py-8">
+    <span className="text-lg sm:text-xl font-semibold text-gray-500 text-center">
+      No products matched your category filter.
+    </span>
+  </div>
+);
+
+// ListProductCardItem component
+import { SingleProductCard } from "./SingleProductCard";
+interface ListProductCardItemProps {
+  product: any;
+  idx: number;
+  handleAddToCart: (product: any) => void;
+  onCardClick: () => void;
+}
+function ListProductCardItem({ product, idx, handleAddToCart, onCardClick }: ListProductCardItemProps) {
+  return (
+    <div className="w-full flex justify-center">
+      <SingleProductCard
+        {...product}
+        addToCart={e => {
+          if (e && e.stopPropagation) e.stopPropagation();
+          handleAddToCart(product);
+        }}
+        onCardClick={onCardClick}
+      />
+    </div>
+  );
+}
+
+// ProductGrid component
+interface ProductGridProps {
+  products: any[];
+  handleAddToCart: (product: any) => void;
+  onCardClick: (product: any, idx: number) => void;
+}
+const ProductGrid: React.FC<ProductGridProps> = ({ products, handleAddToCart, onCardClick }) => (
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-6 justify-items-center w-full max-w-7xl mt-6 sm:px-2 min-h-[200px]">
+    {products.length > 0 ? (
+      products.map((product, idx) => (
+        <ListProductCardItem
+          key={product.id || idx}
+          product={product}
+          idx={idx}
+          handleAddToCart={handleAddToCart}
+          onCardClick={() => onCardClick(product, idx)}
+        />
+      ))
+    ) : (
+      <ProductGridEmpty />
+    )}
+  </div>
+);
 import { useProductPagination } from "./useProductPagination";
 import { Pagination } from "../Pagination/Pagination";
 import { useCart } from "@/context/CartContext";
@@ -59,8 +113,8 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
 
   const router = useRouter();
 
-  // Pagination logic: show 6 per page
-  const { page, setPage, totalPages, paginated } = useProductPagination(products, 6);
+  // Pagination logic: show 10 per page (5x2 grid)
+  const { page, setPage, totalPages, paginated } = useProductPagination(products, 10);
 
   return (
     <div className="flex flex-col items-center w-full lg:px-2 sm:px-0">

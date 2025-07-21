@@ -19,6 +19,18 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
+  // State to control navbar visibility based on scroll position
+  const [showNavbar, setShowNavbar] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Show navbar only when at the very top
+      setShowNavbar(window.scrollY === 0);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Add search functionality
   useEffect(() => {
     if (searchQuery.trim() === "") {
@@ -107,7 +119,14 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
   };
 
   return (
-    <header className={`w-full bg-transparent text-[1.1rem] fixed top-0 left-0 z-50${noBlur ? '' : ' backdrop-blur-md'}`}> 
+    <header
+      className="w-full bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
+      style={{
+        transform: showNavbar ? 'translateY(0)' : 'translateY(-100%)',
+        pointerEvents: showNavbar ? 'auto' : 'none',
+        background: 'transparent',
+      }}
+    >
       <div className="max-w-[1440px] mx-auto px-8 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-12">
@@ -128,7 +147,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
               <a
                 key={index}
                 href={item.href}
-                className="relative font-semibold hover:text-[#3AF0F7] transition-all duration-300 group"
+                className="relative font-semibold hover:text-[#3AF0F7] transition-all duration-300"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] group-hover:w-full transition-all duration-300"></span>

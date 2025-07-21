@@ -9,15 +9,7 @@ import { CartProvider } from '../context/CartContext'
 import { products } from '../data/products'
 import CartSidebarLayout from "@/components/CartSidebar/CartSidebarPage";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 
 export const metadata: Metadata = {
@@ -35,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}>
+      <body className="antialiased bg-white" style={{ fontFamily: 'system-ui, sans-serif' }}>
         <CartProvider>
           <Navbar allProducts={products} />
           <CartSidebarLayout />

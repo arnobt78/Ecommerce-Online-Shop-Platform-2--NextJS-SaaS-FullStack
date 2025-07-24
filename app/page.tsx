@@ -8,7 +8,7 @@ import AnimationsAndStyles from "@/components/HomePage/AnimationsAndStyles";
 
 export default function Home() {
   return (
-    <div className="min-h-screen text-[18px] w-full overflow-x-hidden">
+    <div className="">
       {/* Header and CartSidebar are now global in layout.tsx */}
       <HeroSection />
       <FeatureSection />

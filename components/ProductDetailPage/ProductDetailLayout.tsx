@@ -266,7 +266,7 @@ const mockReelProducts = Array(5).fill({
 });
 
   return (
-    <div className="w-full min-h-screen bg-white flex flex-col items-center">
+    <div className="w-full bg-white flex flex-col items-center">
       {/* Main Content */}
       <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto pt-16 px-1 sm:px-32">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}

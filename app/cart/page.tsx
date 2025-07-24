@@ -75,7 +75,7 @@ export default function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-transparent">
+      <div className="bg-transparent">
         {/* <Header /> */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-32">
           <div className="text-center py-20">
@@ -106,7 +106,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50">
       {/* <Header /> */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-32">
         {/* Header */}

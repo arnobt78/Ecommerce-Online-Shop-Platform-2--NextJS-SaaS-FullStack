@@ -41,8 +41,8 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
 
     const filtered = allProducts
       .filter((product) => {
-        // Defensive: check for existence and type before calling toLowerCase
-        const name = typeof product.name === 'string' ? product.name : '';
+        // Use productName as fallback for name, and productImage as fallback for image
+        const name = typeof product.name === 'string' ? product.name : (typeof product.productName === 'string' ? product.productName : '');
         const brand = typeof product.brand === 'string' ? product.brand : '';
         const category = typeof product.category === 'string' ? product.category : '';
         const query = searchQuery.toLowerCase();
@@ -127,16 +127,16 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
         background: 'transparent',
       }}
     >
-      <div className="max-w-[1440px] mx-auto px-8 py-6">
-        <div className="flex items-center justify-between">
+      <div className="max-w-[1440px] mx-auto py-3 sm:px-8 px-2 sm:py-6">
+        {/* Desktop Navbar */}
+        <div className="hidden md:flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <a href="/">
               <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
             </a>
-            
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="flex items-center space-x-8">
             {[
               { label: "Shop", href: "/products" },
               { label: "Brands", href: "/products?filter=brands" },
@@ -147,7 +147,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
               <a
                 key={index}
                 href={item.href}
-                className="relative font-semibold hover:text-[#3AF0F7] transition-all duration-300"
+                className="relative font-large hover:text-[#3AF0F7] transition-all duration-300"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] group-hover:w-full transition-all duration-300"></span>
@@ -155,6 +155,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
             ))}
           </nav>
 
+          {/* Search and Cart buttons (desktop) */}
           <div className="flex items-center space-x-4">
             <div className="relative hidden lg:block">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
@@ -175,53 +176,77 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                       <div className="space-y-2">
                         {searchResults.map((product) => (
                           <div
-                            key={product.id}
-                            className="flex items-center gap-3 p-2 hover:bg-[#3AF0F7]/10 rounded-xl cursor-pointer transition-all duration-300 group"
-                            onClick={() => {
-                              addToCart(product);
-                              setSearchQuery("");
-                              setShowSearchResults(false);
-                            }}
+                            key={product.id || product.slug || (product.name || product.productName) || Math.random()}
+                            className="flex items-center gap-3 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
                           >
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
-                              {product.productImage ? (
-                                <img
-                                  src={product.productImage.startsWith('/') ? product.productImage : `/` + product.productImage}
-                                  alt={product.productName || 'Product'}
-                                  className="object-contain w-full h-full"
-                                  onError={e => { e.currentTarget.style.display = 'none'; }}
-                                />
-                              ) : (
-                                <div className="text-gray-400 text-xs justify-center">No Image</div>
-                              )}
-                            </div>
-                            <div className="flex flex-col flex-1 min-w-0 justify-center">
-                              <h4 className="font-semibold text-gray-900 text-sm truncate group-hover:text-[#3AF0F7] transition-colors max-w-[140px]" title={product.productName}>
-                                {product.productName.length > 28 ? product.productName.slice(0, 28) + '…' : product.productName}
-                              </h4>
-                              <p className="text-xs text-gray-500 mt-0.5">{product.brand}</p>
-                            </div>
-                            <div className="flex flex-col items-end min-w-[70px] ml-2">
-                              {product.salePrice ? (
-                                <>
+                            <a
+                              href={`/product-detail/${product.slug || ''}`}
+                              className="flex items-center flex-1 gap-3 min-w-0 cursor-pointer"
+                              onClick={() => {
+                                setSearchQuery("");
+                                setShowSearchResults(false);
+                              }}
+                              style={{ textDecoration: 'none' }}
+                            >
+                              <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+                                {(() => {
+                                  const img = product.productImage || product.image || '';
+                                  if (typeof img === 'string' && img.length > 0) {
+                                    return (
+                                      <img
+                                        src={img.startsWith('/') ? img : '/' + img}
+                                        alt={product.productName || product.name || 'Product'}
+                                        className="object-contain w-full h-full"
+                                        onError={e => { e.currentTarget.style.display = 'none'; }}
+                                      />
+                                    );
+                                  } else {
+                                    return <div className="text-gray-400 text-xs justify-center">No Image</div>;
+                                  }
+                                })()}
+                              </div>
+                              <div className="flex flex-col flex-1 min-w-0 justify-center">
+                                <h4 className="font-semibold text-gray-900 text-sm truncate group-hover:text-[#3AF0F7] transition-colors max-w-[140px]" title={product.productName || product.name || ''}>
+                                  {(() => {
+                                    const pname = product.productName || product.name || '';
+                                    return typeof pname === 'string' && pname.length > 0
+                                      ? (pname.length > 28 ? pname.slice(0, 28) + '…' : pname)
+                                      : 'Unnamed';
+                                  })()}
+                                </h4>
+                                <p className="text-xs text-gray-500 mt-0.5">{product.brand || ''}</p>
+                              </div>
+                              <div className="flex flex-col items-end min-w-[70px] ml-2">
+                                {product.salePrice ? (
+                                  <>
+                                    <span className="text-[#3AF0F7] font-bold text-sm">
+                                      €{parseFloat((typeof product.salePrice === 'string' ? product.salePrice : String(product.salePrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
+                                    </span>
+                                    <span className="text-gray-400 line-through text-xs">
+                                      €{parseFloat((typeof product.originalPrice === 'string' ? product.originalPrice : String(product.originalPrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
+                                    </span>
+                                  </>
+                                ) : (
                                   <span className="text-[#3AF0F7] font-bold text-sm">
-                                    €{parseFloat(product.salePrice.replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
+                                    €{parseFloat((typeof product.originalPrice === 'string' ? product.originalPrice : String(product.originalPrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
                                   </span>
-                                  <span className="text-gray-400 line-through text-xs">
-                                    €{parseFloat(product.originalPrice.replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="text-[#3AF0F7] font-bold text-sm">
-                                  €{parseFloat(product.originalPrice.replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
-                                </span>
-                              )}
-                            </div>
-                            <div className="flex-shrink-0">
+                                )}
+                              </div>
+                            </a>
+                            <button
+                              type="button"
+                              className="flex-shrink-0 ml-2 focus:outline-none"
+                              onClick={e => {
+                                e.stopPropagation();
+                                addToCart(product);
+                              }}
+                              tabIndex={0}
+                              aria-label="Add to cart"
+                            >
                               <div className="w-8 h-8 bg-[#3AF0F7] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:scale-110">
                                 <Plus className="w-4 h-4 text-black" />
                               </div>
-                            </div>
+                            </button>
                           </div>
                         ))}
                       </div>
@@ -271,6 +296,38 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
             </Button>
           </div>
         </div>
+
+        {/* Mobile Navbar Row: burger left, logo center, cart right */}
+        <div className="flex md:hidden items-center justify-between">
+          {/* Burger menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className=""
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </Button>
+
+          {/* Center logo */}
+          <a href="/" className="flex-1 flex justify-center">
+            <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
+          </a>
+
+          {/* Cart button */}
+          <Button
+            variant="ghost"
+            onClick={() => setCartOpen(true)}
+            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-black transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
+          >
+            <ShoppingBag className="w-4 h-4" />
+            {getTotalItems() > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+                {getTotalItems()}
+              </span>
+            )}
+          </Button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -278,12 +335,11 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
         <div className="md:hidden w-full bg-white border-b border-gray-200">
           <div className="px-4 py-6 space-y-4">
             {[
-              // { label: "Shop", href: "/categories" },
               { label: "Shop", href: "/products" },
               { label: "Brands", href: "/products?filter=brands" },
               { label: "Flavor", href: "/products?filter=flavors" },
               { label: "Strength", href: "/products?filter=strength" },
-              { label: "SnuzzPro", href: "/pro" },
+              { label: "SnuzzPro", href: "/products?filter=snuzzpro" },
             ].map((item, index) => (
               <a
                 key={index}

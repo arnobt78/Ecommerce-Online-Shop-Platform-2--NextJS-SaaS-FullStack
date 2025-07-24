@@ -7,20 +7,22 @@ interface TopBadgesProps {
   saleLabel?: string;
   shippingLabel: string;
 }
-const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel, shippingLabel }) => (
-  <div className="absolute flex flex-row w-full justify-between top-[8px] left-0 px-2 z-0">
-    {/* Sale badge (conditionally render) */}
-    {saleLabel ? (
-      <div className="bg-white rounded-[6px] w-[54px] h-[18px] flex items-center justify-center">
-        <span className="italic font-semibold text-[10px] leading-[12px] text-[#C02929]">{saleLabel}</span>
+const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel, shippingLabel }) => {
+  return (
+    <div className="absolute flex flex-row w-full justify-between top-[8px] left-0 px-0.5 sm:px-2 z-0">
+      {/* Sale badge (conditionally render) */}
+      {saleLabel ? (
+        <div className="bg-white rounded-[6px] w-[54px] sm:w-[60px] h-[16px] sm:h-[24px] flex items-center justify-center">
+          <span className="italic font-semibold text-[10px] sm:text-[11px] leading-[14px] text-[#C02929]" style={{paddingTop: '1px'}}>{saleLabel}</span>
+        </div>
+      ) : <div className="w-[54px] h-[16px] sm:h-[24px]" />}
+      {/* Free shipping badge */}
+      <div className="bg-white rounded-[6px] w-[74px] sm:w-[80px] h-[16px] sm:h-[24px] flex items-center justify-center">
+        <span className="italic font-semibold text-[10px] sm:text-[11px] leading-[14px] text-black" style={{paddingTop: '1px'}}>{shippingLabel}</span>
       </div>
-    ) : <div className="w-[54px] h-[18px]" />}
-    {/* Free shipping badge */}
-    <div className="bg-white rounded-[6px] w-[74px] h-[18px] flex items-center justify-center">
-      <span className="italic font-semibold text-[10px] leading-[12px] text-black">{shippingLabel}</span>
     </div>
-  </div>
-);
+  );
+};
 
 // ProductImage component
 interface ProductImageProps {
@@ -28,7 +30,7 @@ interface ProductImageProps {
   productName: string;
 }
 const ProductImage: React.FC<ProductImageProps> = ({ productImage, productName }) => (
-  <div className="absolute left-1/2 top-[20px] sm:top-[38px] -translate-x-1/2 w-[80px] h-[80px] w-[190px] h-[190px] sm:w-[240px] sm:h-[240px] flex items-center justify-center">
+  <div className="absolute left-1/2 top-[16px] sm:top-[38px] -translate-x-1/2 w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] flex items-center justify-center">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src={productImage}
@@ -47,16 +49,21 @@ interface ProductInfoProps {
   originalPrice: string;
 }
 const ProductInfo: React.FC<ProductInfoProps> = ({ productName, salePrice, originalPrice }) => (
-  <div className="flex flex-col gap-1">
-    <span className="font-normal text-[12px] leading-[14px] text-black truncate">{productName}</span>
-    <div className="flex items-center gap-2">
+  <div className="flex flex-col gap-1 w-full">
+    <span className="font-normal text-[12px] leading-[12px] text-black truncate w-full">
+      <span className="block sm:hidden">
+        {productName.length > 16 ? productName.slice(0, 12) + '...' : productName}
+      </span>
+      <span className="hidden sm:block">{productName}</span>
+    </span>
+    <div className="flex flex-row items-center gap-1 sm:gap-2 w-full whitespace-nowrap overflow-hidden">
       {salePrice ? (
         <>
-          <span className="font-normal text-[12px] leading-[14px] text-[#C02929]">{salePrice}</span>
-          <span className="font-normal text-[11px] leading-[13px] text-black line-through">{originalPrice}</span>
+          <span className="font-normal text-[12px] leading-[14px] text-[#C02929] truncate max-w-[54px] sm:max-w-none align-middle flex items-center">{salePrice}</span>
+          <span className="font-normal text-[11px] leading-[13px] text-black line-through truncate max-w-[54px] sm:max-w-none align-middle flex items-center">{originalPrice}</span>
         </>
       ) : (
-        <span className="font-normal text-[12px] leading-[14px] text-black">{originalPrice}</span>
+        <span className="font-normal text-[12px] leading-[14px] text-black truncate max-w-[54px] sm:max-w-none align-middle flex items-center">{originalPrice}</span>
       )}
     </div>
   </div>

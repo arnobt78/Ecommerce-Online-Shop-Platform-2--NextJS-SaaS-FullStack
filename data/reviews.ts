@@ -10,7 +10,7 @@ export interface Testimonial {
 const defaultTestimonials: Testimonial[] = [
   {
     name: "A.R",
-    review: "best price but delivery time take long",
+    review: "best price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long",
     rating: 5,
   },
   {
@@ -20,12 +20,12 @@ const defaultTestimonials: Testimonial[] = [
   },
   {
     name: "C.D",
-    review: "Delivery time take long",
+    review: "Delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long",
     rating: 5,
   },
   {
     name: "X.Y",
-    review: "Good price but delivery time take long",
+    review: "Good price but delivery time take long, Good price but delivery time take long, Good price but delivery time take long",
     rating: 4,
   },
 ];

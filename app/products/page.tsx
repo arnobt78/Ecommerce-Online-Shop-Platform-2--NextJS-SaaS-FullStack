@@ -35,21 +35,21 @@ export default function CategoryPage() {
   })
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-transparent">
       {/* Header and CartSidebar are now global in layout.tsx */}
       <main className="pt-20 md:pt-24">
         {/* Hero Section */}
-        <section className="bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 py-12 md:py-16">
-          <div className="max-w-7xl mx-auto px-4 md:px-6">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Best selling</h1>
-            <p className="text-gray-600 text-lg">Discover our most popular nicotine products</p>
+        <section className="bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 py-2 sm:py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Best selling</h1>
+            <p className="text-gray-600 text-md">Discover our most popular nicotine products</p>
           </div>
         </section>
 
         {/* Category Filter, Product List, and Pagination (Reusable Components) */}
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-1 sm:px-4 py-4 md:py-6">
           {/* Category Filter */}
-          <div className="mb-8 flex justify-center w-full">
+          <div className="mb-4 flex justify-center w-full">
             <CategoryFilterMenuBar
               onFilterChange={({ brands, flavors, strength }) => {
                 setSelectedBrands(brands);
@@ -61,7 +61,7 @@ export default function CategoryPage() {
           </div>
           
           {/* Product List */}
-          <div className="mb-8">
+          <div className="">
             <ListProductCard products={filteredProducts} />
           </div>
         </div>

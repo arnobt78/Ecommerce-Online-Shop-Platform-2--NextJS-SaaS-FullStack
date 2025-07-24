@@ -5,9 +5,11 @@ import { ChevronDown, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Navbar from "@/components/Navbar/Navbar"
+
 import { useEffect, useState, useRef } from "react";
 import { useCart } from "@/context/CartContext";
 import Footer from "@/components/Footer/FooterSectionLayout"
+import { products } from "@/data/products";
 
 export default function SnuzzProLanding() {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
@@ -18,29 +20,8 @@ export default function SnuzzProLanding() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-  // Sample products for search functionality
-  const allProducts = [
-    {
-      id: 1,
-      name: "Snuzz Classic",
-      brand: "Snuzz",
-      category: "Nicotine",
-      price: 12.99,
-      salePrice: 9.99,
-      rating: 4.5,
-      image: "SC",
-    },
-    {
-      id: 2,
-      name: "Snuzz Pro Edition",
-      brand: "Snuzz",
-      category: "Premium",
-      price: 19.99,
-      salePrice: 15.99,
-      rating: 4.8,
-      image: "SPE",
-    },
-  ];
+  // Use centralized product data for search functionality
+  const allProducts = products;
 
 
   // ...existing code...
@@ -54,7 +35,7 @@ export default function SnuzzProLanding() {
 
   return (
     <div
-      className="min-h-screen"
+      className=""
     >
       {/* Header: Hide on any screen if cart is open */}
       {!cartOpen && <Navbar allProducts={allProducts} noBlur />}

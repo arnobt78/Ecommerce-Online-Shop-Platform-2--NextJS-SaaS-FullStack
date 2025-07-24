@@ -41,7 +41,7 @@ interface ProductGridProps {
   onCardClick: (product: any, idx: number) => void;
 }
 const ProductGrid: React.FC<ProductGridProps> = ({ products, handleAddToCart, onCardClick }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-4 sm:gap-x-4 sm:gap-y-6 justify-items-center w-full max-w-7xl mt-6 sm:px-2 min-h-[200px]">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-1 gap-y-2 sm:gap-x-4 sm:gap-y-6 justify-items-center w-full max-w-7xl mt-8">
     {products.length > 0 ? (
       products.map((product, idx) => (
         <ListProductCardItem
@@ -113,11 +113,24 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
 
   const router = useRouter();
 
-  // Pagination logic: show 10 per page (5x2 grid)
-  const { page, setPage, totalPages, paginated } = useProductPagination(products, 10);
+  // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
+  const [perPage, setPerPage] = React.useState(16);
+  React.useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640) {
+        setPerPage(16); // phone (sm breakpoint)
+      } else {
+        setPerPage(15); // laptop/tablet and up
+      }
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  const { page, setPage, totalPages, paginated } = useProductPagination(products, perPage);
 
   return (
-    <div className="flex flex-col items-center w-full lg:px-2 sm:px-0">
+    <div className="flex flex-col items-center w-full px-0">
       <ProductGrid
         products={paginated}
         handleAddToCart={handleAddToCart}

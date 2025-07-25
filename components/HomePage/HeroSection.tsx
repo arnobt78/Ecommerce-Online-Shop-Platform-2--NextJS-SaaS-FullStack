@@ -212,14 +212,14 @@ function HeroLeftContent() {
 // --- Main HeroSection component ---
 export default function HeroSection() {
   return (
-    <section className="relative flex items-center justify-center overflow-hidden w-full mt-20 sm:mt-0 sm:min-h-screen bg-transparent">
+    <section className="relative flex items-center justify-center overflow-hidden w-full mt-20 sm:mt-0 sm:min-h-screen object-top bg-transparent">
       {/* Hero background image as full-section background */}
       <img
         alt="Hero background"
         loading="lazy"
         decoding="async"
         data-nimg="fill"
-        className="hidden sm:block absolute inset-0 w-full h-full min-h-screen object-cover object-top z-0"
+        className="hidden sm:block absolute inset-0 w-full h-full min-h-screen object-contain z-0"
         style={{
           position: "absolute",
           height: "100%",
@@ -232,19 +232,18 @@ export default function HeroSection() {
           objectPosition: "top",
           color: "transparent",
         }}
-        src="/hero-crop2.jpg"
+        // src="/hero-img-final.svg"
+        src="/hero-img-compressed.jpg"
       />
       {/* Hero Lines - animated lines for visual interest */}
       <HeroLines />
       {/* Centered, smaller background circle for glow (kept for extra effect) */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] h-[700px] sm:w-[1100px] sm:h-[1100px] z-0 pointer-events-none bg-transparent"></div>
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-16 relative z-10 w-full bg-transparent">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0 sm:gap-8 items-center w-full">
-          {/* Left Content */}
-          <HeroLeftContent />
-          {/* Right Hero SVG Image */}
-          {/* <HeroRightImage /> */}
-        </div>
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-16 relative z-10 w-full bg-transparent flex flex-col items-start justify-center">
+        {/* Left Content */}
+        <HeroLeftContent />
+        {/* Right Hero SVG Image (if needed in future) */}
+        {/* <HeroRightImage /> */}
       </div>
     </section>
   );

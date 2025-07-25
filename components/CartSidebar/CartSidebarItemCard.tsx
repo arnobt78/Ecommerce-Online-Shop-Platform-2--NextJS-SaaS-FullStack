@@ -10,15 +10,19 @@ interface CartSidebarItemProps {
 
 export default function CartSidebarItem({ item, updateQuantity, removeFromCart }: CartSidebarItemProps) {
   return (
-    <div className="flex items-start bg-white rounded-lg shadow p-3 min-h-[72px]">
-      {/* Product image */}
-      <img src={item.image} alt={item.name} className="w-14 h-14 object-contain rounded mr-4 mt-1" />
+    <div className="flex items-stretch bg-transparent p-4 hover:bg-gray-50 transition-colors duration-300">
+      {/* Product image frame, stretches to match content height */}
+      <div className="flex-shrink-0 flex flex-col justify-center">
+        <div className="w-20 h-20 border border-gray-200 rounded-lg flex items-center justify-center bg-white mr-4">
+          <img src={item.image} alt={item.name} className="max-w-[70%] max-h-[70%] object-contain" />
+        </div>
+      </div>
       {/* Main content */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 flex flex-col justify-between">
         {/* Top row: name (left), price (right) */}
         <div className="flex items-center justify-between">
           <div className="font-semibold text-gray-900 text-base leading-tight truncate">{item.name}</div>
-          <div className="text-base font-bold text-gray-900 ml-4 whitespace-nowrap">€{item.price.toFixed(2)}</div>
+          <div className="text-base font-bold text-gray-900 ml-4 whitespace-nowrap">${item.price.toFixed(2)}</div>
         </div>
         {/* Second row: brand (left), empty (right) */}
         <div className="flex items-center justify-between mt-0.5">
@@ -26,20 +30,23 @@ export default function CartSidebarItem({ item, updateQuantity, removeFromCart }
           <div></div>
         </div>
         {/* Third row: quantity controls (left), trash (right) */}
-        <div className="flex items-center justify-between mt-3">
+        <div className="flex items-center justify-between mt-4">
           <div className="flex items-center space-x-2">
             <button
               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-              className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded text-lg text-gray-700 hover:bg-gray-200 transition"
+              className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded text-lg text-gray-700 hover:bg-gray-200 transition border border-gray-200"
               aria-label="Decrease quantity"
               disabled={item.quantity <= 1}
             >
               –
             </button>
-            <span className="font-semibold text-base w-6 text-center">{item.quantity}</span>
+            <span className="flex items-baseline w-4 justify-center">
+              {/* <span className="text-xs text-gray-400">Qty</span> */}
+              <span className="font-semibold text-base text-gray-900">{item.quantity}</span>
+            </span>
             <button
               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-              className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded text-lg text-gray-700 hover:bg-gray-200 transition"
+              className="w-7 h-7 flex items-center justify-center bg-gray-100 rounded text-lg text-gray-700 hover:bg-gray-200 transition border border-gray-200"
               aria-label="Increase quantity"
             >
               +

@@ -21,7 +21,14 @@ export default function CartSidebarItem({ item, updateQuantity, removeFromCart }
       <div className="flex-1 min-w-0 flex flex-col justify-between">
         {/* Top row: name (left), price (right) */}
         <div className="flex items-center justify-between">
-          <div className="font-semibold text-gray-900 text-base leading-tight truncate">{item.name}</div>
+          <button
+            type="button"
+            className="font-semibold text-gray-900 hover:text-indigo-600 text-base leading-tight truncate text-left"
+            onClick={() => item.slug && window.location.assign(`/product-detail/${item.slug}`)}
+            style={{ background: 'none', border: 'none', padding: 0, margin: 0, cursor: 'pointer' }}
+          >
+            {item.name}
+          </button>
           <div className="text-base font-bold text-gray-900 ml-4 whitespace-nowrap">${item.price.toFixed(2)}</div>
         </div>
         {/* Second row: brand (left), empty (right) */}

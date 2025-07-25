@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar/Navbar'
 import { CartProvider } from '../context/CartContext'
 import { products } from '../data/products'
 import CartSidebarLayout from "@/components/CartSidebar/CartSidebarPage";
+import LayoutWithConditionalNavbar from "@/components/DashboardPage/LayoutWithConditionalNavbar";
 
 
 
@@ -25,13 +26,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // <html lang="en" suppressHydrationWarning>
+    //   <body className="antialiased bg-white" style={{ fontFamily: 'system-ui, sans-serif' }}>
+    //     <CartProvider>
+    //       <Navbar allProducts={products} />
+    //       <CartSidebarLayout />
+    //       {children}
+    //       <Footer />
+    //     </CartProvider>
+    //   </body>
+    // </html>
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased bg-white" style={{ fontFamily: 'system-ui, sans-serif' }}>
         <CartProvider>
-          <Navbar allProducts={products} />
-          <CartSidebarLayout />
-          {children}
-          <Footer />
+          <LayoutWithConditionalNavbar>{children}</LayoutWithConditionalNavbar>
         </CartProvider>
       </body>
     </html>

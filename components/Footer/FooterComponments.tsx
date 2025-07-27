@@ -55,7 +55,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
       <div className={`mt-1 sm:block ${open ? 'block' : 'hidden sm:block'}`}>
         <Button 
           variant="ghost" 
-          className="h-auto px-2 sm:px-6 py-1 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-sm md:text-base justify-center sm:justify-start group"
+          className="h-auto px-4 sm:px-6 py-2 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-sm md:text-base justify-center sm:justify-start group"
         >
           Contact support
           <ArrowRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />

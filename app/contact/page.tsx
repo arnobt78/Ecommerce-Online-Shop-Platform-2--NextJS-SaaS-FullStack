@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+
 import ContactForm from "../../components/ContactPage/ContactForm";
 import FaqSection from "../../components/ContactPage/FaqSection";
 

@@ -21,23 +21,33 @@ const filterData = [
     title: "strength",
     options: getUnique(products.map((p) => p.strength)),
   },
+  {
+    title: "sort",
+    options: [
+      "Price Low to High",
+      "Price High to Low",
+      "Products A-Z",
+      "Products Z-A",
+    ],
+  },
 ];
 
 // The CategoryFilterMenuBar component renders a menu bar with multiple filter dropdowns
 
 
 interface CategoryFilterMenuBarProps {
-  onFilterChange?: (filters: { brands: string[]; flavors: string[]; strength: string[] }) => void;
-  initialFilter?: 'brands' | 'flavors' | 'strength';
+  onFilterChange?: (filters: { brands: string[]; flavors: string[]; strength: string[]; sort: string[] }) => void;
+  initialFilter?: 'brands' | 'flavors' | 'strength' | 'sort';
 }
 
 export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ onFilterChange, initialFilter }) => {
   // If initialFilter is set, open that dropdown by default
   const initialSelected = React.useMemo(() => {
-    if (initialFilter === 'brands') return [[filterData[0].options[0] || ''], [], []];
-    if (initialFilter === 'flavors') return [[], [filterData[1].options[0] || ''], []];
-    if (initialFilter === 'strength') return [[], [], [filterData[2].options[0] || '']];
-    return [[], [], []];
+    if (initialFilter === 'brands') return [[filterData[0].options[0] || ''], [], [], []];
+    if (initialFilter === 'flavors') return [[], [filterData[1].options[0] || ''], [], []];
+    if (initialFilter === 'strength') return [[], [], [filterData[2].options[0] || ''], []];
+    if (initialFilter === 'sort') return [[], [], [], [filterData[3].options[0] || '']];
+    return [[], [], [], []];
   }, [initialFilter]);
   const [selected, setSelected] = useState<string[][]>(initialSelected);
 
@@ -48,6 +58,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
         brands: selected[0],
         flavors: selected[1],
         strength: selected[2],
+        sort: selected[3],
       });
     }
   }, [selected, onFilterChange]);
@@ -79,16 +90,16 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
 
   return (
     <div
-      className="flex flex-col sm:flex-row justify-center items-center bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-4 sm:py-6 w-full max-w-2xl"
+      className="flex flex-col sm:flex-row justify-center items-center bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-4 sm:py-6 w-full max-w-4xl"
       style={{ minWidth: 0, minHeight: 80 }}
     >
-      <div className="flex flex-col sm:flex-row w-full max-w-2xl gap-2 sm:gap-0">
+      <div className="flex flex-col sm:flex-row w-full max-w-4xl gap-2 sm:gap-0">
         <FilterDropDown
           title={filterData[0].title}
           _icon={brandIcon}
           options={filterData[0].options}
           selected={selected[0]}
-          onChange={(values) => handleChange(0, values)}
+          onChange={(values: string[]) => handleChange(0, values)}
         />
         <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
           <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
@@ -98,7 +109,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
           _icon={flavorIcon}
           options={filterData[1].options}
           selected={selected[1]}
-          onChange={(values) => handleChange(1, values)}
+          onChange={(values: string[]) => handleChange(1, values)}
         />
         <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
           <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
@@ -108,7 +119,28 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
           _icon={strengthIcon}
           options={filterData[2].options}
           selected={selected[2]}
-          onChange={(values) => handleChange(2, values)}
+          onChange={(values: string[]) => handleChange(2, values)}
+        />
+        <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
+          <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
+        </div>
+        <FilterDropDown
+          title={filterData[3].title}
+          _icon={<svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none"><path d="M12.5 5v16m0 0l-6-6m6 6l6-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+          options={filterData[3].options}
+          selected={selected[3]}
+          onChange={(values: string[]) => handleChange(3, values)}
+          singleSelect
+          disabledOptions={(() => {
+            // Only allow one from each group (Price or Name) to be selected at a time
+            const selectedSort = selected[3][0];
+            if (!selectedSort) return [];
+            if (selectedSort === "Price Low to High") return ["Price High to Low", "Products A-Z", "Products Z-A"];
+            if (selectedSort === "Price High to Low") return ["Price Low to High", "Products A-Z", "Products Z-A"];
+            if (selectedSort === "Products A-Z") return ["Products Z-A", "Price Low to High", "Price High to Low"];
+            if (selectedSort === "Products Z-A") return ["Products A-Z", "Price Low to High", "Price High to Low"];
+            return [];
+          })()}
         />
       </div>
     </div>

@@ -18,21 +18,41 @@ export default function CategoryPage() {
   const initialFilter = useInitialFilter();
   // All cart logic is now handled globally via CartContext
   // Remove local pagination, let ListProductCard handle it
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([])
-  const [selectedFlavors, setSelectedFlavors] = useState<string[]>([])
-  const [selectedStrengths, setSelectedStrengths] = useState<string[]>([])
-  
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedFlavors, setSelectedFlavors] = useState<string[]>([]);
+  const [selectedStrengths, setSelectedStrengths] = useState<string[]>([]);
+  const [selectedSort, setSelectedSort] = useState<string>("");
+
   // Extract unique brands, flavors, strengths from real data
   const brands = Array.from(new Set(products.map((p: ProductData) => p.brand)));
   const flavors = Array.from(new Set(products.map((p: ProductData) => p.flavor)));
   const strengths = Array.from(new Set(products.map((p: ProductData) => p.strength)));
 
-  const filteredProducts = products.filter((product: ProductData) => {
-    const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand)
-    const flavorMatch = selectedFlavors.length === 0 || selectedFlavors.includes(product.flavor)
-    const strengthMatch = selectedStrengths.length === 0 || selectedStrengths.includes(product.strength)
-    return brandMatch && flavorMatch && strengthMatch
-  })
+  // Filter products
+  let filteredProducts = products.filter((product: ProductData) => {
+    const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+    const flavorMatch = selectedFlavors.length === 0 || selectedFlavors.includes(product.flavor);
+    const strengthMatch = selectedStrengths.length === 0 || selectedStrengths.includes(product.strength);
+    return brandMatch && flavorMatch && strengthMatch;
+  });
+
+  // Sort products based on selectedSort
+  if (selectedSort === "Price Low to High") {
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      // Use salePrice if available, else originalPrice
+      const getPrice = (p: ProductData) => parseFloat((p.salePrice || p.originalPrice).replace(/[^\d.,]/g, '').replace(',', '.'));
+      return getPrice(a) - getPrice(b);
+    });
+  } else if (selectedSort === "Price High to Low") {
+    filteredProducts = [...filteredProducts].sort((a, b) => {
+      const getPrice = (p: ProductData) => parseFloat((p.salePrice || p.originalPrice).replace(/[^\d.,]/g, '').replace(',', '.'));
+      return getPrice(b) - getPrice(a);
+    });
+  } else if (selectedSort === "Products A-Z") {
+    filteredProducts = [...filteredProducts].sort((a, b) => a.productName.localeCompare(b.productName));
+  } else if (selectedSort === "Products Z-A") {
+    filteredProducts = [...filteredProducts].sort((a, b) => b.productName.localeCompare(a.productName));
+  }
 
   return (
     <div className="bg-transparent">
@@ -51,10 +71,11 @@ export default function CategoryPage() {
           {/* Category Filter */}
           <div className="mb-4 flex justify-center w-full">
             <CategoryFilterMenuBar
-              onFilterChange={({ brands, flavors, strength }) => {
+              onFilterChange={({ brands, flavors, strength, sort }) => {
                 setSelectedBrands(brands);
                 setSelectedFlavors(flavors);
                 setSelectedStrengths(strength);
+                setSelectedSort(sort && sort.length > 0 ? sort[0] : "");
               }}
               initialFilter={initialFilter}
             />

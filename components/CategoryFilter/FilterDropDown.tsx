@@ -1,34 +1,45 @@
 "use client";
 
-// This file is a React component for a reusable filter dropdown menu.
 import React, { useState } from "react";
 
-interface FilterDropDownProps {
+export interface FilterDropDownProps {
   title: string;
-// The icon prop is intentionally unused to preserve the component API for future use.
-// To satisfy ESLint, prefix with an underscore and make it optional:
-_icon?: React.ReactNode;
+  _icon?: React.ReactNode;
   options: string[];
   selected: string[];
   onChange: (selected: string[]) => void;
+  singleSelect?: boolean;
+  disabledOptions?: string[];
 }
 
 // The FilterDropDown component renders a dropdown menu with checkboxes for selecting options.
-export const FilterDropDown: React.FC<FilterDropDownProps> = ({
+
+export function FilterDropDown({
   title,
   _icon,
   options,
   selected,
   onChange,
-}) => {
+  singleSelect = false,
+  disabledOptions = [],
+}: FilterDropDownProps) {
   const [open, setOpen] = useState(false);
 
-    // Handle option selection
+  // Handle option selection
   const handleSelect = (option: string) => {
-    if (selected.includes(option)) {
-      onChange(selected.filter((item) => item !== option));
+    if (disabledOptions.includes(option)) return;
+    if (singleSelect) {
+      if (selected.includes(option)) {
+        onChange([]);
+      } else {
+        onChange([option]);
+      }
     } else {
-      onChange([...selected, option]);
+      if (selected.includes(option)) {
+        onChange(selected.filter((item) => item !== option));
+      } else {
+        onChange([...selected, option]);
+      }
     }
   };
 
@@ -58,44 +69,48 @@ export const FilterDropDown: React.FC<FilterDropDownProps> = ({
         </span>
       </button>
 
-        {/* Dropdown menu */}
+      {/* Dropdown menu */}
       {open && (
         <div className="absolute left-0 z-[100] w-full mt-2 bg-white border-0 rounded-[16px] shadow-[0_8px_40px_0_rgba(0,0,0,0.18)] max-h-[255px] overflow-y-auto py-2 min-w-[180px] sm:min-w-[216px]">
-          {options.map((option) => (
-            <label
-              key={option}
-              className="flex items-center px-5 py-3 cursor-pointer hover:bg-[#F8F8F8] border-b border-[#EFEFEF] last:border-b-0"
-              style={{ minHeight: 44 }}
-            >
-              <span className="relative flex items-center justify-center" style={{ width: 24, height: 24 }}>
-                <input
-                  type="checkbox"
-                  checked={selected.includes(option)}
-                  onChange={() => handleSelect(option)}
-                  className="appearance-none w-[24px] h-[24px] rounded-[5px] border border-[#222] bg-white checked:bg-[#8EF7FB] checked:border-[#222] focus:ring-0 focus:outline-none"
-                  style={{ boxShadow: "none" }}
-                />
-                {selected.includes(option) && (
-                  <svg
-                    className="absolute left-0 top-0"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect x="0.5" y="0.5" width="23" height="23" rx="5" fill="#8EF7FB" stroke="#222"/>
-                    <path d="M6.5 12.5L11 17L18 9.5" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                )}
-              </span>
+          {options.map((option) => {
+            const isDisabled = disabledOptions.includes(option);
+            return (
+              <label
+                key={option}
+                className={`flex items-center px-5 py-3 cursor-pointer hover:bg-[#F8F8F8] border-b border-[#EFEFEF] last:border-b-0 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                style={{ minHeight: 44 }}
+              >
+                <span className="relative flex items-center justify-center" style={{ width: 24, height: 24 }}>
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(option)}
+                    onChange={() => handleSelect(option)}
+                    disabled={isDisabled}
+                    className="appearance-none w-[24px] h-[24px] rounded-[5px] border border-[#222] bg-white checked:bg-[#8EF7FB] checked:border-[#222] focus:ring-0 focus:outline-none"
+                    style={{ boxShadow: "none" }}
+                  />
+                  {selected.includes(option) && !isDisabled && (
+                    <svg
+                      className="absolute left-0 top-0"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect x="0.5" y="0.5" width="23" height="23" rx="5" fill="#8EF7FB" stroke="#222"/>
+                      <path d="M6.5 12.5L11 17L18 9.5" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  )}
+                </span>
 
                 {/* Option label */}
-              <span className="ml-4 text-[#222] text-[18px] leading-[22px] font-normal">{option}</span>
-            </label>
-          ))}
+                <span className="ml-4 text-[#222] text-[18px] leading-[22px] font-normal">{option}</span>
+              </label>
+            );
+          })}
         </div>
       )}
     </div>
   );
-};
+}

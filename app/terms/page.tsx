@@ -34,9 +34,24 @@ export default function TermsPage() {
     other: useRef<HTMLDivElement>(null),
   };
 
-  // Scroll to section
+  // Track hash for sidebar highlight (SSR-safe)
+  const [activeHash, setActiveHash] = React.useState<string>("");
+  React.useEffect(() => {
+    const updateHash = () => setActiveHash(window.location.hash);
+    updateHash();
+    window.addEventListener("hashchange", updateHash);
+    return () => window.removeEventListener("hashchange", updateHash);
+  }, []);
+
+  // Scroll to section and update hash
   const handleScroll = (id: keyof typeof refs) => {
+    // Smooth scroll to section
     refs[id].current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Update hash in a client-safe way after scroll
+    if (typeof window !== "undefined") {
+      // Use history.replaceState to avoid jump
+      history.replaceState(null, "", `#${id}`);
+    }
   };
 
   return (
@@ -169,13 +184,13 @@ export default function TermsPage() {
       {/* Sidebar */}
       <aside className="hidden sm:flex flex-col w-1.5/5 px-4 sm:px-6 pt-12 sm:pt-28 text-justify pr-8 pl-2 bg-white sticky top-0 h-screen">
         <nav className="flex flex-col gap-2 text-base font-semibold text-[#22223B]">
-          {sections.map((section, idx) => (
+          {sections.map((section) => (
             <button
               key={section.id}
               onClick={() => handleScroll(section.id as keyof typeof refs)}
               className={
                 `text-left py-2 px-2 transition-colors focus:outline-none font-semibold ` +
-                (window?.location.hash === `#${section.id}` ? 'text-[#01DAE3]' : 'hover:text-[#01DAE3] focus:text-[#01DAE3]')
+                (activeHash === `#${section.id}` ? 'text-[#01DAE3]' : 'hover:text-[#01DAE3] focus:text-[#01DAE3]')
               }
               style={{
                 fontWeight: 600,

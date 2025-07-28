@@ -25,7 +25,12 @@ export default function DashboardVideoListSidebar({ videoList, selectedVideo, on
             <div
               key={video.title}
               className={`flex items-center justify-between px-2 py-1.5 rounded-lg mb-1 cursor-pointer transition-all text-sm ${selectedVideo.title === video.title ? 'bg-[#6DF4F9]/40 text-black font-semibold' : 'hover:bg-gray-200'}`}
-              onClick={() => onSelectVideo?.(video)}
+              onClick={() => {
+                onSelectVideo?.(video);
+                if (typeof window !== 'undefined') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
             >
               <span>{video.title}</span>
               <span className="text-xs text-gray-500">{video.duration}</span>

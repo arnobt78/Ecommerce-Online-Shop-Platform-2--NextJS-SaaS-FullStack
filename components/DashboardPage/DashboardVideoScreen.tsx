@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 
-function VideoStatusBar({ progress = 0 }) {
-  // progress: 0-1
+function VideoStatusBar({
+  progress = 0,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
+}: {
+  progress?: number;
+  onPrev: () => void;
+  onNext: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
+}) {
   return (
     <div className="w-full flex items-center justify-between mt-8 rounded-2xl">
       {/* Prev Button */}
       <div className="flex items-center">
-        <button className="bg-white border border-[#6DF4F9] rounded-lg px-6 py-2 flex flex-row-reverse items-center justify-center mr-4 font-medium text-gray-900 hover:bg-[#6DF4F9]/15 transition-colors duration-300">Prev
+        <button
+          className={`bg-white border border-[#6DF4F9] rounded-lg px-6 py-2 flex flex-row-reverse items-center justify-center mr-4 font-medium text-gray-900 transition-colors duration-300 ${!hasPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
+          onClick={hasPrev ? onPrev : undefined}
+          disabled={!hasPrev}
+        >
+          Prev
           <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          
         </button>
       </div>
       {/* Status Bar */}
-      <div className="flex-1 mx-4">
+      <div className="hidden sm:block flex-1 mx-4">
         <div className="relative h-9 flex items-center">
           <div className="absolute left-0 top-0 w-full h-full rounded-lg border border-[#6DF4F9] bg-[#1C1C1C]/[0.03]" />
           <div className="absolute left-0 top-0 h-full rounded-lg bg-[#6DF4F9]" style={{ width: `${Math.max(52, 556 * progress)}px`, minWidth: 52, maxWidth: 556 }} />
@@ -24,7 +39,12 @@ function VideoStatusBar({ progress = 0 }) {
       </div>
       {/* Next Button */}
       <div className="flex items-center">
-        <button className="bg-white border border-[#6DF4F9] rounded-lg px-6 py-2 flex items-center ml-4 font-medium text-gray-900 hover:bg-[#6DF4F9]/15 transition-colors duration-300">Next
+        <button
+          className={`bg-white border border-[#6DF4F9] rounded-lg px-6 py-2 flex items-center ml-4 font-medium text-gray-900 transition-colors duration-300 ${!hasNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
+          onClick={hasNext ? onNext : undefined}
+          disabled={!hasNext}
+        >
+          Next
           <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </button>
       </div>
@@ -32,19 +52,50 @@ function VideoStatusBar({ progress = 0 }) {
   );
 }
 
-export default function DashboardVideoScreen({ video }: { video: { title: string; duration: string; src: string } }) {
-  const [progress] = useState(0.1); // Example progress
+export default function DashboardVideoScreen({
+  video,
+  videoList,
+  setSelectedVideo,
+}: {
+  video: { title: string; duration: string; src: string };
+  videoList: { title: string; duration: string; src: string }[];
+  setSelectedVideo: (video: { title: string; duration: string; src: string }) => void;
+}) {
+  const progress = 0.1; // Example progress
+  const currentIdx = useMemo(() => videoList.findIndex(v => v.title === video.title), [videoList, video.title]);
+  const hasPrev = currentIdx > 0;
+  const hasNext = currentIdx < videoList.length - 1;
+  const handlePrev = () => {
+    if (hasPrev) {
+      setSelectedVideo(videoList[currentIdx - 1]);
+    }
+  };
+  const handleNext = () => {
+    if (hasNext) {
+      setSelectedVideo(videoList[currentIdx + 1]);
+    }
+  };
   return (
-    <section className="flex-1 flex flex-col items-center px-12 py-8 bg-white min-h-screen rounded-2xl">
-      <div className="w-full max-w-3xl mx-auto">
-        <iframe
-          src={video.src}
-          style={{ width: '100%', height: 500, border: 'none', borderRadius: 16 }}
-          title={video.title}
-          allowFullScreen
-        />
-        <div className="mt-6 text-2xl font-semibold text-gray-900">{video.title}</div>
-        <VideoStatusBar progress={progress} />
+    <section className="w-full flex flex-col items-center px-2 sm:px-12 py-2 sm:py-8 bg-white rounded-2xl" style={{ minHeight: '40vh' }}>
+      <div className="w-full max-w-md sm:max-w-3xl mx-auto">
+        <div className="w-full rounded-2xl overflow-hidden" style={{ background: '#e5e5e5' }}>
+          <iframe
+            src={video.src}
+            className="w-full h-[220px] sm:h-[500px] border-none rounded-lg"
+            title={video.title}
+            allowFullScreen
+          />
+        </div>
+        <div className="mt-4 sm:mt-6 text-xl sm:text-2xl font-semibold text-gray-900 text-center">{video.title}</div>
+        <div className="mt-2 sm:mt-6">
+          <VideoStatusBar
+            progress={progress}
+            onPrev={handlePrev}
+            onNext={handleNext}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
+        </div>
       </div>
     </section>
   );

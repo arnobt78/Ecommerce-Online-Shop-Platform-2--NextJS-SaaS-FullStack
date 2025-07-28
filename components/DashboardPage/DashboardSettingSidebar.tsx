@@ -46,6 +46,10 @@ export default function DashboardSettingSidebar({ onTabChange }: DashboardSettin
   const handleTabClick = (tab: TabName) => {
     setActiveTab(tab);
     if (onTabChange) onTabChange(tab);
+    // Scroll to top on all screens
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   return (

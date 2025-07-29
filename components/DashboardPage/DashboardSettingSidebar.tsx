@@ -53,24 +53,24 @@ export default function DashboardSettingSidebar({ onTabChange }: DashboardSettin
   };
 
   return (
-    <aside className="w-full bg-white rounded-2xl shadow-sm flex flex-col items-center py-6 px-4">
-      <div className="flex flex-col gap-6 w-full items-center ">
+    <aside className="w-full bg-white rounded-2xl shadow-sm flex flex-col items-center py-4 px-4">
+      <div className="flex flex-col gap-4 w-full items-center ">
         <button
-          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base mb-2 transition-colors duration-300 ${activeTab === 'Course' ? 'bg-[#6DF4F9]/20 text-[#00BFCB]' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
+          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base mb-2 transition-colors duration-300 ${activeTab === 'Course' ? 'bg-[#6DF4F9]/20 text-gray-900' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
           onClick={() => handleTabClick('Course')}
         >
           <span className="mr-2">{menu[0].icon}</span>
           {menu[0].name}
         </button>
         <button
-          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base mb-2 transition-colors duration-300 ${activeTab === 'Setting' ? 'bg-[#6DF4F9]/20 text-[#00BFCB]' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
+          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base mb-2 transition-colors duration-300 ${activeTab === 'Setting' ? 'bg-[#6DF4F9]/20 text-gray-900' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
           onClick={() => handleTabClick('Setting')}
         >
           <span className="mr-2">{menu[1].icon}</span>
           {menu[1].name}
         </button>
         <button
-          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base transition-colors duration-300 ${activeTab === 'Logout' ? 'bg-[#6DF4F9]/20 text-[#00BFCB]' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
+          className={`w-full flex items-center gap-2 py-3 px-4 rounded-xl font-semibold text-base transition-colors duration-300 ${activeTab === 'Logout' ? 'bg-[#6DF4F9]/20 text-gray-900' : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-200'}`}
           onClick={() => handleTabClick('Logout')}
         >
           <span className="mr-2">{menu[2].icon}</span>

@@ -90,58 +90,58 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
 
   return (
     <div
-      className="flex flex-col sm:flex-row justify-center items-center bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-4 sm:py-6 w-full max-w-4xl"
+      className="bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-4 sm:py-4 w-full max-w-7xl mx-auto flex flex-col justify-center items-center"
       style={{ minWidth: 0, minHeight: 80 }}
     >
-      <div className="flex flex-col sm:flex-row w-full max-w-4xl gap-2 sm:gap-0">
-        <FilterDropDown
-          title={filterData[0].title}
-          _icon={brandIcon}
-          options={filterData[0].options}
-          selected={selected[0]}
-          onChange={(values: string[]) => handleChange(0, values)}
-        />
-        <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
-          <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
+      {/* Responsive grid: 1 column for all screens below 911px, 4 columns for ≥911px */}
+      <div className="w-full grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 [@media(min-width:911px)]:grid-cols-4 gap-2 [@media(min-width:911px)]:gap-0">
+        <div className="[@media(min-width:911px)]:border-r [@media(min-width:911px)]:border-[#E0E0E0] [@media(min-width:911px)]:px-4 [@media(min-width:911px)]:w-full flex-1">
+          <FilterDropDown
+            title={filterData[0].title}
+            _icon={brandIcon}
+            options={filterData[0].options}
+            selected={selected[0]}
+            onChange={(values: string[]) => handleChange(0, values)}
+          />
         </div>
-        <FilterDropDown
-          title={filterData[1].title}
-          _icon={flavorIcon}
-          options={filterData[1].options}
-          selected={selected[1]}
-          onChange={(values: string[]) => handleChange(1, values)}
-        />
-        <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
-          <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
+        <div className="[@media(min-width:911px)]:border-r [@media(min-width:911px)]:border-[#E0E0E0] [@media(min-width:911px)]:px-4 [@media(min-width:911px)]:w-full flex-1">
+          <FilterDropDown
+            title={filterData[1].title}
+            _icon={flavorIcon}
+            options={filterData[1].options}
+            selected={selected[1]}
+            onChange={(values: string[]) => handleChange(1, values)}
+          />
         </div>
-        <FilterDropDown
-          title={filterData[2].title}
-          _icon={strengthIcon}
-          options={filterData[2].options}
-          selected={selected[2]}
-          onChange={(values: string[]) => handleChange(2, values)}
-        />
-        <div className="hidden sm:flex items-center mx-2" style={{ height: 'auto' }}>
-          <div className="border-l border-[#E0E0E0]" style={{ height: '56px', width: 0, margin: '0 auto' }} />
+        <div className="[@media(min-width:911px)]:border-r [@media(min-width:911px)]:border-[#E0E0E0] [@media(min-width:911px)]:px-4 [@media(min-width:911px)]:w-full flex-1">
+          <FilterDropDown
+            title={filterData[2].title}
+            _icon={strengthIcon}
+            options={filterData[2].options}
+            selected={selected[2]}
+            onChange={(values: string[]) => handleChange(2, values)}
+          />
         </div>
-        <FilterDropDown
-          title={filterData[3].title}
-          _icon={<svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none"><path d="M12.5 5v16m0 0l-6-6m6 6l6-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
-          options={filterData[3].options}
-          selected={selected[3]}
-          onChange={(values: string[]) => handleChange(3, values)}
-          singleSelect
-          disabledOptions={(() => {
-            // Only allow one from each group (Price or Name) to be selected at a time
-            const selectedSort = selected[3][0];
-            if (!selectedSort) return [];
-            if (selectedSort === "Price Low to High") return ["Price High to Low", "Products A-Z", "Products Z-A"];
-            if (selectedSort === "Price High to Low") return ["Price Low to High", "Products A-Z", "Products Z-A"];
-            if (selectedSort === "Products A-Z") return ["Products Z-A", "Price Low to High", "Price High to Low"];
-            if (selectedSort === "Products Z-A") return ["Products A-Z", "Price Low to High", "Price High to Low"];
-            return [];
-          })()}
-        />
+        <div className="[@media(min-width:911px)]:px-4 [@media(min-width:911px)]:w-full flex-1">
+          <FilterDropDown
+            title={filterData[3].title}
+            _icon={<svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none"><path d="M12.5 5v16m0 0l-6-6m6 6l6-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+            options={filterData[3].options}
+            selected={selected[3]}
+            onChange={(values: string[]) => handleChange(3, values)}
+            singleSelect
+            disabledOptions={(() => {
+              // Only allow one from each group (Price or Name) to be selected at a time
+              const selectedSort = selected[3][0];
+              if (!selectedSort) return [];
+              if (selectedSort === "Price Low to High") return ["Price High to Low", "Products A-Z", "Products Z-A"];
+              if (selectedSort === "Price High to Low") return ["Price Low to High", "Products A-Z", "Products Z-A"];
+              if (selectedSort === "Products A-Z") return ["Products Z-A", "Price Low to High", "Price High to Low"];
+              if (selectedSort === "Products Z-A") return ["Products A-Z", "Price Low to High", "Price High to Low"];
+              return [];
+            })()}
+          />
+        </div>
       </div>
     </div>
   );

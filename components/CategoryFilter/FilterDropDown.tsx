@@ -44,21 +44,22 @@ export function FilterDropDown({
   };
 
   return (
-    <div className="relative w-full sm:w-[255px]">
+    <div className="relative w-full sm:w-auto">
       <button
         className="flex flex-col items-start w-full px-4 py-2 sm:px-5 sm:py-3 bg-[#ffffff] border-0 rounded-[12px] shadow-none hover:bg-[#D2F3F7] focus:outline-none min-h-[56px] sm:min-h-[72px]"
         onClick={() => setOpen((prev) => !prev)}
         type="button"
       >
-        <span className="flex items-center gap-2 mb-1">
-          {/* Custom icon for each filter, passed from parent */}
+        {/* Top row: icon and title */}
+        <div className="flex items-center gap-2 mb-0 w-full">
           {_icon}
           <span className="font-bold text-[18px] text-[#222] capitalize leading-[22px]">{title}</span>
-        </span>
-        <span className="ml-8 sm:ml-8 text-[#A3A3A3] text-[15px] sm:text-[16px] leading-[19px] font-normal flex items-center gap-2">
-          Choose
+        </div>
+        {/* Second row: Choose and arrow, justify-between */}
+        <div className="w-full flex flex-row items-center justify-between text-[#A3A3A3] text-[15px] sm:text-[16px] leading-[19px] font-normal mt-1 pl-8">
+          <span>Choose</span>
           <svg
-            className={`w-5 h-5 ml-4 sm:ml-10 transition-transform ${open ? "rotate-180" : ""}`}
+            className={`w-5 h-5 ml-2 sm:ml-10 transition-transform ${open ? "rotate-180" : ""}`}
             fill="none"
             stroke="#A3A3A3"
             strokeWidth="2"
@@ -66,12 +67,12 @@ export function FilterDropDown({
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
-        </span>
+        </div>
       </button>
 
       {/* Dropdown menu */}
       {open && (
-        <div className="absolute left-0 z-[100] w-full mt-2 bg-white border-0 rounded-[16px] shadow-[0_8px_40px_0_rgba(0,0,0,0.18)] max-h-[255px] overflow-y-auto py-2 min-w-[180px] sm:min-w-[216px]">
+        <div className="absolute left-0 z-[100] w-full mt-2 bg-white border-0 rounded-[16px] shadow-[0_8px_40px_0_rgba(0,0,0,0.18)] max-h-[255px] overflow-y-auto py-2 min-w-auto sm:min-w-auto">
           {options.map((option) => {
             const isDisabled = disabledOptions.includes(option);
             return (

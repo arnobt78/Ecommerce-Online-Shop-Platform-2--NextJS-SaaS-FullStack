@@ -128,8 +128,8 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
       }}
     >
       <div className="max-w-[1440px] mx-auto py-3 sm:px-8 px-2 sm:py-6">
-        {/* Desktop Navbar */}
-        <div className="hidden md:flex items-center justify-between">
+        {/* Desktop Navbar (≥850px) */}
+        <div className="hidden [@media(min-width:850px)]:flex items-center justify-between">
           <div className="flex items-center space-x-12">
             <a href="/">
               <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
@@ -157,7 +157,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
 
           {/* Search and Cart buttons (desktop) */}
           <div className="flex items-center space-x-4">
-            <div className="relative hidden lg:block">
+            <div className="relative hidden sm:block">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
               <Input
                 value={searchQuery}
@@ -177,11 +177,11 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                         {searchResults.map((product) => (
                           <div
                             key={product.id || product.slug || (product.name || product.productName) || Math.random()}
-                            className="flex items-center gap-3 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
+                            className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
                           >
                             <a
                               href={`/product-detail/${product.slug || ''}`}
-                              className="flex items-center flex-1 gap-3 min-w-0 cursor-pointer"
+                              className="flex items-center flex-1 gap-2 min-w-0 cursor-pointer"
                               onClick={() => {
                                 setSearchQuery("");
                                 setShowSearchResults(false);
@@ -289,7 +289,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="sm:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -297,8 +297,8 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
           </div>
         </div>
 
-        {/* Mobile Navbar Row: burger left, logo center, cart right */}
-        <div className="flex md:hidden items-center justify-between">
+        {/* Mobile Navbar Row: burger left, logo center, cart right (<850px) */}
+        <div className="flex [@media(max-width:849px)]:flex [@media(min-width:850px)]:hidden items-center justify-between">
           {/* Burger menu button */}
           <Button
             variant="ghost"
@@ -332,7 +332,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden w-full bg-white border-b border-gray-200">
+        <div className="[@media(max-width:849px)]:block [@media(min-width:850px)]:hidden w-full bg-white border-b border-gray-200">
           <div className="px-4 py-6 space-y-4">
             {[
               { label: "Shop", href: "/products" },
@@ -362,29 +362,69 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                 <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl z-50 max-h-64 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-3">
-                      {searchResults.slice(0, 5).map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-lg cursor-pointer"
-                          onClick={() => {
-                            addToCart(product);
-                            setSearchQuery("");
-                            setShowSearchResults(false);
-                            setMobileMenuOpen(false);
-                          }}
-                        >
-                          <div className="w-10 h-10 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center">
-                            <div className="text-gray-800 font-bold text-xs">{product.image}</div>
+                      {searchResults.slice(0, 5).map((product) => {
+                        const name = product.productName || product.name || '';
+                        const brand = product.brand || '';
+                        const img = product.productImage || product.image || '';
+                        const salePrice = typeof product.salePrice === 'string'
+                          ? parseFloat(product.salePrice.replace(/[^0-9,.-]+/g, '').replace(',', '.'))
+                          : product.salePrice;
+                        const originalPrice = typeof product.originalPrice === 'string'
+                          ? parseFloat(product.originalPrice.replace(/[^0-9,.-]+/g, '').replace(',', '.'))
+                          : product.originalPrice;
+                        return (
+                          <div
+                            key={product.id}
+                            className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
+                            onClick={() => {
+                              addToCart(product);
+                              setSearchQuery("");
+                              setShowSearchResults(false);
+                              setMobileMenuOpen(false);
+                            }}
+                          >
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                              {img ? (
+                                <img
+                                  src={img.startsWith('/') ? img : '/' + img}
+                                  alt={name}
+                                  className="object-contain w-full h-full"
+                                  onError={e => { e.currentTarget.style.display = 'none'; }}
+                                />
+                              ) : (
+                                <div className="text-gray-400 text-xs justify-center">No Image</div>
+                              )}
+                            </div>
+                            <div className="flex flex-col flex-1 min-w-0 justify-center">
+                              <h4
+                                className="font-semibold text-gray-900 text-sm whitespace-normal line-clamp-2 group-hover:text-[#3AF0F7] transition-colors max-w-[240px]"
+                                title={name}
+                              >
+                                {name}
+                              </h4>
+                              <p className="text-xs text-gray-500 mt-0.5">{brand}</p>
+                            </div>
+                            <div className="flex flex-col items-end ml-2">
+                              {salePrice && !isNaN(salePrice) ? (
+                                <>
+                                  <span className="text-[#3AF0F7] font-bold text-sm">
+                                    €{salePrice.toFixed(2)}
+                                  </span>
+                                  {originalPrice && !isNaN(originalPrice) && originalPrice > salePrice ? (
+                                    <span className="text-gray-400 line-through text-xs">
+                                      €{originalPrice.toFixed(2)}
+                                    </span>
+                                  ) : null}
+                                </>
+                              ) : originalPrice && !isNaN(originalPrice) ? (
+                                <span className="text-[#3AF0F7] font-bold text-sm">€{originalPrice.toFixed(2)}</span>
+                              ) : (
+                                <span className="text-[#3AF0F7] font-bold text-sm">€N/A</span>
+                              )}
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-sm text-gray-900">{product.name}</h4>
-                            <p className="text-xs text-gray-500">{product.brand}</p>
-                          </div>
-                          <div className="text-[#3AF0F7] font-bold text-sm">
-                            €{product.salePrice.toFixed(2)}
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   ) : (
                     <div className="p-4 text-center text-gray-500 text-sm">No products found</div>

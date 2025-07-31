@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import Navbar from "@/components/Navbar/Navbar"
 
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import Footer from "@/components/Footer/FooterSectionLayout"
 import { products } from "@/data/products";
@@ -33,12 +34,14 @@ export default function SnuzzProLanding() {
     }
   };
 
+  const router = useRouter();
   return (
     <div
       className=""
     >
       {/* Header: Hide on any screen if cart is open */}
-      {!cartOpen && <Navbar allProducts={allProducts} noBlur />}
+      {/* {!cartOpen && <Navbar allProducts={allProducts} noBlur />} */}
+      {/* Header is now rendered globally via layout, matching main page behavior */}
 
       {/* Hero Section */}
       <div className="relative w-full bg-transparent">
@@ -76,6 +79,12 @@ export default function SnuzzProLanding() {
             <Button
               variant="outline"
               className="bg-transparent border-gray-400 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-md transition-all duration-300"
+              onClick={() => {
+                router.push("/login");
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+                }, 0);
+              }}
             >
               Log in
             </Button>

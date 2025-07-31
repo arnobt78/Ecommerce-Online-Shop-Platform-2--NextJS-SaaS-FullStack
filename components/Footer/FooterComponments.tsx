@@ -1,6 +1,8 @@
 import { ChevronDown, ArrowRight, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+import { useRouter } from "next/navigation";
+
 // FooterSection
 interface FooterSectionProps {
   title: string;
@@ -11,6 +13,8 @@ interface FooterSectionProps {
 }
 
 export function FooterSection({ title, items, open, onToggle, sectionKey }: FooterSectionProps) {
+  const router = useRouter();
+
   return (
     <div className="text-center sm:text-left">
       <button
@@ -26,6 +30,10 @@ export function FooterSection({ title, items, open, onToggle, sectionKey }: Foot
             <a
               href="#"
               className="transition-colors text-sm md:text-base hover:text-gray-900 block py-1"
+              onClick={() => {
+                if (item === "Contact Us") router.push('/contact');
+                if (item === "Privacy") router.push('/terms');
+              }}
             >
               {item}
             </a>
@@ -42,7 +50,11 @@ interface FooterContactProps {
   onToggle: () => void;
 }
 
+
+
 export function FooterContact({ open, onToggle }: FooterContactProps) {
+  const router = useRouter();
+
   return (
     <div className="text-center sm:text-left">
       <button
@@ -52,10 +64,13 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
         <h4 className="font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 text-base md:text-lg">Contact Us</h4>
         <ChevronDown className={`w-4 h-4 sm:hidden transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
-      <div className={`mt-1 sm:block ${open ? 'block' : 'hidden sm:block'}`}>
-        <Button 
-          variant="ghost" 
+      <div className={`mt-1 sm:block ${open ? 'block' : 'hidden sm:block'}`}> 
+        <Button
+          variant="ghost"
           className="h-auto px-4 sm:px-6 py-2 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-sm md:text-base justify-center sm:justify-start group"
+          onClick={() => {
+            router.push('/contact');
+          }}
         >
           Contact support
           <ArrowRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />

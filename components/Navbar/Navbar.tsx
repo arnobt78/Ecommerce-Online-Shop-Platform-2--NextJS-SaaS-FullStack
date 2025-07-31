@@ -164,7 +164,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                className="pl-8 pr-3 py-1.5 w-48 h-8 border border-gray-300 rounded-md bg-white transition-all duration-300 text-sm focus:outline-none focus:ring-0 focus:border-gray-200 focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="pl-8 pr-3 py-1.5 w-48 h-8 border border-gray-300 rounded-md hover:border-[#3AF0F7]/50 focus:border-[#3AF0F7] focus:ring-0 focus:outline-none"
               />
               {showSearchResults && (
                 <div className="absolute top-full -right-8 mt-2 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
@@ -290,76 +290,75 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
               variant="ghost"
               size="icon"
               className="sm:hidden"
+              // className="[@media(max-width:849px)]:hidden" 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-12 h-12" /> : <Menu className="w-12 h-12" />}
             </Button>
           </div>
         </div>
 
-        {/* Mobile Navbar Row: burger left, logo center, cart right (<850px) */}
-        <div className="flex [@media(max-width:849px)]:flex [@media(min-width:850px)]:hidden items-center justify-between">
-          {/* Burger menu button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className=""
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </Button>
-
-          {/* Center logo */}
-          <a href="/" className="flex-1 flex justify-center">
-            <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
-          </a>
-
-          {/* Cart button */}
-          <Button
-            variant="ghost"
-            onClick={() => setCartOpen(true)}
-            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-black transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
-          >
-            <ShoppingBag className="w-4 h-4" />
-            {getTotalItems() > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
-                {getTotalItems()}
-              </span>
-            )}
-          </Button>
-        </div>
+      {/* Mobile Navbar Row: burger left, logo center, cart right (<850px) */}
+      <div className="flex [@media(max-width:849px)]:flex [@media(min-width:850px)]:hidden items-center justify-between">
+      {/* Burger menu button */}
+  <Button
+    variant="ghost"
+    size="icon"
+    className=""
+    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+  >
+    {mobileMenuOpen ? <X className="w-12 h-12" /> : <Menu className="w-12 h-12" />}
+  </Button>
+  {/* Center logo */}
+  <a href="/" className="flex-1 flex justify-center">
+    <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
+  </a>
+  {/* Cart button */}
+  <Button
+    variant="ghost"
+    onClick={() => setCartOpen(true)}
+    className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-black transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
+  >
+    <ShoppingBag className="w-4 h-4" />
+    {getTotalItems() > 0 && (
+      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+        {getTotalItems()}
+      </span>
+    )}
+  </Button>
+</div>
       </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="[@media(max-width:849px)]:block [@media(min-width:850px)]:hidden w-full bg-white border-b border-gray-200">
-          <div className="px-4 py-6 space-y-4">
+          <div className="mx-0 py-4">
             {[
               { label: "Shop", href: "/products" },
               { label: "Brands", href: "/products?filter=brands" },
               { label: "Flavor", href: "/products?filter=flavors" },
               { label: "Strength", href: "/products?filter=strength" },
-              { label: "SnuzzPro", href: "/products?filter=snuzzpro" },
+              { label: "SnuzzPro", href: "/pro" },
             ].map((item, index) => (
               <a
                 key={index}
                 href={item.href}
-                className="block text-gray-700 hover:text-[#3AF0F7] font-medium py-2"
+                className="block text-gray-700 hover:text-[#3AF0F7] hover:bg-gray-100 font-medium p-4"
               >
                 {item.label}
               </a>
             ))}
-            <div className="pt-4 relative">
-              <Search className="absolute left-3 top-[calc(50%+0.5rem)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
+            <div className="p-4 relative">
+              <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-gray-200"
+                className="w-full pl-10 pr-4 py-3 rounded-md border-2 border-gray-300 hover:border-[#3AF0F7]/50 focus:border-[#3AF0F7] focus:ring-0 focus:outline-none"
               />
               {showSearchResults && searchQuery && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-xl z-50 max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-md z-50 max-h-64 overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-3">
                       {searchResults.slice(0, 5).map((product) => {

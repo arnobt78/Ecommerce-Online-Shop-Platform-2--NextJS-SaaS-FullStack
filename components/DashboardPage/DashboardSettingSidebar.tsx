@@ -29,6 +29,7 @@ const menu = [
 
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 /**
  * Tab menu for dashboard. Notifies parent of tab change via onTabChange.
@@ -42,6 +43,7 @@ interface DashboardSettingSidebarProps {
 
 export default function DashboardSettingSidebar({ onTabChange }: DashboardSettingSidebarProps) {
   const [activeTab, setActiveTab] = useState<TabName>('Course');
+  const router = useRouter();
 
   const handleTabClick = (tab: TabName) => {
     setActiveTab(tab);
@@ -49,6 +51,16 @@ export default function DashboardSettingSidebar({ onTabChange }: DashboardSettin
     // Scroll to top on all screens
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // Logout logic
+    if (tab === 'Logout') {
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('demo_authenticated');
+        localStorage.removeItem('demo_email');
+        localStorage.removeItem('demo_otp');
+        // Optionally clear other demo keys if needed
+        router.push('/login');
+      }
     }
   };
 

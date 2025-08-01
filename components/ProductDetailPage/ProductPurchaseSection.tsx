@@ -71,15 +71,15 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({ salePrice, originalPrice, q
     <div className="flex flex-row items-end min-w-[60px]">
       {showDiscount ? (
         <>
-          <span className="text-[18px] text-gray-400 line-through mr-2">
+          <span className="text-md sm:text-lg text-gray-400 line-through mr-2 sm:mr-2">
             {currency} {totalOriginal.toFixed(2).replace(".", ",")}
           </span>
-          <span className="text-[22px] font-semibold text-red-500 leading-[28px]">
+          <span className="text-md sm:text-lg font-semibold text-red-500">
             {currency} {totalSale.toFixed(2).replace(".", ",")}
           </span>
         </>
       ) : (
-        <span className="text-[22px] font-semibold text-[#0A0A0A] leading-[28px]">
+        <span className="text-md sm:text-lg font-semibold text-[#0A0A0A]">
           {currency} {totalOriginal.toFixed(2).replace(".", ",")}
         </span>
       )}

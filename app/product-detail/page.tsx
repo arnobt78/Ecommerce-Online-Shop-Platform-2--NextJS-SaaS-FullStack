@@ -15,7 +15,7 @@ export default function ProductDetailPage() {
         </div>
       }
     >
-      <div className="mt-20">
+      <div className="mt-6 sm:mt-20">
       <ProductDetailLayout />
       </div>
 

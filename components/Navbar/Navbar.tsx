@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Search, ShoppingCart, Menu, X, Plus, Star, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
@@ -159,13 +159,13 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
           <div className="flex items-center space-x-4">
             <div className="relative hidden sm:block">
               <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-              <Input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setSearchFocused(true)}
-                onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                className="pl-8 pr-3 py-1.5 w-48 h-8 border border-gray-300 rounded-md hover:border-[#3AF0F7]/50 focus:border-[#3AF0F7] focus:ring-0 focus:outline-none"
-              />
+              <input
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  onFocus={() => setSearchFocused(true)}
+  onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+  className="pl-8 pr-3 py-1.5 w-48 h-8 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
+/>
               {showSearchResults && (
                 <div className="absolute top-full -right-8 mt-2 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
                   {searchResults.length > 0 ? (
@@ -250,9 +250,11 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                           </div>
                         ))}
                       </div>
-                      <div className="border-t border-gray-200 mt-4 pt-4">
+                      <div className="border-t border-gray-200 py-2">
                         <button
                           onClick={() => {
+                            // Navigate to /products with search param
+                            window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
                             setSearchQuery("");
                             setShowSearchResults(false);
                           }}
@@ -350,30 +352,24 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
             ))}
             <div className="p-4 relative">
               <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-              <Input
+              <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                className="w-full pl-10 pr-4 py-3 rounded-md border-2 border-gray-300 hover:border-[#3AF0F7]/50 focus:border-[#3AF0F7] focus:ring-0 focus:outline-none"
+                className="w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               />
               {showSearchResults && searchQuery && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-md z-50 max-h-64 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-md z-50 max-h-56 overflow-y-auto">
                   {searchResults.length > 0 ? (
-                    <div className="p-3">
-                      {searchResults.slice(0, 5).map((product) => {
-                        const name = product.productName || product.name || '';
-                        const brand = product.brand || '';
-                        const img = product.productImage || product.image || '';
-                        const salePrice = typeof product.salePrice === 'string'
-                          ? parseFloat(product.salePrice.replace(/[^0-9,.-]+/g, '').replace(',', '.'))
-                          : product.salePrice;
-                        const originalPrice = typeof product.originalPrice === 'string'
-                          ? parseFloat(product.originalPrice.replace(/[^0-9,.-]+/g, '').replace(',', '.'))
-                          : product.originalPrice;
-                        return (
+                    <div className="p-0">
+                      <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
+                         {searchResults.length} Product Found{searchResults.length !== 1 ? "s" : ""}
+                      </div>
+                      <div className="space-y-2">
+                        {searchResults.map((product) => (
                           <div
-                            key={product.id}
+                            key={product.id || product.slug || (product.name || product.productName) || Math.random()}
                             className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
                             onClick={() => {
                               addToCart(product);
@@ -382,54 +378,78 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                               setMobileMenuOpen(false);
                             }}
                           >
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                              {img ? (
-                                <img
-                                  src={img.startsWith('/') ? img : '/' + img}
-                                  alt={name}
-                                  className="object-contain w-full h-full"
-                                  onError={e => { e.currentTarget.style.display = 'none'; }}
-                                />
-                              ) : (
-                                <div className="text-gray-400 text-xs justify-center">No Image</div>
-                              )}
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+                              {(() => {
+                                const img = product.productImage || product.image || '';
+                                if (typeof img === 'string' && img.length > 0) {
+                                  return (
+                                    <img
+                                      src={img.startsWith('/') ? img : '/' + img}
+                                      alt={product.productName || product.name || 'Product'}
+                                      className="object-contain w-full h-full"
+                                      onError={e => { e.currentTarget.style.display = 'none'; }}
+                                    />
+                                  );
+                                } else {
+                                  return <div className="text-gray-400 text-xs justify-center">No Image</div>;
+                                }
+                              })()}
                             </div>
                             <div className="flex flex-col flex-1 min-w-0 justify-center">
-                              <h4
-                                className="font-semibold text-gray-900 text-sm whitespace-normal line-clamp-2 group-hover:text-[#3AF0F7] transition-colors max-w-[240px]"
-                                title={name}
-                              >
-                                {name}
+                              <h4 className="font-semibold text-gray-900 text-sm truncate group-hover:text-[#3AF0F7] transition-colors max-w-[140px]" title={product.productName || product.name || ''}>
+                                {(() => {
+                                  const pname = product.productName || product.name || '';
+                                  return typeof pname === 'string' && pname.length > 0
+                                    ? (pname.length > 28 ? pname.slice(0, 28) + '…' : pname)
+                                    : 'Unnamed';
+                                })()}
                               </h4>
-                              <p className="text-xs text-gray-500 mt-0.5">{brand}</p>
+                              <p className="text-xs text-gray-500 mt-0.5">{product.brand || ''}</p>
                             </div>
-                            <div className="flex flex-col items-end ml-2">
-                              {salePrice && !isNaN(salePrice) ? (
+                            <div className="flex flex-col items-end min-w-[70px] ml-2">
+                              {product.salePrice ? (
                                 <>
                                   <span className="text-[#3AF0F7] font-bold text-sm">
-                                    €{salePrice.toFixed(2)}
+                                    €{parseFloat((typeof product.salePrice === 'string' ? product.salePrice : String(product.salePrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
                                   </span>
-                                  {originalPrice && !isNaN(originalPrice) && originalPrice > salePrice ? (
-                                    <span className="text-gray-400 line-through text-xs">
-                                      €{originalPrice.toFixed(2)}
-                                    </span>
-                                  ) : null}
+                                  <span className="text-gray-400 line-through text-xs">
+                                    €{parseFloat((typeof product.originalPrice === 'string' ? product.originalPrice : String(product.originalPrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
+                                  </span>
                                 </>
-                              ) : originalPrice && !isNaN(originalPrice) ? (
-                                <span className="text-[#3AF0F7] font-bold text-sm">€{originalPrice.toFixed(2)}</span>
                               ) : (
-                                <span className="text-[#3AF0F7] font-bold text-sm">€N/A</span>
+                                <span className="text-[#3AF0F7] font-bold text-sm">
+                                  €{parseFloat((typeof product.originalPrice === 'string' ? product.originalPrice : String(product.originalPrice)).replace(/[^0-9,.-]+/g, '').replace(',', '.')).toFixed(2)}
+                                </span>
                               )}
                             </div>
                           </div>
-                        );
-                      })}
+                        ))}
+                      </div>
+                      <div className="border-t border-gray-200 py-2">
+                        <button
+                          onClick={() => {
+                            window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
+                            setSearchQuery("");
+                            setShowSearchResults(false);
+                            setMobileMenuOpen(false);
+                          }}
+                          className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
+                        >
+                          View All Results →
+                        </button>
+                      </div>
                     </div>
                   ) : (
-                    <div className="p-4 text-center text-gray-500 text-sm">No products found</div>
+                    <div className="p-6 text-center">
+                      <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                      <p className="text-gray-500 font-medium">No products found</p>
+                      <p className="text-gray-400 text-sm">Try searching for different keywords</p>
+                    </div>
                   )}
                 </div>
               )}
+
+              
             </div>
           </div>
         </div>

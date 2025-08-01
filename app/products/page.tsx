@@ -16,6 +16,12 @@ import { products, ProductData } from "@/data/products"
 
 export default function CategoryPage() {
   const initialFilter = useInitialFilter();
+  // Read search param from URL
+  let search = "";
+  if (typeof window !== "undefined") {
+    const params = new URLSearchParams(window.location.search);
+    search = params.get("search") || "";
+  }
   // All cart logic is now handled globally via CartContext
   // Remove local pagination, let ListProductCard handle it
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -30,6 +36,15 @@ export default function CategoryPage() {
 
   // Filter products
   let filteredProducts = products.filter((product: ProductData) => {
+    // If search param is present, filter by productName, brand, or flavor
+    if (search) {
+      const q = search.toLowerCase();
+      return (
+        (product.productName && product.productName.toLowerCase().includes(q)) ||
+        (product.brand && product.brand.toLowerCase().includes(q)) ||
+        (product.flavor && product.flavor.toLowerCase().includes(q))
+      );
+    }
     const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
     const flavorMatch = selectedFlavors.length === 0 || selectedFlavors.includes(product.flavor);
     const strengthMatch = selectedStrengths.length === 0 || selectedStrengths.includes(product.strength);

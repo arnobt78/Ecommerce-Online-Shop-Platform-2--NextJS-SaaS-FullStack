@@ -181,56 +181,12 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({ testimonial })
     </div>
   );
 };
-const ReviewCardSection: React.FC<{ testimonials?: Testimonial[] }> = ({ testimonials = defaultTestimonials }) => {
-  const [isMobile, setIsMobile] = React.useState(false);
-  React.useEffect(() => {
-    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
-    checkIsMobile();
-    window.addEventListener('resize', checkIsMobile);
-    return () => window.removeEventListener('resize', checkIsMobile);
-  }, []);
-  const testimonialsToShow = isMobile ? testimonials.slice(0, 2) : testimonials;
-  return (
-    <section className="px-5 py-12 bg-transparent">
-      <style jsx>{`
-        @keyframes scroll-left {
-          0% { transform: translateX(100%); }
-          100% { transform: translateX(-100%); }
-        }
-        .animate-scroll-left { animation: scroll-left 20s linear infinite; }
-      `}</style>
-      <div className="max-w-[1400px] mx-auto">
-        <h2 className="text-5xl font-bold text-gray-900 text-center mb-12">Reviews</h2>
-        {/* Mobile Layout - Static Grid */}
-        <div className="md:hidden grid grid-cols-1 gap-6 justify-items-center">
-          {testimonialsToShow.map((testimonial, i) => (
-            <ReviewCardItem key={i} testimonial={testimonial} />
-          ))}
-        </div>
-        {/* Desktop Layout - Animated Floating */}
-        <div className="hidden md:block relative overflow-hidden">
-          <div className="flex animate-scroll-left">
-            {[...testimonialsToShow, ...testimonialsToShow].map((testimonial, i) => (
-              <div key={i} className="w-[284px] flex-shrink-0 mx-4">
-                <ReviewCardItem testimonial={testimonial} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-/**
- * ProductDetailReviewsSection renders the reviews section for a product.
- */
-const ProductDetailReviewsSection: React.FC = () => (
-  <div className="w-full mt-12">
-    <ReviewCardSection />
-  </div>
-);
+
+// --- Inlined: Product Detail Page Layout ---
+
 import { ProductPurchaseSection } from "./ProductPurchaseSection";
 import { ProductCardReelSection } from "./ProductCardReelSection";
+import ReviewSection from "@/components/Review/ReviewCardSection";
 
 import { useSearchParams } from "next/navigation";
 import { products } from "../../data/products";
@@ -268,7 +224,7 @@ const mockReelProducts = Array(5).fill({
   return (
     <div className="w-full bg-white flex flex-col items-center">
       {/* Main Content */}
-      <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto pt-16 px-1 sm:px-32">
+      <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto pt-12 px-1 sm:px-32">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}
         <div className="flex flex-col gap-8 w-full bg-white lg:w-[687px]">
           {/* Product Poster Card for Product Detail */}
@@ -277,7 +233,7 @@ const mockReelProducts = Array(5).fill({
           <ProductDetailDescriptionSection product={product} className="hidden sm:block" />
         </div>
         {/* Right: Purchase Section with SVG background - fixed on large screens */}
-        <div className="flex-1 flex flex-col items-start min-w-full sm:min-w-[350px] max-w-full sm:max-w-[687px] mx-auto px-1 sm:px-0">
+        <div className="flex-1 flex flex-col items-start min-w-full sm:min-w-[350px] max-w-full sm:max-w-[687px] mx-auto px-0 sm:px-0">
           <div className="relative w-full bg-white overflow-visible lg:sticky lg:top-0">
             <div className="relative z-10">
               <ProductPurchaseSection
@@ -301,11 +257,14 @@ const mockReelProducts = Array(5).fill({
         </div>
       </div>
       {/* Product Card Reel */}
-      <div className="w-full max-w-[1440px] mx-auto mt-16">
+      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16">
         <ProductCardReelSection products={products.slice(0, 6)} />
       </div>
       {/* Reviews Section */}
-      <ProductDetailReviewsSection />
+      <div className="mt-12 sm:mt-16">
+        <ReviewSection />
+      </div>
+
     </div>
   );
 };

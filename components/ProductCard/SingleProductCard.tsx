@@ -30,7 +30,7 @@ interface ProductImageProps {
   productName: string;
 }
 const ProductImage: React.FC<ProductImageProps> = ({ productImage, productName }) => (
-  <div className="absolute left-1/2 top-[16px] sm:top-[38px] -translate-x-1/2 w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] flex items-center justify-center">
+  <div className="absolute left-1/2 top-[10px] sm:top-[38px] -translate-x-1/2 w-[180px] h-[180px] sm:w-[240px] sm:h-[240px] flex items-center justify-center">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src={productImage}
@@ -124,7 +124,7 @@ export const SingleProductCard: React.FC<SingleProductCardProps> = ({
 }) => {
   return (
     <div
-      className="relative w-[160px] h-[240px] sm:w-full sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
+      className="relative w-[160px] h-[220px] sm:w-full sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
       style={{
         background: "linear-gradient(180deg, #CEF6F8 0%, #F0F1F1 100%)",
         minWidth: 0,

@@ -116,7 +116,7 @@ export const ProductQuantityImageSection: React.FC<ProductQuantityImageSectionPr
   onSelect,
 }) => {
   return (
-    <div className="w-full flex flex-row items-center justify-between gap-2 sm:gap-6 mt-2 mb-2">
+    <div className="w-full flex flex-row items-center justify-between gap-1.5 sm:gap-6 mt-2 mb-2">
       {options.map((opt, idx) => (
         <ProductQuantityImageOptionCard
           key={opt.label}

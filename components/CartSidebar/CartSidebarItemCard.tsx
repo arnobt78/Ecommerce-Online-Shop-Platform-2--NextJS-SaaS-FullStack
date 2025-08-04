@@ -12,7 +12,7 @@ interface CartSidebarItemProps {
 
 export default function CartSidebarItem({ item, updateQuantity, removeFromCart }: CartSidebarItemProps) {
   // Debug: log the item object to see what is actually in the cart
-  // console.log('CartSidebarItemCard item:', item);
+  console.log('CartSidebarItemCard item:', item);
   return (
     <div className="flex items-stretch bg-transparent p-4 hover:bg-gray-50 transition-colors duration-300">
 

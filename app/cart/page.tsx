@@ -299,9 +299,12 @@ export default function CartPage() {
                   <span className="text-2xl font-semibold text-gray-900">€ {getTotal().toFixed(2)}</span>
                 </div>
               </div>
-              <button className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-[#4F46E5] shadow-sm rounded-md relative transition-all duration-300 hover:bg-[#4338ca] active:bg-[#4338ca]/10 mx-auto mt-4 text-white font-semibold text-base">
-                <Lock className="w-5 h-5 mr-2" /> Secure Checkout
-              </button>
+
+              <Link href="/checkout" passHref legacyBehavior>
+                <a className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-[#4F46E5] shadow-sm rounded-md relative transition-all duration-300 hover:bg-[#4338ca] active:bg-[#4338ca]/10 mx-auto mt-4 text-white font-semibold text-base">
+                  <Lock className="w-5 h-5 mr-2" /> Secure Checkout
+                </a>
+              </Link>
 
 
               {/* delivery feature section */}

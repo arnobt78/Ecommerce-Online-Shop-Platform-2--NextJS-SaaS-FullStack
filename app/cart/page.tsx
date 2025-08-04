@@ -306,24 +306,24 @@ export default function CartPage() {
 
               {/* delivery feature section */}
               <div className="my-8">
-                <div className="flex flex-col items-stretch bg-[#3AF0F7]/10 rounded-lg px-4 py-6 sm:flex-row sm:items-center sm:justify-between border border-green-100">
+                <div className="flex items-stretch bg-[#3AF0F7]/10 rounded-lg px-4 py-6 flex-row items-center sm:justify-between border border-green-100">
                   <div className="flex items-center space-x-2 sm:space-x-4">
                     <Clock className="w-6 h-6 text-gray-700" />
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-500 font-medium">Orders Placed</span>
-                      <span className="text-base font-semibold text-gray-700">Today</span>
+                      <span className="text-sm sm:text-base font-semibold text-gray-700">Today</span>
                     </div>
                   </div>
-                  <span className="hidden sm:block mx-2">
+                  <span className="flex items-center mr-4 sm:mr-0">
                     <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
                       <path d="M3,12H21m-3,3,3-3L18,9" stroke="#000000" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
                     </svg>
                   </span>
-                  <div className="flex items-center space-x-2 sm:space-x-4 mt-4 sm:mt-0">
+                  <div className="flex items-center space-x-2 sm:space-x-4">
                     <Package className="w-6 h-6 text-gray-700" />
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-500 font-medium">Delivered</span>
-                      <span className="text-base font-semibold text-gray-700">2 days from now</span>
+                      <span className="text-sm sm:text-base font-semibold text-gray-700">2 days from now</span>
                     </div>
                   </div>
                 </div>
@@ -348,14 +348,14 @@ export default function CartPage() {
                 </div> */}
 
               {/* Promo Code section */}
-              <div className="w-full rounded-lg shadow-xl px-4 py-6 bg-[#3AF0F7]/10 backdrop-blur-sm border border-gray-200/50">
-                <div className="flex items-center space-x-2 mb-2">
-                  <div className="w-10 h-10 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] rounded-full flex items-center justify-center">
+              <div className="w-full px-2 sm:px-0 py-0">
+                <div className="flex items-center space-x-2">
+                  {/* <div className="w-10 h-10 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] rounded-full flex items-center justify-center">
                   <Tag className="w-5 h-5 text-gray-900" />
-                </div>
+                </div> */}
                 <h3 className="text-lg font-semibold text-gray-900">Promo Code</h3>
               </div>
-              <div className="flex space-x-2 sm:space-x-2 mt-3">
+              <div className="flex space-x-2 sm:space-x-2 mt-2">
                 <input
                   placeholder="Enter promo code"
                   value={promoCode}
@@ -364,7 +364,7 @@ export default function CartPage() {
                 />
                 <button
                   onClick={applyPromoCode}
-                  className="bg-[#3AF0F7] hover:bg-[#2de0e7] text-gray-900 text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-[#4338ca]/10"
+                  className="bg-gray-300 hover:bg-[#2de0e7]/50 text-gray-900 text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-[#4338ca]/10"
                 >
                   Apply
                 </button>
@@ -379,11 +379,14 @@ export default function CartPage() {
                   </p>
                 </div>
               )}
-              <p className="text-xs text-gray-600 mt-3 flex items-center">
+              {/* <p className="text-xs text-gray-600 mt-3 flex items-center">
                 <span className="w-2 h-2 bg-[#3AF0F7] rounded-full mr-2"></span>
                 Try "SAVE10" for 10% off your order
-              </p>
+              </p> */}
             </div>
+
+            <div className="block sm:hidden border-t border-gray-200 mt-8" />
+              <div></div>
 
               </div>
             </div>

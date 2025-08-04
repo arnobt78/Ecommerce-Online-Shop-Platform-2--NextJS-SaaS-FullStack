@@ -20,15 +20,15 @@ const CartPageComponents: React.FC = () => {
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
   // Cart logic helpers
-  const updateQuantity = (id: number, newQuantity: number) => {
+  const updateQuantity = (slug: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      setCartItems((prev: any) => prev.filter((item: any) => item.id !== id));
+      setCartItems((prev: any) => prev.filter((item: any) => item.slug !== slug));
     } else {
-      setCartItems((prev: any) => prev.map((item: any) => (item.id === id ? { ...item, quantity: newQuantity } : item)));
+      setCartItems((prev: any) => prev.map((item: any) => (item.slug === slug ? { ...item, quantity: newQuantity } : item)));
     }
   };
-  const removeFromCart = (id: number) => {
-    setCartItems((prev: any) => prev.filter((item: any) => item.id !== id));
+  const removeFromCart = (slug: string) => {
+    setCartItems((prev: any) => prev.filter((item: any) => item.slug !== slug));
   };
   const applyPromoCode = () => {
     if (promoCode.toLowerCase() === "save10") {
@@ -36,7 +36,17 @@ const CartPageComponents: React.FC = () => {
       setPromoCode("");
     }
   };
-  const getSubtotal = () => cartItems.reduce((total: number, item: any) => total + item.price * item.quantity, 0);
+  // Helper to parse price string to number
+  function parsePrice(price: string | undefined) {
+    if (!price) return 0;
+    const cleaned = price.replace(/[^0-9,.-]+/g, "").replace(",", ".");
+    const num = parseFloat(cleaned);
+    return isNaN(num) ? 0 : num;
+  }
+  const getSubtotal = () => cartItems.reduce((total: number, item: any) => {
+    const price = parsePrice(item.salePrice ?? item.originalPrice);
+    return total + price * item.quantity;
+  }, 0);
   const getDiscount = () => (appliedPromo === "SAVE10" ? getSubtotal() * 0.1 : 0);
   const getShipping = () => (getSubtotal() > 100 ? 0 : 5);
   const getTax = () => getSubtotal() * 0.2;
@@ -47,20 +57,20 @@ const CartPageComponents: React.FC = () => {
   return (
     <div className="space-y-8">
       {cartItems.map((item: any) => (
-        <div key={item.id} className="group">
+        <div key={item.slug} className="group">
           <div className="flex items-start space-x-6">
             {/* Product Image */}
             <div className="relative">
               <div className="w-24 h-24 bg-transparent rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 group-hover:shadow-xl transition-all duration-300 overflow-hidden">
-                {typeof item.image === 'string' && item.image.startsWith('/') ? (
+                {typeof item.productImage === 'string' && item.productImage.startsWith('/') ? (
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.productImage}
+                    alt={item.productName}
                     className="object-contain w-full h-full"
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
                   />
                 ) : (
-                  <div className="text-3xl">{item.image}</div>
+                  <div className="text-3xl">{item.productImage}</div>
                 )}
               </div>
             </div>
@@ -70,7 +80,7 @@ const CartPageComponents: React.FC = () => {
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
                     <h3 className="text-xl font-semibold text-gray-900 group-hover:text-[#3AF0F7] transition-colors duration-200">
-                      {item.name}
+                      {item.productName}
                     </h3>
                     <Button
                       variant="ghost"
@@ -84,13 +94,18 @@ const CartPageComponents: React.FC = () => {
                     <span className="text-sm font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
                       {item.brand}
                     </span>
+                    {item.stockStatus && (
+                      <span className="text-xs font-medium text-white px-2 py-1 rounded-full" style={{ background: item.stockStatus === 'in_stock' ? '#15FF00' : item.stockStatus === 'low_stock' ? '#FFD600' : item.stockStatus === 'last_3' ? '#FFD600' : '#FF3B30' }}>
+                        {item.stockStatus.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="text-gray-400 hover:text-red-500"
-                  onClick={() => removeFromCart(item.id)}
+                  onClick={() => removeFromCart(item.slug)}
                 >
                   <Trash2 className="w-5 h-5" />
                 </Button>
@@ -101,7 +116,7 @@ const CartPageComponents: React.FC = () => {
                     variant="ghost"
                     size="icon"
                     className="text-gray-400 hover:text-black"
-                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    onClick={() => updateQuantity(item.slug, item.quantity - 1)}
                     disabled={item.quantity <= 1}
                   >
                     <Minus className="w-4 h-4" />
@@ -113,13 +128,16 @@ const CartPageComponents: React.FC = () => {
                     variant="ghost"
                     size="icon"
                     className="text-gray-400 hover:text-black"
-                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    onClick={() => updateQuantity(item.slug, item.quantity + 1)}
                   >
                     <Plus className="w-4 h-4" />
                   </Button>
                 </div>
                 <span className="text-lg font-semibold text-gray-900">
-                  €{(item.price * item.quantity).toFixed(2)}
+                  €{(() => {
+                    const price = parsePrice(item.salePrice ?? item.originalPrice);
+                    return (price * item.quantity).toFixed(2);
+                  })()}
                 </span>
               </div>
             </div>

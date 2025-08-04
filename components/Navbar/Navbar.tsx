@@ -81,33 +81,21 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
     return 0;
   }
 
-  // Helper to get a unique id for a product (fallback to name+brand if missing)
-  function getProductId(product: any) {
-    if (typeof product.id === 'number' || typeof product.id === 'string') return product.id;
-    // fallback: hash name+brand+image
-    return `${product.name || product.productName}_${product.brand}_${product.image || product.productImage}`;
-  }
-
-  // Add product to cart
+  // Add product to cart using CartItem shape (from data/products.ts)
   const addToCart = (product: any) => {
-    const id = getProductId(product);
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.id === id);
+      const existingItem = prev.find((item) => item.slug === product.slug);
       if (existingItem) {
         return prev.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+          item.slug === product.slug ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
+        // Add full product object plus quantity
         return [
           ...prev,
           {
-            id,
-            name: product.name || product.productName,
-            price: parsePrice(product.salePrice ?? product.price ?? product.originalPrice),
+            ...product,
             quantity: 1,
-            image: product.image || product.productImage,
-            brand: product.brand,
-            slug: product.slug,
           },
         ];
       }

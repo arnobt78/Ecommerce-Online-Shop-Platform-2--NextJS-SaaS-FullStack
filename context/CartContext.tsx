@@ -1,14 +1,12 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-export interface CartItem {
-  id: number;
-  name: string;
-  price: number;
+// Import ProductData to ensure CartItem matches product props
+import type { ProductData } from "@/data/products";
+
+// CartItem extends ProductData and adds quantity. Use slug as unique id.
+export interface CartItem extends ProductData {
   quantity: number;
-  image: string;
-  brand: string;
-  slug: string;
 }
 
 interface CartContextType {
@@ -30,6 +28,7 @@ export function useCart() {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+  
     if (typeof window !== 'undefined') {
       const stored = window.localStorage.getItem('cartItems');
       if (stored) {

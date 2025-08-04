@@ -87,24 +87,18 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
   }
 
   const handleAddToCart = addToCart || ((product: any) => {
-    const id = getProductId(product);
     setCartItems((prev: any[]) => {
-      const existingItem = prev.find((item) => item.id === id);
+      const existingItem = prev.find((item) => item.slug === product.slug);
       if (existingItem) {
         return prev.map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+          item.slug === product.slug ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
         return [
           ...prev,
           {
-            id,
-            name: product.name || product.productName,
-            price: parsePrice(product.salePrice ?? product.price ?? product.originalPrice),
+            ...product,
             quantity: 1,
-            image: product.image || product.productImage,
-            brand: product.brand,
-            slug: product.slug,
           },
         ];
       }

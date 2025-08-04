@@ -12,24 +12,36 @@ export default function CartSidebarLayout() {
   const { cartOpen, setCartOpen, cartItems, setCartItems } = useCart();
   const router = useRouter();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
+  // Use slug as id for cart operations
+  const updateQuantity = (slug: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
+      setCartItems((prev) => prev.filter((item) => item.slug !== slug));
     } else {
-      setCartItems((prev) => prev.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item)));
+      setCartItems((prev) => prev.map((item) => (item.slug === slug ? { ...item, quantity: newQuantity } : item)));
     }
   };
 
-  const removeFromCart = (id: number) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  const removeFromCart = (slug: string) => {
+    setCartItems((prev) => prev.filter((item) => item.slug !== slug));
   };
 
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  // Helper to parse price string to number
+  function parsePrice(price: string | undefined) {
+    if (!price) return 0;
+    const cleaned = price.replace(/[^0-9,.-]+/g, "").replace(",", ".");
+    const num = parseFloat(cleaned);
+    return isNaN(num) ? 0 : num;
+  }
+
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cartItems.reduce((total, item) => {
+      const price = parsePrice(item.salePrice ?? item.originalPrice);
+      return total + price * item.quantity;
+    }, 0);
   };
 
   if (!cartOpen) return null;
@@ -69,7 +81,7 @@ export default function CartSidebarLayout() {
           </div>
 
           {/* Cart Items List */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+          <div className="flex-1 overflow-y-auto p-0 sm:p-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
             {cartItems.length === 0 ? (
               <div className="text-center py-8 md:py-12 animate-fade-in">
                 <div className="w-20 md:w-24 h-20 md:h-24 bg-gradient-to-br from-[#3AF0F7]/20 to-[#8ef7fb]/20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 animate-pulse">
@@ -82,7 +94,7 @@ export default function CartSidebarLayout() {
               <div className="flex flex-col">
                 {cartItems.map((item, index) => (
                   <div
-                    key={item.id}
+                    key={item.slug}
                     style={{ animationDelay: `${index * 100}ms` }}
                     className="animate-slide-in border-b border-gray-200 last:border-b-0"
                   >
@@ -103,7 +115,7 @@ export default function CartSidebarLayout() {
               <div className="flex justify-between items-center px-3 sm:px-4">
                 <span className="text-base sm:text-lg font-semibold text-gray-900">Subtotal:</span>
                 <span className="text-xl sm:text-2xl font-bold text-black">
-                  €{getTotalPrice().toFixed(2)}
+                  € {getTotalPrice().toFixed(2)}
                 </span>
               </div>
               <div className="px-3 sm:px-4 mb-2">

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,10 +32,21 @@ const cardIcons = [
 
 export default function PaymentMethods() {
   const [selected, setSelected] = useState("card");
+  const [isMobile, setIsMobile] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { useShipping: true },
   });
+  // Only run on client
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(typeof window !== "undefined" && window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+  const visibleCount = isMobile ? 2 : 6;
+  const hiddenCount = cardIcons.length - visibleCount;
+  const hiddenIcons = cardIcons.slice(visibleCount);
   const onSubmit = (data: FormData) => {
     alert("Payment submitted: " + JSON.stringify(data));
   };
@@ -51,22 +62,18 @@ export default function PaymentMethods() {
           <label htmlFor="card" className={`${selected === "card" ? "font-semibold" : "font-normal"} flex-1 cursor-pointer`}>Credit Card</label>
           <div className="flex items-center gap-1 relative group">
             {/* Show 2 icons on mobile, 6 on sm+ */}
-            {cardIcons.slice(0,2).map(icon => (
-              <img key={icon.alt} src={icon.src} alt={icon.alt} className="h-8 w-10 object-cover border border-gray-200 rounded sm:hidden" />
-            ))}
-            {cardIcons.slice(0,6).map(icon => (
-              <img key={icon.alt} src={icon.src} alt={icon.alt} className="h-8 w-10 object-cover border border-gray-200 rounded hidden sm:inline-block" />
+            {cardIcons.slice(0, visibleCount).map(icon => (
+              <img key={icon.alt} src={icon.src} alt={icon.alt} className={`h-8 w-10 object-cover border border-gray-200 rounded${isMobile ? '' : ' hidden sm:inline-block'}`} />
             ))}
             {/* Dynamic +N badge and hover tooltip */}
-            {cardIcons.length > 2 && (
+            {hiddenCount > 0 && (
               <div className="ml-1 relative">
                 <span className="text-xs bg-gray-200 px-2 py-0.5 rounded cursor-pointer group-hover:bg-gray-300 transition-colors">
-                  +{(window.innerWidth < 640 ? cardIcons.length - 2 : cardIcons.length - 6)}
+                  +{hiddenCount}
                 </span>
                 <div className="absolute -left-3 -translate-x-1/2 top-6 z-20 hidden group-hover:flex flex-col items-center">
                   <div className="bg-gray-700 text-white rounded-lg shadow-lg p-2 grid grid-cols-3 gap-2 min-w-[120px]">
-                    {/* Show rest of icons in tooltip: after 2 on mobile, after 6 on sm+ */}
-                    {cardIcons.slice(window.innerWidth < 640 ? 2 : 6).map(icon => (
+                    {hiddenIcons.map(icon => (
                       <img key={icon.alt} src={icon.src} alt={icon.alt} className="h-8 w-10 object-cover bg-white rounded p-1" />
                     ))}
                   </div>

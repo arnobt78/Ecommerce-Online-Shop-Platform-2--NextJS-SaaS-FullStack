@@ -52,7 +52,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Right: Cart Summary */}
-        <div className="w-full bg-gray-50 rounded-xl border border-gray-200 p-6 sticky top-0 h-screen">
+        <div className="w-full bg-gray-50 rounded-xl border border-gray-200 p-6 sticky self-start top-8 max-h-[90vh] overflow-auto">
           <h2 className="text-lg font-bold mb-4">Order Summary</h2>
           <div className="divide-y divide-gray-200">
             {cartItems.map((item) => (

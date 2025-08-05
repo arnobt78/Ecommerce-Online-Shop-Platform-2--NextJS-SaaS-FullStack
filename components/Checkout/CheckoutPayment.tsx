@@ -1,5 +1,7 @@
-// CheckoutPayment component: placeholder for payment gateway buttons
+
 "use client";
+import PaymentMethods from "@/components/Checkout/PaymentMethods";
+// CheckoutPayment component: placeholder for payment gateway buttons
 
 export default function CheckoutPayment() {
   return (
@@ -13,7 +15,8 @@ export default function CheckoutPayment() {
         <span className="mx-4 text-gray-400 font-bold">OR</span>
         <div className="flex-1 h-px bg-gray-200" />
       </div>
-      {/* Placeholder for payment gateway integration */}
+      {/* Payment methods section */}
+      <PaymentMethods />
     </div>
   );
 }

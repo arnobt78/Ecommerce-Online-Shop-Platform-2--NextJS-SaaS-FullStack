@@ -6,12 +6,8 @@ import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const router = useRouter();
-  // Clear demo authentication data on page load
-  useEffect(() => {
-    localStorage.removeItem("demo_authenticated");
-    localStorage.removeItem("demo_email");
-    localStorage.removeItem("demo_otp");
-  }, []);
+  // Clear demo authentication data on page load (no longer needed)
+  useEffect(() => {}, []);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [step, setStep] = useState<"email" | "otp">("email");
@@ -20,10 +16,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Generate a random 6-digit OTP
-  function generateOtp() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-  }
+  // No longer need to generate OTP on frontend
 
   // Start timer for resend
   function startTimer() {
@@ -46,46 +39,65 @@ export default function LoginPage() {
     };
   }, []);
 
-  // Handle Send code
-  function handleSendCode(e: React.FormEvent) {
+  // Handle Send code (API call)
+  async function handleSendCode(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address.");
       return;
     }
-    const newOtp = generateOtp();
-    setOtp(newOtp);
-    localStorage.setItem("demo_otp", newOtp);
-    localStorage.setItem("demo_email", email);
-    localStorage.setItem("demo_authenticated", "false");
-    setStep("otp");
-    setCode("");
-    startTimer();
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to send OTP");
+      setStep("otp");
+      setCode("");
+      startTimer();
+      setOtp(data.otp || ""); // For demo, show OTP if returned
+    } catch (err: any) {
+      setError(err.message || "Failed to send OTP");
+    }
   }
 
-  // Handle Resend code
-  function handleResendCode() {
-    const newOtp = generateOtp();
-    setOtp(newOtp);
-    localStorage.setItem("demo_otp", newOtp);
-    localStorage.setItem("demo_authenticated", "false");
-    startTimer();
+  // Handle Resend code (API call)
+  async function handleResendCode() {
     setError("");
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to resend OTP");
+      startTimer();
+      setOtp(data.otp || ""); // For demo, show OTP if returned
+    } catch (err: any) {
+      setError(err.message || "Failed to resend OTP");
+    }
   }
 
-  // Handle OTP login
-  function handleLogin(e: React.FormEvent) {
+  // Handle OTP login (API call)
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    const storedOtp = localStorage.getItem("demo_otp");
-    if (code === storedOtp) {
-      localStorage.setItem("demo_authenticated", "true");
-      setError("");
-      // Redirect to dashboard
+    try {
+      const res = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp: code }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Invalid code. Please try again.");
+      // Authenticated, redirect to dashboard
       router.push("/dashboard");
-    } else {
-      setError("Invalid code. Please try again.");
+    } catch (err: any) {
+      setError(err.message || "Invalid code. Please try again.");
     }
   }
 
@@ -110,6 +122,7 @@ export default function LoginPage() {
               onChange={e => setEmail(e.target.value)}
               className="border border-[#E0E0E0] rounded-lg px-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               required
+              disabled={timer > 0}
             />
             <button
               type="submit"
@@ -122,8 +135,8 @@ export default function LoginPage() {
         ) : (
           <form className="flex flex-col gap-4 w-full max-w-md mt-6 items-center" onSubmit={handleLogin}>
             <div className="w-full mb-2 text-sm text-gray-500 text-center">
-  Enter the OTP code, sent to <span className="font-semibold">{email}</span>
-</div>
+              Enter the OTP code, sent to <span className="font-semibold">{email}</span>
+            </div>
             <div className="relative w-full">
               <input
                 type="text"
@@ -153,8 +166,8 @@ export default function LoginPage() {
             >
               Log in
             </button>
-            {/* For demo, show the OTP code */}
-            <div className="text-xs text-gray-400 mt-2">Demo OTP: <span className="font-mono">{otp}</span></div>
+            {/* For demo, show the OTP code if available */}
+            {otp && <div className="text-xs text-gray-400 mt-2">Demo OTP: <span className="font-mono">{otp}</span></div>}
           </form>
         )}
       </div>

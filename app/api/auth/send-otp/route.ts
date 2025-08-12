@@ -1,4 +1,3 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 import nodemailer from 'nodemailer';
 
@@ -8,14 +7,11 @@ function generateOtp() {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { email } = req.body;
+export async function POST(req: Request) {
+  const body = await req.json();
+  const { email } = body;
   if (!email || !email.includes('@')) {
-    return res.status(400).json({ error: 'Invalid email address' });
+    return new Response(JSON.stringify({ error: 'Invalid email address' }), { status: 400 });
   }
 
   // Find or create user
@@ -45,5 +41,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     text: `Your OTP code is: ${otp}`,
   });
 
-  return res.status(200).json({ success: true });
+  return new Response(JSON.stringify({ success: true }), { status: 200 });
 }

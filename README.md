@@ -13,7 +13,7 @@
 
 ---
 
-A modern, modular, and production-ready e-commerce web application built with Next.js 15, React, TypeScript, Tailwind CSS, and Radix UI. Snuzz provides a beautiful, responsive shopping experience with real-world cart, checkout, and product detail flows.
+A modern, modular, and production-ready e-commerce web application built with Next.js 15, React, TypeScript, Tailwind CSS, and Radix UI. Snuzz provides a beautiful, responsive shopping experience with real-world cart, checkout, and product detail flows deployed on Vercel, PostgreSQL, and Coolify.
 
 - **Live-Demo:** [https://snuzz-pro.vercel.app/](https://snuzz-pro.vercel.app/)
 

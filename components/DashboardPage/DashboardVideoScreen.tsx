@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
+import IframeComponent from './IframeComponent';
 
 function VideoStatusBar({
   progress = 0,
@@ -6,16 +7,18 @@ function VideoStatusBar({
   onNext,
   hasPrev,
   hasNext,
+  videoTitle,
 }: {
   progress?: number;
   onPrev: () => void;
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  videoTitle: string;
 }) {
   return (
     <>
-      {/* Desktop: normal status bar */}
+      {/* Desktop: navigation only, no status bar */}
       <div className="hidden sm:flex w-full items-center justify-between mt-8 rounded-2xl">
         {/* Prev Button */}
         <div className="flex items-center">
@@ -28,16 +31,9 @@ function VideoStatusBar({
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
         </div>
-        {/* Status Bar */}
-        <div className="flex-1 mx-4">
-          <div className="relative h-9 flex items-center">
-            <div className="absolute left-0 top-0 w-full h-full rounded-lg border border-[#6DF4F9] bg-[#1C1C1C]/[0.03]" />
-            <div className="absolute left-0 top-0 h-full rounded-lg bg-[#6DF4F9]" style={{ width: `${Math.max(52, 556 * progress)}px`, minWidth: 52, maxWidth: 556 }} />
-            <div className="relative flex items-center justify-between h-full px-4">
-              <span className="text-xs font-medium text-gray-600">Watched: </span>
-              <span className="text-xs text-gray-500"> {Math.round(progress * 100)}%</span>
-            </div>
-          </div>
+        {/* Video Title */}
+        <div className="flex-1 mx-4 text-center text-2xl font-semibold text-gray-900">
+          {videoTitle}
         </div>
         {/* Next Button */}
         <div className="flex items-center">
@@ -51,39 +47,36 @@ function VideoStatusBar({
           </button>
         </div>
       </div>
-      {/* Mobile: fixed bottom status bar */}
+
+      {/* Mobile: fixed bottom bar with navigation and title */}
       <div className="sm:hidden fixed bottom-0 left-0 w-full z-40 flex justify-center items-end pointer-events-none">
-        <div className="w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-lg px-4 pt-4 pb-6 flex flex-col items-center pointer-events-auto">
-          {/* Progress Bar */}
-          <div className="w-full mb-6">
-            <div className="relative h-10 flex items-center">
-              <div className="absolute left-0 top-0 w-full h-full rounded-lg border border-[#6DF4F9] bg-[#1C1C1C]/[0.03]" />
-              <div className="absolute left-0 top-0 h-full rounded-lg bg-[#6DF4F9]" style={{ width: `${Math.max(52, 556 * progress)}px`, minWidth: 52, maxWidth: '100%' }} />
-              <div className="relative flex items-center justify-between h-full px-4">
-                <span className="text-xs font-medium text-gray-600">Watched: </span>
-                <span className="text-xs text-gray-500"> {Math.round(progress * 100)}%</span>
-              </div>
+        <div className="w-full max-w-md mx-auto bg-white rounded-t-2xl shadow-lg px-2 pt-2 pb-4 flex flex-col items-center pointer-events-auto">
+          <div className="w-full flex flex-row items-center justify-between gap-2 mb-2">
+            {/* Prev Button */}
+            <button
+              className={`flex items-center justify-center border border-[#6DF4F9] rounded-xl py-2 px-3 font-medium text-gray-900 transition-colors duration-300 text-sm ${!hasPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
+              onClick={hasPrev ? onPrev : undefined}
+              disabled={!hasPrev}
+              style={{ minWidth: 60 }}
+            >
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" className="items-center"><path d="M15 18l-6-6 6-6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span className="ml-1">Prev</span>
+            </button>
+            {/* Video Title */}
+            <div className="flex-1 mx-2 text-center text-base font-semibold text-gray-900 truncate">
+              {videoTitle}
             </div>
+            {/* Next Button */}
+            <button
+              className={`flex items-center justify-center border border-[#6DF4F9] rounded-xl py-2 px-3 font-medium text-gray-900 transition-colors duration-300 text-sm ${!hasNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
+              onClick={hasNext ? onNext : undefined}
+              disabled={!hasNext}
+              style={{ minWidth: 60 }}
+            >
+              <span className="mr-1">Next</span>
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" className="items-center"><path d="M9 6l6 6-6 6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
           </div>
-      {/* Navigation Buttons - icon and text in one row */}
-      <div className="w-full flex justify-between gap-4">
-        <button
-          className={`w-1/2 flex flex-row items-center justify-center border border-[#6DF4F9] rounded-xl py-3 font-medium text-gray-900 transition-colors duration-300 ${!hasPrev ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
-          onClick={hasPrev ? onPrev : undefined}
-          disabled={!hasPrev}
-        >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className="items-center"><path d="M15 18l-6-6 6-6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          <span className="text-base">Prev</span>
-        </button>
-        <button
-          className={`w-1/2 flex flex-row items-center justify-center border border-[#6DF4F9] rounded-xl py-3 font-medium text-gray-900 transition-colors duration-300 ${!hasNext ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#6DF4F9]/15'}`}
-          onClick={hasNext ? onNext : undefined}
-          disabled={!hasNext}
-        >
-          <span className="text-base">Next</span>
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" className="items-center"><path d="M9 6l6 6-6 6" stroke="#02000C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        </button>
-      </div>
         </div>
       </div>
     </>
@@ -99,7 +92,54 @@ export default function DashboardVideoScreen({
   videoList: { title: string; duration: string; src: string }[];
   setSelectedVideo: (video: { title: string; duration: string; src: string }) => void;
 }) {
-  const progress = 0.1; // Example progress
+  // --- Timer-based progress state ---
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [watchedSeconds, setWatchedSeconds] = useState(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Parse duration string (e.g., '9:33') to seconds
+  const totalSeconds = useMemo(() => {
+    if (!video.duration) return 1;
+    const parts = video.duration.split(':').map(Number);
+    if (parts.length === 2) {
+      return parts[0] * 60 + parts[1];
+    } else if (parts.length === 3) {
+      return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+    return Number(video.duration) || 1;
+  }, [video.duration]);
+
+  // Start/stop timer on play state
+  useEffect(() => {
+    if (isPlaying && watchedSeconds < totalSeconds) {
+      timerRef.current = setInterval(() => {
+        setWatchedSeconds((prev) => {
+          if (prev + 1 >= totalSeconds) {
+            setIsPlaying(false);
+            return totalSeconds;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } else if (!isPlaying && timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [isPlaying, totalSeconds, watchedSeconds]);
+
+  // Reset timer when video changes
+  useEffect(() => {
+    setIsPlaying(false);
+    setWatchedSeconds(0);
+  }, [video.src]);
+
+  const progress = Math.min(watchedSeconds / totalSeconds, 1);
   const currentIdx = useMemo(() => videoList.findIndex(v => v.title === video.title), [videoList, video.title]);
   const hasPrev = currentIdx > 0;
   const hasNext = currentIdx < videoList.length - 1;
@@ -114,27 +154,44 @@ export default function DashboardVideoScreen({
     }
   };
   return (
-    <section className="w-full flex flex-col items-center px-2 sm:px-12 py-2 sm:py-8 bg-white sm:rounded-2xl" style={{ minHeight: '40vh' }}>
-      <div className="w-full max-w-md sm:max-w-3xl mx-auto">
-        <div className="w-full rounded-2xl overflow-hidden" style={{ background: '#e5e5e5' }}>
+    <section className="w-full flex flex-col items-center px-1 sm:px-12 py-1 sm:py-8 bg-white sm:rounded-2xl">
+      {/* --- STATIC TEST IFRAME FOR HEYGEN SHARE URL --- */}
+      <div className="w-full max-w-md sm:max-w-3xl mx-auto mb-8 relative">
+        <div className="w-full overflow-hidden bg-transparent">
           <iframe
+            width="100%"
+            height="100%"
             src={video.src}
-            className="w-full h-[220px] sm:h-[500px] border-none rounded-lg"
             title={video.title}
+            frameBorder="0"
+            allow="encrypted-media; fullscreen;"
             allowFullScreen
+            style={{ display: 'block', width: '100%', aspectRatio: '16/9', borderRadius: 12, background: '#000' }}
           />
         </div>
-        <div className="mt-4 sm:mt-6 text-xl sm:text-2xl font-semibold text-gray-900 text-center">{video.title}</div>
-        <div className="mt-2 sm:mt-6">
+      </div>
+      {/* --- END STATIC TEST IFRAME --- */}
+      {/* ...existing code... */}
+
+      <div className="w-full max-w-md sm:max-w-3xl mx-auto">
+        {/* <div className="mt-4 sm:mt-6 text-xl sm:text-2xl font-semibold text-gray-900 text-center">{video.title}</div> */}
+        <div className="mt-0 sm:mt-0">
           <VideoStatusBar
             progress={progress}
             onPrev={handlePrev}
             onNext={handleNext}
             hasPrev={hasPrev}
             hasNext={hasNext}
+            videoTitle={video.title}
           />
         </div>
       </div>
     </section>
   );
+  // Helper to format seconds as mm:ss
+  function formatTime(sec: number) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, '0')}`;
+  }
 }

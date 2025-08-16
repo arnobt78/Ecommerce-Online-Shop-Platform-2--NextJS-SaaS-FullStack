@@ -7,41 +7,22 @@ import DashboardVideoScreen from '../../components/DashboardPage/DashboardVideoS
 import DashboardSettingScreen from '../../components/DashboardPage/DashboardSettingScreen';
 
 const initialVideoList = [
+  // {
+  //   title: 'Proxy Test: HeyGen Embed',
+  //   duration: 'Test',
+  //   src: '/api/heygen-proxy?url=https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
+  // },
   {
     title: 'What is Nicotine',
-    duration: '2:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
+    duration: '9:33',
+    src: 'https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
   },
   {
     title: 'What is Smoking',
-    duration: '42:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
+    duration: '10:08',
+    src: 'https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2',
   },
-  {
-    title: 'What is Green World',
-    duration: '1:10:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
-  },
-  {
-    title: 'What is Metal Music',
-    duration: '3:02:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
-  },
-  {
-    title: 'What is Black Metal',
-    duration: '22:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
-  },
-  {
-    title: 'What is Death Metal',
-    duration: '2:22:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
-  },
-  {
-    title: 'What is Blackened Death Metal',
-    duration: '1.02:30',
-    src: 'https://app.heygen.com/guest/videos/29aabbe5b45f47bea7c4b80edaae1198',
-  },
+  // Add more videos as needed, using the correct HeyGen embed URLs
 ];
 
 

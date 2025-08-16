@@ -30,6 +30,9 @@ export default function LoginAuthOTP({
   router,
 }: Props) {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [sending, setSending] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [loggingIn, setLoggingIn] = useState(false);
 
   // Handle Send code
   async function handleSendCode(e: React.FormEvent) {
@@ -39,6 +42,7 @@ export default function LoginAuthOTP({
       setError("Please enter a valid email address.");
       return;
     }
+    setSending(true);
     try {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
@@ -55,11 +59,14 @@ export default function LoginAuthOTP({
       }
     } catch (err) {
       setError("Failed to send OTP.");
+    } finally {
+      setSending(false);
     }
   }
 
   // Handle Resend code
   async function handleResendCode() {
+    setResending(true);
     try {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
@@ -75,6 +82,8 @@ export default function LoginAuthOTP({
       }
     } catch (err) {
       setError("Failed to resend OTP.");
+    } finally {
+      setResending(false);
     }
   }
 
@@ -82,6 +91,7 @@ export default function LoginAuthOTP({
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+    setLoggingIn(true);
     try {
       const res = await fetch("/api/auth/verify-otp", {
         method: "POST",
@@ -97,6 +107,8 @@ export default function LoginAuthOTP({
       }
     } catch (err) {
       setError("Invalid code. Please try again.");
+    } finally {
+      setLoggingIn(false);
     }
   }
 
@@ -114,10 +126,14 @@ export default function LoginAuthOTP({
           />
           <button
             type="submit"
-            className="bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors"
-            disabled={timer > 0}
+            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${sending ? 'opacity-60 cursor-not-allowed' : ''}`}
+            disabled={timer > 0 || sending}
           >
-            {timer > 0 ? `Send code (${timer}s)` : "Send code"}
+            {sending
+              ? "Sending code..."
+              : timer > 0
+                ? `Send code (${timer}s)`
+                : "Send code"}
           </button>
         </form>
       ) : (
@@ -140,19 +156,21 @@ export default function LoginAuthOTP({
               ) : (
                 <button
                   type="button"
-                  className="text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded"
-                  onClick={handleResendCode}
+                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${resending ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  onClick={resending ? undefined : handleResendCode}
+                  disabled={resending}
                 >
-                  Resend code
+                  {resending ? 'Resending code...' : 'Resend code'}
                 </button>
               )}
             </div>
           </div>
           <button
             type="submit"
-            className="bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors"
+            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${loggingIn ? 'opacity-60 cursor-not-allowed' : ''}`}
+            disabled={loggingIn}
           >
-            Log in
+            {loggingIn ? 'Logging in...' : 'Log in'}
           </button>
         </form>
       )}

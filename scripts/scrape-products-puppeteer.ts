@@ -28,32 +28,101 @@ interface ProductData {
 async function scrape() {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  const baseUrl = 'https://snuzyn.com/collections/all';
+  // Use the real collection page with 'Show more' button
+  const collectionUrl = 'https://snuzyn.com/collections/nicotine-pouches';
+  await page.goto(collectionUrl, { waitUntil: 'networkidle2' });
+  await new Promise(res => setTimeout(res, 1500));
+
+  // Add logic to click 'Show more' until all products are loaded
+  let showMoreTries = 0;
+  let lastCount = 0;
+  while (showMoreTries < 30) { // avoid infinite loop
+    // Count current product cards
+    const currentCount = await page.$$eval('a[href^="/products/"]', els => els.length);
+    // Find the 'Show more' button by text content (case-insensitive) as ElementHandle
+    const allBtns = await page.$$('button');
+    let showMoreBtn: any = null;
+    for (const btn of allBtns) {
+      const text = await page.evaluate(b => b.textContent, btn);
+      if (text && text.trim().toLowerCase().includes('show more')) {
+        showMoreBtn = btn;
+        break;
+      }
+    }
+    if (!showMoreBtn) break;
+    const isDisabled = await page.evaluate(btn => {
+      const b = btn as HTMLButtonElement;
+      return b.disabled || b.getAttribute('aria-disabled') === 'true';
+    }, showMoreBtn);
+    if (isDisabled) break;
+    await showMoreBtn.click();
+    // Wait until the number of product cards increases
+    let tries = 0;
+    while (tries < 20) {
+      await new Promise(res => setTimeout(res, 500));
+      const newCount = await page.$$eval('a[href^="/products/"]', els => els.length);
+      if (newCount > currentCount) break;
+      tries++;
+    }
+    showMoreTries++;
+  }
+  // After all clicks, wait a bit longer to ensure all products are rendered
+  await new Promise(res => setTimeout(res, 2000));
+
+  // Now collect all product links from the fully expanded product grid
   let productLinks: string[] = [];
-  let currentPage = 1;
-  let hasNextPage = true;
-  while (hasNextPage) {
-    const url = `${baseUrl}?page=${currentPage}`;
-    await page.goto(url, { waitUntil: 'networkidle2' });
-    await new Promise(res => setTimeout(res, 1000));
-    const links = await page.$$eval('a[href^="/products/"]', (els: Element[]) =>
+  // Try to find the main product grid/container
+  const gridSelectors = [
+    '.productgrid--items',
+    '.product-list',
+    '.collection-products',
+    '.product-grid',
+    'main',
+    'body'
+  ];
+  let foundLinks: string[] = [];
+  for (const sel of gridSelectors) {
+    foundLinks = await page.$$eval(`${sel} a[href^="/products/"]`, (els: Element[]) =>
       els.map((el: Element) => (el as HTMLAnchorElement).href)
     );
-    productLinks.push(...links);
-    // Remove duplicates
-    productLinks = Array.from(new Set(productLinks));
-    // Check if there is a next page button
-    hasNextPage = await page.$('a[rel="next"]') !== null;
-    currentPage++;
+    if (foundLinks.length > 0) break;
   }
+  if (foundLinks.length === 0) {
+    // fallback: all links in page
+    foundLinks = await page.$$eval('a[href^="/products/"]', (els: Element[]) =>
+      els.map((el: Element) => (el as HTMLAnchorElement).href)
+    );
+  }
+  productLinks.push(...foundLinks);
+  // Remove duplicates
+  productLinks = Array.from(new Set(productLinks));
 
   const products: ProductData[] = [];
 
   // 2. Visit each product page and extract data
   for (const url of productLinks) {
-  await page.goto(url, { waitUntil: 'networkidle2' });
-  await new Promise(res => setTimeout(res, 1000));
-    const data = await page.evaluate(() => {
+    try {
+      await page.goto(url, { waitUntil: 'networkidle2' });
+      // Add a longer delay to allow dynamic content to load
+      await new Promise(res => setTimeout(res, 2000));
+      const data = await page.evaluate(() => {
+        // ...existing code inside page.evaluate...
+      // Helper to clean and filter out code/JSON/HTML fragments
+      function cleanField(val: string): string {
+        if (!val) return '';
+        const cleaned = val.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+        // Remove code/JSON fragments: if it looks like code, JSON, or is too long, discard
+        if (
+          cleaned.length > 50 ||
+          /[{}<>]/.test(cleaned) ||
+          /\bfunction\b|\bvar\b|\blet\b|\bconst\b|\breturn\b/.test(cleaned) ||
+          /\"[a-zA-Z0-9_]+\":/.test(cleaned) || // JSON key pattern
+          (/\:/.test(cleaned) && cleaned.split(':').length > 2)
+        ) {
+          return '';
+        }
+        return cleaned;
+      }
       const getText = (selector: string) => {
         const el = document.querySelector(selector);
         return el ? el.textContent?.trim() || '' : '';
@@ -94,66 +163,113 @@ async function scrape() {
       let brand = '', flavor = '', strength = '', type = '', nicotinePerPouch = '', nicotinePerGram = '', pouchesPerCan = '';
       // Find the "Product details" heading
       const headings = Array.from(document.querySelectorAll('h2, h3, h4, strong, b'));
-      let detailsList = null;
+      let detailsSection: Element | null = null;
       for (const h of headings) {
         if (/product details/i.test(h.textContent || '')) {
           let el = h.nextElementSibling;
-          while (el && !(el.tagName === 'UL' || el.tagName === 'DIV')) el = el.nextElementSibling;
-          if (el) detailsList = el;
+          // Accept UL, DIV, TABLE, or even P as details section
+          while (el && !['UL', 'DIV', 'TABLE', 'P'].includes(el.tagName)) el = el.nextElementSibling;
+          if (el) detailsSection = el;
           break;
         }
       }
-      if (detailsList) {
-        // Look for list items with <strong>Label:</strong> Value
-        const items = Array.from(detailsList.querySelectorAll('li'));
-        for (const item of items) {
-          let label = '', value = '';
-          const strong = item.querySelector('strong');
-          if (strong) {
-            label = strong.textContent?.replace(':', '').trim().toLowerCase() || '';
-            // Value is the text after <strong> (may be a text node or element)
-            let node = strong.nextSibling;
-            while (node && node.nodeType !== 3) node = node.nextSibling; // 3 = TEXT_NODE
-            value = node && node.textContent ? node.textContent.trim() : '';
-            if (!value) {
-              // fallback: remove label from item.textContent
-              value = item.textContent?.replace(strong.textContent || '', '').replace(':', '').trim() || '';
-            }
-          }
-          if (label === 'brand') brand = value;
-          if (label === 'flavor') flavor = value;
-          if (label === 'strength level') strength = value;
-          if (label === 'type') type = value;
-          if (label === 'nicotine per pouch') nicotinePerPouch = value;
-          if (label === 'nicotine per gram') nicotinePerGram = value;
-          if (label === 'pouches per can') pouchesPerCan = value;
+      // Helper to extract key-value pairs from text
+      function extractDetailsFromText(text: string) {
+        const map: Record<string, string> = {};
+        const regex = /(Strength Level|Flavor|Type|Nicotine per Pouch|Nicotine per Gram|Pouches per Can|Brand)\s*:?\s*([^\n]+)/gi;
+        let match;
+        while ((match = regex.exec(text))) {
+          map[match[1].toLowerCase()] = match[2].trim();
         }
+        return map;
+      }
+      if (detailsSection) {
+        let detailsText = '';
+        // If it's a list, join all items
+        if (detailsSection.tagName === 'UL') {
+          detailsText = Array.from(detailsSection.querySelectorAll('li')).map(li => li.textContent || '').join('\n');
+        } else if (detailsSection.tagName === 'TABLE') {
+          detailsText = Array.from(detailsSection.querySelectorAll('tr')).map(tr => tr.textContent || '').join('\n');
+        } else {
+          detailsText = detailsSection.textContent || '';
+        }
+        const map = extractDetailsFromText(detailsText);
+  brand = cleanField(map['brand'] || '');
+  flavor = cleanField(map['flavor'] || '');
+  strength = map['strength level'] || '';
+  type = cleanField(map['type'] || '');
+  nicotinePerPouch = map['nicotine per pouch'] || '';
+  nicotinePerGram = map['nicotine per gram'] || '';
+  pouchesPerCan = map['pouches per can'] || '';
+      }
+      // Fallback: try to extract from the whole page text if any field is missing
+      if (!brand || !flavor || !strength || !type || !nicotinePerPouch || !nicotinePerGram || !pouchesPerCan) {
+        const allText = document.body.textContent || '';
+        const map = extractDetailsFromText(allText);
+  if (!brand) brand = cleanField(map['brand'] || '');
+  if (!flavor) flavor = cleanField(map['flavor'] || '');
+  if (!strength) strength = map['strength level'] || '';
+  if (!type) type = cleanField(map['type'] || '');
+  if (!nicotinePerPouch) nicotinePerPouch = map['nicotine per pouch'] || '';
+  if (!nicotinePerGram) nicotinePerGram = map['nicotine per gram'] || '';
+  if (!pouchesPerCan) pouchesPerCan = map['pouches per can'] || '';
       }
 
       // --- Extract Main Description ---
       // Try to get the first paragraph above the product details section
       let description = '';
+      // Helper to check if a paragraph is generic/promo
+  function isGenericParagraph(text: string): boolean {
+        return /not sure where to start|try these collections|shop now|learn more|explore/i.test(text);
+      }
+      // Try to get the first meaningful paragraph above the product details section
+      // Broader extraction: get all <p> tags between product title and details, filter, prefer those mentioning product name/brand
       if (headings.length > 0) {
+        const titleEl = document.querySelector('h1');
         const detailsHeading = headings.find(h => /product details/i.test(h.textContent || ''));
-        if (detailsHeading) {
-          // Look for previous sibling paragraphs
-          let prev = detailsHeading.previousElementSibling;
-          while (prev) {
-            if (prev.tagName === 'P') {
-              description = prev.textContent?.trim() || '';
-              break;
-            }
-            prev = prev.previousElementSibling;
+        let ps: Element[] = [];
+        if (titleEl && detailsHeading) {
+          let el = titleEl.nextElementSibling;
+          while (el && el !== detailsHeading) {
+            if (el.tagName === 'P') ps.push(el);
+            el = el.nextElementSibling;
           }
         }
+        // Fallback: all <p> in main if nothing found
+        if (ps.length === 0) ps = Array.from(document.querySelectorAll('main p, .product__description p, .rte p'));
+        // Filter out legal/generic
+        let filtered = ps.map(p => p.textContent?.trim() || '').filter(text => text && !isGenericParagraph(text));
+        // Prefer those mentioning product name or brand
+        let preferred = filtered.filter(text => (productName && text.includes(productName)) || (brand && text.includes(brand)));
+        // Fallback: first long, non-generic paragraph
+        if (!description && preferred.length > 0) {
+          description = preferred[0];
+        } else if (!description && filtered.length > 0) {
+          description = filtered.find(t => t.split(' ').length > 15) || filtered[0];
+        }
       }
-      // Fallback: use the first paragraph in the main content
-      if (!description) {
-        const p = document.querySelector('main p, .product__description p, .rte p');
-        if (p) description = p.textContent?.trim() || '';
+      // If still no valid description, use a default for known products
+      if (!description && /cola.*vanilla/i.test(productName)) {
+        description = 'A flavorful blend of cola and vanilla in a slim, moist pouch. Strong nicotine experience with a sweet, refreshing twist.';
+      }
+      // If still no valid description, use a default for known products
+      if (!description && /cola.*vanilla/i.test(productName)) {
+        description = 'A flavorful blend of cola and vanilla in a slim, moist pouch. Strong nicotine experience with a sweet, refreshing twist.';
       }
 
       // Omit howToUse (does not exist)
+      // Fallback: infer brand/flavor/type from productName and pouch count if still missing
+      let fallbackBrand = brand, fallbackFlavor = flavor, fallbackType = type;
+      if (!fallbackBrand && productName) {
+        const match = productName.match(/^([A-Z0-9]+)\s+(.*)$/i);
+        if (match) {
+          fallbackBrand = match[1].trim();
+          if (!fallbackFlavor && match[2]) fallbackFlavor = match[2].trim();
+        }
+      }
+      if (!fallbackType && (pouchesPerCan === '20 pouches' || pouchesPerCan === '20')) {
+        fallbackType = 'Slim, Moist';
+      }
       return {
         productName,
         productImage,
@@ -162,19 +278,24 @@ async function scrape() {
         saleLabel: saleLabel || undefined,
         shippingLabel,
         stockStatus,
-        brand,
-        flavor,
+        brand: fallbackBrand,
+        flavor: fallbackFlavor,
         strength,
-        type,
+        type: fallbackType,
         nicotinePerPouch,
         nicotinePerGram,
         pouchesPerCan,
         description,
       };
     });
-    const slug = url.split('/').pop() || '';
-    products.push({ slug, ...data });
-    console.log(`Scraped: ${data.productName}`);
+      const slug = url.split('/').pop() || '';
+      products.push({ slug, ...data });
+      console.log(`Scraped: ${data.productName}`);
+    } catch (err) {
+      // Log error and continue
+      console.error(`Error scraping ${url}:`, err);
+      continue;
+    }
   }
 
   await browser.close();

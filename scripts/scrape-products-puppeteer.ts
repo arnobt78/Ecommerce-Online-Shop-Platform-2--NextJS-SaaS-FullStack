@@ -34,19 +34,24 @@ async function scrape() {
   await new Promise(res => setTimeout(res, 1500));
 
   // Add logic to click 'Show more' until all products are loaded
+  // Improved: Click 'Show more' until the button is gone or hidden/disabled
   let showMoreTries = 0;
-  let lastCount = 0;
-  while (showMoreTries < 30) { // avoid infinite loop
-    // Count current product cards
-    const currentCount = await page.$$eval('a[href^="/products/"]', els => els.length);
+  while (showMoreTries < 30) {
     // Find the 'Show more' button by text content (case-insensitive) as ElementHandle
     const allBtns = await page.$$('button');
     let showMoreBtn: any = null;
     for (const btn of allBtns) {
       const text = await page.evaluate(b => b.textContent, btn);
       if (text && text.trim().toLowerCase().includes('show more')) {
-        showMoreBtn = btn;
-        break;
+        // Check if visible
+        const visible = await page.evaluate(b => {
+          const style = window.getComputedStyle(b);
+          return style && style.display !== 'none' && style.visibility !== 'hidden' && b.offsetParent !== null;
+        }, btn);
+        if (visible) {
+          showMoreBtn = btn;
+          break;
+        }
       }
     }
     if (!showMoreBtn) break;
@@ -55,12 +60,14 @@ async function scrape() {
       return b.disabled || b.getAttribute('aria-disabled') === 'true';
     }, showMoreBtn);
     if (isDisabled) break;
+    // Count current product cards (visible only)
+    const currentCount = await page.$$eval('a[href^="/products/"]', els => els.filter(e => e.offsetParent !== null).length);
     await showMoreBtn.click();
-    // Wait until the number of product cards increases
+    // Wait until the number of visible product cards increases
     let tries = 0;
     while (tries < 20) {
       await new Promise(res => setTimeout(res, 500));
-      const newCount = await page.$$eval('a[href^="/products/"]', els => els.length);
+      const newCount = await page.$$eval('a[href^="/products/"]', els => els.filter(e => e.offsetParent !== null).length);
       if (newCount > currentCount) break;
       tries++;
     }
@@ -69,7 +76,7 @@ async function scrape() {
   // After all clicks, wait a bit longer to ensure all products are rendered
   await new Promise(res => setTimeout(res, 2000));
 
-  // Now collect all product links from the fully expanded product grid
+  // Now collect all VISIBLE product links from the fully expanded product grid
   let productLinks: string[] = [];
   // Try to find the main product grid/container
   const gridSelectors = [
@@ -83,14 +90,14 @@ async function scrape() {
   let foundLinks: string[] = [];
   for (const sel of gridSelectors) {
     foundLinks = await page.$$eval(`${sel} a[href^="/products/"]`, (els: Element[]) =>
-      els.map((el: Element) => (el as HTMLAnchorElement).href)
+      els.filter(el => (el as HTMLElement).offsetParent !== null).map((el: Element) => (el as HTMLAnchorElement).href)
     );
     if (foundLinks.length > 0) break;
   }
   if (foundLinks.length === 0) {
-    // fallback: all links in page
+    // fallback: all visible links in page
     foundLinks = await page.$$eval('a[href^="/products/"]', (els: Element[]) =>
-      els.map((el: Element) => (el as HTMLAnchorElement).href)
+      els.filter(el => (el as HTMLElement).offsetParent !== null).map((el: Element) => (el as HTMLAnchorElement).href)
     );
   }
   productLinks.push(...foundLinks);

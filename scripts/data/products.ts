@@ -183,6 +183,22 @@ export const products: ProductData[] = [
     "description": "ZYN Black Cherry Mini offers a smooth and rich black cherry flavor in a discreet mini pouch format. Designed for comfort and discretion, these dry pouches deliver a light nicotine experience with 3 mg of nicotine per pouch, making them ideal for new users or those seeking a milder option. With 20 mini pouches per can, ZYN Black Cherry Mini is perfect for on-the-go enjoyment with a deliciously fruity twist."
   },
   {
+    "slug": "velo-mclaren-sweet-papaya",
+    "productName": "VELO Mclaren Sweet Papaya - Limited Edition",
+    "productImage": "https://snuzyn.com/cdn/shop/files/velo-mclaren-sweet-papaya-limited-edition.png?v=1754492775&width=1200",
+    "originalPrice": "€5,99",
+    "shippingLabel": "Free shipping on 10+ cans",
+    "stockStatus": "in_stock",
+    "brand": "VELO",
+    "flavor": "Sweet Papaya",
+    "strength": "Medium",
+    "type": "Slim",
+    "nicotinePerPouch": "8 mg",
+    "nicotinePerGram": "15.6 mg/g",
+    "pouchesPerCan": "20 pouches",
+    "description": "VELO McLaren Sweet Papaya is a limited-edition nicotine pouch developed in collaboration with McLaren, delivering a tropical punch of sweet papaya paired with a smooth, medium-strength nicotine hit. With 8mg per pouch and a slim, moist format, this pouch offers a balanced experience for users who appreciate bold flavor without overwhelming strength."
+  },
+  {
     "slug": "zyn-cool-mint-mini-strong",
     "productName": "ZYN Cool Mint Mini Strong",
     "productImage": "https://snuzyn.com/cdn/shop/files/zyn-cool-mint-mini-strong-210565.png?v=1754492844&width=1200",
@@ -325,21 +341,5 @@ export const products: ProductData[] = [
     "nicotinePerGram": "14.3 mg/g",
     "pouchesPerCan": "20 pouches",
     "description": "VELO Icy Cherry nicotine pouches offer a delightful fusion of sweet red cherry flavor complemented by a refreshing, icy mint undertone, delivering a crisp and invigorating experience. These slim, all-white pouches are designed for discretion and comfort, fitting seamlessly under the lip without causing teeth discoloration. Each pouch contains 10 mg of nicotine, providing a satisfying sensation suitable for experienced users seeking a bold flavor profile. With 20 pouches per can, VELO Icy Cherry offers a convenient and flavorful alternative to traditional products."
-  },
-  {
-    "slug": "xqs-tropical",
-    "productName": "XQS Tropical",
-    "productImage": "https://snuzyn.com/cdn/shop/files/xqs-tropical-8mg-201264.png?v=1754492826&width=1200",
-    "originalPrice": "€4,99",
-    "shippingLabel": "Free shipping on 10+ cans",
-    "stockStatus": "in_stock",
-    "brand": "XQS",
-    "flavor": "Mango, Passionfruit, Pineapple",
-    "strength": "Medium",
-    "type": "Slim, Moist",
-    "nicotinePerPouch": "8 mg",
-    "nicotinePerGram": "16 mg/g",
-    "pouchesPerCan": "20 pouches",
-    "description": "XQS Tropical nicotine pouches deliver a vibrant blend of exotic fruits, combining the sweetness of mango, the tanginess of passionfruit, and the juiciness of pineapple. These slim, moist pouches are designed for discreet use, fitting comfortably under the lip without staining teeth. Each pouch contains 8 mg of nicotine, offering a medium-strength experience suitable for both new and seasoned users. With 20 pouches per can, XQS Tropical provides a flavorful and satisfying alternative to traditional products."
   }
 ];

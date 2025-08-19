@@ -35,10 +35,14 @@ export async function POST(req: Request) {
   });
 
   await transporter.sendMail({
-    from: process.env.SMTP_USER,
+    from: `Snuzz PRO <${process.env.SMTP_USER}>`,
     to: email,
-    subject: 'Your Snuzz PRO OTP Code',
-    text: `Your OTP code is: ${otp}`,
+    subject: `Your Snuzz PRO OTP Code: ${otp} [${Date.now()}]`,
+    text: `Hello,\n\nYour OTP code for Snuzz PRO is: ${otp}\n\nThis code will expire in 1 minute.\nIf you did not request this, please ignore this email.\n\nThank you,\nSnuzz PRO Team`,
+    html: `<div style=\"font-family:sans-serif;font-size:16px;color:#222\"><p>Hello,</p><p>Your <b>OTP code</b> for <b>Snuzz PRO</b> is:</p><div style=\"font-size:2em;font-weight:bold;letter-spacing:2px;margin:16px 0\">${otp}</div><p>This code will expire in <b>1 minute</b> (<span id=\"otp-timer\">60</span> seconds).</p><p>If you did not request this, please ignore this email.</p><br><p style=\"color:#888\">Thank you,<br>Snuzz PRO Team</p></div>`,
+    headers: {
+      'X-Entity-Ref-ID': `${Date.now()}-${Math.floor(Math.random()*10000)}`
+    }
   });
 
   return new Response(JSON.stringify({ success: true }), { status: 200 });

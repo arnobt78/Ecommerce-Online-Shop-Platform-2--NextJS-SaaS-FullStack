@@ -15,9 +15,9 @@ export default function DashboardVideoListSidebar({ videoList, selectedVideo, on
       </div>
       <div className="w-full flex-1">
         {/* Example: sectioned video list, static for now */}
-        <div className="flex flex-row justify-between w-full mb-2">
-          <span className="font-semibold text-gray-800">Intro</span>
-          <span className="text-xs text-gray-500 mr-2">5 min</span>
+        <div className="flex flex-row justify-between w-full mb-2 items-end">
+          <span className="font-semibold text-gray-800">Courses</span>
+          <span className="text-xs text-gray-500">03:29:40</span>
         </div>
         <div className="w-full">
           {videoList.map((video, idx) => (

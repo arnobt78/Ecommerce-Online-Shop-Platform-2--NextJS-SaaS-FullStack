@@ -6,23 +6,116 @@ import DashboardSettingSidebar from '../../components/DashboardPage/DashboardSet
 import DashboardVideoScreen from '../../components/DashboardPage/DashboardVideoScreen';
 import DashboardSettingScreen from '../../components/DashboardPage/DashboardSettingScreen';
 
+// const initialVideoList = [
+//   // {
+//   //   title: 'Proxy Test: HeyGen Embed',
+//   //   duration: 'Test',
+//   //   src: '/api/heygen-proxy?url=https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
+//   // },
+//   {
+//     title: 'What is Nicotine',
+//     duration: '9:33',
+//     src: 'https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
+//   },
+//   {
+//     title: 'What is Smoking',
+//     duration: '10:08',
+//     src: 'https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2',
+//   },
+//   // Add more videos as needed, using the correct HeyGen embed URLs
+// ];
+
 const initialVideoList = [
-  // {
-  //   title: 'Proxy Test: HeyGen Embed',
-  //   duration: 'Test',
-  //   src: '/api/heygen-proxy?url=https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
-  // },
   {
-    title: 'What is Nicotine',
+    title: 'What is Nicotine?',
     duration: '9:33',
     src: 'https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198',
   },
   {
-    title: 'What is Smoking',
+    title: 'History.',
     duration: '10:08',
     src: 'https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2',
   },
-  // Add more videos as needed, using the correct HeyGen embed URLs
+  {
+    title: 'Effects.',
+    duration: '9:28',
+    src: 'https://app.heygen.com/embeds/fff30d50262f45b583ea569528a07b90',
+  },
+  {
+    title: 'How they work?',
+    duration: '9:36',
+    src: 'https://app.heygen.com/embeds/a31d7f575a7943a292219159e64e678a',
+  },
+  {
+    title: 'Smoking x vaping.',
+    duration: '10:55',
+    src: 'https://app.heygen.com/embeds/4b0edd4ddc46423f8573b85580beb0ff',
+  },
+  {
+    title: 'Pros. and cons.',
+    duration: '11:56',
+    src: 'https://app.heygen.com/embeds/e0b1e65bec434d4ba5e9f21b0d3bd04c',
+  },
+  {
+    title: 'Nicotine salt.',
+    duration: '10:34',
+    src: 'https://app.heygen.com/embeds/44cf86330949487d923dd3955c34a246',
+  },
+  {
+    title: 'Freebase nicotine.',
+    duration: '12:02',
+    src: 'https://app.heygen.com/embeds/1d5d6eed05854fe3aaf8060e77cf0b1b',
+  },
+  {
+    title: 'Strength and delivery.',
+    duration: '11:31',
+    src: 'https://app.heygen.com/embeds/3589199deb5b4222b1a6d703583f2d96',
+  },
+  {
+    title: 'Natural vs synthetic.',
+    duration: '11:28',
+    src: 'https://app.heygen.com/embeds/ac9745473c014745b6c6e312e5bf6693',
+  },
+  {
+    title: 'Manufacturing.',
+    duration: '11:20',
+    src: 'https://app.heygen.com/embeds/cb8fd7f5bb3b47bea3b3356c0d301c00',
+  },
+  {
+    title: 'Quality control.',
+    duration: '12:12',
+    src: 'https://app.heygen.com/embeds/b6239f1321aa49248c5deb09e763de88',
+  },
+  {
+    title: 'How to use responsibly.',
+    duration: '11:17',
+    src: 'https://app.heygen.com/embeds/ae6ca86ffe904d99b221c0262289bcd3',
+  },
+  {
+    title: 'Dosage, strength, frequency.',
+    duration: '13:02',
+    src: 'https://app.heygen.com/embeds/cbdc44b33b314e629545c96b2c890c4c',
+  },
+  {
+    title: 'Overuse risks.',
+    duration: '11:27',
+    src: 'https://app.heygen.com/embeds/319a448d0ca543918f1a6a127d30eefd',
+  },
+  {
+    title: 'How it develops?',
+    duration: '10:11',
+    src: 'https://app.heygen.com/embeds/65121c1911c04226890e7a6d741a2cc3',
+  },
+  {
+    title: 'Signs and Symptoms.',
+    duration: '10:57',
+    src: 'https://app.heygen.com/embeds/a1758c22ad59435590afba9df9fdd419',
+  },
+  {
+    title: 'Prevention, treatment.',
+    duration: '12:33',
+    src: 'https://app.heygen.com/embeds/01612629f1104d2289bc05a9903a32cc',
+  },
 ];
 
 

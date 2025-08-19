@@ -311,20 +311,20 @@ export const products: ProductData[] = [
     "description": "ZYN Cool Mint Extra Strong is crafted for experienced users who prefer a more intense cooling mint flavor. These slim, dry pouches provide 11 mg of nicotine each, delivering a strong and invigorating experience. The discreet and comfortable fit under the lip ensures clean and easy use anytime, anywhere. Each can contains 21 pouches for lasting freshness and satisfaction."
   },
   {
-    "slug": "zyn-cool-mint-mini",
-    "productName": "ZYN Cool Mint Mini",
-    "productImage": "https://snuzyn.com/cdn/shop/files/zyn-cool-mint-mini-916114.png?v=1754492843&width=1200",
+    "slug": "velo-icy-cherry",
+    "productName": "VELO Icy Cherry",
+    "productImage": "https://snuzyn.com/cdn/shop/files/velo-icy-cherry-182845.png?v=1754492772&width=1200",
     "originalPrice": "€5,49",
     "shippingLabel": "Free shipping on 10+ cans",
     "stockStatus": "in_stock",
-    "brand": "ZYN",
-    "flavor": "Mint",
-    "strength": "Light",
-    "type": "Mini, Dry",
-    "nicotinePerPouch": "3 mg",
-    "nicotinePerGram": "Approx. 7,5 mg/g",
+    "brand": "VELO",
+    "flavor": "Red Cherry and Mint",
+    "strength": "Medium",
+    "type": "Slim, Dry",
+    "nicotinePerPouch": "10 mg",
+    "nicotinePerGram": "14.3 mg/g",
     "pouchesPerCan": "20 pouches",
-    "description": "ZYN Cool Mint Mini nicotine pouches offer a crisp and cooling mint flavor in a discreet mini size. These dry pouches deliver a light nicotine experience with 3 mg of nicotine per pouch, making them perfect for beginners or those who prefer a milder effect. The slim and compact design ensures a comfortable fit under the lip, and with 20 pouches per can, ZYN Cool Mint Mini is an excellent choice for on-the-go refreshment."
+    "description": "VELO Icy Cherry nicotine pouches offer a delightful fusion of sweet red cherry flavor complemented by a refreshing, icy mint undertone, delivering a crisp and invigorating experience. These slim, all-white pouches are designed for discretion and comfort, fitting seamlessly under the lip without causing teeth discoloration. Each pouch contains 10 mg of nicotine, providing a satisfying sensation suitable for experienced users seeking a bold flavor profile. With 20 pouches per can, VELO Icy Cherry offers a convenient and flavorful alternative to traditional products."
   },
   {
     "slug": "xqs-tropical",

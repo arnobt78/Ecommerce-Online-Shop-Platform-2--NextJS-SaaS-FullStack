@@ -21,7 +21,11 @@ export default function CartSidebarItem({ item, updateQuantity, removeFromCart }
         <div className="w-20 h-20 border border-gray-200 rounded-lg flex items-center justify-center bg-white mr-2 sm:mr-4 overflow-hidden">
           {item.productImage && typeof item.productImage === 'string' && item.productImage.length > 0 ? (
             <img
-              src={item.productImage.startsWith('/') ? item.productImage : '/' + item.productImage}
+              src={
+                item.productImage.startsWith('http://') || item.productImage.startsWith('https://')
+                  ? item.productImage
+                  : '/' + item.productImage.replace(/^\/+/, '')
+              }
               alt={item.productName || 'Product'}
               className="max-w-[70%] max-h-[70%] object-contain"
               onError={e => { e.currentTarget.style.display = 'none'; }}
@@ -46,7 +50,10 @@ export default function CartSidebarItem({ item, updateQuantity, removeFromCart }
           </button>
           <div className="text-md font-semibold text-gray-900 ml-2 sm:ml-4 whitespace-nowrap">
             € {(() => {
-              const price = item.salePrice ?? item.originalPrice;
+              // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
+              let price = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+                ? item.salePrice
+                : item.originalPrice;
               if (!price || typeof price !== 'string') return '0.00';
               const cleaned = price.replace(/[^0-9,.-]+/g, "").replace(",", ".");
               const num = parseFloat(cleaned);

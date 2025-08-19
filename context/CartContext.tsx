@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 // Import ProductData to ensure CartItem matches product props
-import type { ProductData } from "@/data/products";
+import type { ProductData } from "@/scripts/data/products";
 
 // CartItem extends ProductData and adds quantity. Use slug as unique id.
 export interface CartItem extends ProductData {

@@ -64,8 +64,11 @@ export default function CartPage() {
 
   const getSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      // Prefer salePrice, fallback to originalPrice
-      const price = parsePrice(item.salePrice ?? item.originalPrice);
+      // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
+      let priceStr = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+        ? item.salePrice
+        : item.originalPrice;
+      const price = parsePrice(priceStr);
       return total + price * item.quantity;
     }, 0)
   }
@@ -154,15 +157,20 @@ export default function CartPage() {
                           {/* Product Image */}
                           <div className="relative">
                             <div className="w-24 h-24 bg-gradient-to-br from-[#8cedf8]/30 via-white to-[#3AF0F7]/20 rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 group-hover:shadow-xl transition-all duration-300 overflow-hidden">
-                              {typeof item.productImage === 'string' && item.productImage.startsWith('/') ? (
+                              {/* Robust image logic: show image if valid URL, else fallback */}
+                              {typeof item.productImage === 'string' && item.productImage.length > 0 ? (
                                 <img
-                                  src={item.productImage}
+                                  src={
+                                    item.productImage.startsWith('http://') || item.productImage.startsWith('https://')
+                                      ? item.productImage
+                                      : '/' + item.productImage.replace(/^\/+/, '')
+                                  }
                                   alt={item.productName}
                                   className="object-contain w-full h-full"
                                   style={{ maxWidth: '100%', maxHeight: '100%' }}
                                 />
                               ) : (
-                                <div className="text-2xl">{item.productImage}</div>
+                                <div className="text-2xl">No Image</div>
                               )}
                             </div>
                           </div>
@@ -234,7 +242,10 @@ export default function CartPage() {
                                 <p className="text-xs sm:text-sm text-gray-500">Item Total</p>
                                 <p className="text-lg sm:text-xl font-semibold text-gray-900">
                                   € {(() => {
-                                    const price = item.salePrice ?? item.originalPrice;
+                                    // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
+                                    let price = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+                                      ? item.salePrice
+                                      : item.originalPrice;
                                     const cleaned = price ? price.replace(/[^0-9,.-]+/g, "").replace(",", ".") : "0";
                                     const num = parseFloat(cleaned);
                                     return (num * item.quantity).toFixed(2);

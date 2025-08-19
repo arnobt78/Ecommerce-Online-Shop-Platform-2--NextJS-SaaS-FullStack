@@ -10,7 +10,7 @@ import ReviewSection from "@/components/Review/ReviewCardSection";
 import { ListProductCard } from "@/components/ProductCard/ListProductCard"
 import { CategoryFilterMenuBar } from "@/components/CategoryFilter/CategoryFilterMenuBar"
 import { useInitialFilter } from "./useInitialFilter"
-import { products, ProductData } from "@/data/products"
+import { products, ProductData } from "@/scripts/data/products"
 
 
 

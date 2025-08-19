@@ -1,6 +1,7 @@
 
+import React from "react";
 import { ListProductCard } from "@/components/ProductCard/ListProductCard";
-import { products } from "@/data/products";
+import { products } from "@/scripts/data/products";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,16 @@ const ProductsSectionTitle: React.FC = () => (
 
 // ProductsSection is the main section that displays the best selling products and a button to show all products.
 export default function ProductsSection() {
+  // Shuffle products and pick 10 random ones on each render
+  const getRandomProducts = <T,>(arr: T[], n: number): T[] => {
+    const result = [...arr];
+    for (let i = result.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [result[i], result[j]] = [result[j], result[i]];
+    }
+    return result.slice(0, n);
+  };
+  const randomProducts = React.useMemo(() => getRandomProducts(products, 10), []);
   return (
     <section id="products-section" className="px-1 sm:px-4 py-4 sm:py-8 w-full">
       <div className="max-w-[1440px] mx-auto w-full">
@@ -22,8 +33,7 @@ export default function ProductsSection() {
         {/* Product Cards List */}
         <div className="flex flex-col items-center w-full">
           {/* ListProductCard fetches and displays products from data/products.ts */}
-          <ListProductCard products={products.slice(0, 10)} />
-
+          <ListProductCard products={randomProducts} />
           {/* Show all button */}
           <Link href="/products" passHref legacyBehavior>
             {/* <button

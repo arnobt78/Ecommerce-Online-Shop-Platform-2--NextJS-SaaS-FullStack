@@ -189,37 +189,57 @@ import { ProductCardReelSection } from "./ProductCardReelSection";
 import ReviewSection from "@/components/Review/ReviewCardSection";
 
 import { useSearchParams } from "next/navigation";
-import { products } from "../../data/products";
+import { products } from "@/scripts/data/products";
 
 // Get product index from query param, fallback to 0
 
 interface ProductDetailLayoutProps {
   product?: any;
+  slug?: string;
 }
 
-export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ product: propProduct }) => {
-  const searchParams = useSearchParams();
-  const idx = Number(searchParams.get("idx")) || 0;
-  const product = propProduct || products[idx] || products[0];
+export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ product: propProduct, slug }) => {
+  // If slug is provided, find the product by slug
+  // Otherwise, fallback to idx from searchParams
+  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : undefined;
+  let idx = 0;
+  if (searchParams) {
+    idx = Number(searchParams.get("idx")) || 0;
+  }
+  let product = propProduct;
+  if (!product && slug) {
+    // Dynamically import products if not already imported
+    try {
+      // @ts-ignore
+      const allProducts = require("@/scripts/data/products").products;
+      product = allProducts.find((p: any) => p.slug === slug);
+    } catch (e) {
+      // fallback
+      product = undefined;
+    }
+  }
+  if (!product && typeof products !== 'undefined') {
+    product = products[idx] || products[0];
+  }
   const [quantity, setQuantity] = useState(1);
 
-const mockDescription = {
-  brand: "Velo",
-  flavor: "Mint",
-  strength: "Medium",
-  nicotinePerPouch: "6 mg",
-  description: "",
-  howToUse: "",
-};
+// const mockDescription = {
+//   brand: "Velo",
+//   flavor: "Mint",
+//   strength: "Medium",
+//   nicotinePerPouch: "6 mg",
+//   description: "",
+//   howToUse: "",
+// };
 
-const mockReelProducts = Array(5).fill({
-  productImage: "/product-image.png",
-  productName: "Klint Artic Mint",
-  salePrice: "€ 3,60",
-  originalPrice: "€ 4,99",
-  saleLabel: "Sale 30%",
-  shippingLabel: "Free shipping",
-});
+// const mockReelProducts = Array(5).fill({
+//   productImage: "/product-image.png",
+//   productName: "Klint Artic Mint",
+//   salePrice: "€ 3,60",
+//   originalPrice: "€ 4,99",
+//   saleLabel: "Sale 30%",
+//   shippingLabel: "Free shipping",
+// });
 
   return (
     <div className="w-full bg-white flex flex-col items-center">

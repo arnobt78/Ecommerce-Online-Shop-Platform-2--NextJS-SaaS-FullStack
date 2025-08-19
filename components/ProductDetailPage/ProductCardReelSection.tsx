@@ -1,9 +1,8 @@
 
-
 import React from "react";
-import { products as globalProducts } from "../../data/products";
-
-import { useRouter } from "next/navigation";
+import { products as globalProducts } from "@/scripts/data/products";
+import { useCart } from "@/context/CartContext";
+import { useRouter, usePathname } from "next/navigation";
 import { SingleProductCard } from "@/components/ProductCard/SingleProductCard";
 
 // ProductReelCard component (inlined)
@@ -17,9 +16,29 @@ interface ProductReelCardProps {
  */
 const ProductReelCard: React.FC<ProductReelCardProps> = ({ product, onProductClick, products }) => {
   const router = useRouter();
-  // Helper: get product index for navigation (assumes unique productName)
-  const getProductIndex = (product: any) => {
-    return products.findIndex((p: any) => p.productName === product.productName);
+  const { setCartItems, setCartOpen } = useCart();
+  // Helper: get product slug for navigation
+  const getProductSlug = (product: any) => product.slug;
+  // Add to cart handler for reel
+  const handleAddToCart = (e?: React.MouseEvent) => {
+    e?.stopPropagation && e.stopPropagation();
+    setCartItems((prev: any[]) => {
+      const existingItem = prev.find((item) => item.slug === product.slug);
+      if (existingItem) {
+        return prev.map((item) =>
+          item.slug === product.slug ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [
+          ...prev,
+          {
+            ...product,
+            quantity: 1,
+          },
+        ];
+      }
+    });
+    setCartOpen(true);
   };
   return (
     <div
@@ -28,9 +47,9 @@ const ProductReelCard: React.FC<ProductReelCardProps> = ({ product, onProductCli
         if (typeof onProductClick === 'function') {
           onProductClick(product);
         } else {
-          const index = getProductIndex(product);
-          if (index !== -1) {
-            router.push(`/product-detail?idx=${index}`);
+          const slug = getProductSlug(product);
+          if (slug) {
+            router.push(`/product-detail/${slug}`);
           }
         }
       }}
@@ -42,15 +61,15 @@ const ProductReelCard: React.FC<ProductReelCardProps> = ({ product, onProductCli
           if (typeof onProductClick === 'function') {
             onProductClick(product);
           } else {
-            const index = getProductIndex(product);
-            if (index !== -1) {
-              router.push(`/product-detail?idx=${index}`);
+            const slug = getProductSlug(product);
+            if (slug) {
+              router.push(`/product-detail/${slug}`);
             }
           }
         }
       }}
     >
-      <SingleProductCard {...product} />
+      <SingleProductCard {...product} addToCart={handleAddToCart} />
     </div>
   );
 };
@@ -84,7 +103,9 @@ interface ProductCardReelSectionProps {
   onProductClick?: (product: any) => void;
 }
 
-
+/**
+ * ProductCardReelSection displays a reel/grid of related products.
+ */
 export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({ products, onProductClick }) => {
   // Use the same grid and card layout as ListProductCard for consistency
   // Show only 2 cards on mobile, 5 on desktop
@@ -100,9 +121,44 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({ 
   // Use products prop if provided, otherwise fallback to globalProducts
   const productsToUse = products && products.length > 0 ? products : globalProducts;
 
+  // Get current slug from URL
+  const pathname = usePathname();
+  const slug = React.useMemo(() => {
+    // Expecting /product-detail/[slug]
+    const match = pathname && pathname.match(/\/product-detail\/(.+)$/);
+    return match ? match[1] : undefined;
+  }, [pathname]);
+
+  // Try to get current product from props (if passed from ProductDetailLayout), otherwise from URL
+  const currentProduct = React.useMemo(() => {
+    // If productsToUse contains only 1 product, assume it's the current product
+    if (productsToUse.length === 1) return productsToUse[0];
+    // Otherwise, find by slug from URL
+    if (slug) return productsToUse.find((p: any) => p.slug === slug);
+    return undefined;
+  }, [slug, productsToUse]);
+
+  // Filter products by brand or flavor (same as current product, but not itself)
+  const filteredProducts = React.useMemo(() => {
+    if (!currentProduct) return productsToUse;
+    const { brand, flavor, slug: currentSlug } = currentProduct;
+    const norm = (val: string) => (val || '').toLowerCase().trim();
+    // Find related by brand or flavor, case-insensitive and trimmed
+    let filtered = productsToUse.filter((p: any) =>
+      (norm(p.brand) === norm(brand) || norm(p.flavor) === norm(flavor)) && p.slug !== currentSlug
+    );
+    // If none found, fallback to all except current
+    if (filtered.length === 0) {
+      filtered = productsToUse.filter((p: any) => p.slug !== currentSlug);
+    }
+    // Sort A-Z by productName
+    filtered.sort((a: any, b: any) => (a.productName || '').localeCompare(b.productName || '', undefined, { sensitivity: 'base' }));
+    return filtered;
+  }, [currentProduct, productsToUse, cardsToShow]);
+
   return (
     <div className="w-full flex flex-col items-center px-1 sm:px-0">
-      <ProductReelGrid products={productsToUse} cardsToShow={cardsToShow} onProductClick={onProductClick} />
+      <ProductReelGrid products={filteredProducts} cardsToShow={cardsToShow} onProductClick={onProductClick} />
     </div>
   );
 };

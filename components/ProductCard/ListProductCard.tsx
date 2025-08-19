@@ -86,6 +86,21 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
     return `${product.name || product.productName}_${product.brand}_${product.image || product.productImage}`;
   }
 
+  // Sort: numbers first, then A-Z
+  const sortedProducts = React.useMemo(() => {
+    if (!products) return [];
+    const isNumberFirst = (name: string) => /^[0-9]/.test(name.trim());
+    return [...products].sort((a, b) => {
+      const nameA = (a.productName || a.name || '').trim();
+      const nameB = (b.productName || b.name || '').trim();
+      const aNum = isNumberFirst(nameA);
+      const bNum = isNumberFirst(nameB);
+      if (aNum && !bNum) return -1;
+      if (!aNum && bNum) return 1;
+      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    });
+  }, [products]);
+
   const handleAddToCart = addToCart || ((product: any) => {
     setCartItems((prev: any[]) => {
       const existingItem = prev.find((item) => item.slug === product.slug);
@@ -121,7 +136,7 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  const { page, setPage, totalPages, paginated } = useProductPagination(products, perPage);
+  const { page, setPage, totalPages, paginated } = useProductPagination(sortedProducts, perPage);
 
   return (
     <div className="flex flex-col items-center w-full px-0">
@@ -132,8 +147,8 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
           if (product.slug) {
             router.push(`/product-detail/${product.slug}`);
           } else {
-            // fallback: try idx-based navigation (should not happen if data is correct)
-            router.push(`/product-detail?idx=${product.id ?? idx}`);
+            // fallback: if no slug, do nothing or show error (should not happen if data is correct)
+            // Optionally, you can show a toast or alert here
           }
         }}
       />

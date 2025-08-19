@@ -5,7 +5,7 @@ import "./globals.css";
 import Footer from '@/components/Footer/FooterSectionLayout'
 import Navbar from '@/components/Navbar/Navbar'
 import { CartProvider } from '../context/CartContext'
-import { products } from '../data/products'
+import { products } from '@/scripts/data/products'
 import CartSidebarLayout from "@/components/CartSidebar/CartSidebarPage";
 import LayoutWithConditionalNavbar from "@/components/DashboardPage/LayoutWithConditionalNavbar";
 

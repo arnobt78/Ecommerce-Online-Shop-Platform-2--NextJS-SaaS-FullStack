@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+// DEBUG: Top-level log to check if file is loaded
+console.log('CartPageComponents.tsx file loaded');
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
@@ -13,9 +15,16 @@ import {
  * CartPageComponents - All-in-one cart page UI and logic for the cart route.
  * Includes header, item list, summary, and empty cart state.
  */
+
 const CartPageComponents: React.FC = () => {
+  // DEBUG: Log to check if component function is called
+  console.log('CartPageComponents function called');
+
   // Cart context state
   const { cartItems, setCartItems } = useCart();
+  // Debug: log cart items to check productImage values
+  console.log('CartPageComponents cartItems:', cartItems);
+
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
@@ -62,15 +71,19 @@ const CartPageComponents: React.FC = () => {
             {/* Product Image */}
             <div className="relative">
               <div className="w-24 h-24 bg-transparent rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 group-hover:shadow-xl transition-all duration-300 overflow-hidden">
-                {typeof item.productImage === 'string' && item.productImage.startsWith('/') ? (
+                {typeof item.productImage === 'string' && item.productImage.length > 0 ? (
                   <img
-                    src={item.productImage}
+                    src={
+                      item.productImage.startsWith('http://') || item.productImage.startsWith('https://')
+                        ? item.productImage
+                        : '/' + item.productImage.replace(/^\/+/, '')
+                    }
                     alt={item.productName}
                     className="object-contain w-full h-full"
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
                   />
                 ) : (
-                  <div className="text-3xl">{item.productImage}</div>
+                  <div className="text-3xl">No Image</div>
                 )}
               </div>
             </div>

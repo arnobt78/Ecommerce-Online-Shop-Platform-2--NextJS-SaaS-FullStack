@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FilterDropDown } from "./FilterDropDown";
 
 
-import { products } from "../../data/products";
+import { products } from "@/scripts/data/products";
 
 // Dynamically extract unique filter options from product data
 const getUnique = (arr: string[]) => Array.from(new Set(arr)).filter(Boolean);

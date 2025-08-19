@@ -144,7 +144,7 @@ async function scrape() {
         const originalPrice = getText('.price-item--regular, .product__price');
         const salePrice = getText('.price-item--sale');
         const saleLabel = getText('.badge--sale');
-        const shippingLabel = 'Free shipping on 10+ cans';
+        const shippingLabel = 'Free Shipping';
         let stockStatus = 'no_stock';
         const pageText = document.body.textContent?.toLowerCase() || '';
         if (pageText.includes('in stock')) stockStatus = 'in_stock';

@@ -25,7 +25,11 @@ export default function CheckoutPage() {
     return isNaN(num) ? 0 : num;
   }
   const getSubtotal = () => cartItems.reduce((total, item) => {
-    const price = parsePrice(item.salePrice ?? item.originalPrice);
+    // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
+    let priceStr = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+      ? item.salePrice
+      : item.originalPrice;
+    const price = parsePrice(priceStr);
     return total + price * item.quantity;
   }, 0);
   const getDiscount = () => (appliedPromo === "SAVE10" ? getSubtotal() * 0.1 : 0);
@@ -60,9 +64,19 @@ export default function CheckoutPage() {
                 <img src={item.productImage} alt={item.productName} className="w-16 h-16 object-contain rounded border mr-4" />
                 <div className="flex-1">
                   <div className="font-semibold text-sm">{item.productName}</div>
-                  <div className="text-xs text-gray-500">{item.quantity} x {item.salePrice ?? item.originalPrice}</div>
+                  <div className="text-xs text-gray-500">{item.quantity} x {(() => {
+                    let price = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+                      ? item.salePrice
+                      : item.originalPrice;
+                    return price;
+                  })()}</div>
                 </div>
-                <div className="font-bold text-base">{((parsePrice(item.salePrice ?? item.originalPrice) || 0) * item.quantity).toFixed(2)}</div>
+                <div className="font-bold text-base">€ {(() => {
+                  let price = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+                    ? item.salePrice
+                    : item.originalPrice;
+                  return ((parsePrice(price) || 0) * item.quantity).toFixed(2);
+                })()}</div>
               </div>
             ))}
           </div>

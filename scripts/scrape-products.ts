@@ -50,7 +50,7 @@ async function scrape() {
     const originalPrice = $$('span.price').first().text().trim();
     const salePrice = $$('span.price--sale').text().trim() || undefined;
     const saleLabel = $$('span.badge--sale').text().trim() || undefined;
-    const shippingLabel = 'Free shipping on 10+ cans'; // or scrape from site
+    const shippingLabel = 'Free Shipping'; // or scrape from site
     // Detect stock status from product page text
     let stockStatus: StockStatus = 'no_stock';
     const pageText = resp.data.toLowerCase();

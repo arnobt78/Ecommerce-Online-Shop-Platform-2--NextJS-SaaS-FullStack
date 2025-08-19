@@ -39,7 +39,11 @@ export default function CartSidebarLayout() {
 
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => {
-      const price = parsePrice(item.salePrice ?? item.originalPrice);
+      // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
+      let priceStr = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
+        ? item.salePrice
+        : item.originalPrice;
+      const price = parsePrice(priceStr);
       return total + price * item.quantity;
     }, 0);
   };

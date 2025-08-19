@@ -10,7 +10,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import Footer from "@/components/Footer/FooterSectionLayout"
-import { products } from "@/data/products";
+import { products } from "@/scripts/data/products";
 
 export default function SnuzzProLanding() {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();

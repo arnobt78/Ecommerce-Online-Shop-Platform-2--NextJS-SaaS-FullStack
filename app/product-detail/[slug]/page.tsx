@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { products } from "@/data/products";
+import { products } from "@/scripts/data/products";
 import { ProductDetailLayout } from "@/components/ProductDetailPage/ProductDetailLayout";
 
 export default async function ProductDetailSlugPage({ params }: { params: { slug: string } }) {
@@ -9,7 +9,7 @@ export default async function ProductDetailSlugPage({ params }: { params: { slug
   if (!product) return notFound();
   return (
     <div className="mt-20">
-      <ProductDetailLayout product={product} />
+      <ProductDetailLayout product={product} slug={slug} />
     </div>
   );
 }

@@ -30,7 +30,7 @@ async function scrape() {
   await page.goto(collectionUrl, { waitUntil: 'networkidle2' });
   await new Promise(res => setTimeout(res, 1500));
 
-  // Click 'Show more' until all products are loaded
+  // --- Robustly click 'Show more' until all products are loaded ---
   let lastProductCount = 0;
   let stableRounds = 0;
   for (let tries = 0; tries < 40; tries++) {
@@ -73,7 +73,7 @@ async function scrape() {
     await new Promise(res => setTimeout(res, 500));
   }
 
-  // Collect all visible product links
+  // --- Collect all visible product links ---
   let productLinks: string[] = [];
   const gridSelectors = [
     '.productgrid--items',
@@ -100,6 +100,7 @@ async function scrape() {
 
   const products: ProductData[] = [];
 
+  // --- Visit each product page and extract data ---
   for (const url of productLinks) {
     try {
       await page.goto(url, { waitUntil: 'networkidle2' });
@@ -120,7 +121,7 @@ async function scrape() {
           return cleaned;
         }
         const getText = (selector: string) => {
-          const el = document.querySelector(selector);
+          const el = document.querySelector(selector as string);
           return el ? el.textContent?.trim() || '' : '';
         };
         const productName = getText('h1');
@@ -144,16 +145,17 @@ async function scrape() {
         const salePrice = getText('.price-item--sale');
         const saleLabel = getText('.badge--sale');
         const shippingLabel = 'Free shipping on 10+ cans';
-        let stockStatus: StockStatus = 'no_stock';
+        let stockStatus = 'no_stock';
         const pageText = document.body.textContent?.toLowerCase() || '';
         if (pageText.includes('in stock')) stockStatus = 'in_stock';
         else if (pageText.includes('low stock')) stockStatus = 'low_stock';
         else if (pageText.includes('last 3')) stockStatus = 'last_3';
         else if (pageText.includes('out of stock') || pageText.includes('sold out')) stockStatus = 'no_stock';
 
+        // --- Robust Product Details Extraction ---
         let brand = '', flavor = '', strength = '', type = '', nicotinePerPouch = '', nicotinePerGram = '', pouchesPerCan = '';
         const headings = Array.from(document.querySelectorAll('h2, h3, h4, strong, b'));
-        let detailsSection: Element | null = null;
+        let detailsSection = null;
         for (const h of headings) {
           if (/product details/i.test(h.textContent || '')) {
             let el = h.nextElementSibling;
@@ -162,52 +164,104 @@ async function scrape() {
             break;
           }
         }
-        function extractDetailsFromText(text: string) {
+        // Helper to extract key-value pairs from a node (table, ul, div, etc)
+        function extractDetailsFromNode(node: Element): Record<string, string> {
           const map: Record<string, string> = {};
-          const regex = /(Strength Level|Flavor|Type|Nicotine per Pouch|Nicotine per Gram|Pouches per Can|Brand)\\s*:?\s*([^\n]+)/gi;
-          let match;
-          while ((match = regex.exec(text))) {
-            map[match[1].toLowerCase()] = match[2].trim();
+          // Table rows
+          if ((node as HTMLElement).tagName === 'TABLE') {
+            const rows = (node as HTMLTableElement).querySelectorAll('tr');
+            for (const tr of Array.from(rows)) {
+              const tds = tr.querySelectorAll('td, th');
+              if (tds.length >= 2) {
+                const key = tds[0].textContent?.trim().toLowerCase();
+                const val = tds[1].textContent?.trim();
+                if (key && val) map[key] = val;
+              } else if (tds.length === 1) {
+                // Sometimes "Label: Value" in one cell
+                const parts = tds[0].textContent?.split(':');
+                if (parts && parts.length === 2) {
+                  map[parts[0].trim().toLowerCase()] = parts[1].trim();
+                }
+              }
+            }
+          }
+          // List items
+          if ((node as HTMLElement).tagName === 'UL' || (node as HTMLElement).tagName === 'OL') {
+            const items = (node as HTMLElement).querySelectorAll('li');
+            for (const li of Array.from(items)) {
+              const txt = li.textContent || '';
+              const match = txt.match(/^(.*?):\s*(.*)$/);
+              if (match) {
+                map[match[1].trim().toLowerCase()] = match[2].trim();
+              }
+            }
+          }
+          // Divs or Ps with "Label: Value"
+          if ((node as HTMLElement).tagName === 'DIV' || (node as HTMLElement).tagName === 'P') {
+            const txt = node.textContent || '';
+            const lines = txt.split('\n');
+            for (const line of lines) {
+              const match = line.match(/^(.*?):\s*(.*)$/);
+              if (match) {
+                map[match[1].trim().toLowerCase()] = match[2].trim();
+              }
+            }
           }
           return map;
         }
+        // Try to extract from detailsSection and its children
+        let detailsMap: Record<string, string> = {};
         if (detailsSection) {
-          let detailsText = '';
-          if (detailsSection.tagName === 'UL') {
-            detailsText = Array.from(detailsSection.querySelectorAll('li')).map(li => li.textContent || '').join('\\n');
-          } else if (detailsSection.tagName === 'TABLE') {
-            detailsText = Array.from(detailsSection.querySelectorAll('tr')).map(tr => tr.textContent || '').join('\\n');
-          } else {
-            detailsText = detailsSection.textContent || '';
+          detailsMap = extractDetailsFromNode(detailsSection);
+          // Also check children (sometimes details are nested)
+          for (const child of Array.from(detailsSection.children)) {
+            Object.assign(detailsMap, extractDetailsFromNode(child));
           }
-          const map = extractDetailsFromText(detailsText);
-          brand = cleanField(map['brand'] || '');
-          flavor = cleanField(map['flavor'] || '');
-          strength = map['strength level'] || '';
-          type = cleanField(map['type'] || '');
-          nicotinePerPouch = map['nicotine per pouch'] || '';
-          nicotinePerGram = map['nicotine per gram'] || '';
-          pouchesPerCan = map['pouches per can'] || '';
         }
+        // Fallback: scan all tables, uls, divs in main for details
+        if (!detailsSection || Object.keys(detailsMap).length === 0) {
+          const main = document.querySelector('main') || document.body;
+          const nodes = main.querySelectorAll('table, ul, ol, div, p');
+          for (const node of Array.from(nodes)) {
+            Object.assign(detailsMap, extractDetailsFromNode(node));
+          }
+        }
+        // Assign fields
+        const map = detailsMap as Record<string, string>;
+        brand = cleanField(map['brand'] || '');
+        flavor = cleanField(map['flavor'] || '');
+        strength = map['strength level'] || '';
+        type = cleanField(map['type'] || '');
+        nicotinePerPouch = map['nicotine per pouch'] || '';
+        nicotinePerGram = map['nicotine per gram'] || '';
+        pouchesPerCan = map['pouches per can'] || '';
+
+        // Fallback: try to extract from the whole page text if any field is missing
         if (!brand || !flavor || !strength || !type || !nicotinePerPouch || !nicotinePerGram || !pouchesPerCan) {
           const allText = document.body.textContent || '';
-          const map = extractDetailsFromText(allText);
-          if (!brand) brand = cleanField(map['brand'] || '');
-          if (!flavor) flavor = cleanField(map['flavor'] || '');
-          if (!strength) strength = map['strength level'] || '';
-          if (!type) type = cleanField(map['type'] || '');
-          if (!nicotinePerPouch) nicotinePerPouch = map['nicotine per pouch'] || '';
-          if (!nicotinePerGram) nicotinePerGram = map['nicotine per gram'] || '';
-          if (!pouchesPerCan) pouchesPerCan = map['pouches per can'] || '';
+          const regex = /(Strength Level|Flavor|Type|Nicotine per Pouch|Nicotine per Gram|Pouches per Can|Brand)\s*:?\\s*([^\n]+)/gi;
+          let match;
+          while ((match = regex.exec(allText))) {
+            const key = match[1].toLowerCase();
+            const val = match[2].trim();
+            if (key === 'brand' && !brand) brand = cleanField(val);
+            if (key === 'flavor' && !flavor) flavor = cleanField(val);
+            if (key === 'strength level' && !strength) strength = val;
+            if (key === 'type' && !type) type = cleanField(val);
+            if (key === 'nicotine per pouch' && !nicotinePerPouch) nicotinePerPouch = val;
+            if (key === 'nicotine per gram' && !nicotinePerGram) nicotinePerGram = val;
+            if (key === 'pouches per can' && !pouchesPerCan) pouchesPerCan = val;
+          }
         }
 
+        // --- Description logic unchanged ---
         let description = '';
-        function isGenericParagraph(text: string): boolean {
-          return /not sure where to start|try these collections|shop now|learn more|explore/i.test(text);
+        function isGenericParagraph(text: any) {
+          return /not sure where to start|try these collections|shop now|learn more|explore/i.test(text as any);
         }
         if (headings.length > 0) {
           const titleEl = document.querySelector('h1');
-          const detailsHeading = headings.find(h => /product details/i.test(h.textContent || ''));
+          const detailsHeading = headings.find((h: any) => /product details/i.test(h.textContent || ''));
           let ps: Element[] = [];
           if (titleEl && detailsHeading) {
             let el = titleEl.nextElementSibling;
@@ -231,7 +285,7 @@ async function scrape() {
 
         let fallbackBrand = brand, fallbackFlavor = flavor, fallbackType = type;
         if (!fallbackBrand && productName) {
-          const match = productName.match(/^([A-Z0-9]+)\\s+(.*)$/i);
+          const match = productName.match(/^([A-Z0-9]+)\s+(.*)$/i);
           if (match) {
             fallbackBrand = match[1].trim();
             if (!fallbackFlavor && match[2]) fallbackFlavor = match[2].trim();
@@ -259,7 +313,12 @@ async function scrape() {
         };
       });
       const slug = url.split('/').pop() || '';
-      products.push({ slug, ...data });
+      // Ensure stockStatus is a valid StockStatus
+      let stockStatus: StockStatus = 'no_stock';
+      if (data.stockStatus === 'in_stock' || data.stockStatus === 'low_stock' || data.stockStatus === 'last_3' || data.stockStatus === 'no_stock') {
+        stockStatus = data.stockStatus;
+      }
+      products.push({ ...data, slug, stockStatus });
       console.log(`Scraped: ${data.productName}`);
     } catch (err) {
       console.error(`Error scraping ${url}:`, err);

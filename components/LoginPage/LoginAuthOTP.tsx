@@ -140,6 +140,8 @@ export default function LoginAuthOTP({
         <form className="flex flex-col gap-4 w-full max-w-md mt-6 items-center" onSubmit={handleLogin}>
           <div className="w-full mb-2 text-sm text-gray-500 text-center">
             Enter the OTP code, sent to <span className="font-semibold">{email}</span>
+            <br />
+            <span className="block text-xs text-gray-400 mt-1">Please check your email inbox or spam folder for the code.</span>
           </div>
           <div className="relative w-full">
             <input

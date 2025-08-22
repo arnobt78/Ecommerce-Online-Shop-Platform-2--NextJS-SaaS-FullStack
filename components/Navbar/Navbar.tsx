@@ -182,7 +182,9 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                                   if (typeof img === 'string' && img.length > 0) {
                                     return (
                                       <img
-                                        src={img.startsWith('/') ? img : '/' + img}
+                                        src={img.startsWith('http://') || img.startsWith('https://')
+                                          ? img
+                                          : '/' + img.replace(/^\/+/, '')}
                                         alt={product.productName || product.name || 'Product'}
                                         className="object-contain w-full h-full"
                                         onError={e => { e.currentTarget.style.display = 'none'; }}

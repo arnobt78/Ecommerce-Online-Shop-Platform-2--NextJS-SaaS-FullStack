@@ -67,6 +67,33 @@ interface ListProductCardProps {
 }
 
 export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addToCart }) => {
+  // DEBUG: Log the product names received as props to verify sort order
+  // console.log('[DEBUG] ListProductCard received products:', products.map(p => p.name || p.productName));
+
+  // Use products as-is, do not re-sort. Parent controls sort order.
+
+  // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
+  const [perPage, setPerPage] = React.useState(16);
+  React.useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 640) {
+        setPerPage(16); // phone (sm breakpoint)
+      } else {
+        setPerPage(15); // laptop/tablet and up
+      }
+    }
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const { page, setPage, totalPages, paginated } = useProductPagination(products, perPage);
+
+  // Reset to page 1 whenever products change (sort/filter)
+  React.useEffect(() => {
+    setPage(1);
+    console.log('[DEBUG] Pagination reset to page 1 due to products change');
+  }, [products, setPage]);
   const { setCartItems } = useCart();
   // Use the provided addToCart or fallback to global context
   // Helper to parse price string (e.g., "€ 3,60") to number (3.60)
@@ -86,21 +113,7 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
     return `${product.name || product.productName}_${product.brand}_${product.image || product.productImage}`;
   }
 
-  // Sort: numbers first, then A-Z
-  const sortedProducts = React.useMemo(() => {
-    if (!products) return [];
-    const isNumberFirst = (name: string) => /^[0-9]/.test(name.trim());
-    return [...products].sort((a, b) => {
-      const nameA = (a.productName || a.name || '').trim();
-      const nameB = (b.productName || b.name || '').trim();
-      const aNum = isNumberFirst(nameA);
-      const bNum = isNumberFirst(nameB);
-      if (aNum && !bNum) return -1;
-      if (!aNum && bNum) return 1;
-      return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
-    });
-  }, [products]);
-
+  // ...existing code...
   const handleAddToCart = addToCart || ((product: any) => {
     setCartItems((prev: any[]) => {
       const existingItem = prev.find((item) => item.slug === product.slug);
@@ -122,21 +135,7 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({ products, addT
 
   const router = useRouter();
 
-  // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
-  const [perPage, setPerPage] = React.useState(16);
-  React.useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth < 640) {
-        setPerPage(16); // phone (sm breakpoint)
-      } else {
-        setPerPage(15); // laptop/tablet and up
-      }
-    }
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  const { page, setPage, totalPages, paginated } = useProductPagination(sortedProducts, perPage);
+  // ...existing code...
 
   return (
     <div className="flex flex-col items-center w-full px-0">

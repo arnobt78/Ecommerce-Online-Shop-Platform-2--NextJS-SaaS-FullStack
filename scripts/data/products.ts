@@ -5368,7 +5368,8 @@ export const products: ProductData[] = [
   },
   {
     "productName": "CUBA Black Peach",
-    "productImage": "https://snuzyn.com/cdn/shop/files/CUBABlackPeach.png?v=1755604592&width=2048",
+    // "productImage": "https://snuzyn.com/cdn/shop/files/CUBABlackPeach.png?v=1755604592&width=2048",
+    "productImage": "https://snuzyn.com/cdn/shop/files/CUBANinjaBubbleGumSlimStrong.png?v=1755604978&width=2048",
     "originalPrice": "€4,79",
     "shippingLabel": "Free Shipping",
     "stockStatus": "in_stock",

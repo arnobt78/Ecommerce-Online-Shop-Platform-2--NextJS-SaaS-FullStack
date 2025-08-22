@@ -38,30 +38,40 @@ const filterData = [
 interface CategoryFilterMenuBarProps {
   onFilterChange?: (filters: { brands: string[]; flavors: string[]; strength: string[]; sort: string[] }) => void;
   initialFilter?: 'brands' | 'flavors' | 'strength' | 'sort';
+  selectedBrands: string[];
+  setSelectedBrands: (brands: string[]) => void;
+  selectedFlavors: string[];
+  setSelectedFlavors: (flavors: string[]) => void;
+  selectedStrengths: string[];
+  setSelectedStrengths: (strengths: string[]) => void;
+  selectedSort: string;
+  setSelectedSort: (sort: string) => void;
 }
 
-export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ onFilterChange, initialFilter }) => {
-  // If initialFilter is set, open that dropdown by default
-  const initialSelected = React.useMemo(() => {
-    if (initialFilter === 'brands') return [[filterData[0].options[0] || ''], [], [], []];
-    if (initialFilter === 'flavors') return [[], [filterData[1].options[0] || ''], [], []];
-    if (initialFilter === 'strength') return [[], [], [filterData[2].options[0] || ''], []];
-    if (initialFilter === 'sort') return [[], [], [], [filterData[3].options[0] || '']];
-    return [[], [], [], []];
-  }, [initialFilter]);
-  const [selected, setSelected] = useState<string[][]>(initialSelected);
+export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({
+  onFilterChange,
+  initialFilter,
+  selectedBrands,
+  setSelectedBrands,
+  selectedFlavors,
+  setSelectedFlavors,
+  selectedStrengths,
+  setSelectedStrengths,
+  selectedSort,
+  setSelectedSort
+}) => {
 
-  // Filter products based on selected filters (for parent usage)
+  // Sync parent state with dropdowns
   React.useEffect(() => {
     if (onFilterChange) {
       onFilterChange({
-        brands: selected[0],
-        flavors: selected[1],
-        strength: selected[2],
-        sort: selected[3],
+        brands: selectedBrands,
+        flavors: selectedFlavors,
+        strength: selectedStrengths,
+        sort: selectedSort ? [selectedSort] : [],
       });
     }
-  }, [selected, onFilterChange]);
+  }, [selectedBrands, selectedFlavors, selectedStrengths, selectedSort, onFilterChange]);
 
   // SVG icons extracted from the Figma/SVG for each filter
   // Checklist icon for Brands
@@ -85,8 +95,11 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
 
   // Handle change in selected values for each dropdown
   const handleChange = (idx: number, values: string[]) => {
-    setSelected((prev) => prev.map((s, i) => (i === idx ? values : s)));
-  };
+    if (idx === 0) setSelectedBrands(values);
+    if (idx === 1) setSelectedFlavors(values);
+    if (idx === 2) setSelectedStrengths(values);
+    if (idx === 3) setSelectedSort(values[0] || "");
+  }
 
   return (
     <div
@@ -100,7 +113,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
             title={filterData[0].title}
             _icon={brandIcon}
             options={filterData[0].options}
-            selected={selected[0]}
+            selected={selectedBrands}
             onChange={(values: string[]) => handleChange(0, values)}
           />
         </div>
@@ -109,7 +122,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
             title={filterData[1].title}
             _icon={flavorIcon}
             options={filterData[1].options}
-            selected={selected[1]}
+            selected={selectedFlavors}
             onChange={(values: string[]) => handleChange(1, values)}
           />
         </div>
@@ -118,7 +131,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
             title={filterData[2].title}
             _icon={strengthIcon}
             options={filterData[2].options}
-            selected={selected[2]}
+            selected={selectedStrengths}
             onChange={(values: string[]) => handleChange(2, values)}
           />
         </div>
@@ -127,12 +140,12 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({ on
             title={filterData[3].title}
             _icon={<svg xmlns="http://www.w3.org/2000/svg" width="25" height="26" viewBox="0 0 25 26" fill="none"><path d="M12.5 5v16m0 0l-6-6m6 6l6-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
             options={filterData[3].options}
-            selected={selected[3]}
+            selected={selectedSort ? [selectedSort] : []}
             onChange={(values: string[]) => handleChange(3, values)}
             singleSelect
             disabledOptions={(() => {
               // Only allow one from each group (Price or Name) to be selected at a time
-              const selectedSort = selected[3][0];
+              const selectedSortValue = selectedSort;
               if (!selectedSort) return [];
               if (selectedSort === "Price Low to High") return ["Price High to Low", "Products A-Z", "Products Z-A"];
               if (selectedSort === "Price High to Low") return ["Price Low to High", "Products A-Z", "Products Z-A"];

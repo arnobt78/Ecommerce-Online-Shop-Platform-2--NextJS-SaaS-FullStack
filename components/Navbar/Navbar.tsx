@@ -16,6 +16,7 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResultsTotal, setSearchResultsTotal] = useState(0);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
@@ -35,26 +36,25 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setSearchResults([]);
+      setSearchResultsTotal(0);
       setShowSearchResults(false);
       return;
     }
 
-    const filtered = allProducts
-      .filter((product) => {
-        // Use productName as fallback for name, and productImage as fallback for image
-        const name = typeof product.name === 'string' ? product.name : (typeof product.productName === 'string' ? product.productName : '');
-        const brand = typeof product.brand === 'string' ? product.brand : '';
-        const category = typeof product.category === 'string' ? product.category : '';
-        const query = searchQuery.toLowerCase();
-        return (
-          name.toLowerCase().includes(query) ||
-          brand.toLowerCase().includes(query) ||
-          category.toLowerCase().includes(query)
-        );
-      })
-      .slice(0, 8);
-
-    setSearchResults(filtered);
+    const filteredAll = allProducts.filter((product) => {
+      // Use productName as fallback for name, and productImage as fallback for image
+      const name = typeof product.name === 'string' ? product.name : (typeof product.productName === 'string' ? product.productName : '');
+      const brand = typeof product.brand === 'string' ? product.brand : '';
+      const category = typeof product.category === 'string' ? product.category : '';
+      const query = searchQuery.toLowerCase();
+      return (
+        name.toLowerCase().includes(query) ||
+        brand.toLowerCase().includes(query) ||
+        category.toLowerCase().includes(query)
+      );
+    });
+    setSearchResultsTotal(filteredAll.length);
+    setSearchResults(filteredAll.slice(0, 8));
     setShowSearchResults(true);
   }, [searchQuery, allProducts]);
 
@@ -158,11 +158,19 @@ export default function Navbar({ allProducts = [], noBlur = false }: NavbarProps
                 <div className="absolute top-full -right-8 mt-2 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-0">
-                      <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
-                         {searchResults.length} Product Found{searchResults.length !== 1 ? "s" : ""}
-                      </div>
+               <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
+                 {searchResultsTotal} Product Found{searchResultsTotal !== 1 ? "s" : ""}
+               </div>
                       <div className="space-y-2">
-                        {searchResults.map((product) => (
+                        {[...searchResults].sort((a, b) => {
+                          const nameA = (a.productName || a.name || '').trim();
+                          const nameB = (b.productName || b.name || '').trim();
+                          const aNum = /^[0-9]/.test(nameA);
+                          const bNum = /^[0-9]/.test(nameB);
+                          if (aNum && !bNum) return -1;
+                          if (!aNum && bNum) return 1;
+                          return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+                        }).map((product) => (
                           <div
                             key={product.id || product.slug || (product.name || product.productName) || Math.random()}
                             className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"

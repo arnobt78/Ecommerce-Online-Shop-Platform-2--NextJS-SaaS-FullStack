@@ -46,6 +46,17 @@ export function FilterDropDown({
     }
   };
 
+  // Sort options: numbers first, then A-Z
+  const sortedOptions = [...options].sort((a, b) => {
+    const nameA = (a || '').trim();
+    const nameB = (b || '').trim();
+    const aNum = /^[0-9]/.test(nameA);
+    const bNum = /^[0-9]/.test(nameB);
+    if (aNum && !bNum) return -1;
+    if (!aNum && bNum) return 1;
+    return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+  });
+
   return (
     <div className="relative w-full sm:w-auto">
       <button
@@ -77,7 +88,7 @@ export function FilterDropDown({
       {open && (
         <div className="absolute left-0 z-[100] w-full mt-2 bg-white border-0 rounded-[16px] shadow-[0_8px_40px_0_rgba(0,0,0,0.18)] max-h-[320px] overflow-y-auto py-2 min-w-auto sm:min-w-auto flex flex-col">
           <div className="flex-1 overflow-y-auto">
-            {options.map((option) => {
+            {sortedOptions.map((option) => {
               const isDisabled = disabledOptions.includes(option);
               return (
                 <label
@@ -110,14 +121,14 @@ export function FilterDropDown({
                   </span>
 
                   {/* Option label */}
-                  <span className="ml-4 text-[#222] text-[18px] leading-[22px] font-normal">{option}</span>
+                  <span className="ml-4 text-[#222] text-md font-normal">{option}</span>
                 </label>
               );
             })}
           </div>
           <button
             type="button"
-            className={`w-[90%] mx-auto my-2 py-2 rounded-[8px] text-[16px] font-semibold transition-colors duration-200 ${selected.length === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-[#8EF7FB] text-black hover:bg-[#3AF0F7] cursor-pointer'}`}
+            className={`w-[90%] mx-auto my-2 py-2 rounded-[8px] text-sm font-semibold transition-colors duration-200 ${selected.length === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-[#8EF7FB] text-black hover:bg-[#3AF0F7] cursor-pointer'}`}
             disabled={selected.length === 0}
             onClick={() => onChange([])}
             tabIndex={0}

@@ -115,64 +115,84 @@ export default function LoginAuthOTP({
   return (
     <>
       {step === "email" ? (
-        <form className="flex flex-col gap-4 w-full max-w-md mt-6 items-center" onSubmit={handleSendCode}>
+        <form
+          className="flex flex-col gap-4 w-full max-w-md mt-6 items-center"
+          onSubmit={handleSendCode}
+        >
           <input
             type="email"
-            placeholder="Your email"
+            placeholder="Enter Your Email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             className="border border-[#E0E0E0] rounded-lg px-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
             required
           />
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${sending ? 'opacity-60 cursor-not-allowed' : ''}`}
+            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+              sending ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             disabled={timer > 0 || sending}
           >
             {sending
               ? "Sending code..."
               : timer > 0
-                ? `Send code (${timer}s)`
-                : "Send code"}
+              ? `Send code (${timer}s)`
+              : "Send code"}
           </button>
         </form>
       ) : (
-        <form className="flex flex-col gap-4 w-full max-w-md mt-6 items-center" onSubmit={handleLogin}>
+        <form
+          className="flex flex-col gap-4 w-full max-w-md mt-6 items-center"
+          onSubmit={handleLogin}
+        >
           <div className="w-full mb-2 text-sm text-gray-500 text-center">
-            Enter the OTP code, sent to <span className="font-semibold">{email}</span>
+            Enter the OTP code, sent to{" "}
+            <span className="font-semibold">{email}</span>
             <br />
-            <span className="block text-xs text-gray-400 mt-1">Please check your email inbox or spam folder for the code.</span>
+            <span className="block text-xs text-gray-400 mt-1">
+              Please check your email inbox or spam folder for the code.
+            </span>
           </div>
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="One time code"
+              placeholder="One Time Code"
               value={code}
-              onChange={e => setCode(e.target.value)}
+              onChange={(e) => setCode(e.target.value)}
               className="text-sm sm:text-md border border-[#E0E0E0] rounded-lg pl-2 sm:pl-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff] pr-32"
               required
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-4">
               {timer > 0 ? (
-                <span className="text-sm sm:text-md text-gray-500 whitespace-nowrap">Resend in <span className="text-sm sm:text-md text-red-500 font-semibold">{timer}s</span></span>
+                <span className="text-sm sm:text-md text-gray-500 whitespace-nowrap">
+                  Resend in{" "}
+                  <span className="text-sm sm:text-md text-red-500 font-semibold">
+                    {timer}s
+                  </span>
+                </span>
               ) : (
                 <button
                   type="button"
-                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${resending ? 'opacity-60 cursor-not-allowed' : ''}`}
+                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${
+                    resending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                   onClick={resending ? undefined : handleResendCode}
                   disabled={resending}
                 >
-                  {resending ? 'Resending code...' : 'Resend code'}
+                  {resending ? "Resending code..." : "Resend code"}
                 </button>
               )}
             </div>
           </div>
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${loggingIn ? 'opacity-60 cursor-not-allowed' : ''}`}
+            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+              loggingIn ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             disabled={loggingIn}
           >
-            {loggingIn ? 'Logging in...' : 'Log in'}
+            {loggingIn ? "Logging in..." : "Log in"}
           </button>
         </form>
       )}

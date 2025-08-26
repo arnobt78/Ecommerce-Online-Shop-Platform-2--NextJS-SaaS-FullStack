@@ -217,7 +217,7 @@ export default function ContactForm() {
       </div>
       {submitted && (
         <div className="text-green-600 text-center mt-2">
-          Thank you! Your message has been sent.
+          Thank you! Our support team will reply to you within 24 hours.
         </div>
       )}
     </form>

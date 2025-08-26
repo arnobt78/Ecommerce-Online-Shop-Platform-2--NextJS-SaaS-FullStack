@@ -28,7 +28,7 @@ export default function FaqSection() {
   const [open, setOpen] = useState<number | null>(null);
   return (
     <section className="w-full max-w-4xl mx-auto">
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">FAQ Questions</h3>
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">FAQ</h3>
       <div className="bg-transparent">
         {faqs.map((faq, idx) => (
           <FaqItem

@@ -82,15 +82,6 @@ export default function ContactPage() {
         <div className="mt-24">
           <FaqSection />
         </div>
-        <p className="text-gray-900 mt-8">
-          This right ensures a full refund, including shipping costs, unless the
-          item is returned damaged or used. Please be aware that we do not
-          provide refunds for snuzz PRO platform, due to their digital nature.
-          We understand that life can be unpredictable, and exceptional
-          circumstances may arise that warrant consideration on a case-by-case
-          basis. If you believe your situation warrants for an exception to our
-          refund policy, please contact our support team.
-        </p>
       </main>
     </div>
   );

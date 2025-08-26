@@ -17,7 +17,7 @@ export default function FaqSection() {
     {
       question: "Do you offer refunds?",
       answer:
-        "Yes, in Europe consumers have a 14-day right of withdrawal, allowing them to return goods purchased online without providing a reason.",
+        "This right ensures a full refund, including shipping costs, unless the item is returned damaged or used. Please be aware that we do not provide refunds for snuzz PRO platform, due to their digital nature. We understand that life can be unpredictable, and exceptional circumstances may arise that warrant consideration on a case-by-case basis. If you believe your situation warrants for an exception to our refund policy, please contact our support team.",
     },
     {
       question: "How long does it take to get answer?",

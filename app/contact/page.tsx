@@ -53,12 +53,12 @@ export default function ContactPage() {
       </div>
 
       <main className="relative z-10 flex-1 max-w-3xl mx-auto w-full px-4 pt-20 sm:pt-24 text-justify">
-        <h1 className="text-center text-3xl sm:text-4xl font-semibold text-gray-900 mb-6 sm:mb-24">
+        <h1 className="text-center text-3xl sm:text-4xl font-semibold text-gray-900 mb-6 sm:mb-12">
           Contact Us
         </h1>
-        <h2 className="text-center text-xl sm:text-2xl font-medium text-gray-700 mb-6">
+        {/* <h2 className="text-center text-xl sm:text-2xl font-medium text-gray-700 mb-6">
           We want to hear from you
-        </h2>
+        </h2> */}
         <p className="text-gray-600 mb-4">
           To contact our support team please fill out the form below including
           following information:

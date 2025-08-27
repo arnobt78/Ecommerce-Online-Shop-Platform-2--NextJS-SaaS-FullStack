@@ -45,10 +45,10 @@ const FeatureCardSection: React.FC = () => {
   return (
     <section className="px-2 py-8 sm:py-12 bg-transparent">
       <div className="max-w-[1440px] mx-auto bg-transparent">
-        <div className="w-full flex flex-col items-center justify-center bg-transparent">
-          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-12 max-w-5xl mx-auto bg-transparent">
+        <div className="w-full flex flex-col items-center justify-center bg-transparent min-w-0 overflow-hidden">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-12 max-w-5xl mx-auto bg-transparent min-w-0 overflow-hidden">
             {/* SVG 1: Best Price on Market */}
-            <div className="flex flex-col items-center text-center w-full h-full">
+            <div className="flex flex-col items-center text-center w-full h-full min-w-0 flex-shrink">
               <div className="flex items-center justify-center w-full mb-1">
                 <svg
                   width="145"

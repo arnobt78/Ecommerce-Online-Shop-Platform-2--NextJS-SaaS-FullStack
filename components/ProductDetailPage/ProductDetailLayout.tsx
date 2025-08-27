@@ -164,9 +164,9 @@ const ProductCardDescriptionSection: React.FC<
         <div className="text-[#343232] text-justify min-w-0">
           {howToUse || (
             <div className="flex flex-col items-center w-full sm:pt-4">
-              <div className="flex flex-row justify-center items-start gap-2 sm:gap-24 mb-6 w-full">
+              <div className="flex flex-row justify-center items-start gap-1 sm:gap-12 mb-6 w-full">
                 {/* Step 1 */}
-                <div className="flex flex-col items-center w-32 sm:w-36">
+                <div className="flex flex-col items-center flex-1 min-w-0">
                   <img
                     src="/how-to-use-icons/howToUse-1.svg"
                     alt="Step 1: Open the can"
@@ -177,7 +177,7 @@ const ProductCardDescriptionSection: React.FC<
                   </span>
                 </div>
                 {/* Step 2 */}
-                <div className="flex flex-col items-center w-32 sm:w-32">
+                <div className="flex flex-col items-center flex-1 min-w-0">
                   <img
                     src="/how-to-use-icons/howToUse-2.svg"
                     alt="Step 2: Place the pouch"
@@ -188,7 +188,7 @@ const ProductCardDescriptionSection: React.FC<
                   </span>
                 </div>
                 {/* Step 3 */}
-                <div className="flex flex-col items-center w-32 sm:w-32">
+                <div className="flex flex-col items-center flex-1 min-w-0">
                   <img
                     src="/how-to-use-icons/howToUse-3.svg"
                     alt="Step 3: Enjoy and dispose"
@@ -199,11 +199,6 @@ const ProductCardDescriptionSection: React.FC<
                   </span>
                 </div>
               </div>
-              {/* <div className="text-center text-xs sm:text-sm text-[#343232] max-w-2xl mx-auto mt-2">
-                For best results, do not eat or drink while using the pouch.
-                Keep out of reach of children and store in a cool, dry place. Do
-                not swallow or chew the pouch.
-              </div> */}
             </div>
           )}
         </div>

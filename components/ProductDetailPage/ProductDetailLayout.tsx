@@ -1,8 +1,6 @@
-
 "use client";
 
 import React, { useState } from "react";
-
 
 // --- Inlined: ProductPosterCard ---
 interface ProductPosterCardProps {
@@ -14,14 +12,20 @@ interface ProductPosterCardProps {
 const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => (
   <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
     {/* Top badges */}
-    <div className="absolute flex flex-row w-full justify-between top-4 left-0 px-4 z-10">
+    <div className="absolute flex flex-row w-full justify-between top-1 sm:top-4 left-0 pr-1 sm:pr-4 z-10">
       {product.saleLabel ? (
-        <div className="bg-white rounded-[6px] w-[70px] h-[24px] flex items-center justify-center shadow-sm">
-          <span className="italic font-semibold text-[13px] leading-[16px] text-[#C02929]">{product.saleLabel}</span>
+        <div className="bg-white rounded-[6px] w-[70px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
+          <span className="italic font-medium text-xs sm:text-sm text-[#C02929]">
+            {product.saleLabel}
+          </span>
         </div>
-      ) : <div className="w-[70px] h-[24px]" />}
-      <div className="bg-white rounded-[6px] w-[110px] h-[24px] flex items-center justify-center shadow-sm">
-        <span className="italic font-semibold text-[13px] leading-[16px] text-black">{product.shippingLabel}</span>
+      ) : (
+        <div className="w-[70px] h-[24px]" />
+      )}
+      <div className="bg-white rounded-[6px] w-[90px] sm:w-[110px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
+        <span className="italic font-medium text-xs sm:text-sm text-black">
+          {product.shippingLabel}
+        </span>
       </div>
     </div>
     {/* Product image as poster */}
@@ -46,7 +50,13 @@ interface ProductCardDescriptionSectionProps {
   description?: string;
   howToUse?: string;
 }
-const CollapsibleSection: React.FC<{ title: string; open: boolean; onToggle: () => void; children: React.ReactNode; sectionId: string }> = ({ title, open, onToggle, children, sectionId }) => (
+const CollapsibleSection: React.FC<{
+  title: string;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+  sectionId: string;
+}> = ({ title, open, onToggle, children, sectionId }) => (
   <div className="flex flex-col gap-5 border-b border-[#C4C4C4] pb-8 pt-8">
     <button
       className="flex flex-row items-center justify-between w-full bg-transparent border-0 p-0 cursor-pointer focus:outline-none"
@@ -55,62 +65,146 @@ const CollapsibleSection: React.FC<{ title: string; open: boolean; onToggle: () 
       aria-expanded={open}
       aria-controls={sectionId}
     >
-      <span className="font-semibold text-[24px] leading-[29px] text-black">{title}</span>
-      <svg width="20" height="10" viewBox="0 0 20 10" fill="none" xmlns="http://www.w3.org/2000/svg" className={`transition-transform duration-300 ease-in-out ${open ? '' : 'rotate-180'}`} style={{ transformOrigin: '50% 50%' }}>
-        <path d="M1 1L10 9L19 1" stroke="#000" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+      <span className="font-semibold text-[24px] leading-[29px] text-black">
+        {title}
+      </span>
+      <svg
+        width="20"
+        height="10"
+        viewBox="0 0 20 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={`transition-transform duration-300 ease-in-out ${
+          open ? "" : "rotate-180"
+        }`}
+        style={{ transformOrigin: "50% 50%" }}
+      >
+        <path
+          d="M1 1L10 9L19 1"
+          stroke="#000"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
     </button>
-    <div id={sectionId} className={`transition-all duration-300 ease-in-out overflow-hidden ${open ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none'}`} aria-hidden={!open}>
+    <div
+      id={sectionId}
+      className={`transition-all duration-300 ease-in-out overflow-hidden ${
+        open
+          ? "max-h-[2000px] opacity-100"
+          : "max-h-0 opacity-0 pointer-events-none"
+      }`}
+      aria-hidden={!open}
+    >
       {children}
     </div>
   </div>
 );
-const ProductDescriptionDetails: React.FC<{ brand: string; flavor: string; strength: string; nicotinePerPouch: string; description?: string }> = ({ brand, flavor, strength, nicotinePerPouch, description }) => (
+const ProductDescriptionDetails: React.FC<{
+  brand: string;
+  flavor: string;
+  strength: string;
+  nicotinePerPouch: string;
+  description?: string;
+}> = ({ brand, flavor, strength, nicotinePerPouch, description }) => (
   <>
-    <div className="flex flex-row items-center text-[#343232] text-md sm:text-lg font-normal">
+    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
       <span>Brand:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]" style={{marginTop: 14}}></span>
+      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
       <span className="ml-2">{brand}</span>
     </div>
-    <div className="flex flex-row items-center text-[#343232] text-md sm:text-lg font-normal">
+    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
       <span>Flavor:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]" style={{marginTop: 14}}></span>
+      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
       <span className="ml-2">{flavor}</span>
     </div>
-    <div className="flex flex-row items-center text-[#343232] text-md sm:text-lg font-normal">
+    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
       <span>Strength:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]" style={{marginTop: 14}}></span>
+      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
       <span className="ml-2">{strength}</span>
     </div>
-    <div className="flex flex-row items-center text-[#343232] text-md sm:text-lg font-normal">
+    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
       <span>Nicotine per pouch:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]" style={{marginTop: 14}}></span>
+      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
       <span className="ml-2">{nicotinePerPouch}</span>
     </div>
-    <div className="flex flex-row items-center text-[#343232] text-md sm:text-lg font-normal text-justify mt-4">
+    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg text-justify mt-4">
       <p className="">{description}</p>
     </div>
   </>
 );
-const ProductCardDescriptionSection: React.FC<ProductCardDescriptionSectionProps> = ({ brand, flavor, strength, nicotinePerPouch, description, howToUse }) => {
+const ProductCardDescriptionSection: React.FC<
+  ProductCardDescriptionSectionProps
+> = ({ brand, flavor, strength, nicotinePerPouch, description, howToUse }) => {
   const [descOpen, setDescOpen] = React.useState(true);
   const [howToUseOpen, setHowToUseOpen] = React.useState(true);
   return (
     <div className="w-full max-w-[687px]">
-      <CollapsibleSection title="Product Description" open={descOpen} onToggle={() => setDescOpen((prev) => !prev)} sectionId="product-desc-section">
-        <ProductDescriptionDetails brand={brand} flavor={flavor} strength={strength} nicotinePerPouch={nicotinePerPouch} description={description} />
+      <CollapsibleSection
+        title="Product Description"
+        open={descOpen}
+        onToggle={() => setDescOpen((prev) => !prev)}
+        sectionId="product-desc-section"
+      >
+        <ProductDescriptionDetails
+          brand={brand}
+          flavor={flavor}
+          strength={strength}
+          nicotinePerPouch={nicotinePerPouch}
+          description={description}
+        />
       </CollapsibleSection>
-      <CollapsibleSection title="How to Use" open={howToUseOpen} onToggle={() => setHowToUseOpen((prev) => !prev)} sectionId="how-to-use-section">
-        <div className="text-[#343232] text-md sm:text-lg font-normal whitespace-pre-line text-justify">
+      <CollapsibleSection
+        title="How to Use"
+        open={howToUseOpen}
+        onToggle={() => setHowToUseOpen((prev) => !prev)}
+        sectionId="how-to-use-section"
+      >
+        <div className="text-[#343232] text-justify min-w-0">
           {howToUse || (
-            <>
-              <p>
-                Open the can and take out a single pouch. Place the pouch between your upper lip and gum. Let the pouch rest and enjoy the flavor and nicotine release for up to 30 minutes. Dispose of the used pouch in a waste bin. Do not swallow or chew the pouch.
-              </p>
-              <p className="mt-2">
-                For best results, do not eat or drink while using the pouch. Keep out of reach of children and store in a cool, dry place.
-              </p>
-            </>
+            <div className="flex flex-col items-center w-full sm:pt-4">
+              <div className="flex flex-row justify-center items-start gap-4 sm:gap-24 mb-6 w-full">
+                {/* Step 1 */}
+                <div className="flex flex-col items-center w-16 sm:w-32">
+                  <img
+                    src="/how-to-use-icons/howToUse-1.svg"
+                    alt="Step 1: Open the can"
+                    className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
+                  />
+                  <span className="block text-center text-xs sm:text-base font-medium mt-1">
+                    Open the can and take out a single pouch.
+                  </span>
+                </div>
+                {/* Step 2 */}
+                <div className="flex flex-col items-center w-16 sm:w-32">
+                  <img
+                    src="/how-to-use-icons/howToUse-2.svg"
+                    alt="Step 2: Place the pouch"
+                    className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
+                  />
+                  <span className="block text-center text-xs sm:text-base font-medium mt-1">
+                    Place the pouch between your upper lip and gum.
+                  </span>
+                </div>
+                {/* Step 3 */}
+                <div className="flex flex-col items-center w-16 sm:w-32">
+                  <img
+                    src="/how-to-use-icons/howToUse-3.svg"
+                    alt="Step 3: Enjoy and dispose"
+                    className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
+                  />
+                  <span className="block text-center text-xs sm:text-base font-medium mt-1">
+                    Hold for up to 30 minutes. Do not chew or swallow.
+                  </span>
+                </div>
+              </div>
+              <div className="text-center text-xs sm:text-sm text-[#343232] max-w-2xl mx-auto mt-2">
+                For best results, do not eat or drink while using the pouch.
+                Keep out of reach of children and store in a cool, dry place. Do
+                not swallow or chew the pouch.
+              </div>
+            </div>
           )}
         </div>
       </CollapsibleSection>
@@ -124,9 +218,11 @@ interface ProductDetailDescriptionSectionProps {
 /**
  * ProductDetailDescriptionSection renders the product description section for a product.
  */
-const ProductDetailDescriptionSection: React.FC<ProductDetailDescriptionSectionProps> = ({ product, className = "" }) => (
+const ProductDetailDescriptionSection: React.FC<
+  ProductDetailDescriptionSectionProps
+> = ({ product, className = "" }) => (
   <div className={`relative bg-white overflow-visible ${className}`}>
-    <div className="relative z-10 p-6">
+    <div className="relative z-10 m-1 sm:m-6">
       <ProductCardDescriptionSection
         brand={product.brand}
         flavor={product.flavor}
@@ -151,21 +247,38 @@ const defaultTestimonials: Testimonial[] = [
   { name: "M.B", review: "best price but delivery time take long", rating: 5 },
   { name: "M.B", review: "best price but delivery time take long", rating: 5 },
 ];
-const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
+const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
+  testimonial,
+}) => {
   return (
     <div className="border-0 transition-all duration-300 bg-transparent w-full max-w-[284px] rounded-[19px] shadow-md">
       <div className="px-5 py-2">
         <div className="flex items-center space-x-1 mb-1">
           {[...Array(5)].map((_, j) => (
-            <span key={j} className={`size-4 ${j < 4 ? "fill-black text-black" : "fill-none text-black"}`}>★</span>
+            <span
+              key={j}
+              className={`size-4 ${
+                j < 4 ? "fill-black text-black" : "fill-none text-black"
+              }`}
+            >
+              ★
+            </span>
           ))}
         </div>
-        <p className="text-gray-700 mb-1 text-sm leading-relaxed">{testimonial.review}</p>
+        <p className="text-gray-700 mb-1 text-sm leading-relaxed">
+          {testimonial.review}
+        </p>
         <div className="flex items-center">
           <div className="flex items-center space-x-2">
             <span>👤</span>
-            <p className="font-semibold text-sm text-gray-900">{testimonial.name}</p>
-            <img src="/signature.png" alt="Verified signature" className="h-4 w-auto ml-2" />
+            <p className="font-semibold text-sm text-gray-900">
+              {testimonial.name}
+            </p>
+            <img
+              src="/signature.png"
+              alt="Verified signature"
+              className="h-4 w-auto ml-2"
+            />
           </div>
         </div>
       </div>
@@ -189,10 +302,16 @@ interface ProductDetailLayoutProps {
   slug?: string;
 }
 
-export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ product: propProduct, slug }) => {
+export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
+  product: propProduct,
+  slug,
+}) => {
   // If slug is provided, find the product by slug
   // Otherwise, fallback to idx from searchParams
-  const searchParams = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : undefined;
+  const searchParams =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search)
+      : undefined;
   let idx = 0;
   if (searchParams) {
     idx = Number(searchParams.get("idx")) || 0;
@@ -209,28 +328,10 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ produc
       product = undefined;
     }
   }
-  if (!product && typeof products !== 'undefined') {
+  if (!product && typeof products !== "undefined") {
     product = products[idx] || products[0];
   }
   const [quantity, setQuantity] = useState(1);
-
-// const mockDescription = {
-//   brand: "Velo",
-//   flavor: "Mint",
-//   strength: "Medium",
-//   nicotinePerPouch: "6 mg",
-//   description: "",
-//   howToUse: "",
-// };
-
-// const mockReelProducts = Array(5).fill({
-//   productImage: "/product-image.png",
-//   productName: "Klint Artic Mint",
-//   salePrice: "€ 3,60",
-//   originalPrice: "€ 4,99",
-//   saleLabel: "Sale 30%",
-//   shippingLabel: "Free shipping",
-// });
 
   return (
     <div className="w-full bg-white flex flex-col items-center">
@@ -241,12 +342,15 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ produc
           {/* Product Poster Card for Product Detail */}
           <ProductPosterCard product={product} />
           {/* Description Section with SVG background (hidden on mobile, shown on desktop) */}
-          <ProductDetailDescriptionSection product={product} className="hidden sm:block" />
+          <ProductDetailDescriptionSection
+            product={product}
+            className="hidden sm:block"
+          />
         </div>
         {/* Right: Purchase Section with SVG background - fixed on large screens */}
         <div className="flex-1 flex flex-col items-start min-w-full sm:min-w-[350px] max-w-full sm:max-w-[687px] mx-auto px-0 sm:px-0">
           <div className="relative w-full bg-white overflow-visible lg:sticky lg:top-0">
-            <div className="relative z-10">
+            <div className="relative z-10 w-full">
               <ProductPurchaseSection
                 productName={product.productName}
                 productImage={product.productImage}
@@ -264,7 +368,10 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ produc
             </div>
           </div>
           {/* Description Section for mobile only (below purchase section) */}
-          <ProductDetailDescriptionSection product={product} className="block sm:hidden w-full" />
+          <ProductDetailDescriptionSection
+            product={product}
+            className="block sm:hidden w-full"
+          />
         </div>
       </div>
       {/* Product Card Reel */}
@@ -275,7 +382,6 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({ produc
       <div className="mt-12 sm:mt-16">
         <ReviewSection />
       </div>
-
     </div>
   );
 };

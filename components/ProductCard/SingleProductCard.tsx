@@ -9,26 +9,20 @@ interface TopBadgesProps {
 }
 const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel, shippingLabel }) => {
   return (
-    <div className="absolute flex flex-row w-full justify-between top-[8px] left-0 px-0.5 sm:px-2 z-0">
+    <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between top-[8px] left-0 px-1 sm:px-2 z-0">
       {/* Sale badge (conditionally render) */}
       {saleLabel ? (
-        <div className="bg-white rounded-[6px] w-[54px] sm:w-[60px] h-[16px] sm:h-[24px] flex items-center justify-center">
-          <span
-            className="italic font-semibold text-[10px] sm:text-[11px] leading-[14px] text-[#C02929]"
-            style={{ paddingTop: "1px" }}
-          >
+        <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
+          <span className="italic font-medium text-[9px] sm:text-[11px] text-[#C02929]">
             {saleLabel}
           </span>
         </div>
       ) : (
-        <div className="w-[54px] h-[16px] sm:h-[24px]" />
+        <div className="w-[48px] h-[16px] sm:h-[24px]" />
       )}
       {/* Free shipping badge */}
-      <div className="bg-white rounded-[6px] w-[74px] sm:w-[80px] h-[16px] sm:h-[24px] flex items-center justify-center">
-        <span
-          className="italic font-semibold text-[10px] sm:text-[11px] leading-[14px] text-black"
-          style={{ paddingTop: "1px" }}
-        >
+      <div className="bg-white rounded-[6px] w-[68px] sm:w-[80px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
+        <span className="italic font-medium text-[9px] sm:text-[11px] text-black">
           {shippingLabel}
         </span>
       </div>
@@ -45,7 +39,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
   productImage,
   productName,
 }) => (
-  <div className="absolute left-1/2 top-[18px] sm:top-[38px] -translate-x-1/2 w-[160px] h-[160px] sm:w-[240px] sm:h-[240px] flex items-center justify-center">
+  <div className="absolute left-1/2 top-[12px] sm:top-[12px] -translate-x-1/2 w-[150px] h-[150px] sm:w-[280px] sm:h-[280px] flex items-center justify-center">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src={productImage}
@@ -174,7 +168,7 @@ export const SingleProductCard: React.FC<SingleProductCardProps> = ({
 }) => {
   return (
     <div
-      className="relative w-[160px] h-[220px] sm:w-full sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
+      className="relative w-[160px] h-[210px] sm:w-full sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
       style={{
         background: "linear-gradient(180deg, #CEF6F8 0%, #F0F1F1 100%)",
         minWidth: 0,

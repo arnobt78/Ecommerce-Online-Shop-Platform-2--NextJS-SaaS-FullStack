@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // DEBUG: Top-level log to check if file is loaded
-console.log('CartPageComponents.tsx file loaded');
+console.log("CartPageComponents.tsx file loaded");
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,16 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import {
-  ArrowLeft, Heart, Trash2, Plus, Minus, ShoppingBag, Lock, CreditCard, Truck, Shield
+  ArrowLeft,
+  Heart,
+  Trash2,
+  Plus,
+  Minus,
+  ShoppingBag,
+  Lock,
+  CreditCard,
+  Truck,
+  Shield,
 } from "lucide-react";
 
 /**
@@ -18,12 +27,12 @@ import {
 
 const CartPageComponents: React.FC = () => {
   // DEBUG: Log to check if component function is called
-  console.log('CartPageComponents function called');
+  console.log("CartPageComponents function called");
 
   // Cart context state
   const { cartItems, setCartItems } = useCart();
   // Debug: log cart items to check productImage values
-  console.log('CartPageComponents cartItems:', cartItems);
+  console.log("CartPageComponents cartItems:", cartItems);
 
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
@@ -31,9 +40,15 @@ const CartPageComponents: React.FC = () => {
   // Cart logic helpers
   const updateQuantity = (slug: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      setCartItems((prev: any) => prev.filter((item: any) => item.slug !== slug));
+      setCartItems((prev: any) =>
+        prev.filter((item: any) => item.slug !== slug)
+      );
     } else {
-      setCartItems((prev: any) => prev.map((item: any) => (item.slug === slug ? { ...item, quantity: newQuantity } : item)));
+      setCartItems((prev: any) =>
+        prev.map((item: any) =>
+          item.slug === slug ? { ...item, quantity: newQuantity } : item
+        )
+      );
     }
   };
   const removeFromCart = (slug: string) => {
@@ -52,14 +67,17 @@ const CartPageComponents: React.FC = () => {
     const num = parseFloat(cleaned);
     return isNaN(num) ? 0 : num;
   }
-  const getSubtotal = () => cartItems.reduce((total: number, item: any) => {
-    const price = parsePrice(item.salePrice ?? item.originalPrice);
-    return total + price * item.quantity;
-  }, 0);
-  const getDiscount = () => (appliedPromo === "SAVE10" ? getSubtotal() * 0.1 : 0);
+  const getSubtotal = () =>
+    cartItems.reduce((total: number, item: any) => {
+      const price = parsePrice(item.salePrice ?? item.originalPrice);
+      return total + price * item.quantity;
+    }, 0);
+  const getDiscount = () =>
+    appliedPromo === "SAVE10" ? getSubtotal() * 0.1 : 0;
   const getShipping = () => (getSubtotal() > 100 ? 0 : 5);
   const getTax = () => getSubtotal() * 0.2;
-  const getTotal = () => getSubtotal() - getDiscount() + getShipping() + getTax();
+  const getTotal = () =>
+    getSubtotal() - getDiscount() + getShipping() + getTax();
 
   // Only render cart items list (no summary, promo, or badges)
   if (!cartItems.length) return null;
@@ -71,16 +89,18 @@ const CartPageComponents: React.FC = () => {
             {/* Product Image */}
             <div className="relative">
               <div className="w-24 h-24 bg-transparent rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 group-hover:shadow-xl transition-all duration-300 overflow-hidden">
-                {typeof item.productImage === 'string' && item.productImage.length > 0 ? (
+                {typeof item.productImage === "string" &&
+                item.productImage.length > 0 ? (
                   <img
                     src={
-                      item.productImage.startsWith('http://') || item.productImage.startsWith('https://')
+                      item.productImage.startsWith("http://") ||
+                      item.productImage.startsWith("https://")
                         ? item.productImage
-                        : '/' + item.productImage.replace(/^\/+/, '')
+                        : "/" + item.productImage.replace(/^\/+/, "")
                     }
                     alt={item.productName}
                     className="object-contain w-full h-full"
-                    style={{ maxWidth: '100%', maxHeight: '100%' }}
+                    style={{ maxWidth: "100%", maxHeight: "100%" }}
                   />
                 ) : (
                   <div className="text-3xl">No Image</div>
@@ -108,8 +128,22 @@ const CartPageComponents: React.FC = () => {
                       {item.brand}
                     </span>
                     {item.stockStatus && (
-                      <span className="text-xs font-medium text-white px-2 py-1 rounded-full" style={{ background: item.stockStatus === 'in_stock' ? '#15FF00' : item.stockStatus === 'low_stock' ? '#FFD600' : item.stockStatus === 'last_3' ? '#FFD600' : '#FF3B30' }}>
-                        {item.stockStatus.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
+                      <span
+                        className="text-xs font-medium text-white px-2 py-1 rounded-full"
+                        style={{
+                          background:
+                            item.stockStatus === "in_stock"
+                              ? "#4ade80"
+                              : item.stockStatus === "low_stock"
+                              ? "#FFD600"
+                              : item.stockStatus === "last_3"
+                              ? "#FFD600"
+                              : "#FF3B30",
+                        }}
+                      >
+                        {item.stockStatus
+                          .replace(/_/g, " ")
+                          .replace(/\b\w/g, (l: string) => l.toUpperCase())}
                       </span>
                     )}
                   </div>
@@ -147,8 +181,11 @@ const CartPageComponents: React.FC = () => {
                   </Button>
                 </div>
                 <span className="text-lg font-semibold text-gray-900">
-                  €{(() => {
-                    const price = parsePrice(item.salePrice ?? item.originalPrice);
+                  €
+                  {(() => {
+                    const price = parsePrice(
+                      item.salePrice ?? item.originalPrice
+                    );
                     return (price * item.quantity).toFixed(2);
                   })()}
                 </span>

@@ -89,7 +89,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
   const router = useRouter();
 
   return (
-    <div className="text-center sm:text-left flex flex-col justify-center items-center h-full min-h-[120px]">
+    <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0">
       {/* <button
         onClick={onToggle}
         className="flex items-center justify-between w-full sm:pointer-events-none"
@@ -151,7 +151,7 @@ const payments: Payment[] = [
 
 export function FooterPayments() {
   return (
-    <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-3 md:gap-4">
+    <div className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4">
       {payments.map((payment, i) => (
         <div
           key={i}
@@ -171,7 +171,7 @@ export function FooterPayments() {
 // FooterCopyright
 export function FooterCopyright() {
   return (
-    <p className="text-gray-500 text-xs md:text-sm text-center sm:text-right">
+    <p className="text-gray-500 text-xs sm:text-sm text-center sm:text-right">
       © Snuzz {new Date().getUTCFullYear()}. All Rights Reserved.
     </p>
   );

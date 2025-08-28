@@ -57,7 +57,7 @@ const CollapsibleSection: React.FC<{
   children: React.ReactNode;
   sectionId: string;
 }> = ({ title, open, onToggle, children, sectionId }) => (
-  <div className="flex flex-col gap-5 border-b border-[#C4C4C4] pb-8 pt-8">
+  <div className="flex flex-col gap-5 border-b border-[#C4C4C4] pt-4 sm:pt-8 sm:pb-8">
     <button
       className="flex flex-row items-center justify-between w-full bg-transparent border-0 p-0 cursor-pointer focus:outline-none"
       type="button"
@@ -371,10 +371,10 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
       </div>
       {/* Product Card Reel */}
       <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16">
-        <ProductCardReelSection products={products.slice(0, 6)} />
+        <ProductCardReelSection products={products} />
       </div>
       {/* Reviews Section */}
-      <div className="mt-12 sm:mt-16">
+      <div className="mt-8 sm:mt-16">
         <ReviewSection />
       </div>
     </div>

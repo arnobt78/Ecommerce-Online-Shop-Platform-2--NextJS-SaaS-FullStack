@@ -119,7 +119,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
       {showArrows && (
         <button
           type="button"
-          className="flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-r from-white/70 to-transparent cursor-pointer"
+          className="flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-r from-white/90 to-transparent cursor-pointer"
           onClick={handleLeft}
           aria-label="Scroll left"
           disabled={scrollIndex === 0}
@@ -175,7 +175,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
       {showArrows && (
         <button
           type="button"
-          className="flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-l from-white/70 to-transparent cursor-pointer"
+          className="flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-l from-white/90 to-transparent cursor-pointer"
           onClick={handleRight}
           aria-label="Scroll right"
           disabled={scrollIndex === maxIndex}

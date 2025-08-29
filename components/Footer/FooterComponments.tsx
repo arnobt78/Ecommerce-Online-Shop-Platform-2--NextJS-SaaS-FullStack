@@ -45,7 +45,7 @@ export function FooterSection({
           <li key={item}>
             <a
               href="#"
-              className="transition-colors text-sm md:text-base hover:text-gray-900 block py-1"
+              className="transition-colors text-sm sm:text-base hover:text-gray-900 font-semibold sm:font-normal block py-1"
               onClick={() => {
                 // Handle navigation for terms, privacy, refund, and FAQ links
                 if (item === "Terms of Service") router.push("/terms");

@@ -48,7 +48,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   handleAddToCart,
   onCardClick,
 }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
+  // <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-0 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
     {products.length > 0 ? (
       products.map((product, idx) => (
         <ListProductCardItem

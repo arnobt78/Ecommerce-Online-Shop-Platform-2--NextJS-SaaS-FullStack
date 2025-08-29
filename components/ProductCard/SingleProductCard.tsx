@@ -168,7 +168,7 @@ export const SingleProductCard: React.FC<SingleProductCardProps> = ({
 }) => {
   return (
     <div
-      className="relative w-[160px] h-[210px] sm:w-full sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
+      className="relative w-full max-w-[160px] h-[210px] sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
       style={{
         background: "linear-gradient(180deg, #CEF6F8 0%, #F0F1F1 100%)",
         minWidth: 0,

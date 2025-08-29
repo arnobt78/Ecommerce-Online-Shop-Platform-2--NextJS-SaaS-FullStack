@@ -26,16 +26,14 @@ function ListProductCardItem({
   onCardClick,
 }: ListProductCardItemProps) {
   return (
-    <div className="w-full flex justify-center">
-      <SingleProductCard
-        {...product}
-        addToCart={(e) => {
-          if (e && e.stopPropagation) e.stopPropagation();
-          handleAddToCart(product);
-        }}
-        onCardClick={onCardClick}
-      />
-    </div>
+    <SingleProductCard
+      {...product}
+      addToCart={(e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
+        handleAddToCart(product);
+      }}
+      onCardClick={onCardClick}
+    />
   );
 }
 
@@ -50,7 +48,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   handleAddToCart,
   onCardClick,
 }) => (
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-1 gap-y-2 sm:gap-x-4 sm:gap-y-6 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
     {products.length > 0 ? (
       products.map((product, idx) => (
         <ListProductCardItem

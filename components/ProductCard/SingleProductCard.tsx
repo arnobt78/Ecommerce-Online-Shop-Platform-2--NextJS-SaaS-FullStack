@@ -9,7 +9,7 @@ interface TopBadgesProps {
 }
 const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel, shippingLabel }) => {
   return (
-    <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between top-[8px] left-0 px-1 sm:px-2 z-0">
+    <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between top-[8px] left-0 px-1 sm:px-2 z-30">
       {/* Sale badge (conditionally render) */}
       {saleLabel ? (
         <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
@@ -39,7 +39,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
   productImage,
   productName,
 }) => (
-  <div className="absolute left-1/2 top-[14px] sm:top-[12px] -translate-x-1/2 w-[190px] h-[190px] sm:w-[280px] sm:h-[280px] flex items-center justify-center">
+  <div className="absolute left-1/2 top-[12px] sm:top-[12px] -translate-x-1/2 w-[190px] h-[190px] sm:w-[280px] sm:h-[280px] flex items-center justify-center">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src={productImage}

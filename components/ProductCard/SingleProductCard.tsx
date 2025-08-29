@@ -39,7 +39,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
   productImage,
   productName,
 }) => (
-  <div className="absolute left-1/2 top-[12px] sm:top-[12px] -translate-x-1/2 w-[150px] h-[150px] sm:w-[280px] sm:h-[280px] flex items-center justify-center">
+  <div className="absolute left-1/2 top-[14px] sm:top-[12px] -translate-x-1/2 w-[190px] h-[190px] sm:w-[280px] sm:h-[280px] flex items-center justify-center">
     {/* eslint-disable-next-line @next/next/no-img-element */}
     <img
       src={productImage}
@@ -168,7 +168,7 @@ export const SingleProductCard: React.FC<SingleProductCardProps> = ({
 }) => {
   return (
     <div
-      className="relative w-full h-[210px] sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
+      className="relative w-full h-[240px] sm:max-w-[248px] sm:h-[329px] rounded-[16px] mx-auto overflow-hidden shadow-lg flex-shrink hover:scale-[1.01] transition-transform duration-300 ease-in-out cursor-pointer"
       style={{
         background: "linear-gradient(180deg, #CEF6F8 0%, #F0F1F1 100%)",
         minWidth: 0,

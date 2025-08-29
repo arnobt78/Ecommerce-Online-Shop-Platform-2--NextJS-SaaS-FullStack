@@ -14,9 +14,9 @@ function ReviewModal({
   if (!open || !testimonial) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-4 sm:p-8 relative text-justify">
+      <div className="bg-white rounded-xl shadow-lg max-w-md w-full px-4 sm:px-8 py-6 sm:py-8 relative text-justify">
         <button
-          className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold"
+          className="absolute top-2 right-6 text-gray-400 hover:text-gray-700 text-2xl font-bold"
           onClick={onClose}
           aria-label="Close"
         >

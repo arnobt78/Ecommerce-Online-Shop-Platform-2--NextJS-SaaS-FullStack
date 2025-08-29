@@ -94,10 +94,16 @@ const ProductPurchaseActions: React.FC<ProductPurchaseActionsProps> = ({
  * GuaranteeShippingReturns displays guarantee, shipping, and returns info.
  */
 const GuaranteeShippingReturns: React.FC = () => (
-  <div className="flex flex-col sm:flex-row justify-between items-center bg-[#8EF7FB]/12 px-4 py-4 gap-2">
-    <span className="text-[15px] text-[#343232]">Money Back Guarantee</span>
-    <span className="text-[15px] text-[#343232]">Free Shipping</span>
-    <span className="text-[15px] text-[#343232]">Free Returns</span>
+  <div className="flex flex-row justify-between items-center bg-[#8EF7FB]/12 px-0 sm:px-4 py-4 sm:py-4 gap-1 sm:gap-2">
+    <span className="flex-1 sm:flex-none text-center text-xs sm:text-sm text-[#343232]">
+      Money Back Guarantee
+    </span>
+    <span className="flex-1 sm:flex-none text-center text-xs sm:text-sm text-[#343232]">
+      Free Shipping
+    </span>
+    <span className="flex-1 sm:flex-none text-center text-xs sm:text-sm text-[#343232]">
+      Free Returns
+    </span>
   </div>
 );
 
@@ -106,7 +112,7 @@ const GuaranteeShippingReturns: React.FC = () => (
  * ShippingOptions displays shipping, express, and pickup options with icons.
  */
 const ShippingOptions: React.FC = () => (
-  <div className="flex flex-col gap-4 mt-4 w-full px-4 sm:px-0">
+  <div className="flex flex-col gap-4 py-2 w-full px-4 sm:px-0">
     <div className="flex flex-row items-center gap-4">
       {/* Truck Icon */}
       <span className="inline-flex items-center justify-center w-7 h-7">

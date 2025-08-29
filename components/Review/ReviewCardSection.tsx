@@ -14,7 +14,7 @@ function ReviewModal({
   if (!open || !testimonial) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+      <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-4 sm:p-8 relative text-justify">
         <button
           className="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl font-bold"
           onClick={onClose}
@@ -73,7 +73,7 @@ function ReviewCardItem({
       className="border-0 transition-all duration-300 bg-transparent w-full max-w-[284px] rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hove:to-[#8ef7fb]/15"
       onClick={onClick}
     >
-      <CardContent className="px-5 py-4 flex flex-col h-full justify-between text-justify">
+      <CardContent className="px-4 py-4 flex flex-col h-full justify-between text-justify">
         <div>
           <div className="flex items-center space-x-1 mb-1">
             {[...Array(5)].map((_, j) => (
@@ -137,7 +137,7 @@ export default function ReviewCard({
   };
 
   return (
-    <section className="px-4 bg-transparent">
+    <section className="px-2 sm:px-4 bg-transparent">
       <style jsx>{`
         @keyframes scroll-left {
           0% {

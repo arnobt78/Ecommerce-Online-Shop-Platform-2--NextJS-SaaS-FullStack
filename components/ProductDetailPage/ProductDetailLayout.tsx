@@ -331,7 +331,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   return (
     <div className="w-full bg-white flex flex-col items-center">
       {/* Main Content */}
-      <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto pt-12 px-1 sm:px-32">
+      <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto px-1 sm:px-32">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}
         <div className="flex flex-col gap-8 w-full bg-white lg:w-[687px]">
           {/* Product Poster Card for Product Detail */}

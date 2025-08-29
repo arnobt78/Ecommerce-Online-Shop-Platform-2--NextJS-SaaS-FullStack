@@ -12,7 +12,7 @@ export default async function ProductDetailSlugPage({
   const product = products.find((p) => p.slug === slug);
   if (!product) return notFound();
   return (
-    <div className="pt-4 sm:pt-20">
+    <div className="pt-20 sm:pt-32">
       <ProductDetailLayout product={product} slug={slug} />
     </div>
   );

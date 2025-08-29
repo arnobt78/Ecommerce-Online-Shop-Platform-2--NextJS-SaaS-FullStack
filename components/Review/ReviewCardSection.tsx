@@ -70,7 +70,7 @@ function ReviewCardItem({
 }) {
   return (
     <Card
-      className="border-0 transition-all duration-300 bg-transparent w-full max-w-[284px] rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hove:to-[#8ef7fb]/15"
+      className="border-0 transition-all duration-300 bg-transparent w-full max-w-[320px] rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hove:to-[#8ef7fb]/15"
       onClick={onClick}
     >
       <CardContent className="px-4 py-4 flex flex-col h-full justify-between text-justify">

@@ -181,7 +181,7 @@ export default function CategoryPage() {
             selectedFlavors.length > 0 ||
             selectedStrengths.length > 0 ||
             selectedSort) && (
-            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 m-0">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-2 m-0 px-2 sm:px-0">
               <span className="font-medium whitespace-nowrap">
                 Filtered by:
               </span>

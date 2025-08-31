@@ -26,16 +26,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // <html lang="en" suppressHydrationWarning>
-    //   <body className="antialiased bg-white" style={{ fontFamily: 'system-ui, sans-serif' }}>
-    //     <CartProvider>
-    //       <Navbar allProducts={products} />
-    //       <CartSidebarLayout />
-    //       {children}
-    //       <Footer />
-    //     </CartProvider>
-    //   </body>
-    // </html>
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased bg-white" style={{ fontFamily: 'system-ui, sans-serif' }}>
         <CartProvider>

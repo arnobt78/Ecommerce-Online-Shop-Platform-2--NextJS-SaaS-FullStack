@@ -74,9 +74,8 @@ const CollapsibleSection: React.FC<{
         viewBox="0 0 20 10"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`transition-transform duration-300 ease-in-out ${
-          open ? "" : "rotate-180"
-        }`}
+        className={`transition-transform duration-300 ease-in-out ${open ? "" : "rotate-180"
+          }`}
         style={{ transformOrigin: "50% 50%" }}
       >
         <path
@@ -90,11 +89,10 @@ const CollapsibleSection: React.FC<{
     </button>
     <div
       id={sectionId}
-      className={`transition-all duration-300 ease-in-out overflow-hidden ${
-        open
+      className={`transition-all duration-300 ease-in-out overflow-hidden ${open
           ? "max-h-[2000px] opacity-100"
           : "max-h-0 opacity-0 pointer-events-none"
-      }`}
+        }`}
       aria-hidden={!open}
     >
       {children}
@@ -152,7 +150,7 @@ const ProductCardDescriptionSection: React.FC<
           flavor={flavor}
           strength={strength}
           nicotinePerPouch={nicotinePerPouch}
-          // description={description}
+        // description={description}
         />
       </CollapsibleSection>
       <CollapsibleSection
@@ -252,9 +250,8 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
           {[...Array(5)].map((_, j) => (
             <span
               key={j}
-              className={`size-4 ${
-                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-              }`}
+              className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                }`}
             >
               ★
             </span>
@@ -303,10 +300,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
 }) => {
   // If slug is provided, find the product by slug
   // Otherwise, fallback to idx from searchParams
-  const searchParams =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search)
-      : undefined;
+  const searchParams = useSearchParams();
   let idx = 0;
   if (searchParams) {
     idx = Number(searchParams.get("idx")) || 0;
@@ -355,8 +349,8 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
                 originalPrice={product.originalPrice || ""}
                 quantity={quantity}
                 onQuantityChange={setQuantity}
-                onBuyNow={() => {}}
-                onAddToCart={() => {}}
+                onBuyNow={() => { }}
+                onAddToCart={() => { }}
                 productId={idx}
                 slug={product.slug}
               />

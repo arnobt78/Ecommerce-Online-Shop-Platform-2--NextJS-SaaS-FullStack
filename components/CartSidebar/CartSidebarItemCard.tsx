@@ -17,18 +17,25 @@ export default function CartSidebarItem({
 }: CartSidebarItemProps) {
   // Debug: log the item object to see what is actually in the cart
   console.log("CartSidebarItemCard item:", item);
+
+  const handleViewProduct = () => {
+    if (typeof window !== 'undefined') {
+      window.location.assign(`/product-detail/${item.slug}`);
+    }
+  };
+
   return (
     <div className="flex items-stretch bg-transparent p-4 hover:bg-gray-50 transition-colors duration-300">
       {/* Product image frame, stretches to match content height */}
       <div className="flex-shrink-0 flex flex-col justify-center">
         <div className="w-20 h-20 border border-gray-200 rounded-lg flex items-center justify-center bg-white mr-2 sm:mr-4 overflow-hidden">
           {item.productImage &&
-          typeof item.productImage === "string" &&
-          item.productImage.length > 0 ? (
+            typeof item.productImage === "string" &&
+            item.productImage.length > 0 ? (
             <img
               src={
                 item.productImage.startsWith("http://") ||
-                item.productImage.startsWith("https://")
+                  item.productImage.startsWith("https://")
                   ? item.productImage
                   : "/" + item.productImage.replace(/^\/+/, "")
               }
@@ -51,10 +58,7 @@ export default function CartSidebarItem({
           <button
             type="button"
             className="font-semibold text-gray-900 hover:text-indigo-600 text-sm sm:text-md leading-tight truncate text-left"
-            onClick={() =>
-              item.slug &&
-              window.location.assign(`/product-detail/${item.slug}`)
-            }
+            onClick={handleViewProduct}
             style={{
               background: "none",
               border: "none",
@@ -71,7 +75,7 @@ export default function CartSidebarItem({
               // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
               let price =
                 typeof item.salePrice === "string" &&
-                item.salePrice.trim().length > 0
+                  item.salePrice.trim().length > 0
                   ? item.salePrice
                   : item.originalPrice;
               if (!price || typeof price !== "string") return "0.00";

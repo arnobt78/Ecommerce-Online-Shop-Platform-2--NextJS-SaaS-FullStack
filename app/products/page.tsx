@@ -11,15 +11,15 @@ import { ListProductCard } from "@/components/ProductCard/ListProductCard";
 import { CategoryFilterMenuBar } from "@/components/CategoryFilter/CategoryFilterMenuBar";
 import { useInitialFilter } from "./useInitialFilter";
 import { products, ProductData } from "@/scripts/data/products";
+import { useSearchParams } from "next/navigation";
 
 export default function CategoryPage() {
   const initialFilter = useInitialFilter();
-  // Read search param from URL
-  let search = "";
-  if (typeof window !== "undefined") {
-    const params = new URLSearchParams(window.location.search);
-    search = params.get("search") || "";
-  }
+  const searchParams = useSearchParams();
+
+  // Read search param from URL using Next.js hook
+  const search = searchParams?.get("search") || "";
+
   // All cart logic is now handled globally via CartContext
   // Remove local pagination, let ListProductCard handle it
   // Filter state (lifted to parent)
@@ -150,8 +150,8 @@ export default function CategoryPage() {
         {/* Hero Section */}
         <section className="bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 py-2 sm:py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900">
-              Best selling
+            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900">
+              Best Selling
             </h1>
             <p className="text-gray-600 text-md">
               Discover our most popular nicotine products

@@ -16,6 +16,8 @@ export default function SnuzzProLanding() {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
     checkMobile();
     window.addEventListener("resize", checkMobile);

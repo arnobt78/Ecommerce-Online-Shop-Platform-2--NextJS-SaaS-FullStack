@@ -39,6 +39,8 @@ export default function Navbar({
   }, []);
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleScroll = () => {
       // Show navbar only when at the very top
       setShowNavbar(window.scrollY === 0);
@@ -62,8 +64,8 @@ export default function Navbar({
         typeof product.name === "string"
           ? product.name
           : typeof product.productName === "string"
-          ? product.productName
-          : "";
+            ? product.productName
+            : "";
       const brand = typeof product.brand === "string" ? product.brand : "";
       const category =
         typeof product.category === "string" ? product.category : "";
@@ -213,11 +215,10 @@ export default function Navbar({
                                 product.slug ||
                                 product.name ||
                                 product.productName ||
-                                `search-result-${
-                                  product.slug ||
-                                  product.name ||
-                                  product.productName ||
-                                  index
+                                `search-result-${product.slug ||
+                                product.name ||
+                                product.productName ||
+                                index
                                 }`
                               }
                               className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
@@ -245,7 +246,7 @@ export default function Navbar({
                                         <img
                                           src={
                                             img.startsWith("http://") ||
-                                            img.startsWith("https://")
+                                              img.startsWith("https://")
                                               ? img
                                               : "/" + img.replace(/^\/+/, "")
                                           }
@@ -312,7 +313,7 @@ export default function Navbar({
                                         €
                                         {parseFloat(
                                           (typeof product.originalPrice ===
-                                          "string"
+                                            "string"
                                             ? product.originalPrice
                                             : String(product.originalPrice)
                                           )
@@ -326,7 +327,7 @@ export default function Navbar({
                                       €
                                       {parseFloat(
                                         (typeof product.originalPrice ===
-                                        "string"
+                                          "string"
                                           ? product.originalPrice
                                           : String(product.originalPrice)
                                         )
@@ -493,11 +494,10 @@ export default function Navbar({
                               product.slug ||
                               product.name ||
                               product.productName ||
-                              `search-result-mobile-${
-                                product.slug ||
-                                product.name ||
-                                product.productName ||
-                                index
+                              `search-result-mobile-${product.slug ||
+                              product.name ||
+                              product.productName ||
+                              index
                               }`
                             }
                             className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"

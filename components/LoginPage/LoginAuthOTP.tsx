@@ -101,6 +101,11 @@ export default function LoginAuthOTP({
       const data = await res.json();
       if (data.success) {
         setError("");
+        // Set authentication flag in localStorage
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('demo_authenticated', 'true');
+          localStorage.setItem('demo_email', email);
+        }
         router.push("/dashboard");
       } else {
         setError(data.error || "Invalid code. Please try again.");
@@ -129,16 +134,15 @@ export default function LoginAuthOTP({
           />
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
-              sending ? "opacity-60 cursor-not-allowed" : ""
-            }`}
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${sending ? "opacity-60 cursor-not-allowed" : ""
+              }`}
             disabled={timer > 0 || sending}
           >
             {sending
               ? "Sending code..."
               : timer > 0
-              ? `Send code (${timer}s)`
-              : "Send code"}
+                ? `Send code (${timer}s)`
+                : "Send code"}
           </button>
         </form>
       ) : (
@@ -174,9 +178,8 @@ export default function LoginAuthOTP({
               ) : (
                 <button
                   type="button"
-                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${
-                    resending ? "opacity-60 cursor-not-allowed" : ""
-                  }`}
+                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${resending ? "opacity-60 cursor-not-allowed" : ""
+                    }`}
                   onClick={resending ? undefined : handleResendCode}
                   disabled={resending}
                 >
@@ -187,9 +190,8 @@ export default function LoginAuthOTP({
           </div>
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
-              loggingIn ? "opacity-60 cursor-not-allowed" : ""
-            }`}
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${loggingIn ? "opacity-60 cursor-not-allowed" : ""
+              }`}
             disabled={loggingIn}
           >
             {loggingIn ? "Logging in..." : "Log in"}

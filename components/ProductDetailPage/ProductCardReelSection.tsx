@@ -102,6 +102,8 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     setMounted(true);
   }, []);
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleResize = () => {
       setItemsToShow(window.innerWidth < 640 ? 2 : 5);
     };
@@ -276,6 +278,8 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
 }) => {
   const [isMobile, setIsMobile] = React.useState(false);
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
     window.addEventListener("resize", handleResize);

@@ -39,7 +39,9 @@ export default function PaymentMethods() {
   });
   // Only run on client
   React.useEffect(() => {
-    const checkMobile = () => setIsMobile(typeof window !== "undefined" && window.innerWidth < 640);
+    if (typeof window === 'undefined') return;
+
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -56,7 +58,7 @@ export default function PaymentMethods() {
       <p className="text-xs text-gray-500 mb-4">All transactions are secure and encrypted.</p>
       <div className="border rounded-xl overflow-hidden">
         {/* Card Option */}
-        <div className={`flex items-center px-4 py-3 border-b ${selected === "card" ? "bg-gray-50" : "bg-white"}`}> 
+        <div className={`flex items-center px-4 py-3 border-b ${selected === "card" ? "bg-gray-50" : "bg-white"}`}>
           <input type="radio" id="card" name="payment-method" checked={selected === "card"} onChange={() => setSelected("card")}
             className="accent-black mr-2" />
           <label htmlFor="card" className={`${selected === "card" ? "font-semibold" : "font-normal"} flex-1 cursor-pointer`}>Credit Card</label>
@@ -121,7 +123,7 @@ export default function PaymentMethods() {
               className="accent-pink-500 mr-2" />
             <label htmlFor="klarna" className={`${selected === "klarna" ? "font-semibold" : "font-normal"} flex-1 cursor-pointer`}>Klarna - Pay now or later</label>
             <img
-                src={cardIcons.find(icon => icon.alt === "Klarna")?.src} alt="Klarna" className="h-8 w-10 object-cover bg-white rounded shadow border border-gray-200"
+              src={cardIcons.find(icon => icon.alt === "Klarna")?.src} alt="Klarna" className="h-8 w-10 object-cover bg-white rounded shadow border border-gray-200"
             />
           </div>
           {selected === "klarna" && (
@@ -146,7 +148,7 @@ export default function PaymentMethods() {
                 <div className="border rounded-xl p-4 flex items-center justify-between max-w-xs mx-auto bg-white">
                   <div className="flex items-center">
                     <img src={cardIcons.find(icon => icon.alt === "Trustly")?.src} alt="Trustly" className="h-10 sm:h-14 max-w-[130px] sm:max-w-[280px] object-contain bg-white rounded px-2" />
-                    </div>
+                  </div>
                 </div>
               </div>
               <p className="text-sm text-gray-700 mt-2 text-center">After you click "Buy now", you will be redirected to Trustly to securely complete your purchase.</p>
@@ -154,7 +156,7 @@ export default function PaymentMethods() {
           )}
         </div>
         {/* Wire Transfer Option */}
-        <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}> 
+        <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}>
           <div className="flex items-center px-4 py-3">
             <input type="radio" id="wire" name="payment-method" checked={selected === "wire"} onChange={() => setSelected("wire")}
               className="accent-blue-500 mr-2" />

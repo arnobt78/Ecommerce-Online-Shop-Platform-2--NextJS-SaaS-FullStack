@@ -86,13 +86,15 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
   // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
   const [perPage, setPerPage] = React.useState(16);
   React.useEffect(() => {
-    function handleResize() {
+    if (typeof window === 'undefined') return;
+
+    const handleResize = () => {
       if (window.innerWidth < 640) {
         setPerPage(16); // phone (sm breakpoint)
       } else {
         setPerPage(15); // laptop/tablet and up
       }
-    }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -125,9 +127,8 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
   function getProductId(product: any) {
     if (typeof product.id === "number" || typeof product.id === "string")
       return product.id;
-    return `${product.name || product.productName}_${product.brand}_${
-      product.image || product.productImage
-    }`;
+    return `${product.name || product.productName}_${product.brand}_${product.image || product.productImage
+      }`;
   }
 
   // ...existing code...

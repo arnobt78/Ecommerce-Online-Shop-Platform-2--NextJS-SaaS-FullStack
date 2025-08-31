@@ -32,9 +32,8 @@ function ReviewModal({
           {[...Array(5)].map((_, j) => (
             <Star
               key={j}
-              className={`size-4 ${
-                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-              }`}
+              className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                }`}
             />
           ))}
         </div>
@@ -79,9 +78,8 @@ function ReviewCardItem({
             {[...Array(5)].map((_, j) => (
               <Star
                 key={j}
-                className={`size-4 ${
-                  j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-                }`}
+                className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                  }`}
               />
             ))}
           </div>
@@ -116,9 +114,9 @@ export default function ReviewCard({
     useState<Testimonial | null>(null);
 
   useEffect(() => {
-    const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    if (typeof window === 'undefined') return;
+
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);

@@ -27,28 +27,30 @@ export function useCart() {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-  
-    if (typeof window !== 'undefined') {
-      const stored = window.localStorage.getItem('cartItems');
-      if (stored) {
-        try {
-          return JSON.parse(stored);
-        } catch {
-          return [];
-        }
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Load cart items from localStorage after hydration
+  useEffect(() => {
+    const stored = localStorage.getItem('cartItems');
+    if (stored) {
+      try {
+        const parsedItems = JSON.parse(stored);
+        setCartItems(parsedItems);
+      } catch {
+        // If parsing fails, keep empty array
       }
     }
-    return [];
-  });
-  const [cartOpen, setCartOpen] = useState(false);
+    setIsHydrated(true);
+  }, []);
 
-  // Persist cartItems to localStorage whenever it changes
+  // Persist cartItems to localStorage whenever it changes (only after hydration)
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    if (isHydrated) {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }
-  }, [cartItems]);
+  }, [cartItems, isHydrated]);
 
   return (
     <CartContext.Provider value={{ cartItems, setCartItems, cartOpen, setCartOpen }}>

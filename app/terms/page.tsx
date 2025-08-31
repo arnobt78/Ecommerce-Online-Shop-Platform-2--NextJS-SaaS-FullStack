@@ -37,6 +37,8 @@ export default function TermsPage() {
   // Track hash for sidebar highlight (SSR-safe)
   const [activeHash, setActiveHash] = React.useState<string>("");
   React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const updateHash = () => setActiveHash(window.location.hash);
     updateHash();
     window.addEventListener("hashchange", updateHash);
@@ -62,8 +64,8 @@ export default function TermsPage() {
         <p className="text-lg text-gray-700 mb-6">Welcome to Facebook!</p>
         <p className="text-base text-gray-700 mb-6">
           Facebook builds technologies and services that enable people to connect with each other, build communities, and grow businesses. These Terms govern your use of Facebook, Messenger, and the other products, features, apps, services, technologies, and software we offer (the Facebook Products or Products), except where we expressly state that separate terms (and not these) apply. These Products are provided to you by Facebook, Inc.<br /><br />
-          We don’t charge you to use Facebook or the other products and services covered by these Terms. Instead, businesses and organizations pay us to show you ads for their products and services. By using our Products, you agree that we can show you ads that we think will be relevant to you and your interests. We use your personal data to help determine which ads to show you.<br /><br />
-          We don’t sell your personal data to advertisers, and we don’t share information that directly identifies you (such as your name, email address or other contact information) with advertisers unless you give us specific permission. Instead, advertisers can tell us things like the kind of audience they want to see their ads, and we show those ads to people who may be interested. We provide advertisers with reports about the performance of their ads that help them understand how people are interacting with their content. See Section 2 below to learn more.<br /><br />
+          We don't charge you to use Facebook or the other products and services covered by these Terms. Instead, businesses and organizations pay us to show you ads for their products and services. By using our Products, you agree that we can show you ads that we think will be relevant to you and your interests. We use your personal data to help determine which ads to show you.<br /><br />
+          We don't sell your personal data to advertisers, and we don't share information that directly identifies you (such as your name, email address or other contact information) with advertisers unless you give us specific permission. Instead, advertisers can tell us things like the kind of audience they want to see their ads, and we show those ads to people who may be interested. We provide advertisers with reports about the performance of their ads that help them understand how people are interacting with their content. See Section 2 below to learn more.<br /><br />
           Our Data Policy explains how we collect and use your personal data to determine some of the ads you see and provide all of the other services described below. You can also go to your settings at any time to review the privacy choices you have about how we use your data.
         </p>
 
@@ -99,18 +101,18 @@ export default function TermsPage() {
           <p className="text-base text-gray-700 mb-4">
             Instead of paying to use Facebook and the other products and services we offer, by using the Facebook Products covered by these Terms, you agree that we can show you ads that businesses and organizations pay us to promote on and off the Facebook Company Products. We use your personal data, such as information about your activity and interests, to show you ads that are more relevant to you.<br /><br />
             Protecting people's privacy is central to how we've designed our ad system. This means that we can show you relevant and useful ads without telling advertisers who you are. We don't sell your personal data. We allow advertisers to tell us things like their business goal, and the kind of audience they want to see their ads (for example, people between the age of 18-35 who like cycling). We then show their ad to people who might be interested.<br /><br />
-            We also provide advertisers with reports about the performance of their ads to help them understand how people are interacting with their content on and off Facebook. For example, we provide general demographic and interest information to advertisers (for example, that an ad was seen by a woman between the ages of 25 and 34 who lives in Madrid and likes software engineering) to help them better understand their audience. We don’t share information that directly identifies you (information such as your name or email address that by itself can be used to contact you or identifies who you are) unless you give us specific permission. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a> about how Facebook ads work here.<br /><br />
+            We also provide advertisers with reports about the performance of their ads to help them understand how people are interacting with their content on and off Facebook. For example, we provide general demographic and interest information to advertisers (for example, that an ad was seen by a woman between the ages of 25 and 34 who lives in Madrid and likes software engineering) to help them better understand their audience. We don't share information that directly identifies you (information such as your name or email address that by itself can be used to contact you or identifies who you are) unless you give us specific permission. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a> about how Facebook ads work here.<br /><br />
             We collect and use your personal data in order to provide the services described above to you. You can learn about how we collect and use your data in our Data Policy. You have controls over the types of ads and advertisers you see, and the types of information we use to determine which ads we show you. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a>.
           </p>
         </div>
-        
+
         {/* Section 3 */}
         <div ref={refs.commitments} id="commitments" className="mb-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">3. Your commitments to Facebook and our community</h2>
           <p className="text-base text-gray-700 mb-4">
             Instead of paying to use Facebook and the other products and services we offer, by using the Facebook Products covered by these Terms, you agree that we can show you ads that businesses and organizations pay us to promote on and off the Facebook Company Products. We use your personal data, such as information about your activity and interests, to show you ads that are more relevant to you.<br /><br />
             Protecting people's privacy is central to how we've designed our ad system. This means that we can show you relevant and useful ads without telling advertisers who you are. We don't sell your personal data. We allow advertisers to tell us things like their business goal, and the kind of audience they want to see their ads (for example, people between the age of 18-35 who like cycling). We then show their ad to people who might be interested.<br /><br />
-            We also provide advertisers with reports about the performance of their ads to help them understand how people are interacting with their content on and off Facebook. For example, we provide general demographic and interest information to advertisers (for example, that an ad was seen by a woman between the ages of 25 and 34 who lives in Madrid and likes software engineering) to help them better understand their audience. We don’t share information that directly identifies you (information such as your name or email address that by itself can be used to contact you or identifies who you are) unless you give us specific permission. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a> about how Facebook ads work here.<br /><br />
+            We also provide advertisers with reports about the performance of their ads to help them understand how people are interacting with their content on and off Facebook. For example, we provide general demographic and interest information to advertisers (for example, that an ad was seen by a woman between the ages of 25 and 34 who lives in Madrid and likes software engineering) to help them better understand their audience. We don't share information that directly identifies you (information such as your name or email address that by itself can be used to contact you or identifies who you are) unless you give us specific permission. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a> about how Facebook ads work here.<br /><br />
             We collect and use your personal data in order to provide the services described above to you. You can learn about how we collect and use your data in our Data Policy. You have controls over the types of ads and advertisers you see, and the types of information we use to determine which ads we show you. <a href="#" className="text-[#01DAE3] hover:text-[#01DAE3]/70 font-semibold transition-colors">Learn more</a>.
           </p>
         </div>
@@ -130,18 +132,18 @@ export default function TermsPage() {
             You are a convicted sex offender.<br />
             We've previously disabled your account for violations of our Terms or Policies.<br />
             You are prohibited from receiving our products, services, or software under applicable laws.<br /><br />
-            
+
             <span className="font-semibold text-[#01DAE3]">2. Account suspension or termination</span><br /><br />
             We want Facebook to be a place where people feel welcome and safe to express themselves and share their thoughts and ideas.<br />
-            If we determine that you have clearly, seriously or repeatedly breached our Terms or Policies, including in particular our Community Standards, we may suspend or permanently disable access to your account. We may also suspend or disable your account if you repeatedly infringe other people’s intellectual property rights or where we are required to do so for legal reasons.<br /><br />
-            Where we take such action we’ll let you know and explain any options you have to request a review, unless doing so may expose us or others to legal liability; harm our community of users; compromise or interfere with the integrity or operation of any of our services, systems or Products; or where we are restricted due to technical limitations; or where we are prohibited from doing so for legal reasons.<br /><br />
+            If we determine that you have clearly, seriously or repeatedly breached our Terms or Policies, including in particular our Community Standards, we may suspend or permanently disable access to your account. We may also suspend or disable your account if you repeatedly infringe other people's intellectual property rights or where we are required to do so for legal reasons.<br /><br />
+            Where we take such action we'll let you know and explain any options you have to request a review, unless doing so may expose us or others to legal liability; harm our community of users; compromise or interfere with the integrity or operation of any of our services, systems or Products; or where we are restricted due to technical limitations; or where we are prohibited from doing so for legal reasons.<br /><br />
             You can learn more about what you can do if your account has been disabled and how to contact us if you think we have disabled your account by mistake.<br />
             If you delete or we disable your account, these Terms shall terminate as an agreement between you and us, but the following provisions will remain in place: 3, 4.2-4.5.<br /><br />
 
             <span className="font-semibold text-[#01DAE3]">3. Limits on liability</span><br /><br />
             We want Facebook to be a place where people feel welcome and safe to express themselves and share their thoughts and ideas.<br />
-            If we determine that you have clearly, seriously or repeatedly breached our Terms or Policies, including in particular our Community Standards, we may suspend or permanently disable access to your account. We may also suspend or disable your account if you repeatedly infringe other people’s intellectual property rights or where we are required to do so for legal reasons.<br /><br />
-            Where we take such action we’ll let you know and explain any options you have to request a review, unless doing so may expose us or others to legal liability; harm our community of users; compromise or interfere with the integrity or operation of any of our services, systems or Products; or where we are restricted due to technical limitations; or where we are prohibited from doing so for legal reasons.<br /><br />
+            If we determine that you have clearly, seriously or repeatedly breached our Terms or Policies, including in particular our Community Standards, we may suspend or permanently disable access to your account. We may also suspend or disable your account if you repeatedly infringe other people's intellectual property rights or where we are required to do so for legal reasons.<br /><br />
+            Where we take such action we'll let you know and explain any options you have to request a review, unless doing so may expose us or others to legal liability; harm our community of users; compromise or interfere with the integrity or operation of any of our services, systems or Products; or where we are restricted due to technical limitations; or where we are prohibited from doing so for legal reasons.<br /><br />
             You can learn more about what you can do if your account has been disabled and how to contact us if you think we have disabled your account by mistake.<br />
             If you delete or we disable your account, these Terms shall terminate as an agreement between you and us, but the following provisions will remain in place: 3, 4.2-4.5.<br /><br />
 
@@ -164,20 +166,20 @@ export default function TermsPage() {
 
         {/* Section 5 */}
         <div ref={refs.other} id="other" className="mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">5. Other terms and policies that may apply to you</h2>
-        <ul className="list-disc pl-6 text-base text-gray-700 mb-4 marker:text-[#55E3EA] space-y-2">
-          <li><span className="font-bold text-[#22223B]">Community Standards:</span> These guidelines outline our standards regarding the content you post to Facebook and your activity on Facebook and other Facebook Products.</li>
-          <li><span className="font-bold text-[#22223B]">Commercial Terms:</span> These terms apply if you also access or use our Products for any commercial or business purpose, including advertising, operating an app on our Platform, using our measurement services, managing a group or a Page for a business, or selling goods or services.</li>
-          <li><span className="font-bold text-[#22223B]">Advertising Policies:</span> These policies specify what types of ad content are allowed by partners who advertise across the Facebook Products.</li>
-          <li><span className="font-bold text-[#22223B]">Self-Serve Ad Terms:</span> These terms apply when you use self-serve advertising interfaces to create, submit, or deliver advertising or other commercial or sponsored activity or content.</li>
-          <li><span className="font-bold text-[#22223B]">Pages, Groups and Events Policy:</span> These guidelines apply if you create or administer a Facebook Page, group, or event, or if you use Facebook to communicate or administer a promotion.</li>
-          <li><span className="font-bold text-[#22223B]">Facebook Platform Policy:</span> These guidelines outline the policies that apply to your use of our Platform (for example, for developers or operators of a Platform application or website or if you use social plugins).</li>
-          <li><span className="font-bold text-[#22223B]">Developer Payment Terms:</span> These terms apply to developers of applications that use Facebook Payments.</li>
-          <li><span className="font-bold text-[#22223B]">Community Payment Terms:</span> These terms apply to payments made on or through Facebook.</li>
-          <li><span className="font-bold text-[#22223B]">Commerce Policies:</span> These guidelines outline the policies that apply when you offer products and services for sale on Facebook.</li>
-          <li><span className="font-bold text-[#22223B]">Facebook Brand Resources:</span> These guidelines outline the policies that apply to use of Facebook trademarks, logos, and screenshots.</li>
-          <li><span className="font-bold text-[#22223B]">Music Guidelines:</span> These guidelines outline the policies that apply if you post or share content containing music on Facebook.</li>
-        </ul>
+          <h2 className="text-xl font-semibold text-gray-900 mb-4">5. Other terms and policies that may apply to you</h2>
+          <ul className="list-disc pl-6 text-base text-gray-700 mb-4 marker:text-[#55E3EA] space-y-2">
+            <li><span className="font-bold text-[#22223B]">Community Standards:</span> These guidelines outline our standards regarding the content you post to Facebook and your activity on Facebook and other Facebook Products.</li>
+            <li><span className="font-bold text-[#22223B]">Commercial Terms:</span> These terms apply if you also access or use our Products for any commercial or business purpose, including advertising, operating an app on our Platform, using our measurement services, managing a group or a Page for a business, or selling goods or services.</li>
+            <li><span className="font-bold text-[#22223B]">Advertising Policies:</span> These policies specify what types of ad content are allowed by partners who advertise across the Facebook Products.</li>
+            <li><span className="font-bold text-[#22223B]">Self-Serve Ad Terms:</span> These terms apply when you use self-serve advertising interfaces to create, submit, or deliver advertising or other commercial or sponsored activity or content.</li>
+            <li><span className="font-bold text-[#22223B]">Pages, Groups and Events Policy:</span> These guidelines apply if you create or administer a Facebook Page, group, or event, or if you use Facebook to communicate or administer a promotion.</li>
+            <li><span className="font-bold text-[#22223B]">Facebook Platform Policy:</span> These guidelines outline the policies that apply to your use of our Platform (for example, for developers or operators of a Platform application or website or if you use social plugins).</li>
+            <li><span className="font-bold text-[#22223B]">Developer Payment Terms:</span> These terms apply to developers of applications that use Facebook Payments.</li>
+            <li><span className="font-bold text-[#22223B]">Community Payment Terms:</span> These terms apply to payments made on or through Facebook.</li>
+            <li><span className="font-bold text-[#22223B]">Commerce Policies:</span> These guidelines outline the policies that apply when you offer products and services for sale on Facebook.</li>
+            <li><span className="font-bold text-[#22223B]">Facebook Brand Resources:</span> These guidelines outline the policies that apply to use of Facebook trademarks, logos, and screenshots.</li>
+            <li><span className="font-bold text-[#22223B]">Music Guidelines:</span> These guidelines outline the policies that apply if you post or share content containing music on Facebook.</li>
+          </ul>
         </div>
       </div>
 

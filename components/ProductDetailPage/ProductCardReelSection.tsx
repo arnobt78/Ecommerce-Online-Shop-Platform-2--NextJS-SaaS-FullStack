@@ -1,4 +1,5 @@
 import React from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import { products, ProductData } from "@/scripts/data/products";
 import { useCart } from "@/context/CartContext";
 import { useRouter, usePathname } from "next/navigation";
@@ -80,14 +81,26 @@ interface ProductReelGridProps {
   cardsToShow: number;
   onProductClick?: (product: any) => void;
 }
+
 const ProductReelGrid: React.FC<ProductReelGridProps> = ({
   products,
   cardsToShow,
   onProductClick,
 }) => {
-  const [scrollIndex, setScrollIndex] = React.useState(0);
   const [itemsToShow, setItemsToShow] = React.useState(2);
+  const [mounted, setMounted] = React.useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    skipSnaps: false,
+    containScroll: "trimSnaps",
+    dragFree: false,
+    slidesToScroll: 1,
+  });
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
   React.useEffect(() => {
     const handleResize = () => {
       setItemsToShow(window.innerWidth < 640 ? 2 : 5);
@@ -97,21 +110,36 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const showArrows = products.length > itemsToShow;
-  const maxIndex = Math.max(0, products.length - itemsToShow);
-  const handleLeft = () => setScrollIndex((i) => Math.max(0, i - 1));
-  const handleRight = () => setScrollIndex((i) => Math.min(maxIndex, i + 1));
+  React.useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
 
-  const visibleProducts = products.slice(
-    scrollIndex,
-    scrollIndex + itemsToShow
-  );
+  // Arrow navigation logic (must be after hooks)
+  const totalSlides = products.length - itemsToShow + 1;
+  const showArrows = totalSlides > 1;
+  const handleLeft = () => {
+    if (emblaApi) emblaApi.scrollTo(selectedIndex - 1);
+  };
+  const handleRight = () => {
+    if (emblaApi) emblaApi.scrollTo(selectedIndex + 1);
+  };
 
   // Responsive card width
   const getCardWidth = () => {
-    if (itemsToShow <= 2) return "90vw"; // Show 2 full cards on mobile
+    if (itemsToShow <= 2) return "90vw";
     return "220px";
   };
+
+  if (!mounted) {
+    // Render nothing on server to avoid hydration mismatch
+    return null;
+  }
 
   return (
     <div className="relative w-full flex flex-row items-center justify-center max-w-[1180px]">
@@ -122,7 +150,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           className="flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-r from-white/90 to-transparent cursor-pointer"
           onClick={handleLeft}
           aria-label="Scroll left"
-          disabled={scrollIndex === 0}
+          disabled={selectedIndex === 0}
         >
           <svg
             className="w-8 h-8 text-gray-400 hover:text-gray-700"
@@ -139,37 +167,30 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           </svg>
         </button>
       )}
-      {/* Reel */}
-      <div
-        className="flex flex-row gap-x-1 sm:gap-x-4 w-full mx-auto overflow-x-hidden scroll-smooth justify-center"
-        style={{
-          scrollSnapType: "x mandatory",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          overflowY: "hidden",
-        }}
-      >
-        <style>{`
-          .scrollbar-hide::-webkit-scrollbar { display: none; }
-        `}</style>
-        {visibleProducts.map((product, idx) => (
-          <div
-            className="flex justify-center flex-shrink-0"
-            key={scrollIndex + idx}
-            style={{
-              width: getCardWidth(),
-              scrollSnapAlign: "start",
-              minWidth: itemsToShow <= 2 ? "45vw" : undefined, // 2 full cards on mobile
-              maxWidth: itemsToShow <= 2 ? "45vw" : undefined,
-            }}
-          >
-            <ProductReelCard
-              product={product}
-              onProductClick={onProductClick}
-              products={products}
-            />
-          </div>
-        ))}
+      <div className="w-full overflow-hidden" ref={emblaRef}>
+        <div
+          className="flex flex-row gap-x-1 sm:gap-x-4"
+          style={{ willChange: "transform" }}
+        >
+          {products.map((product, idx) => (
+            <div
+              className="flex justify-center flex-shrink-0"
+              key={idx}
+              style={{
+                width: getCardWidth(),
+                scrollSnapAlign: "start",
+                minWidth: itemsToShow <= 2 ? "45vw" : undefined,
+                maxWidth: itemsToShow <= 2 ? "45vw" : undefined,
+              }}
+            >
+              <ProductReelCard
+                product={product}
+                onProductClick={onProductClick}
+                products={products}
+              />
+            </div>
+          ))}
+        </div>
       </div>
       {/* Right Arrow */}
       {showArrows && (
@@ -178,7 +199,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           className="flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-l from-white/90 to-transparent cursor-pointer"
           onClick={handleRight}
           aria-label="Scroll right"
-          disabled={scrollIndex === maxIndex}
+          disabled={selectedIndex === totalSlides - 1}
         >
           <svg
             className="w-8 h-8 text-gray-400 hover:text-gray-700"
@@ -195,10 +216,55 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           </svg>
         </button>
       )}
+      {/* Dots indicator for mobile */}
+      {/* {products.length > itemsToShow && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 flex flex-row gap-1 sm:hidden z-20"
+          style={{
+            bottom: "calc(0% - 16px)",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "auto",
+            minWidth: "unset",
+            maxWidth: "unset",
+          }}
+        >
+          {(() => {
+            const total = products.length - itemsToShow + 1;
+            const maxDots = 20;
+            let start = 0;
+            let end = total;
+            if (total > maxDots) {
+              if (selectedIndex < Math.floor(maxDots / 2)) {
+                start = 0;
+                end = maxDots;
+              } else if (selectedIndex > total - Math.ceil(maxDots / 2)) {
+                start = total - maxDots;
+                end = total;
+              } else {
+                start = selectedIndex - Math.floor(maxDots / 2);
+                end = start + maxDots;
+              }
+            }
+            return Array.from({ length: Math.min(total, maxDots) }, (_, i) => {
+              const idx = start + i;
+              return (
+                <span
+                  key={idx}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    selectedIndex === idx
+                      ? "bg-gray-700 scale-110"
+                      : "bg-gray-300"
+                  }`}
+                />
+              );
+            });
+          })()}
+        </div>
+      )} */}
     </div>
   );
 };
-
 interface ProductCardReelSectionProps {
   products?: any[];
   onProductClick?: (product: any) => void;
@@ -263,21 +329,23 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   let restProducts = productsToUse.filter(
     (p) => !alreadyShownSlugs.has(p.slug)
   );
-  // Shuffle restProducts for randomness
-  for (let i = restProducts.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [restProducts[i], restProducts[j]] = [restProducts[j], restProducts[i]];
-  }
-  // Combine related + random others
-  finalProducts = [...relatedProducts, ...restProducts];
-  // Optionally, limit to a max number if you want (e.g., 20)
-  // finalProducts = finalProducts.slice(0, 20);
+  // Shuffle restProducts for randomness, but only on the client to avoid hydration mismatch
+  const [shuffledRestProducts, setShuffledRestProducts] =
+    React.useState(restProducts);
 
-  // Sort alphabetically for consistency (optional, or comment out for more randomness)
-  // finalProducts = [...finalProducts].sort((a, b) => {
-  //   if (!a.productName || !b.productName) return 0;
-  //   return a.productName.localeCompare(b.productName);
-  // });
+  React.useEffect(() => {
+    // Shuffle only on the client
+    const arr = [...restProducts];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    setShuffledRestProducts(arr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productsToUse, relatedProducts.length]);
+
+  // Combine related + random others
+  finalProducts = [...relatedProducts, ...shuffledRestProducts];
 
   return (
     <div className="w-full flex flex-col items-center px-1 sm:px-0">

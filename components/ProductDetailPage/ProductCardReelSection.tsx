@@ -169,7 +169,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
       )}
       <div className="w-full overflow-hidden" ref={emblaRef}>
         <div
-          className="flex flex-row gap-x-1 sm:gap-x-4"
+          className="flex flex-row gap-x-2 sm:gap-x-4"
           style={{ willChange: "transform" }}
         >
           {products.map((product, idx) => (

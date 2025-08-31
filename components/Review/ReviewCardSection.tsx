@@ -33,7 +33,7 @@ function ReviewModal({
             <Star
               key={j}
               className={`size-4 ${
-                j < 4 ? "fill-black text-black" : "fill-none text-black"
+                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
               }`}
             />
           ))}
@@ -80,7 +80,7 @@ function ReviewCardItem({
               <Star
                 key={j}
                 className={`size-4 ${
-                  j < 4 ? "fill-black text-black" : "fill-none text-black"
+                  j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
                 }`}
               />
             ))}

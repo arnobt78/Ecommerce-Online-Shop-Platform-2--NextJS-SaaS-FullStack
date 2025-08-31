@@ -54,9 +54,6 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
           {currency} {totalOriginal.toFixed(2).replace(".", ",")}
         </span>
       )}
-      {/* {quantity > 1 && (
-        <span className="text-[14px] text-gray-500">({currency} {(showDiscount ? sale : original).toFixed(2).replace(".", ",")} x {quantity})</span>
-      )} */}
     </div>
   );
 };
@@ -75,13 +72,13 @@ const ProductPurchaseActions: React.FC<ProductPurchaseActionsProps> = ({
 }) => (
   <div className="flex flex-col gap-2 pt-0 sm:pt-2 sm:flex-row">
     <button
-      className="flex-1 bg-[#8EF7FB] rounded-[3.3px] py-3 text-[19px] font-medium text-black hover:bg-[#6ee7f7] transition transform duration-300 cursor-pointer active:bg-[#8EF7FB]"
+      className="flex-1 bg-[#8EF7FB] rounded-[3.3px] py-3 text-[19px] font-medium text-gray-900 hover:bg-[#6ee7f7] transition transform duration-300 cursor-pointer active:bg-[#8EF7FB]"
       onClick={onBuyNow}
     >
       Buy now
     </button>
     <button
-      className="flex-1 border-2 border-[#8EF7FB] bg-white rounded-[3.3px] py-3 text-[19px] font-medium text-black hover:bg-[#e0f7fa] transition transform duration-300 cursor-pointer active:bg-[#8EF7FB]"
+      className="flex-1 border-2 border-[#8EF7FB] bg-white rounded-[3.3px] py-3 text-[19px] font-medium text-gray-900 hover:bg-[#e0f7fa] transition transform duration-300 cursor-pointer active:bg-[#8EF7FB]"
       onClick={onAddToCart}
     >
       Add to cart
@@ -173,7 +170,7 @@ const ShippingOptions: React.FC = () => (
         </svg>
       </span>
       <div className="flex flex-col">
-        <span className="font-medium text-[13px] text-black leading-tight">
+        <span className="font-medium text-[13px] text-gray-900 leading-tight">
           Free shipping
         </span>
         <span className="text-[13px] text-gray-400 leading-tight">
@@ -201,7 +198,7 @@ const ShippingOptions: React.FC = () => (
         </svg>
       </span>
       <div className="flex flex-col">
-        <span className="font-medium text-[13px] text-black leading-tight">
+        <span className="font-medium text-[13px] text-gray-900 leading-tight">
           Express shipping
         </span>
         <span className="text-[13px] text-gray-400 leading-tight">
@@ -248,7 +245,7 @@ const ShippingOptions: React.FC = () => (
         </svg>
       </span>
       <div className="flex flex-col">
-        <span className="font-medium text-[13px] text-black leading-tight">
+        <span className="font-medium text-[13px] text-gray-900 leading-tight">
           Pickup from warehouse
         </span>
         <span className="text-[13px] text-gray-400 leading-tight">
@@ -334,11 +331,15 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
     <div className="w-full max-w-[687px] flex flex-col gap-0 sm:gap-6 px-1 sm:px-0">
       {/* Product Name & Stock Status Centered */}
       <div className="flex flex-col items-center justify-center w-full text-center">
-        <span className="font-medium text-[30px] leading-[40px] text-black -tracking-[0.01em] break-words">
+        <span className="font-medium text-[30px] leading-[40px] text-gray-900 -tracking-[0.01em] break-words">
           {productName}
         </span>
-        <div className="flex flex-row items-center gap-2 flex-wrap justify-center mt-2">
-          <StockStatusLabel stockStatus={stockStatus} />
+        <div className="flex flex-row items-center gap-2 flex-wrap justify-center mt-0">
+          <StockStatusLabel
+            stockStatus={stockStatus}
+            labelClassName="pl-2 text-md text-gray-500"
+            dotClassName="-left-0.5 top-1.5"
+          />
         </div>
       </div>
 

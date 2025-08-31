@@ -162,7 +162,7 @@ const CartPageComponents: React.FC = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-gray-900"
                     onClick={() => updateQuantity(item.slug, item.quantity - 1)}
                     disabled={item.quantity <= 1}
                   >
@@ -174,7 +174,7 @@ const CartPageComponents: React.FC = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="text-gray-400 hover:text-black"
+                    className="text-gray-400 hover:text-gray-900"
                     onClick={() => updateQuantity(item.slug, item.quantity + 1)}
                   >
                     <Plus className="w-4 h-4" />

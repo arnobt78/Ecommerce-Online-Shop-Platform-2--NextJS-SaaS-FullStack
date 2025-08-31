@@ -22,7 +22,7 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel, shippingLabel }) => {
       )}
       {/* Free shipping badge */}
       <div className="bg-white rounded-[6px] w-[68px] sm:w-[80px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
-        <span className="italic font-bold text-[9px] sm:text-[11px] text-black">
+        <span className="italic font-bold text-[9px] sm:text-[11px] text-gray-900">
           {shippingLabel}
         </span>
       </div>
@@ -65,7 +65,7 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
   <div className="flex flex-col gap-1 w-full min-w-0 max-w-full">
     {/* Use CSS for truncation and responsive max-width, no JS or window usage */}
     <span
-      className="font-normal text-xs sm:text-sm text-black truncate w-full block max-w-[110px] sm:max-w-[180px]"
+      className="font-normal text-xs sm:text-sm text-gray-900 truncate w-full block max-w-[110px] sm:max-w-[180px]"
       title={productName}
     >
       {productName}
@@ -76,12 +76,12 @@ const ProductInfo: React.FC<ProductInfoProps> = ({
           <span className="font-normal text-xs text-[#C02929] truncate max-w-[54px] sm:max-w-none align-middle flex items-center">
             {salePrice}
           </span>
-          <span className="font-normal text-xs text-black line-through truncate max-w-[54px] sm:max-w-none align-middle flex items-center">
+          <span className="font-normal text-xs text-gray-900 line-through truncate max-w-[54px] sm:max-w-none align-middle flex items-center">
             {originalPrice}
           </span>
         </>
       ) : (
-        <span className="font-normal text-xs text-black truncate max-w-[54px] sm:max-w-none align-middle flex items-center">
+        <span className="font-normal text-xs text-gray-900 truncate max-w-[54px] sm:max-w-none align-middle flex items-center">
           {originalPrice}
         </span>
       )}

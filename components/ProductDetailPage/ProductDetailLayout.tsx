@@ -23,7 +23,7 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => (
         <div className="w-[70px] h-[24px]" />
       )}
       <div className="bg-white rounded-[6px] w-[90px] sm:w-[110px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
-        <span className="italic font-medium text-xs sm:text-sm text-black">
+        <span className="italic font-medium text-xs sm:text-sm text-gray-900">
           {product.shippingLabel}
         </span>
       </div>
@@ -65,7 +65,7 @@ const CollapsibleSection: React.FC<{
       aria-expanded={open}
       aria-controls={sectionId}
     >
-      <span className="font-semibold text-[24px] leading-[29px] text-black">
+      <span className="font-semibold text-[24px] leading-[29px] text-gray-900">
         {title}
       </span>
       <svg
@@ -253,7 +253,7 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
             <span
               key={j}
               className={`size-4 ${
-                j < 4 ? "fill-black text-black" : "fill-none text-black"
+                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
               }`}
             >
               ★

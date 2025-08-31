@@ -48,13 +48,13 @@ export function FilterDropDown({
 
   // Sort options: numbers first, then A-Z
   const sortedOptions = [...options].sort((a, b) => {
-    const nameA = (a || '').trim();
-    const nameB = (b || '').trim();
+    const nameA = (a || "").trim();
+    const nameB = (b || "").trim();
     const aNum = /^[0-9]/.test(nameA);
     const bNum = /^[0-9]/.test(nameB);
     if (aNum && !bNum) return -1;
     if (!aNum && bNum) return 1;
-    return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
+    return nameA.localeCompare(nameB, undefined, { sensitivity: "base" });
   });
 
   return (
@@ -67,19 +67,27 @@ export function FilterDropDown({
         {/* Top row: icon and title */}
         <div className="flex items-center gap-2 mb-0 w-full">
           {_icon}
-          <span className="font-bold text-[18px] text-[#222] capitalize leading-[22px]">{title}</span>
+          <span className="font-bold text-[18px] text-[#222] capitalize leading-[22px]">
+            {title}
+          </span>
         </div>
         {/* Second row: Choose and arrow, justify-between */}
         <div className="w-full flex flex-row items-center justify-between text-[#A3A3A3] text-[15px] sm:text-[16px] leading-[19px] font-normal mt-1 pl-8">
           <span>Choose</span>
           <svg
-            className={`w-5 h-5 ml-2 sm:ml-10 transition-transform ${open ? "rotate-180" : ""}`}
+            className={`w-5 h-5 ml-2 sm:ml-10 transition-transform ${
+              open ? "rotate-180" : ""
+            }`}
             fill="none"
             stroke="#A3A3A3"
             strokeWidth="2"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </div>
       </button>
@@ -93,10 +101,15 @@ export function FilterDropDown({
               return (
                 <label
                   key={option}
-                  className={`flex items-center px-5 py-3 cursor-pointer hover:bg-[#F8F8F8] border-b border-[#EFEFEF] last:border-b-0 ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  className={`flex items-center px-5 py-3 cursor-pointer hover:bg-[#F8F8F8] border-b border-[#EFEFEF] last:border-b-0 ${
+                    isDisabled ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
                   style={{ minHeight: 44 }}
                 >
-                  <span className="relative flex items-center justify-center" style={{ width: 24, height: 24 }}>
+                  <span
+                    className="relative flex items-center justify-center"
+                    style={{ width: 24, height: 24 }}
+                  >
                     <input
                       type="checkbox"
                       checked={selected.includes(option)}
@@ -114,21 +127,41 @@ export function FilterDropDown({
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <rect x="0.5" y="0.5" width="23" height="23" rx="5" fill="#8EF7FB" stroke="#222"/>
-                        <path d="M6.5 12.5L11 17L18 9.5" stroke="#222" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <rect
+                          x="0.5"
+                          y="0.5"
+                          width="23"
+                          height="23"
+                          rx="5"
+                          fill="#8EF7FB"
+                          stroke="#222"
+                        />
+                        <path
+                          d="M6.5 12.5L11 17L18 9.5"
+                          stroke="#222"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     )}
                   </span>
 
                   {/* Option label */}
-                  <span className="ml-4 text-[#222] text-md font-normal">{option}</span>
+                  <span className="ml-4 text-[#222] text-md font-normal">
+                    {option}
+                  </span>
                 </label>
               );
             })}
           </div>
           <button
             type="button"
-            className={`w-[90%] mx-auto my-2 py-2 rounded-[8px] text-sm font-semibold transition-colors duration-200 ${selected.length === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-[#8EF7FB] text-black hover:bg-[#3AF0F7] cursor-pointer'}`}
+            className={`w-[90%] mx-auto my-2 py-2 rounded-[8px] text-sm font-semibold transition-colors duration-200 ${
+              selected.length === 0
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-[#8EF7FB] text-gray-900 hover:bg-[#3AF0F7] cursor-pointer"
+            }`}
             disabled={selected.length === 0}
             onClick={() => onChange([])}
             tabIndex={0}

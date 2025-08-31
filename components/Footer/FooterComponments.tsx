@@ -130,7 +130,7 @@ export function FooterLogoSocial() {
             key={i}
             className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer hover:bg-gray-200"
           >
-            <Icon className="w-5 h-5 sm:w-5 sm:h-5 text-black" />
+            <Icon className="w-5 h-5 sm:w-5 sm:h-5 text-gray-900" />
           </div>
         ))}
       </div>

@@ -38,12 +38,12 @@ const ProductQuantityDropdownPrice: React.FC<
           <span className="text-[18px] font-semibold text-[#C02929] leading-[24px]">
             {currency} {totalSale.toFixed(2).replace(".", ",")}
           </span>
-          <span className="text-[16px] text-black line-through">
+          <span className="text-[16px] text-gray-900 line-through">
             {currency} {totalOriginal.toFixed(2).replace(".", ",")}
           </span>
         </>
       ) : (
-        <span className="text-[18px] font-semibold text-black leading-[24px]">
+        <span className="text-[18px] font-semibold text-gray-900 leading-[24px]">
           {currency} {totalOriginal.toFixed(2).replace(".", ",")}
         </span>
       )}
@@ -84,7 +84,7 @@ const ProductQuantityDropdownList: React.FC<
         type="button"
         role="option"
         aria-selected={q === value}
-        className={`w-full flex flex-row items-center px-4 py-4 text-md font-normal text-black/80 focus:outline-none cursor-pointer ${
+        className={`w-full flex flex-row items-center px-4 py-4 text-md font-normal text-gray-900/80 focus:outline-none cursor-pointer ${
           q === value ? "bg-[#8EF7FB]/10" : "bg-white"
         } ${i === 0 ? "rounded-t-xl" : ""} ${
           i === quantityOptions.length - 1 ? "rounded-b-xl" : ""

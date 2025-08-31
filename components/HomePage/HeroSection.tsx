@@ -209,7 +209,7 @@ function HeroLeftContent() {
         </div>
         <Link href="/products">
           <button
-            className="buy-button relative px-8 py-3 text-black text-lg font-medium flex items-center rounded-2xl bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] shadow-[0_0_620px_#0A0F8A,0_0_354px_#0A0F8A]"
+            className="buy-button relative px-8 py-3 text-gray-900 text-lg font-medium flex items-center rounded-2xl bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] shadow-[0_0_620px_#0A0F8A,0_0_354px_#0A0F8A]"
             style={{
               minWidth: "160px",
               minHeight: "54px",

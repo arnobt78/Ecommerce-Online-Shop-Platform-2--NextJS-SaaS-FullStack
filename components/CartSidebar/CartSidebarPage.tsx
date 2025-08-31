@@ -1,9 +1,9 @@
 // Moved and renamed from components/cart-sidebar.tsx
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ShoppingCart, ShoppingBag, X, CreditCard, Lock } from "lucide-react"
-import Link from "next/link"
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, ShoppingBag, X, CreditCard, Lock } from "lucide-react";
+import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import CartSidebarItem from "@/components/CartSidebar/CartSidebarItemCard";
@@ -17,7 +17,11 @@ export default function CartSidebarLayout() {
     if (newQuantity === 0) {
       setCartItems((prev) => prev.filter((item) => item.slug !== slug));
     } else {
-      setCartItems((prev) => prev.map((item) => (item.slug === slug ? { ...item, quantity: newQuantity } : item)));
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.slug === slug ? { ...item, quantity: newQuantity } : item
+        )
+      );
     }
   };
 
@@ -40,9 +44,10 @@ export default function CartSidebarLayout() {
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => {
       // Use salePrice if it is a non-empty string, otherwise fallback to originalPrice
-      let priceStr = (typeof item.salePrice === 'string' && item.salePrice.trim().length > 0)
-        ? item.salePrice
-        : item.originalPrice;
+      let priceStr =
+        typeof item.salePrice === "string" && item.salePrice.trim().length > 0
+          ? item.salePrice
+          : item.originalPrice;
       const price = parsePrice(priceStr);
       return total + price * item.quantity;
     }, 0);
@@ -72,7 +77,9 @@ export default function CartSidebarLayout() {
               <div className="w-8 md:w-10 h-8 md:h-10 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] rounded-full flex items-center justify-center">
                 <ShoppingBag className="w-4 h-4" />
               </div>
-              <h2 className="text-lg md:text-xl font-semibold text-gray-900">Shopping Cart</h2>
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">
+                Shopping Cart
+              </h2>
             </div>
             <Button
               variant="ghost"
@@ -91,8 +98,12 @@ export default function CartSidebarLayout() {
                 <div className="w-20 md:w-24 h-20 md:h-24 bg-gradient-to-br from-[#3AF0F7]/20 to-[#8ef7fb]/20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 animate-pulse">
                   <ShoppingCart className="w-10 md:w-12 h-10 md:h-12 text-gray-300" />
                 </div>
-                <p className="text-gray-500 text-base md:text-lg font-semibold mb-2">Your cart is empty</p>
-                <p className="text-gray-400 text-sm">Add some products to get started!</p>
+                <p className="text-gray-500 text-base md:text-lg font-semibold mb-2">
+                  Your cart is empty
+                </p>
+                <p className="text-gray-400 text-sm">
+                  Add some products to get started!
+                </p>
               </div>
             ) : (
               <div className="flex flex-col">
@@ -117,13 +128,17 @@ export default function CartSidebarLayout() {
           {cartItems.length > 0 && (
             <div className="border-t border-gray-200 p-4 bg-gradient-to-r from-gray-50 to-white backdrop-blur-sm animate-slide-up">
               <div className="flex justify-between items-center px-3 sm:px-4">
-                <span className="text-base sm:text-lg font-semibold text-gray-900">Subtotal:</span>
-                <span className="text-xl sm:text-2xl font-bold text-black">
+                <span className="text-base sm:text-lg font-semibold text-gray-900">
+                  Subtotal:
+                </span>
+                <span className="text-xl sm:text-2xl font-bold text-gray-900">
                   € {getTotalPrice().toFixed(2)}
                 </span>
               </div>
               <div className="px-3 sm:px-4 mb-2">
-                <span className="block text-sm text-gray-600">Shipping and taxes calculated at checkout.</span>
+                <span className="block text-sm text-gray-600">
+                  Shipping and taxes calculated at checkout.
+                </span>
               </div>
               <button
                 type="button"
@@ -131,16 +146,21 @@ export default function CartSidebarLayout() {
                 style={{ minHeight: 40, borderRadius: 6 }}
                 onClick={() => {
                   setCartOpen(false);
-                  router.push('/cart');
+                  router.push("/cart");
                 }}
               >
-                <span className="font-medium text-[16px] leading-6 text-white flex items-center" style={{height: 24, maxWidth: 350}}>
+                <span
+                  className="font-medium text-[16px] leading-6 text-white flex items-center"
+                  style={{ height: 24, maxWidth: 350 }}
+                >
                   Checkout
                 </span>
               </button>
               <div className="flex flex-row justify-center items-center mt-4 space-x-2 animate-fade-in">
                 {/* or label */}
-                <span className="flex items-center text-[14px] leading-5 text-gray-600">or</span>
+                <span className="flex items-center text-[14px] leading-5 text-gray-600">
+                  or
+                </span>
                 {/* Continue Shopping button */}
                 <button
                   type="button"
@@ -148,7 +168,7 @@ export default function CartSidebarLayout() {
                   style={{ height: 20, minWidth: 146 }}
                   onClick={() => {
                     setCartOpen(false);
-                    router.push('/products');
+                    router.push("/products");
                   }}
                 >
                   Continue Shopping &rarr;

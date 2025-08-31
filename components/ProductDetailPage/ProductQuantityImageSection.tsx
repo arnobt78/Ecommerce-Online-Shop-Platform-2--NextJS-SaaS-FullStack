@@ -35,7 +35,7 @@ const ProductQuantityImageOptionCard: React.FC<
       style={{ minWidth: 43, height: 17 }}
     >
       <span
-        className="text-[10.3px] leading-[13px] font-normal text-black uppercase"
+        className="text-[10.3px] leading-[13px] font-normal text-gray-900 uppercase"
         style={{ fontFamily: "Inter, sans-serif" }}
       >
         {percent}
@@ -52,7 +52,7 @@ const ProductQuantityImageOptionCard: React.FC<
     </div>
     {/* Optionally show description below */}
     {/* {description && (
-      <span className=" text-xs text-gray-500 group-hover:text-black transition-colors duration-300">{description}</span>
+      <span className=" text-xs text-gray-500 group-hover:text-gray-900 transition-colors duration-300">{description}</span>
     )} */}
   </button>
   // </div>

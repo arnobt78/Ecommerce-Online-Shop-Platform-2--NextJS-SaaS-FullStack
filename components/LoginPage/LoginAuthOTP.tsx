@@ -129,7 +129,7 @@ export default function LoginAuthOTP({
           />
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
               sending ? "opacity-60 cursor-not-allowed" : ""
             }`}
             disabled={timer > 0 || sending}
@@ -187,7 +187,7 @@ export default function LoginAuthOTP({
           </div>
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-black font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
               loggingIn ? "opacity-60 cursor-not-allowed" : ""
             }`}
             disabled={loggingIn}

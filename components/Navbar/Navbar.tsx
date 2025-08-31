@@ -206,14 +206,19 @@ export default function Navbar({
                               sensitivity: "base",
                             });
                           })
-                          .map((product) => (
+                          .map((product, index) => (
                             <div
                               key={
                                 product.id ||
                                 product.slug ||
                                 product.name ||
                                 product.productName ||
-                                Math.random()
+                                `search-result-${
+                                  product.slug ||
+                                  product.name ||
+                                  product.productName ||
+                                  index
+                                }`
                               }
                               className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
                             >
@@ -343,7 +348,7 @@ export default function Navbar({
                                 aria-label="Add to cart"
                               >
                                 <div className="w-8 h-8 bg-[#3AF0F7] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:scale-110">
-                                  <Plus className="w-4 h-4 text-black" />
+                                  <Plus className="w-4 h-4 text-gray-900" />
                                 </div>
                               </button>
                             </div>
@@ -383,7 +388,7 @@ export default function Navbar({
             <Button
               variant="ghost"
               onClick={() => setCartOpen(true)}
-              className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-black transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
+              className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-gray-900 transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
             >
               <ShoppingBag className="w-4 h-4" />
               {hydrated && getTotalItems() > 0 && (
@@ -432,7 +437,7 @@ export default function Navbar({
           <Button
             variant="ghost"
             onClick={() => setCartOpen(true)}
-            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-black transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
+            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-gray-900 transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
           >
             <ShoppingBag className="w-4 h-4" />
             {hydrated && getTotalItems() > 0 && (
@@ -481,14 +486,19 @@ export default function Navbar({
                         {searchResults.length !== 1 ? "s" : ""}
                       </div>
                       <div className="space-y-2">
-                        {searchResults.map((product) => (
+                        {searchResults.map((product, index) => (
                           <div
                             key={
                               product.id ||
                               product.slug ||
                               product.name ||
                               product.productName ||
-                              Math.random()
+                              `search-result-mobile-${
+                                product.slug ||
+                                product.name ||
+                                product.productName ||
+                                index
+                              }`
                             }
                             className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
                             onClick={() => {

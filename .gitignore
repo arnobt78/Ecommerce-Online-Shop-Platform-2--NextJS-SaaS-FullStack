@@ -28,6 +28,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# analysis files
+unused-deps.json
+
 .DS_Store
 
 .vscode

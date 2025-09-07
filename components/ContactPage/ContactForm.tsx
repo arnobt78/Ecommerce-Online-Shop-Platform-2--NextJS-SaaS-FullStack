@@ -1,14 +1,16 @@
 "use client";
 import { useState } from "react";
 import { z } from "zod";
-const ContactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email address"),
-  orderNumber: z.string().min(1, "Order Number is required"),
-  message: z.string().min(5, "Message is required"),
-});
-
+import { useLanguage } from "@/context/LanguageContextNew";
 export default function ContactForm() {
+  const { t } = useLanguage();
+
+  const ContactSchema = z.object({
+    name: z.string().min(2, t("contact.validation.nameRequired")),
+    email: z.string().email(t("contact.validation.emailInvalid")),
+    orderNumber: z.string().min(1, t("contact.validation.orderNumberRequired")),
+    message: z.string().min(5, t("contact.validation.messageRequired")),
+  });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -67,15 +69,11 @@ export default function ContactForm() {
         setForm({ name: "", email: "", orderNumber: "", message: "" });
       } else {
         setSubmitted(false);
-        setApiError(
-          "Sorry, something went wrong, your message has not been sent, please try again."
-        );
+        setApiError(t("contact.form.error"));
       }
     } catch (err) {
       setSubmitted(false);
-      setApiError(
-        "Sorry, something went wrong, your message has not been sent, please try again."
-      );
+      setApiError(t("contact.form.error"));
     } finally {
       setLoading(false);
     }
@@ -86,7 +84,7 @@ export default function ContactForm() {
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <label className="block text-sm font-normal text-gray-700 mb-1">
-            Name
+            {t("contact.form.name")}
           </label>
           <input
             type="text"
@@ -94,7 +92,7 @@ export default function ContactForm() {
             value={form.name}
             onChange={handleChange}
             required
-            placeholder="Enter Your Name"
+            placeholder={t("contact.form.namePlaceholder")}
             className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 ${
               errors.name ? "border-red-400" : "border-gray-300"
             }`}
@@ -105,7 +103,7 @@ export default function ContactForm() {
         </div>
         <div className="flex-1">
           <label className="block text-sm font-normal text-gray-700 mb-1">
-            Email
+            {t("contact.form.email")}
           </label>
           <input
             type="email"
@@ -113,7 +111,7 @@ export default function ContactForm() {
             value={form.email}
             onChange={handleChange}
             required
-            placeholder="Enter Your Email"
+            placeholder={t("contact.form.emailPlaceholder")}
             className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 ${
               errors.email ? "border-red-400" : "border-gray-300"
             }`}
@@ -125,7 +123,7 @@ export default function ContactForm() {
       </div>
       <div className="flex-1">
         <label className="block text-sm font-normal text-gray-700 mb-1">
-          Order Number
+          {t("contact.form.orderNumber")}
         </label>
         <input
           type="text"
@@ -133,7 +131,7 @@ export default function ContactForm() {
           value={form.orderNumber}
           onChange={handleChange}
           required
-          placeholder="Enter Your Order Number"
+          placeholder={t("contact.form.orderNumberPlaceholder")}
           className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 ${
             errors.orderNumber ? "border-red-400" : "border-gray-300"
           }`}
@@ -144,7 +142,7 @@ export default function ContactForm() {
       </div>
       <div>
         <label className="block text-sm font-normal text-gray-700 mb-1">
-          Message
+          {t("contact.form.message")}
         </label>
         <textarea
           name="message"
@@ -152,7 +150,7 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           rows={6}
-          placeholder="Enter Your Message"
+          placeholder={t("contact.form.messagePlaceholder")}
           className={`w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-200 ${
             errors.message ? "border-red-400" : "border-gray-300"
           }`}
@@ -172,7 +170,7 @@ export default function ContactForm() {
         >
           {loading ? (
             <span className="opacity-60 flex items-center">
-              Message Sending...
+              {t("contact.form.sending")}
               <svg
                 className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 animate-spin"
                 fill="none"
@@ -197,7 +195,7 @@ export default function ContactForm() {
             </span>
           ) : (
             <>
-              Contact support
+              {t("contact.form.submit")}
               <svg
                 className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform"
                 fill="none"
@@ -217,7 +215,7 @@ export default function ContactForm() {
       </div>
       {submitted && (
         <div className="text-green-600 text-center mt-2">
-          Thank you! Our support team will reply to you within 24 hours.
+          {t("contact.form.success")}
         </div>
       )}
     </form>

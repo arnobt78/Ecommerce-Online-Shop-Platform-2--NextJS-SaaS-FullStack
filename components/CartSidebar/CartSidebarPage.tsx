@@ -7,8 +7,10 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import CartSidebarItem from "@/components/CartSidebar/CartSidebarItemCard";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 export default function CartSidebarLayout() {
+  const { t } = useLanguage();
   const { cartOpen, setCartOpen, cartItems, setCartItems } = useCart();
   const router = useRouter();
 
@@ -78,7 +80,7 @@ export default function CartSidebarLayout() {
                 <ShoppingBag className="w-4 h-4" />
               </div>
               <h2 className="text-lg md:text-xl font-semibold text-gray-900">
-                Shopping Cart
+                {t("cart.shoppingCart")}
               </h2>
             </div>
             <Button
@@ -99,10 +101,10 @@ export default function CartSidebarLayout() {
                   <ShoppingCart className="w-10 md:w-12 h-10 md:h-12 text-gray-300" />
                 </div>
                 <p className="text-gray-500 text-base md:text-lg font-semibold mb-2">
-                  Your cart is empty
+                  {t("cart.empty")}
                 </p>
                 <p className="text-gray-400 text-sm">
-                  Add some products to get started!
+                  {t("cart.emptyDescription")}
                 </p>
               </div>
             ) : (
@@ -129,7 +131,7 @@ export default function CartSidebarLayout() {
             <div className="border-t border-gray-200 p-4 bg-gradient-to-r from-gray-50 to-white backdrop-blur-sm animate-slide-up">
               <div className="flex justify-between items-center px-3 sm:px-4">
                 <span className="text-base sm:text-lg font-semibold text-gray-900">
-                  Subtotal:
+                  {t("cart.subtotal")}
                 </span>
                 <span className="text-xl sm:text-2xl font-bold text-gray-900">
                   € {getTotalPrice().toFixed(2)}
@@ -137,7 +139,7 @@ export default function CartSidebarLayout() {
               </div>
               <div className="px-3 sm:px-4 mb-2">
                 <span className="block text-sm text-gray-600">
-                  Shipping and taxes calculated at checkout.
+                  {t("cart.shippingTaxes")}
                 </span>
               </div>
               <button
@@ -153,13 +155,13 @@ export default function CartSidebarLayout() {
                   className="font-medium text-[16px] leading-6 text-white flex items-center"
                   style={{ height: 24, maxWidth: 350 }}
                 >
-                  Checkout
+                  {t("cart.checkout")}
                 </span>
               </button>
               <div className="flex flex-row justify-center items-center mt-4 space-x-2 animate-fade-in">
                 {/* or label */}
                 <span className="flex items-center text-[14px] leading-5 text-gray-600">
-                  or
+                  {t("cart.or")}
                 </span>
                 {/* Continue Shopping button */}
                 <button
@@ -171,7 +173,7 @@ export default function CartSidebarLayout() {
                     router.push("/products");
                   }}
                 >
-                  Continue Shopping &rarr;
+                  {t("cart.continueShopping")}
                 </button>
               </div>
 

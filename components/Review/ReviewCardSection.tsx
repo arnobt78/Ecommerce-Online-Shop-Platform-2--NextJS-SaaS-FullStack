@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 // ReviewModal component displays a modal with the full review text
 function ReviewModal({
   open,
@@ -32,8 +33,9 @@ function ReviewModal({
           {[...Array(5)].map((_, j) => (
             <Star
               key={j}
-              className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-                }`}
+              className={`size-4 ${
+                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+              }`}
             />
           ))}
         </div>
@@ -46,6 +48,7 @@ function ReviewModal({
 }
 import { Star, CircleUserRound } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 interface Testimonial {
   name: string;
@@ -78,8 +81,9 @@ function ReviewCardItem({
             {[...Array(5)].map((_, j) => (
               <Star
                 key={j}
-                className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-                  }`}
+                className={`size-4 ${
+                  j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                }`}
               />
             ))}
           </div>
@@ -93,10 +97,13 @@ function ReviewCardItem({
             <p className="font-semibold text-sm text-gray-900">
               {testimonial.name}
             </p>
-            <img
+            <Image
               src="/signature.png"
               alt="Verified signature"
+              width={32}
+              height={16}
               className="h-4 w-auto ml-2"
+              style={{ width: "auto", height: "16px" }}
             />
           </div>
         </div>
@@ -108,19 +115,20 @@ function ReviewCardItem({
 export default function ReviewCard({
   testimonials = defaultTestimonials,
 }: ReviewCardProps) {
+  const { t, isHydrated } = useLanguage();
   const [isMobile, setIsMobile] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] =
     useState<Testimonial | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!isHydrated) return;
 
     const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
-  }, []);
+  }, [isHydrated]);
 
   const testimonialsToShow = isMobile ? testimonials.slice(0, 2) : testimonials;
 
@@ -151,7 +159,7 @@ export default function ReviewCard({
       `}</style>
       <div className="max-w-[1400px] mx-auto">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
-          Reviews
+          {t("home.reviews.title")}
         </h2>
 
         {/* Mobile Layout - Static Grid */}

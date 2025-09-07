@@ -19,6 +19,8 @@ import {
   Truck,
   Shield,
 } from "lucide-react";
+import Image from "next/image";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 /**
  * CartPageComponents - All-in-one cart page UI and logic for the cart route.
@@ -29,6 +31,7 @@ const CartPageComponents: React.FC = () => {
   // DEBUG: Log to check if component function is called
   console.log("CartPageComponents function called");
 
+  const { t } = useLanguage();
   // Cart context state
   const { cartItems, setCartItems } = useCart();
   // Debug: log cart items to check productImage values
@@ -91,7 +94,7 @@ const CartPageComponents: React.FC = () => {
               <div className="w-24 h-24 bg-transparent rounded-2xl flex items-center justify-center shadow-lg border border-gray-100 group-hover:shadow-xl transition-all duration-300 overflow-hidden">
                 {typeof item.productImage === "string" &&
                 item.productImage.length > 0 ? (
-                  <img
+                  <Image
                     src={
                       item.productImage.startsWith("http://") ||
                       item.productImage.startsWith("https://")
@@ -99,11 +102,12 @@ const CartPageComponents: React.FC = () => {
                         : "/" + item.productImage.replace(/^\/+/, "")
                     }
                     alt={item.productName}
+                    width={96}
+                    height={96}
                     className="object-contain w-full h-full"
-                    style={{ maxWidth: "100%", maxHeight: "100%" }}
                   />
                 ) : (
-                  <div className="text-3xl">No Image</div>
+                  <div className="text-3xl">{t("cartPage.noImage")}</div>
                 )}
               </div>
             </div>

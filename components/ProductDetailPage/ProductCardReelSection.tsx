@@ -1,9 +1,13 @@
+import { ProductCardReelSkeleton } from "./ProductCardReelSkeleton";
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { products, ProductData } from "@/scripts/data/products";
 import { useCart } from "@/context/CartContext";
 import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
 import { SingleProductCard } from "@/components/ProductCard/SingleProductCard";
+import { useLanguage } from "@/context/LanguageContextNew";
+import { useProductContext, ProductProvider } from "@/context/ProductContext";
 
 // ProductReelCard component (inlined)
 interface ProductReelCardProps {
@@ -19,6 +23,9 @@ const ProductReelCard: React.FC<ProductReelCardProps> = ({
   const router = useRouter();
   const { setCartItems, setCartOpen } = useCart();
   const getProductSlug = (product: any) => product.slug;
+  const [isLoading, setIsLoading] = React.useState(false);
+  // Use React Context for client-side product sharing
+  const { setSharedProduct } = useProductContext();
   const handleAddToCart = (e?: React.MouseEvent) => {
     e?.stopPropagation && e.stopPropagation();
     setCartItems((prev: any[]) => {
@@ -41,36 +48,33 @@ const ProductReelCard: React.FC<ProductReelCardProps> = ({
     });
     setCartOpen(true);
   };
+
+  // Optimistic UI: show spinner when loading
+  const Spinner = () => (
+    <div className="flex items-center justify-center w-full h-full min-h-[180px]">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#3AF0F7]"></div>
+    </div>
+  );
+
+  const slug = getProductSlug(product);
   return (
-    <div
-      className="w-full flex justify-center cursor-pointer"
-      onClick={() => {
-        if (typeof onProductClick === "function") {
-          onProductClick(product);
-        } else {
-          const slug = getProductSlug(product);
-          if (slug) {
-            router.push(`/product-detail/${slug}`);
-          }
-        }
-      }}
-      tabIndex={0}
-      role="button"
-      aria-label={`View details for ${product.productName}`}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          if (typeof onProductClick === "function") {
-            onProductClick(product);
-          } else {
-            const slug = getProductSlug(product);
-            if (slug) {
-              router.push(`/product-detail/${slug}`);
-            }
-          }
-        }
-      }}
-    >
-      <SingleProductCard {...product} addToCart={handleAddToCart} />
+    <div className="w-full flex justify-center">
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <Link
+          href={`/product-detail/${slug}`}
+          prefetch={true}
+          className="w-full flex justify-center cursor-pointer"
+          aria-label={`View details for ${product.productName}`}
+          onClick={() => {
+            setIsLoading(true);
+            setSharedProduct(product);
+          }}
+        >
+          <SingleProductCard {...product} addToCart={handleAddToCart} />
+        </Link>
+      )}
     </div>
   );
 };
@@ -87,6 +91,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
   cardsToShow,
   onProductClick,
 }) => {
+  const { isHydrated, t } = useLanguage();
   const [itemsToShow, setItemsToShow] = React.useState(2);
   const [mounted, setMounted] = React.useState(false);
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -102,7 +107,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     setMounted(true);
   }, []);
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!isHydrated) return;
 
     const handleResize = () => {
       setItemsToShow(window.innerWidth < 640 ? 2 : 5);
@@ -110,7 +115,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isHydrated]);
 
   React.useEffect(() => {
     if (!emblaApi) return;
@@ -139,8 +144,8 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
   };
 
   if (!mounted) {
-    // Render nothing on server to avoid hydration mismatch
-    return null;
+    // Show skeleton loader while carousel is hydrating
+    return <ProductCardReelSkeleton count={cardsToShow} />;
   }
 
   return (
@@ -151,7 +156,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           type="button"
           className="flex items-center justify-center absolute left-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-r from-white/90 to-transparent cursor-pointer"
           onClick={handleLeft}
-          aria-label="Scroll left"
+          aria-label={t("productDetail.scrollLeft")}
           disabled={selectedIndex === 0}
         >
           <svg
@@ -200,7 +205,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           type="button"
           className="flex items-center justify-center absolute right-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-l from-white/90 to-transparent cursor-pointer"
           onClick={handleRight}
-          aria-label="Scroll right"
+          aria-label={t("productDetail.scrollRight")}
           disabled={selectedIndex === totalSlides - 1}
         >
           <svg
@@ -218,52 +223,6 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
           </svg>
         </button>
       )}
-      {/* Dots indicator for mobile */}
-      {/* {products.length > itemsToShow && (
-        <div
-          className="absolute left-1/2 -translate-x-1/2 flex flex-row gap-1 sm:hidden z-20"
-          style={{
-            bottom: "calc(0% - 16px)",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "auto",
-            minWidth: "unset",
-            maxWidth: "unset",
-          }}
-        >
-          {(() => {
-            const total = products.length - itemsToShow + 1;
-            const maxDots = 20;
-            let start = 0;
-            let end = total;
-            if (total > maxDots) {
-              if (selectedIndex < Math.floor(maxDots / 2)) {
-                start = 0;
-                end = maxDots;
-              } else if (selectedIndex > total - Math.ceil(maxDots / 2)) {
-                start = total - maxDots;
-                end = total;
-              } else {
-                start = selectedIndex - Math.floor(maxDots / 2);
-                end = start + maxDots;
-              }
-            }
-            return Array.from({ length: Math.min(total, maxDots) }, (_, i) => {
-              const idx = start + i;
-              return (
-                <span
-                  key={idx}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    selectedIndex === idx
-                      ? "bg-gray-700 scale-110"
-                      : "bg-gray-300"
-                  }`}
-                />
-              );
-            });
-          })()}
-        </div>
-      )} */}
     </div>
   );
 };
@@ -276,93 +235,35 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   products,
   onProductClick,
 }) => {
+  const { isHydrated, t } = useLanguage();
   const [isMobile, setIsMobile] = React.useState(false);
+
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!isHydrated) return;
 
     const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isHydrated]);
   const cardsToShow = isMobile ? 2 : 5;
 
   let productsToUse: ProductData[] = Array.isArray(products) ? products : [];
 
-  // Get current slug from URL
-  const pathname = usePathname();
-  const slug = React.useMemo(() => {
-    const match = pathname && pathname.match(/\/product-detail\/(.+)$/);
-    return match ? match[1] : undefined;
-  }, [pathname]);
-
-  // Find the current product by slug
-  const currentProduct = React.useMemo(() => {
-    if (!slug) return undefined;
-    return productsToUse.find((p) => p.slug === slug);
-  }, [slug, productsToUse]);
-
-  // Filter related products by productName, brand, or flavor
-  let relatedProducts: ProductData[] = [];
-  if (currentProduct) {
-    relatedProducts = productsToUse.filter(
-      (p) =>
-        p.slug !== currentProduct.slug &&
-        ((currentProduct.productName &&
-          p.productName &&
-          p.productName
-            .toLowerCase()
-            .includes(currentProduct.productName.toLowerCase())) ||
-          (currentProduct.brand &&
-            p.brand &&
-            p.brand.toLowerCase() === currentProduct.brand.toLowerCase()) ||
-          (currentProduct.flavor &&
-            p.flavor &&
-            p.flavor.toLowerCase() === currentProduct.flavor.toLowerCase()))
-    );
-  }
-
-  // Always fill the reel: related products first, then random others (excluding current and already shown)
-  let finalProducts: ProductData[] = [];
-  const alreadyShownSlugs = new Set<string>(
-    [...relatedProducts.map((p) => p.slug), currentProduct?.slug].filter(
-      Boolean
-    ) as string[]
-  );
-  // Get the rest of the products (excluding current and related)
-  let restProducts = productsToUse.filter(
-    (p) => !alreadyShownSlugs.has(p.slug)
-  );
-  // Shuffle restProducts for randomness, but only on the client to avoid hydration mismatch
-  const [shuffledRestProducts, setShuffledRestProducts] =
-    React.useState(restProducts);
-
-  React.useEffect(() => {
-    // Shuffle only on the client
-    const arr = [...restProducts];
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    setShuffledRestProducts(arr);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productsToUse, relatedProducts.length]);
-
-  // Combine related + random others
-  finalProducts = [...relatedProducts, ...shuffledRestProducts];
-
   return (
-    <div className="w-full flex flex-col items-center px-1 sm:px-0">
-      <div className="w-full flex flex-row items-center justify-center mb-8">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight text-center">
-          You May Also Like
-        </h2>
+    <ProductProvider>
+      <div className="w-full flex flex-col items-center px-1 sm:px-0">
+        <div className="w-full flex flex-row items-center justify-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight text-center">
+            {t("productDetail.youMayAlsoLike")}
+          </h2>
+        </div>
+        <ProductReelGrid
+          products={productsToUse}
+          cardsToShow={cardsToShow}
+          onProductClick={onProductClick}
+        />
       </div>
-      <ProductReelGrid
-        products={finalProducts}
-        cardsToShow={cardsToShow}
-        onProductClick={onProductClick}
-      />
-    </div>
+    </ProductProvider>
   );
 };

@@ -3,13 +3,16 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 // ProductGridEmpty component
-const ProductGridEmpty: React.FC = () => (
-  <div className="col-span-full flex flex-col items-center justify-center w-full min-h-[180px] py-8">
-    <span className="text-lg sm:text-xl font-semibold text-gray-500 text-center">
-      No products matched your category filter.
-    </span>
-  </div>
-);
+const ProductGridEmpty: React.FC = () => {
+  const { t } = useLanguage();
+  return (
+    <div className="col-span-full flex flex-col items-center justify-center w-full min-h-[180px] py-8">
+      <span className="text-lg sm:text-xl font-semibold text-gray-500 text-center">
+        {t("products.noProducts")}
+      </span>
+    </div>
+  );
+};
 
 // ListProductCardItem component
 import { SingleProductCard } from "./SingleProductCard";
@@ -68,6 +71,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 import { useProductPagination } from "./useProductPagination";
 import { Pagination } from "../Pagination/Pagination";
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 interface ListProductCardProps {
   products: any[];
@@ -78,6 +82,7 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
   products,
   addToCart,
 }) => {
+  const { isHydrated } = useLanguage();
   // DEBUG: Log the product names received as props to verify sort order
   // console.log('[DEBUG] ListProductCard received products:', products.map(p => p.name || p.productName));
 
@@ -85,8 +90,9 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
 
   // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
   const [perPage, setPerPage] = React.useState(16);
+
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (!isHydrated) return;
 
     const handleResize = () => {
       if (window.innerWidth < 640) {
@@ -98,7 +104,7 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isHydrated]);
 
   const { page, setPage, totalPages, paginated } = useProductPagination(
     products,
@@ -127,8 +133,9 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
   function getProductId(product: any) {
     if (typeof product.id === "number" || typeof product.id === "string")
       return product.id;
-    return `${product.name || product.productName}_${product.brand}_${product.image || product.productImage
-      }`;
+    return `${product.name || product.productName}_${product.brand}_${
+      product.image || product.productImage
+    }`;
   }
 
   // ...existing code...

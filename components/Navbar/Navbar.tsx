@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import {
   Search,
   ShoppingCart,
@@ -13,6 +12,9 @@ import {
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContextNew";
+import { LanguageSelector } from "@/components/LanguageSelector/LanguageSelector";
+import Image from "next/image";
 
 type NavbarProps = {
   allProducts?: any[];
@@ -24,6 +26,7 @@ export default function Navbar({
   noBlur = false,
 }: NavbarProps) {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -39,7 +42,7 @@ export default function Navbar({
   }, []);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const handleScroll = () => {
       // Show navbar only when at the very top
@@ -64,8 +67,8 @@ export default function Navbar({
         typeof product.name === "string"
           ? product.name
           : typeof product.productName === "string"
-            ? product.productName
-            : "";
+          ? product.productName
+          : "";
       const brand = typeof product.brand === "string" ? product.brand : "";
       const category =
         typeof product.category === "string" ? product.category : "";
@@ -140,27 +143,51 @@ export default function Navbar({
         background: "transparent",
       }}
     >
-      <div className="max-w-[1440px] mx-auto py-3 sm:px-8 px-2 sm:py-6">
-        {/* Desktop Navbar (≥850px) */}
-        <div className="hidden [@media(min-width:850px)]:flex items-center justify-between">
+      <div className="max-w-9xl w-full mx-auto py-6 px-2 sm:px-12">
+        {/* Desktop Navbar (≥1185px) */}
+        <div className="hidden [@media(min-width:1185px)]:flex items-center justify-between">
           <div className="flex items-center space-x-12">
-            <a href="/">
-              <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
+            <a
+              href="/"
+              className="flex items-center justify-center"
+              style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
+            >
+              <Image
+                src="/logo.svg"
+                alt="SNUZZ"
+                width={120}
+                height={48}
+                className="h-12 w-auto"
+                style={{ width: 120, height: 48, minWidth: 120, maxWidth: 120 }}
+                priority
+              />
             </a>
           </div>
 
-          <nav className="flex items-center space-x-8">
+          <nav
+            className="flex items-center space-x-8 flex-nowrap overflow-x-auto scrollbar-hide"
+            style={{ minWidth: 480, maxWidth: "100vw" }}
+          >
             {[
-              { label: "Shop", href: "/products" },
-              { label: "Brands", href: "/products?filter=brands" },
-              { label: "Flavor", href: "/products?filter=flavors" },
-              { label: "Strength", href: "/products?filter=strength" },
-              { label: "snuzzPRO", href: "/pro" },
+              { label: t("nav.shop"), href: "/products" },
+              { label: t("nav.brands"), href: "/products?filter=brands" },
+              { label: t("nav.flavor"), href: "/products?filter=flavors" },
+              { label: t("nav.strength"), href: "/products?filter=strength" },
+              { label: t("nav.snuzzpro"), href: "/pro" },
             ].map((item, index) => (
               <a
                 key={index}
                 href={item.href}
-                className="relative font-large hover:text-[#3AF0F7] transition-all duration-300"
+                className="relative font-large hover:text-[#3AF0F7] transition-all duration-300 flex items-center justify-center"
+                style={{
+                  minWidth: 90,
+                  maxWidth: 110,
+                  width: 100,
+                  fontFamily: "inherit",
+                  fontWeight: 400,
+                  textAlign: "center",
+                  whiteSpace: "nowrap",
+                }}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] group-hover:w-full transition-all duration-300"></span>
@@ -177,6 +204,7 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                placeholder={t("nav.search.placeholder")}
                 className="pl-8 pr-3 py-1.5 w-48 h-8 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               />
               {showSearchResults && (
@@ -184,8 +212,10 @@ export default function Navbar({
                   {searchResults.length > 0 ? (
                     <div className="p-0">
                       <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
-                        {searchResultsTotal} Product Found
-                        {searchResultsTotal !== 1 ? "s" : ""}
+                        {searchResultsTotal}{" "}
+                        {searchResultsTotal === 1
+                          ? t("nav.search.results")
+                          : t("nav.search.results.plural")}
                       </div>
                       <div className="space-y-2">
                         {[...searchResults]
@@ -215,10 +245,11 @@ export default function Navbar({
                                 product.slug ||
                                 product.name ||
                                 product.productName ||
-                                `search-result-${product.slug ||
-                                product.name ||
-                                product.productName ||
-                                index
+                                `search-result-${
+                                  product.slug ||
+                                  product.name ||
+                                  product.productName ||
+                                  index
                                 }`
                               }
                               className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
@@ -243,18 +274,23 @@ export default function Navbar({
                                       img.length > 0
                                     ) {
                                       return (
-                                        <img
+                                        <Image
                                           src={
-                                            img.startsWith("http://") ||
-                                              img.startsWith("https://")
-                                              ? img
-                                              : "/" + img.replace(/^\/+/, "")
+                                            typeof img === "string" &&
+                                            img.length > 0
+                                              ? img.startsWith("http://") ||
+                                                img.startsWith("https://")
+                                                ? img
+                                                : "/" + img.replace(/^\/+/, "")
+                                              : ""
                                           }
                                           alt={
                                             product.productName ||
                                             product.name ||
                                             "Product"
                                           }
+                                          width={48}
+                                          height={48}
                                           className="object-contain w-full h-full"
                                           onError={(e) => {
                                             e.currentTarget.style.display =
@@ -313,7 +349,7 @@ export default function Navbar({
                                         €
                                         {parseFloat(
                                           (typeof product.originalPrice ===
-                                            "string"
+                                          "string"
                                             ? product.originalPrice
                                             : String(product.originalPrice)
                                           )
@@ -327,7 +363,7 @@ export default function Navbar({
                                       €
                                       {parseFloat(
                                         (typeof product.originalPrice ===
-                                          "string"
+                                        "string"
                                           ? product.originalPrice
                                           : String(product.originalPrice)
                                         )
@@ -367,7 +403,7 @@ export default function Navbar({
                           }}
                           className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
                         >
-                          View All Results →
+                          {t("nav.search.viewAll")}
                         </button>
                       </div>
                     </div>
@@ -375,16 +411,19 @@ export default function Navbar({
                     <div className="p-6 text-center">
                       <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                       <p className="text-gray-500 font-medium">
-                        No products found
+                        {t("nav.search.noResults")}
                       </p>
                       <p className="text-gray-400 text-sm">
-                        Try searching for different keywords
+                        {t("nav.search.tryDifferent")}
                       </p>
                     </div>
                   )}
                 </div>
               )}
             </div>
+
+            {/* Language Selector */}
+            <LanguageSelector />
 
             <Button
               variant="ghost"
@@ -415,8 +454,8 @@ export default function Navbar({
           </div>
         </div>
 
-        {/* Mobile Navbar Row: burger left, logo center, cart right (<850px) */}
-        <div className="flex [@media(max-width:849px)]:flex [@media(min-width:850px)]:hidden items-center justify-between">
+        {/* Mobile Navbar Row: burger left, logo center, cart right (<1185px) */}
+        <div className="flex [@media(max-width:1184px)]:flex [@media(min-width:1185px)]:hidden items-center justify-between">
           {/* Burger menu button */}
           <Button
             variant="ghost"
@@ -431,8 +470,19 @@ export default function Navbar({
             )}
           </Button>
           {/* Center logo */}
-          <a href="/" className="flex-1 flex justify-center">
-            <img src="/logo.svg" alt="SNUZZ" className="h-12 w-auto" />
+          <a
+            href="/"
+            className="flex-1 flex justify-center"
+            style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
+          >
+            <Image
+              src="/logo.svg"
+              alt="SNUZZ"
+              width={120}
+              height={48}
+              className="h-12 w-auto"
+              style={{ width: 120, height: 48, minWidth: 120, maxWidth: 120 }}
+            />
           </a>
           {/* Cart button */}
           <Button
@@ -452,14 +502,14 @@ export default function Navbar({
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="[@media(max-width:849px)]:block [@media(min-width:850px)]:hidden w-full bg-white border-b border-gray-200">
+        <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden w-full bg-white border-b border-gray-200">
           <div className="mx-0 py-4">
             {[
-              { label: "Shop", href: "/products" },
-              { label: "Brands", href: "/products?filter=brands" },
-              { label: "Flavor", href: "/products?filter=flavors" },
-              { label: "Strength", href: "/products?filter=strength" },
-              { label: "SnuzzPro", href: "/pro" },
+              { label: t("nav.shop"), href: "/products" },
+              { label: t("nav.brands"), href: "/products?filter=brands" },
+              { label: t("nav.flavor"), href: "/products?filter=flavors" },
+              { label: t("nav.strength"), href: "/products?filter=strength" },
+              { label: t("nav.snuzzpro"), href: "/pro" },
             ].map((item, index) => (
               <a
                 key={index}
@@ -469,6 +519,12 @@ export default function Navbar({
                 {item.label}
               </a>
             ))}
+
+            {/* Language Selector for Mobile */}
+            <div className="px-4 py-2">
+              <LanguageSelector />
+            </div>
+
             <div className="p-4 relative">
               <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
               <input
@@ -476,6 +532,7 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                placeholder={t("nav.search.placeholder")}
                 className="w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               />
               {showSearchResults && searchQuery && (
@@ -483,8 +540,10 @@ export default function Navbar({
                   {searchResults.length > 0 ? (
                     <div className="p-0">
                       <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
-                        {searchResults.length} Product Found
-                        {searchResults.length !== 1 ? "s" : ""}
+                        {searchResults.length}{" "}
+                        {searchResults.length === 1
+                          ? t("nav.search.results")
+                          : t("nav.search.results.plural")}
                       </div>
                       <div className="space-y-2">
                         {searchResults.map((product, index) => (
@@ -494,10 +553,11 @@ export default function Navbar({
                               product.slug ||
                               product.name ||
                               product.productName ||
-                              `search-result-mobile-${product.slug ||
-                              product.name ||
-                              product.productName ||
-                              index
+                              `search-result-mobile-${
+                                product.slug ||
+                                product.name ||
+                                product.productName ||
+                                index
                               }`
                             }
                             className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
@@ -514,7 +574,7 @@ export default function Navbar({
                                   product.productImage || product.image || "";
                                 if (typeof img === "string" && img.length > 0) {
                                   return (
-                                    <img
+                                    <Image
                                       src={
                                         img.startsWith("/") ? img : "/" + img
                                       }
@@ -523,6 +583,8 @@ export default function Navbar({
                                         product.name ||
                                         "Product"
                                       }
+                                      width={48}
+                                      height={48}
                                       className="object-contain w-full h-full"
                                       onError={(e) => {
                                         e.currentTarget.style.display = "none";
@@ -615,7 +677,7 @@ export default function Navbar({
                           }}
                           className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
                         >
-                          View All Results →
+                          {t("nav.search.viewAll")}
                         </button>
                       </div>
                     </div>
@@ -623,10 +685,10 @@ export default function Navbar({
                     <div className="p-6 text-center">
                       <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
                       <p className="text-gray-500 font-medium">
-                        No products found
+                        {t("nav.search.noResults")}
                       </p>
                       <p className="text-gray-400 text-sm">
-                        Try searching for different keywords
+                        {t("nav.search.tryDifferent")}
                       </p>
                     </div>
                   )}

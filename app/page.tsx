@@ -5,17 +5,18 @@ import ProductsSection from "@/components/HomePage/ProductsSection";
 import FeatureSection from "@/components/HomePage/FeatureSection";
 import ReviewSection from "@/components/Review/ReviewCardSection";
 import AnimationsAndStyles from "@/components/HomePage/AnimationsAndStyles";
+import { PageCache, usePagePreload } from "@/components/PageCache";
 
 export default function Home() {
+  const { preloadAllData } = usePagePreload();
+
   return (
-    <div className="">
-      {/* Header and CartSidebar are now global in layout.tsx */}
+    <PageCache pageKey="home" preloadData={preloadAllData}>
       <HeroSection />
       <FeatureSection />
       <ProductsSection />
       <ReviewSection />
       <AnimationsAndStyles />
-    </div>
+    </PageCache>
   );
 }
-

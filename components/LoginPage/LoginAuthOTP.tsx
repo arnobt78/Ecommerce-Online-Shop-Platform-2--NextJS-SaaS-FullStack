@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 interface Props {
   email: string;
@@ -29,6 +30,7 @@ export default function LoginAuthOTP({
   startTimer,
   router,
 }: Props) {
+  const { t } = useLanguage();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [sending, setSending] = useState(false);
   const [resending, setResending] = useState(false);
@@ -39,7 +41,7 @@ export default function LoginAuthOTP({
     e.preventDefault();
     setError("");
     if (!email || !email.includes("@")) {
-      setError("Please enter a valid email address.");
+      setError(t("login.validation.emailRequired"));
       return;
     }
     setSending(true);
@@ -55,10 +57,10 @@ export default function LoginAuthOTP({
         setCode("");
         startTimer();
       } else {
-        setError(data.error || "Failed to send OTP.");
+        setError(data.error || t("login.error.sendFailed"));
       }
     } catch (err) {
-      setError("Failed to send OTP.");
+      setError(t("login.error.sendFailed"));
     } finally {
       setSending(false);
     }
@@ -78,10 +80,10 @@ export default function LoginAuthOTP({
         startTimer();
         setError("");
       } else {
-        setError(data.error || "Failed to resend OTP.");
+        setError(data.error || t("login.error.resendFailed"));
       }
     } catch (err) {
-      setError("Failed to resend OTP.");
+      setError(t("login.error.resendFailed"));
     } finally {
       setResending(false);
     }
@@ -102,16 +104,16 @@ export default function LoginAuthOTP({
       if (data.success) {
         setError("");
         // Set authentication flag in localStorage
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('demo_authenticated', 'true');
-          localStorage.setItem('demo_email', email);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("demo_authenticated", "true");
+          localStorage.setItem("demo_email", email);
         }
         router.push("/dashboard");
       } else {
-        setError(data.error || "Invalid code. Please try again.");
+        setError(data.error || t("login.error.invalidCode"));
       }
     } catch (err) {
-      setError("Invalid code. Please try again.");
+      setError(t("login.error.invalidCode"));
     } finally {
       setLoggingIn(false);
     }
@@ -126,7 +128,7 @@ export default function LoginAuthOTP({
         >
           <input
             type="email"
-            placeholder="Enter Your Email"
+            placeholder={t("login.emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="border border-[#E0E0E0] rounded-lg px-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
@@ -134,15 +136,16 @@ export default function LoginAuthOTP({
           />
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${sending ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+              sending ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             disabled={timer > 0 || sending}
           >
             {sending
-              ? "Sending code..."
+              ? t("login.sendingCode")
               : timer > 0
-                ? `Send code (${timer}s)`
-                : "Send code"}
+              ? t("login.sendCodeTimer").replace("{timer}", timer.toString())
+              : t("login.sendCode")}
           </button>
         </form>
       ) : (
@@ -151,26 +154,26 @@ export default function LoginAuthOTP({
           onSubmit={handleLogin}
         >
           <div className="w-full mb-2 text-sm text-gray-500 text-center">
-            Enter the OTP code, sent to{" "}
+            {t("login.otpInstructions")}{" "}
             <span className="font-semibold">{email}</span>
             <br />
             <span className="block text-xs text-gray-400 mt-1">
-              Please check your email inbox or spam folder for the code.
+              {t("login.checkEmail")}
             </span>
           </div>
           <div className="relative w-full">
             <input
               type="text"
-              placeholder="One Time Code"
+              placeholder={t("login.otpPlaceholder")}
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="text-sm sm:text-md border border-[#E0E0E0] rounded-lg pl-2 sm:pl-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff] pr-32"
+              className="text-sm sm:text-md border border-[#E0E0E0] rounded-lg pl-2 sm:pl-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff] pr-32"
               required
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-4">
               {timer > 0 ? (
                 <span className="text-sm sm:text-md text-gray-500 whitespace-nowrap">
-                  Resend in{" "}
+                  {t("login.resendIn")}{" "}
                   <span className="text-sm sm:text-md text-red-500 font-semibold">
                     {timer}s
                   </span>
@@ -178,23 +181,25 @@ export default function LoginAuthOTP({
               ) : (
                 <button
                   type="button"
-                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${resending ? "opacity-60 cursor-not-allowed" : ""
-                    }`}
+                  className={`text-[#01DAE3] text-sm sm:text-md font-medium sm:font-semibold hover:underline bg-[#01DAE3]/10 px-2 py-1 rounded ${
+                    resending ? "opacity-60 cursor-not-allowed" : ""
+                  }`}
                   onClick={resending ? undefined : handleResendCode}
                   disabled={resending}
                 >
-                  {resending ? "Resending code..." : "Resend code"}
+                  {resending ? t("login.resendingCode") : t("login.resendCode")}
                 </button>
               )}
             </div>
           </div>
           <button
             type="submit"
-            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${loggingIn ? "opacity-60 cursor-not-allowed" : ""
-              }`}
+            className={`bg-[#8ffaff] text-gray-900 font-bold rounded-lg py-3 text-base w-full mt-2 hover:bg-[#6ee7f7] transition-colors ${
+              loggingIn ? "opacity-60 cursor-not-allowed" : ""
+            }`}
             disabled={loggingIn}
           >
-            {loggingIn ? "Logging in..." : "Log in"}
+            {loggingIn ? t("login.loggingIn") : t("login.logIn")}
           </button>
         </form>
       )}

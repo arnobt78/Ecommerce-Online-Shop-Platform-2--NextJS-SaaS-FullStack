@@ -2,8 +2,11 @@
 
 import ContactForm from "../../components/ContactPage/ContactForm";
 import FaqSection from "../../components/ContactPage/FaqSection";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+
   return (
     <div className="relative min-h-screen bg-white flex flex-col md:flex-row overflow-hidden">
       {/* Gradient background on right */}
@@ -54,30 +57,24 @@ export default function ContactPage() {
 
       <main className="relative z-10 flex-1 max-w-3xl mx-auto w-full px-4 pt-20 sm:pt-24 text-justify">
         <h1 className="text-center text-3xl sm:text-4xl font-semibold text-gray-900 mb-6 sm:mb-12">
-          Contact Us
+          {t("contact.title")}
         </h1>
         {/* <h2 className="text-center text-xl sm:text-2xl font-medium text-gray-700 mb-6">
           We want to hear from you
         </h2> */}
-        <p className="text-gray-600 mb-4">
-          To contact our support team please fill out the form below including
-          following information:
-        </p>
+        <p className="text-gray-600 mb-4">{t("contact.description")}</p>
         <ul className="list-disc pl-6 text-gray-600 mb-6 space-y-1">
           <li>
-            <b>Your Name.</b>
+            <b>{t("contact.info.name")}</b>
           </li>
           <li>
-            <b>Your Email.</b>
+            <b>{t("contact.info.email")}</b>
           </li>
           <li>
-            <b>Order Number.</b>
+            <b>{t("contact.info.orderNumber")}</b>
           </li>
         </ul>
-        <p className="text-gray-600 mb-8">
-          By contacting our customer support team, you agree to our Privacy
-          Policy. Thank you.
-        </p>
+        <p className="text-gray-600 mb-8">{t("contact.privacy")}</p>
         <ContactForm />
         <div className="mt-24">
           <FaqSection />

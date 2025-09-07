@@ -1,5 +1,7 @@
 import { ChevronDown, ArrowRight, Instagram, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/context/LanguageContextNew";
+import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 
@@ -20,6 +22,7 @@ export function FooterSection({
   sectionKey,
 }: FooterSectionProps) {
   const router = useRouter();
+  const { t } = useLanguage();
 
   return (
     <div className="text-center sm:text-left">
@@ -87,6 +90,7 @@ interface FooterContactProps {
 
 export function FooterContact({ open, onToggle }: FooterContactProps) {
   const router = useRouter();
+  const { t } = useLanguage();
 
   return (
     <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0">
@@ -105,7 +109,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
             router.push("/contact");
           }}
         >
-          Contact support
+          {t("footer.contact.title")}
           <ArrowRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
         </Button>
       </div>
@@ -118,9 +122,11 @@ export function FooterLogoSocial() {
   return (
     <div className="sm:col-span-2 lg:col-span-1 text-center flex flex-col justify-center items-center h-full min-h-[120px]">
       <a href="/" aria-label="Go to homepage">
-        <img
+        <Image
           src="/logo.svg"
           alt="SNUZZ"
+          width={120}
+          height={40}
           className="h-10 w-auto mb-4 sm:mb-6 mx-auto mt-4 sm:mt-8"
         />
       </a>
@@ -157,9 +163,11 @@ export function FooterPayments() {
           key={i}
           className="w-10 sm:w-8 md:w-10 h-6 sm:h-5 md:h-6 rounded flex items-center justify-center bg-white shadow-sm border border-gray-200"
         >
-          <img
+          <Image
             src={payment.image}
             alt={payment.name}
+            width={20}
+            height={20}
             className="size-5 object-contain"
           />
         </div>
@@ -170,9 +178,11 @@ export function FooterPayments() {
 
 // FooterCopyright
 export function FooterCopyright() {
+  const { t } = useLanguage();
+
   return (
     <p className="text-gray-500 text-xs sm:text-sm text-center sm:text-right">
-      © Snuzz {new Date().getUTCFullYear()}. All Rights Reserved.
+      {t("footer.copyright")}
     </p>
   );
 }

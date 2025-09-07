@@ -2,31 +2,25 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 
 import {
-  ArrowLeft,
   Plus,
   Minus,
   Trash2,
   ShoppingBag,
   Lock,
-  CreditCard,
   Truck,
-  Shield,
-  Tag,
-  Star,
-  Heart,
   Clock,
-  ArrowRight,
   Package,
   Percent,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { useCart } from "@/context/CartContext";
 import { StockStatusLabel } from "@/components/ui/StockStatusLabel";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 // Parse price string to number
 function parsePrice(price: string | undefined) {
@@ -37,6 +31,7 @@ function parsePrice(price: string | undefined) {
 }
 
 export default function CartPage() {
+  const { t } = useLanguage();
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
@@ -112,18 +107,17 @@ export default function CartPage() {
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] rounded-full animate-pulse"></div>
             </div>
             <h2 className="text-3xl font-bold text-gray-900 mb-4 tracking-tight">
-              Your cart is empty
+              {t("cartPage.empty.title")}
             </h2>
             <p className="text-lg text-gray-600 mb-10 max-w-md mx-auto leading-relaxed">
-              Discover our curated collection of premium products and start
-              building your perfect order.
+              {t("cartPage.empty.description")}
             </p>
             <Link href="/products">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-gray-900 font-semibold px-8 py-3 text-base shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
-                Explore Products
+                {t("cartPage.empty.exploreProducts")}
               </Button>
             </Link>
           </div>
@@ -142,10 +136,10 @@ export default function CartPage() {
             <div className="h-8 w-px bg-gradient-to-b from-transparent via-gray-300 to-transparent" />
             <div>
               <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 tracking-tight">
-                Shopping Cart
+                {t("cartPage.title")}
               </h1>
               <p className="text-sm sm:text-lg text-gray-600 mt-1">
-                Review your items and proceed to checkout
+                {t("cartPage.subtitle")}
               </p>
             </div>
           </div>
@@ -171,7 +165,7 @@ export default function CartPage() {
                               {/* Robust image logic: show image if valid URL, else fallback */}
                               {typeof item.productImage === "string" &&
                               item.productImage.length > 0 ? (
-                                <img
+                                <Image
                                   src={
                                     item.productImage.startsWith("http://") ||
                                     item.productImage.startsWith("https://")
@@ -180,6 +174,8 @@ export default function CartPage() {
                                         item.productImage.replace(/^\/+/, "")
                                   }
                                   alt={item.productName}
+                                  width={96}
+                                  height={96}
                                   className="object-contain w-full h-full"
                                   style={{
                                     maxWidth: "100%",
@@ -187,7 +183,9 @@ export default function CartPage() {
                                   }}
                                 />
                               ) : (
-                                <div className="text-2xl">No Image</div>
+                                <div className="text-2xl">
+                                  {t("cartPage.noImage")}
+                                </div>
                               )}
                             </div>
                           </div>
@@ -211,13 +209,13 @@ export default function CartPage() {
                                       {item.productName}
                                     </h3>
                                   )}
-                                  <Button
+                                  {/* <Button
                                     variant="ghost"
                                     size="sm"
                                     className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:text-red-500"
                                   >
                                     <Heart className="w-4 h-4" />
-                                  </Button>
+                                  </Button> */}
                                 </div>
                                 <div className="flex items-center">
                                   <StockStatusLabel
@@ -274,7 +272,7 @@ export default function CartPage() {
                               </div>
                               <div className="text-right">
                                 <p className="text-xs sm:text-sm text-gray-500">
-                                  Item Total
+                                  {t("cartPage.itemTotal")}
                                 </p>
                                 <p className="text-lg sm:text-xl font-semibold text-gray-900">
                                   €{" "}
@@ -319,15 +317,18 @@ export default function CartPage() {
                   <ShoppingBag className="w-5 h-5 text-gray-900" />
                 </div> */}
                 <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                  Order Summary
+                  {t("cartPage.orderSummary")}
                 </h2>
               </div>
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-700">
                   <span className="flex items-center">
                     <ShoppingBag className="w-4 h-4 mr-1" />
-                    Subtotal ({getTotalItems()}{" "}
-                    {getTotalItems() === 1 ? "item" : "items"})
+                    {t("cartPage.subtotal")} ({getTotalItems()}{" "}
+                    {getTotalItems() === 1
+                      ? t("cartPage.item")
+                      : t("cartPage.items")}
+                    )
                   </span>
                   <span className="font-semibold">
                     € {getSubtotal().toFixed(2)}
@@ -336,17 +337,19 @@ export default function CartPage() {
                 {getShipping() === 0 && (
                   <div className="flex justify-between items-center text-gray-700">
                     <span className="flex items-center">
-                      <Truck className="w-4 h-4 mr-1" /> Shipping
+                      <Truck className="w-4 h-4 mr-1" />{" "}
+                      {t("cartPage.shipping")}
                     </span>
                     <span className="text-green-600 font-semibold bg-green-100 px-3 py-1 rounded-full text-sm">
-                      Free
+                      {t("cartPage.free")}
                     </span>
                   </div>
                 )}
                 {getShipping() > 0 && (
                   <div className="flex justify-between items-center text-gray-700">
                     <span className="flex items-center">
-                      <Truck className="w-4 h-4 mr-1" /> Shipping
+                      <Truck className="w-4 h-4 mr-1" />{" "}
+                      {t("cartPage.shipping")}
                     </span>
                     <span className="font-semibold">
                       € {getShipping().toFixed(2)}
@@ -356,20 +359,20 @@ export default function CartPage() {
                 <div className="flex justify-between text-gray-700">
                   <span className="flex items-center">
                     <Percent className="w-4 h-4 mr-1" />
-                    Tax
+                    {t("cartPage.tax")}
                   </span>
                   <span className="font-semibold">€ {getTax().toFixed(2)}</span>
                 </div>
                 {getDiscount() > 0 && (
                   <div className="flex justify-between text-green-600">
-                    <span>Discount</span>
+                    <span>{t("cartPage.discount")}</span>
                     <span>-€ {getDiscount().toFixed(2)}</span>
                   </div>
                 )}
                 <div className="border-t border-gray-200 my-4" />
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-semibold text-gray-900">
-                    Total
+                    {t("cartPage.total")}
                   </span>
                   <span className="text-2xl font-semibold text-gray-900">
                     € {getTotal().toFixed(2)}
@@ -379,21 +382,22 @@ export default function CartPage() {
 
               <Link href="/checkout" passHref legacyBehavior>
                 <a className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-[#4F46E5] shadow-sm rounded-md relative transition-all duration-300 hover:bg-[#4338ca] active:bg-[#4338ca]/10 mx-auto mt-4 text-white font-semibold text-base">
-                  <Lock className="w-5 h-5 mr-2" /> Secure Checkout
+                  <Lock className="w-5 h-5 mr-2" />{" "}
+                  {t("cartPage.secureCheckout")}
                 </a>
               </Link>
 
               {/* delivery feature section */}
               <div className="my-8">
-                <div className="flex items-stretch bg-[#3AF0F7]/10 rounded-lg px-4 py-6 flex-row items-center sm:justify-between border border-green-100">
+                <div className="flex items-stretch bg-[#3AF0F7]/10 rounded-lg px-4 py-6 flex-row sm:items-center sm:justify-between border border-green-100">
                   <div className="flex items-center space-x-2 sm:space-x-4">
                     <Clock className="w-6 h-6 text-gray-700" />
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-500 font-medium">
-                        Orders Placed
+                        {t("cartPage.ordersPlaced")}
                       </span>
                       <span className="text-sm sm:text-base font-semibold text-gray-700">
-                        Today
+                        {t("cartPage.today")}
                       </span>
                     </div>
                   </div>
@@ -417,10 +421,10 @@ export default function CartPage() {
                     <Package className="w-6 h-6 text-gray-700" />
                     <div className="flex flex-col">
                       <span className="text-xs text-gray-500 font-medium">
-                        Delivered
+                        {t("cartPage.delivered")}
                       </span>
                       <span className="text-sm sm:text-base font-semibold text-gray-700">
-                        2 days from now
+                        {t("cartPage.deliveryTime")}
                       </span>
                     </div>
                   </div>
@@ -452,12 +456,12 @@ export default function CartPage() {
                   <Tag className="w-5 h-5 text-gray-900" />
                 </div> */}
                     <h3 className="text-lg font-semibold text-gray-900">
-                      Promo Code
+                      {t("cartPage.promoCode")}
                     </h3>
                   </div>
                   <div className="flex space-x-2 sm:space-x-2 mt-2">
                     <input
-                      placeholder="Enter promo code"
+                      placeholder={t("cartPage.enterPromoCode")}
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value)}
                       className="border border-[#E0E0E0] rounded-md px-4 py-2 text-sm sm:text-base text-gray-700 w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
@@ -466,7 +470,7 @@ export default function CartPage() {
                       onClick={applyPromoCode}
                       className="bg-gray-300 hover:bg-[#2de0e7]/50 text-gray-900 text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-[#4338ca]/10"
                     >
-                      Apply
+                      {t("cartPage.apply")}
                     </button>
                   </div>
                   {appliedPromo && (
@@ -475,8 +479,9 @@ export default function CartPage() {
                         <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mr-2">
                           <span className="text-white text-xs">✓</span>
                         </div>
-                        Promo code "{appliedPromo}" applied! You saved €
-                        {getDiscount().toFixed(2)}
+                        {t("cartPage.promoApplied")
+                          .replace("{code}", appliedPromo)
+                          .replace("{amount}", getDiscount().toFixed(2))}
                       </p>
                     </div>
                   )}

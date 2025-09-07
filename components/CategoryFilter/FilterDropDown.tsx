@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 export interface FilterDropDownProps {
   title: string;
@@ -23,6 +24,7 @@ export function FilterDropDown({
   singleSelect = false,
   disabledOptions = [],
 }: FilterDropDownProps) {
+  const { t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   // Handle option selection
@@ -73,7 +75,7 @@ export function FilterDropDown({
         </div>
         {/* Second row: Choose and arrow, justify-between */}
         <div className="w-full flex flex-row items-center justify-between text-[#A3A3A3] text-[15px] sm:text-[16px] leading-[19px] font-normal mt-1 pl-8">
-          <span>Choose</span>
+          <span>{t("products.filter.choose")}</span>
           <svg
             className={`w-5 h-5 ml-2 sm:ml-10 transition-transform ${
               open ? "rotate-180" : ""
@@ -166,7 +168,7 @@ export function FilterDropDown({
             onClick={() => onChange([])}
             tabIndex={0}
           >
-            Clear Filter
+            {t("products.filter.clearFilter")}
           </button>
         </div>
       )}

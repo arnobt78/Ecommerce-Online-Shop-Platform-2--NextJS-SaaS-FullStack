@@ -8,8 +8,10 @@ import {
   FooterPayments,
   FooterCopyright,
 } from "@/components/Footer/FooterComponments";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 export default function Footer() {
+  const { t } = useLanguage();
   const [openDropdowns, setOpenDropdowns] = useState<{
     [key: string]: boolean;
   }>({});
@@ -27,31 +29,36 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-8 pb-0 sm:pb-8 items-center">
           <FooterLogoSocial />
           <FooterSection
-            title="Shop"
-            items={["Brands", "Flavours", "Strength", "Snuzz PRO"]}
+            title={t("footer.shop.title")}
+            items={[
+              t("footer.shop.brands"),
+              t("footer.shop.flavours"),
+              t("footer.shop.strength"),
+              t("footer.shop.snuzzpro"),
+            ]}
             open={!!openDropdowns.shop}
             onToggle={() => toggleDropdown("shop")}
             sectionKey="shop"
           />
           <FooterSection
-            title="Favorites"
+            title={t("footer.favorites.title")}
             items={[
-              "ZYN Apple Mint",
-              "VELO Peppermint Storm",
-              "Killa Grape Ice",
-              "Puff & Pouch Grape",
+              t("footer.favorites.zynAppleMint"),
+              t("footer.favorites.veloPeppermint"),
+              t("footer.favorites.killaGrape"),
+              t("footer.favorites.puffGrape"),
             ]}
             open={!!openDropdowns.favorites}
             onToggle={() => toggleDropdown("favorites")}
             sectionKey="favorites"
           />
           <FooterSection
-            title="Information"
+            title={t("footer.information.title")}
             items={[
-              "Terms of Service",
-              "Privacy Policy",
-              "Refund Policy",
-              "FAQ",
+              t("footer.information.terms"),
+              t("footer.information.privacy"),
+              t("footer.information.refund"),
+              t("footer.information.faq"),
             ]}
             open={!!openDropdowns.information}
             onToggle={() => toggleDropdown("information")}

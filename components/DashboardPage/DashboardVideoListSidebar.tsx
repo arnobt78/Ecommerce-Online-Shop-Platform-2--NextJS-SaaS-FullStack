@@ -1,3 +1,5 @@
+import { useLanguage } from "@/context/LanguageContextNew";
+
 export default function DashboardVideoListSidebar({
   videoList,
   selectedVideo,
@@ -11,9 +13,11 @@ export default function DashboardVideoListSidebar({
     src: string;
   }) => void;
 }) {
+  const { t } = useLanguage();
+
   return (
     <aside className="w-full bg-white rounded-2xl shadow-sm flex flex-col items-center px-4 pt-4 pb-2">
-      <div className="hidden sm:block mb-4 w-full flex justify-center items-center">
+      <div className="hidden sm:block mb-4 w-full justify-center items-center">
         <svg
           width="180"
           height="40"
@@ -38,7 +42,9 @@ export default function DashboardVideoListSidebar({
       <div className="w-full flex-1">
         {/* Example: sectioned video list, static for now */}
         <div className="flex flex-row justify-between w-full mb-2 items-end">
-          <span className="font-semibold text-gray-800">Courses</span>
+          <span className="font-semibold text-gray-800">
+            {t("dashboard.courses")}
+          </span>
           <span className="text-xs text-gray-500">03:29:40</span>
         </div>
         <div className="w-full">

@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { useProductContext } from "@/context/ProductContext";
+import Image from "next/image";
 
 // --- Inlined: ProductPosterCard ---
 interface ProductPosterCardProps {
@@ -9,37 +11,42 @@ interface ProductPosterCardProps {
 /**
  * ProductPosterCard displays the main product image and badges.
  */
-const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => (
-  <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
-    {/* Top badges */}
-    <div className="absolute flex flex-row w-full justify-between top-1 sm:top-4 left-0 pr-1 sm:pr-4 z-10">
-      {product.saleLabel ? (
-        <div className="bg-white rounded-[6px] w-[70px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
-          <span className="italic font-medium text-xs sm:text-sm text-[#C02929]">
-            {product.saleLabel}
+const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
+  const { t } = useLanguage();
+  return (
+    <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
+      {/* Top badges */}
+      <div className="absolute flex flex-row w-full justify-between top-1 sm:top-4 left-0 pr-1 sm:pr-4 z-10">
+        {product.saleLabel ? (
+          <div className="bg-white rounded-[6px] w-[70px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
+            <span className="italic font-medium text-xs sm:text-sm text-[#C02929]">
+              {product.saleLabel}
+            </span>
+          </div>
+        ) : (
+          <div className="w-[70px] h-[24px]" />
+        )}
+        <div className="bg-white rounded-[6px] w-[90px] sm:w-[110px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
+          <span className="italic font-medium text-xs sm:text-sm text-gray-900">
+            {t("products.shipping.freeShipping")}
           </span>
         </div>
-      ) : (
-        <div className="w-[70px] h-[24px]" />
-      )}
-      <div className="bg-white rounded-[6px] w-[90px] sm:w-[110px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
-        <span className="italic font-medium text-xs sm:text-sm text-gray-900">
-          {product.shippingLabel}
-        </span>
+      </div>
+      {/* Product image as poster */}
+      <div className="relative flex flex-col items-center justify-center w-full h-full z-0 ">
+        <Image
+          src={product.productImage}
+          alt={product.productName}
+          width={640}
+          height={640}
+          className="object-contain w-full h-full mx-auto drop-shadow-xl"
+          draggable={false}
+          loading="lazy"
+        />
       </div>
     </div>
-    {/* Product image as poster */}
-    <div className="relative flex flex-col items-center justify-center w-full h-full z-0 ">
-      <img
-        src={product.productImage}
-        alt={product.productName}
-        className="object-contain w-full h-full mx-auto drop-shadow-xl"
-        draggable={false}
-        loading="lazy"
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 // --- Inlined: ProductCardDescriptionSection and ProductDetailDescriptionSection ---
 interface ProductCardDescriptionSectionProps {
@@ -74,8 +81,9 @@ const CollapsibleSection: React.FC<{
         viewBox="0 0 20 10"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className={`transition-transform duration-300 ease-in-out ${open ? "" : "rotate-180"
-          }`}
+        className={`transition-transform duration-300 ease-in-out ${
+          open ? "" : "rotate-180"
+        }`}
         style={{ transformOrigin: "50% 50%" }}
       >
         <path
@@ -89,10 +97,11 @@ const CollapsibleSection: React.FC<{
     </button>
     <div
       id={sectionId}
-      className={`transition-all duration-300 ease-in-out overflow-hidden ${open
+      className={`transition-all duration-300 ease-in-out overflow-hidden ${
+        open
           ? "max-h-[2000px] opacity-100"
           : "max-h-0 opacity-0 pointer-events-none"
-        }`}
+      }`}
       aria-hidden={!open}
     >
       {children}
@@ -105,42 +114,47 @@ const ProductDescriptionDetails: React.FC<{
   strength: string;
   nicotinePerPouch: string;
   description?: string;
-}> = ({ brand, flavor, strength, nicotinePerPouch, description }) => (
-  <>
-    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
-      <span>Brand:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
-      <span className="ml-2">{brand}</span>
-    </div>
-    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
-      <span>Flavor:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
-      <span className="ml-2">{flavor}</span>
-    </div>
-    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
-      <span>Strength:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
-      <span className="ml-2">{strength}</span>
-    </div>
-    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
-      <span>Nicotine per pouch:</span>
-      <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
-      <span className="ml-2">{nicotinePerPouch}</span>
-    </div>
-    <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg text-justify mt-4">
-      <p className="">{description}</p>
-    </div>
-  </>
-);
+}> = ({ brand, flavor, strength, nicotinePerPouch, description }) => {
+  const { t } = useLanguage();
+
+  return (
+    <>
+      <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
+        <span>{t("productDetail.brand")}</span>
+        <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
+        <span className="ml-2">{brand}</span>
+      </div>
+      <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
+        <span>{t("productDetail.flavor")}</span>
+        <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
+        <span className="ml-2">{flavor}</span>
+      </div>
+      <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
+        <span>{t("productDetail.strength")}</span>
+        <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
+        <span className="ml-2">{strength}</span>
+      </div>
+      <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg">
+        <span>{t("productDetail.nicotinePerPouch")}</span>
+        <span className="flex-1 border-b border-dotted border-[#343232] mx-2 h-[1px]"></span>
+        <span className="ml-2">{nicotinePerPouch}</span>
+      </div>
+      <div className="flex flex-row items-center text-[#343232] text-sm sm:text-lg text-justify mt-4">
+        <p className="">{description}</p>
+      </div>
+    </>
+  );
+};
 const ProductCardDescriptionSection: React.FC<
   ProductCardDescriptionSectionProps
 > = ({ brand, flavor, strength, nicotinePerPouch, description, howToUse }) => {
+  const { t } = useLanguage();
   const [descOpen, setDescOpen] = React.useState(true);
   const [howToUseOpen, setHowToUseOpen] = React.useState(true);
   return (
     <div className="w-full max-w-[687px]">
       <CollapsibleSection
-        title="Product Description"
+        title={t("productDetail.description")}
         open={descOpen}
         onToggle={() => setDescOpen((prev) => !prev)}
         sectionId="product-desc-section"
@@ -150,11 +164,11 @@ const ProductCardDescriptionSection: React.FC<
           flavor={flavor}
           strength={strength}
           nicotinePerPouch={nicotinePerPouch}
-        // description={description}
+          // description={description}
         />
       </CollapsibleSection>
       <CollapsibleSection
-        title="How to Use"
+        title={t("productDetail.howToUse")}
         open={howToUseOpen}
         onToggle={() => setHowToUseOpen((prev) => !prev)}
         sectionId="how-to-use-section"
@@ -165,35 +179,41 @@ const ProductCardDescriptionSection: React.FC<
               <div className="flex flex-row justify-center items-start gap-1 sm:gap-12 mb-6 w-full">
                 {/* Step 1 */}
                 <div className="flex flex-col items-center flex-1 min-w-0">
-                  <img
+                  <Image
                     src="/how-to-use-icons/howToUse-1.svg"
-                    alt="Step 1: Open the can"
+                    alt={t("productDetail.step1.title")}
+                    width={128}
+                    height={128}
                     className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
                   />
                   <span className="block text-center text-xs sm:text-base font-medium mt-1">
-                    Open the can and take out a single pouch.
+                    {t("productDetail.howToUse.step1")}
                   </span>
                 </div>
                 {/* Step 2 */}
                 <div className="flex flex-col items-center flex-1 min-w-0">
-                  <img
+                  <Image
                     src="/how-to-use-icons/howToUse-2.svg"
-                    alt="Step 2: Place the pouch"
+                    alt={t("productDetail.step2.title")}
+                    width={128}
+                    height={128}
                     className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
                   />
                   <span className="block text-center text-xs sm:text-base font-medium mt-1">
-                    Place the pouch between your upper lip and gum.
+                    {t("productDetail.howToUse.step2")}
                   </span>
                 </div>
                 {/* Step 3 */}
                 <div className="flex flex-col items-center flex-1 min-w-0">
-                  <img
+                  <Image
                     src="/how-to-use-icons/howToUse-3.svg"
-                    alt="Step 3: Enjoy and dispose"
+                    alt={t("productDetail.step3.title")}
+                    width={128}
+                    height={128}
                     className="w-24 h-24 sm:w-32 sm:h-32 mb-2"
                   />
                   <span className="block text-center text-xs sm:text-base font-medium mt-1">
-                    Hold for up to 30 minutes. Do not chew or swallow.
+                    {t("productDetail.howToUse.step3")}
                   </span>
                 </div>
               </div>
@@ -250,8 +270,9 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
           {[...Array(5)].map((_, j) => (
             <span
               key={j}
-              className={`size-4 ${j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-                }`}
+              className={`size-4 ${
+                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+              }`}
             >
               ★
             </span>
@@ -266,9 +287,11 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
             <p className="font-semibold text-sm text-gray-900">
               {testimonial.name}
             </p>
-            <img
+            <Image
               src="/signature.png"
               alt="Verified signature"
+              width={32}
+              height={16}
               className="h-4 w-auto ml-2"
             />
           </div>
@@ -282,10 +305,12 @@ const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
 
 import { ProductPurchaseSection } from "./ProductPurchaseSection";
 import { ProductCardReelSection } from "./ProductCardReelSection";
+import { getRelatedProducts } from "./ProductCardReelServer";
 import ReviewSection from "@/components/Review/ReviewCardSection";
 
 import { useSearchParams } from "next/navigation";
 import { products } from "@/scripts/data/products";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 // Get product index from query param, fallback to 0
 
@@ -298,6 +323,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   product: propProduct,
   slug,
 }) => {
+  const { t } = useLanguage();
   // If slug is provided, find the product by slug
   // Otherwise, fallback to idx from searchParams
   const searchParams = useSearchParams();
@@ -305,7 +331,9 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   if (searchParams) {
     idx = Number(searchParams.get("idx")) || 0;
   }
-  let product = propProduct;
+  // Use context for instant product rendering after navigation from reel
+  const { sharedProduct } = useProductContext();
+  let product = sharedProduct || propProduct;
   if (!product && slug) {
     // Dynamically import products if not already imported
     try {
@@ -321,6 +349,12 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
     product = products[idx] || products[0];
   }
   const [quantity, setQuantity] = useState(1);
+
+  // Memoize related products for the reel section for performance
+  const relatedProducts = useMemo(
+    () => getRelatedProducts(product, products),
+    [product, products]
+  );
 
   return (
     <div className="w-full bg-white flex flex-col items-center">
@@ -349,8 +383,8 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
                 originalPrice={product.originalPrice || ""}
                 quantity={quantity}
                 onQuantityChange={setQuantity}
-                onBuyNow={() => { }}
-                onAddToCart={() => { }}
+                onBuyNow={() => {}}
+                onAddToCart={() => {}}
                 productId={idx}
                 slug={product.slug}
               />
@@ -365,7 +399,8 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
       </div>
       {/* Product Card Reel */}
       <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16">
-        <ProductCardReelSection products={products} />
+        {/* Select and shuffle related products on the server for instant SSG load */}
+        <ProductCardReelSection products={relatedProducts} />
       </div>
       {/* Reviews Section */}
       <div className="mt-8 sm:mt-16">

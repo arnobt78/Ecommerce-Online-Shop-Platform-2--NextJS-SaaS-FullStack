@@ -237,6 +237,18 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
 }) => {
   const { isHydrated, t } = useLanguage();
   const [isMobile, setIsMobile] = React.useState(false);
+  const [hasError, setHasError] = React.useState(false);
+
+  // Error boundary for this component
+  React.useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      console.error("ProductCardReelSection error:", error);
+      setHasError(true);
+    };
+
+    window.addEventListener("error", handleError);
+    return () => window.removeEventListener("error", handleError);
+  }, []);
 
   React.useEffect(() => {
     if (!isHydrated || typeof window === "undefined") return;
@@ -253,6 +265,28 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   // Don't render until hydrated to prevent mobile errors
   if (!isHydrated) {
     return <ProductCardReelSkeleton count={cardsToShow} />;
+  }
+
+  // Show error state if there was an error
+  if (hasError) {
+    return (
+      <div className="w-full flex flex-col items-center px-1 sm:px-0">
+        <div className="w-full flex flex-row items-center justify-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight text-center">
+            {t("productDetail.youMayAlsoLike")}
+          </h2>
+        </div>
+        <div className="text-center text-gray-500 py-8">
+          <p>Unable to load related products</p>
+          <button
+            onClick={() => setHasError(false)}
+            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (

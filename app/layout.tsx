@@ -6,6 +6,7 @@ import { QueryProvider } from "../context/QueryProvider";
 import LayoutWithConditionalNavbar from "@/components/DashboardPage/LayoutWithConditionalNavbar";
 import { StaticDataPreloader } from "@/components/StaticDataPreloader";
 import { I18nProvider } from "@/components/I18nProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: {
@@ -206,6 +207,7 @@ export default function RootLayout({
             </QueryProvider>
           </LanguageProvider>
         </I18nProvider>
+        <Analytics />
       </body>
     </html>
   );

@@ -324,6 +324,39 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   slug,
 }) => {
   const { t } = useLanguage();
+
+  // Production debugging
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("ProductDetailLayout mounted:", {
+        slug,
+        hasPropProduct: !!propProduct,
+        productName: propProduct?.productName,
+        productSlug: propProduct?.slug,
+        productId: propProduct?.id,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent,
+        url: window.location.href,
+        pathname: window.location.pathname,
+        searchParams: window.location.search,
+        hash: window.location.hash,
+        referrer: document.referrer,
+        viewport: {
+          width: window.innerWidth,
+          height: window.innerHeight,
+        },
+        screen: {
+          width: window.screen.width,
+          height: window.screen.height,
+        },
+        devicePixelRatio: window.devicePixelRatio,
+        language: navigator.language,
+        platform: navigator.platform,
+        cookieEnabled: navigator.cookieEnabled,
+        onLine: navigator.onLine,
+      });
+    }
+  }, [slug, propProduct]);
   // If slug is provided, find the product by slug
   // Otherwise, fallback to idx from searchParams
   const searchParams = useSearchParams();
@@ -337,9 +370,44 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   if (!product && slug) {
     // Find product from already imported products array
     product = products.find((p: any) => p.slug === slug);
+
+    // Log product finding results
+    if (typeof window !== "undefined") {
+      console.log("Product finding results:", {
+        slug,
+        foundProduct: !!product,
+        productName: product?.productName,
+        totalProducts: products.length,
+        searchMethod: "slug",
+        timestamp: new Date().toISOString(),
+      });
+    }
   }
   if (!product && typeof products !== "undefined") {
     product = products[idx] || products[0];
+
+    // Log fallback product finding
+    if (typeof window !== "undefined") {
+      console.log("Fallback product finding:", {
+        idx,
+        foundProduct: !!product,
+        productName: product?.productName,
+        totalProducts: products.length,
+        searchMethod: "index",
+        timestamp: new Date().toISOString(),
+      });
+    }
+  }
+
+  // Final product validation
+  if (typeof window !== "undefined" && !product) {
+    console.error("No product found:", {
+      slug,
+      idx,
+      totalProducts: products.length,
+      availableSlugs: products.map((p: any) => p.slug),
+      timestamp: new Date().toISOString(),
+    });
   }
   const [quantity, setQuantity] = useState(1);
 

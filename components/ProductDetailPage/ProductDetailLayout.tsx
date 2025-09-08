@@ -335,15 +335,8 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   const { sharedProduct } = useProductContext();
   let product = sharedProduct || propProduct;
   if (!product && slug) {
-    // Dynamically import products if not already imported
-    try {
-      // @ts-ignore
-      const allProducts = require("@/scripts/data/products").products;
-      product = allProducts.find((p: any) => p.slug === slug);
-    } catch (e) {
-      // fallback
-      product = undefined;
-    }
+    // Find product from already imported products array
+    product = products.find((p: any) => p.slug === slug);
   }
   if (!product && typeof products !== "undefined") {
     product = products[idx] || products[0];

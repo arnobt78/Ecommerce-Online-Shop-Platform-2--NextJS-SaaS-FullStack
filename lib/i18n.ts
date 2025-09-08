@@ -13,9 +13,13 @@ function getInitialLanguageForI18n(): string {
   }
 
   // On client-side, try to get from localStorage first
-  const savedLanguage = localStorage.getItem("selectedLanguage");
-  if (savedLanguage && ["en", "pl", "de", "cs"].includes(savedLanguage)) {
-    return savedLanguage;
+  try {
+    const savedLanguage = localStorage.getItem("selectedLanguage");
+    if (savedLanguage && ["en", "pl", "de", "cs"].includes(savedLanguage)) {
+      return savedLanguage;
+    }
+  } catch (e) {
+    // localStorage might not be available
   }
 
   // Fallback to browser language detection

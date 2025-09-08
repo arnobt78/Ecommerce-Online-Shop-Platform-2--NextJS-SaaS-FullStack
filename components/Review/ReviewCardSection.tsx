@@ -122,7 +122,7 @@ export default function ReviewCard({
     useState<Testimonial | null>(null);
 
   useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || typeof window === "undefined") return;
 
     const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
     checkIsMobile();

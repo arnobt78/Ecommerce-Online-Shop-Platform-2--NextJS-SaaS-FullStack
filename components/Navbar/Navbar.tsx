@@ -556,7 +556,19 @@ export default function Navbar({
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setSearchFocused(true)}
+                onFocus={(e) => {
+                  setSearchFocused(true);
+                  // Scroll to keep search input visible when keyboard appears
+                  setTimeout(() => {
+                    const searchInput = e.target as HTMLInputElement;
+                    if (searchInput) {
+                      searchInput.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      });
+                    }
+                  }, 300); // Small delay to let keyboard appear first
+                }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}
                 className={`w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${

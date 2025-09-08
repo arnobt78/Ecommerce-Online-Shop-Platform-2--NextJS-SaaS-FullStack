@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import { useProductContext } from "@/context/ProductContext";
+import { useLanguage } from "@/context/LanguageContextNew";
 import Image from "next/image";
 
 // --- Inlined: ProductPosterCard ---
@@ -310,7 +311,6 @@ import ReviewSection from "@/components/Review/ReviewCardSection";
 
 import { useSearchParams } from "next/navigation";
 import { products } from "@/scripts/data/products";
-import { useLanguage } from "@/context/LanguageContextNew";
 
 // Get product index from query param, fallback to 0
 

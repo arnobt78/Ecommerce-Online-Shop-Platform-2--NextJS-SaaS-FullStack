@@ -58,7 +58,7 @@ export default function Navbar({
         setShowNavbar(true); // Always visible on mobile
       }
 
-      // Simple: close mobile menu when scrolling down (but not when search is focused)
+      // Close mobile menu when scrolling down (but not when search is focused)
       if (!isAtTop && mobileMenuOpen && !searchFocused) {
         setMobileMenuOpen(false);
       }
@@ -459,7 +459,10 @@ export default function Navbar({
               size="icon"
               className="sm:hidden"
               // className="[@media(max-width:849px)]:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                // Ensure state is properly synchronized
+                setMobileMenuOpen((prev) => !prev);
+              }}
             >
               {mobileMenuOpen ? (
                 <X className="w-12 h-12" />
@@ -477,7 +480,10 @@ export default function Navbar({
             variant="ghost"
             size="icon"
             className=""
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {
+              // Ensure state is properly synchronized
+              setMobileMenuOpen((prev) => !prev);
+            }}
           >
             {mobileMenuOpen ? (
               <X className="w-12 h-12" />

@@ -38,8 +38,6 @@ export default function Navbar({
   // State to keep search results visible even when navbar is hidden
   const [keepSearchResultsVisible, setKeepSearchResultsVisible] =
     useState(false);
-  // State to control mobile menu visibility independently of scroll
-  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   // Hydration state to avoid SSR mismatch for cart badge
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
@@ -62,13 +60,13 @@ export default function Navbar({
       }
 
       // Close mobile menu when scrolling (but keep search results if active)
-      if (!isAtTop && mobileMenuVisible) {
-        setMobileMenuVisible(false);
+      if (!isAtTop && mobileMenuOpen) {
+        setMobileMenuOpen(false);
       }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [showSearchResults, searchQuery, mobileMenuVisible]);
+  }, [showSearchResults, searchQuery, mobileMenuOpen]);
 
   // Close search results when they should be hidden
   useEffect(() => {
@@ -82,7 +80,7 @@ export default function Navbar({
   // Handle search focus state - keep mobile menu open when search is focused
   useEffect(() => {
     if (searchFocused && mobileMenuOpen) {
-      setMobileMenuVisible(true);
+      // Menu stays open when search is focused
     }
   }, [searchFocused, mobileMenuOpen]);
 
@@ -477,10 +475,7 @@ export default function Navbar({
               size="icon"
               className="sm:hidden"
               // className="[@media(max-width:849px)]:hidden"
-              onClick={() => {
-                setMobileMenuOpen(!mobileMenuOpen);
-                setMobileMenuVisible(!mobileMenuVisible);
-              }}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
                 <X className="w-12 h-12" />
@@ -538,9 +533,9 @@ export default function Navbar({
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && mobileMenuVisible && (
+      {mobileMenuOpen && (
         <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden w-full bg-white border-b border-gray-200">
-          <div className="mx-0 py-4">
+          <div className="mx-0 py-0">
             {/* Navigation Items - Collapse when search is focused for better UX */}
             <div
               className={`transition-all duration-300 ease-in-out ${
@@ -616,7 +611,6 @@ export default function Navbar({
                               setSearchQuery("");
                               setShowSearchResults(false);
                               setMobileMenuOpen(false);
-                              setMobileMenuVisible(false);
                             }}
                           >
                             <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">

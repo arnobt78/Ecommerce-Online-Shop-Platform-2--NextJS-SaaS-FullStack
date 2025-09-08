@@ -38,6 +38,8 @@ export default function Navbar({
   // State to keep search results visible even when navbar is hidden
   const [keepSearchResultsVisible, setKeepSearchResultsVisible] =
     useState(false);
+  // State to control mobile menu visibility independently of scroll
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   // Hydration state to avoid SSR mismatch for cart badge
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
@@ -58,10 +60,15 @@ export default function Navbar({
       } else if (isAtTop) {
         setKeepSearchResultsVisible(false);
       }
+
+      // Close mobile menu when scrolling (but keep search results if active)
+      if (!isAtTop && mobileMenuVisible) {
+        setMobileMenuVisible(false);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [showSearchResults, searchQuery]);
+  }, [showSearchResults, searchQuery, mobileMenuVisible]);
 
   // Close search results when they should be hidden
   useEffect(() => {
@@ -71,6 +78,13 @@ export default function Navbar({
       setSearchFocused(false);
     }
   }, [keepSearchResultsVisible, showNavbar]);
+
+  // Handle search focus state - keep mobile menu open when search is focused
+  useEffect(() => {
+    if (searchFocused && mobileMenuOpen) {
+      setMobileMenuVisible(true);
+    }
+  }, [searchFocused, mobileMenuOpen]);
 
   // Add search functionality
   useEffect(() => {
@@ -463,7 +477,10 @@ export default function Navbar({
               size="icon"
               className="sm:hidden"
               // className="[@media(max-width:849px)]:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              onClick={() => {
+                setMobileMenuOpen(!mobileMenuOpen);
+                setMobileMenuVisible(!mobileMenuVisible);
+              }}
             >
               {mobileMenuOpen ? (
                 <X className="w-12 h-12" />
@@ -521,11 +538,17 @@ export default function Navbar({
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
+      {mobileMenuOpen && mobileMenuVisible && (
         <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden w-full bg-white border-b border-gray-200">
           <div className="mx-0 py-4">
-            {/* Navigation Items - Keep visible for better UX */}
-            <div className="transition-all duration-300 ease-in-out max-h-96 opacity-100">
+            {/* Navigation Items - Collapse when search is focused for better UX */}
+            <div
+              className={`transition-all duration-300 ease-in-out ${
+                searchFocused
+                  ? "max-h-0 overflow-hidden opacity-0 -mt-4"
+                  : "max-h-96 opacity-100"
+              }`}
+            >
               {[
                 { label: t("nav.shop"), href: "/products" },
                 { label: t("nav.brands"), href: "/products?filter=brands" },
@@ -542,7 +565,7 @@ export default function Navbar({
                 </a>
               ))}
 
-              {/* Language Selector for Mobile - Keep visible for better UX */}
+              {/* Language Selector for Mobile - Collapse when search is focused */}
               <div className="px-4 py-2">
                 <LanguageSelector />
               </div>
@@ -561,12 +584,7 @@ export default function Navbar({
                   searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""
                 }`}
               />
-              {/* Subtle hint when search is focused */}
-              {/* {searchFocused && (
-                <div className="absolute top-full left-4 right-4 text-xs text-gray-400 text-center animate-fade-in">
-                  {t("nav.search.tryDifferent")}
-                </div>
-              )} */}
+
               {showSearchResults && searchQuery && (
                 <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md z-50 max-h-80 overflow-y-auto shadow-lg">
                   {searchResults.length > 0 ? (
@@ -598,6 +616,7 @@ export default function Navbar({
                               setSearchQuery("");
                               setShowSearchResults(false);
                               setMobileMenuOpen(false);
+                              setMobileMenuVisible(false);
                             }}
                           >
                             <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">

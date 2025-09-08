@@ -49,27 +49,45 @@ export default function Navbar({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Don't add scroll listener if search input is active
-    if (searchInputActive || searchFocused) {
-      return;
-    }
-
     let scrollTimeout: NodeJS.Timeout;
+    let lastScrollY = window.scrollY;
+    let keyboardAppeared = false;
 
     const handleScroll = () => {
-      const isAtTop = window.scrollY === 0;
+      const currentScrollY = window.scrollY;
+      const isAtTop = currentScrollY === 0;
       setShowNavbar(isAtTop);
+
+      // Detect if keyboard appeared (small scroll down when search is focused)
+      if (
+        searchFocused &&
+        currentScrollY > lastScrollY &&
+        currentScrollY - lastScrollY < 50
+      ) {
+        keyboardAppeared = true;
+        lastScrollY = currentScrollY;
+        return; // Don't close menu for keyboard appearance
+      }
+
+      // Reset keyboard detection after a delay
+      if (keyboardAppeared) {
+        setTimeout(() => {
+          keyboardAppeared = false;
+        }, 1000);
+      }
 
       // Clear any existing timeout
       clearTimeout(scrollTimeout);
 
       // Debounce the mobile menu closure
       scrollTimeout = setTimeout(() => {
-        // Close mobile menu when scrolling down
-        if (!isAtTop && mobileMenuOpen) {
+        // Close mobile menu when scrolling down (but not for keyboard appearance)
+        if (!isAtTop && mobileMenuOpen && !keyboardAppeared) {
           setMobileMenuOpen(false);
         }
       }, 150);
+
+      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -77,7 +95,7 @@ export default function Navbar({
       window.removeEventListener("scroll", handleScroll);
       clearTimeout(scrollTimeout);
     };
-  }, [mobileMenuOpen, searchInputActive, searchFocused]);
+  }, [mobileMenuOpen, searchFocused]);
 
   // Add search functionality
   useEffect(() => {

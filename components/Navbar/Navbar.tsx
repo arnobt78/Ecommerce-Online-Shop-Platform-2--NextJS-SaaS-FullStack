@@ -49,19 +49,35 @@ export default function Navbar({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    let scrollTimeout: NodeJS.Timeout;
+
     const handleScroll = () => {
       const isAtTop = window.scrollY === 0;
       setShowNavbar(isAtTop);
 
-      // Close mobile menu when scrolling down (but not when search input is active)
-      if (!isAtTop && mobileMenuOpen && !searchInputActive) {
-        setMobileMenuOpen(false);
-      }
+      // Clear any existing timeout
+      clearTimeout(scrollTimeout);
+
+      // Debounce the mobile menu closure to prevent keyboard-triggered scroll events
+      scrollTimeout = setTimeout(() => {
+        // Close mobile menu when scrolling down (but not when search input is active)
+        if (
+          !isAtTop &&
+          mobileMenuOpen &&
+          !searchInputActive &&
+          !searchFocused
+        ) {
+          setMobileMenuOpen(false);
+        }
+      }, 150); // Small delay to prevent keyboard-triggered scroll events
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [mobileMenuOpen, searchInputActive]);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, [mobileMenuOpen, searchInputActive, searchFocused]);
 
   // Add search functionality
   useEffect(() => {
@@ -551,6 +567,11 @@ export default function Navbar({
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onClick={() => {
+                  setSearchFocused(true);
+                  setSearchInputActive(true);
+                  // Prevent menu from closing when search is clicked
+                }}
                 onFocus={() => {
                   setSearchFocused(true);
                   setSearchInputActive(true);

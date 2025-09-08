@@ -121,11 +121,63 @@ export default function DebugPage() {
         </div>
 
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-xl font-semibold mb-4">Console Logs</h2>
-          <p className="text-gray-600">
-            Open your browser's developer tools (F12) and check the Console tab
-            for any error messages.
-          </p>
+          <h2 className="text-xl font-semibold mb-4">
+            Console Logs & Debugging
+          </h2>
+          <div className="space-y-4">
+            <p className="text-gray-600">
+              <strong>For iPhone 8 Safari:</strong>
+            </p>
+            <ol className="list-decimal list-inside text-sm text-gray-600 space-y-2">
+              <li>Connect iPhone to Mac via USB</li>
+              <li>
+                On iPhone: Settings → Safari → Advanced → Web Inspector (ON)
+              </li>
+              <li>On Mac: Safari → Develop → [Your iPhone] → [Website]</li>
+              <li>Check Console tab for detailed logs</li>
+            </ol>
+
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-blue-900 mb-2">
+                Localhost Testing:
+              </h3>
+              <p className="text-blue-800 text-sm">
+                Current URL:{" "}
+                <code className="bg-blue-100 px-1 rounded">
+                  {typeof window !== "undefined"
+                    ? window.location.href
+                    : "Loading..."}
+                </code>
+              </p>
+              <p className="text-blue-800 text-sm mt-1">
+                If testing localhost, use:{" "}
+                <code className="bg-blue-100 px-1 rounded">
+                  http://192.168.2.87:3000
+                </code>
+              </p>
+            </div>
+
+            <div className="bg-yellow-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-yellow-900 mb-2">
+                What to Look For:
+              </h3>
+              <ul className="list-disc list-inside text-sm text-yellow-800 space-y-1">
+                <li>
+                  <strong>Success:</strong> "ProductDetailLayout mounted" logs
+                </li>
+                <li>
+                  <strong>Error:</strong> "ErrorBoundary caught an error" logs
+                </li>
+                <li>
+                  <strong>Product Finding:</strong> "Product finding results"
+                  logs
+                </li>
+                <li>
+                  <strong>Hydration:</strong> Any hydration mismatch warnings
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>

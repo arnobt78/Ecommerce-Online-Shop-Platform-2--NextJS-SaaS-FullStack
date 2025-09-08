@@ -208,7 +208,7 @@ export default function Navbar({
                 className="pl-8 pr-3 py-1.5 w-48 h-8 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               />
               {showSearchResults && (
-                <div className="absolute top-full -right-8 mt-2 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-0">
                       <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
@@ -504,27 +504,37 @@ export default function Navbar({
       {mobileMenuOpen && (
         <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden w-full bg-white border-b border-gray-200">
           <div className="mx-0 py-4">
-            {[
-              { label: t("nav.shop"), href: "/products" },
-              { label: t("nav.brands"), href: "/products?filter=brands" },
-              { label: t("nav.flavor"), href: "/products?filter=flavors" },
-              { label: t("nav.strength"), href: "/products?filter=strength" },
-              { label: t("nav.snuzzpro"), href: "/pro" },
-            ].map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="block text-gray-700 hover:text-[#3AF0F7] hover:bg-gray-100 font-medium p-4"
-              >
-                {item.label}
-              </a>
-            ))}
+            {/* Navigation Items - Collapse when search is focused */}
+            <div
+              className={`transition-all duration-300 ease-in-out ${
+                searchFocused
+                  ? "max-h-0 overflow-hidden opacity-0 -mt-4"
+                  : "max-h-96 opacity-100"
+              }`}
+            >
+              {[
+                { label: t("nav.shop"), href: "/products" },
+                { label: t("nav.brands"), href: "/products?filter=brands" },
+                { label: t("nav.flavor"), href: "/products?filter=flavors" },
+                { label: t("nav.strength"), href: "/products?filter=strength" },
+                { label: t("nav.snuzzpro"), href: "/pro" },
+              ].map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className="block text-gray-700 hover:text-[#3AF0F7] hover:bg-gray-100 font-medium p-4"
+                >
+                  {item.label}
+                </a>
+              ))}
 
-            {/* Language Selector for Mobile */}
-            <div className="px-4 py-2">
-              <LanguageSelector />
+              {/* Language Selector for Mobile - Collapse when search is focused */}
+              <div className="px-4 py-2">
+                <LanguageSelector />
+              </div>
             </div>
 
+            {/* Search Section - Always visible */}
             <div className="p-4 relative">
               <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
               <input
@@ -533,10 +543,18 @@ export default function Navbar({
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}
-                className="w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
+                className={`w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${
+                  searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""
+                }`}
               />
+              {/* Subtle hint when search is focused */}
+              {/* {searchFocused && (
+                <div className="absolute top-full left-4 right-4 text-xs text-gray-400 text-center animate-fade-in">
+                  {t("nav.search.tryDifferent")}
+                </div>
+              )} */}
               {showSearchResults && searchQuery && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-md z-50 max-h-56 overflow-y-auto">
+                <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md z-50 max-h-80 overflow-y-auto shadow-lg">
                   {searchResults.length > 0 ? (
                     <div className="p-0">
                       <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
@@ -576,7 +594,13 @@ export default function Navbar({
                                   return (
                                     <Image
                                       src={
-                                        img.startsWith("/") ? img : "/" + img
+                                        typeof img === "string" &&
+                                        img.length > 0
+                                          ? img.startsWith("http://") ||
+                                            img.startsWith("https://")
+                                            ? img
+                                            : "/" + img.replace(/^\/+/, "")
+                                          : ""
                                       }
                                       alt={
                                         product.productName ||
@@ -594,7 +618,7 @@ export default function Navbar({
                                 } else {
                                   return (
                                     <div className="text-gray-400 text-xs justify-center">
-                                      No Image
+                                      {t("cart.noImage")}
                                     </div>
                                   );
                                 }

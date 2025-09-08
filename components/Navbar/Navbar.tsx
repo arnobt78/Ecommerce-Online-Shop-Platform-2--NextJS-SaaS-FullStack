@@ -152,7 +152,7 @@ export default function Navbar({
 
   return (
     <header
-      className="w-full bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
+      className="w-full bg-white sm:bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
       style={{
         transform: showNavbar ? "translateY(0)" : "translateY(-100%)",
         pointerEvents: showNavbar ? "auto" : "none",
@@ -558,25 +558,39 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={(e) => {
                   setSearchFocused(true);
-                  // Keep search input visible when keyboard appears
-                  setTimeout(() => {
+
+                  // Robust keyboard detection and viewport adjustment
+                  const adjustViewport = () => {
                     const searchInput = e.target as HTMLInputElement;
                     if (searchInput) {
                       // Get the input's position relative to the viewport
                       const inputRect = searchInput.getBoundingClientRect();
-                      // Calculate how much to scroll to keep input visible
-                      const scrollAdjustment =
-                        inputRect.top - window.innerHeight / 2;
+                      const viewportHeight = window.innerHeight;
 
-                      if (scrollAdjustment < 0) {
-                        // Scroll up to keep input visible
+                      // Check if input is visible in viewport
+                      const isInputVisible =
+                        inputRect.top >= 0 &&
+                        inputRect.bottom <= viewportHeight;
+
+                      if (!isInputVisible) {
+                        // Calculate scroll adjustment to center the input
+                        const scrollAdjustment =
+                          inputRect.top - viewportHeight / 2;
+
+                        // Smooth scroll to keep input visible
                         window.scrollTo({
                           top: window.scrollY + scrollAdjustment,
                           behavior: "smooth",
                         });
                       }
                     }
-                  }, 200); // Shorter delay to reduce flicker but allow keyboard to appear
+                  };
+
+                  // Try multiple times to catch keyboard appearance
+                  adjustViewport(); // Immediate check
+                  setTimeout(adjustViewport, 100); // Quick check
+                  setTimeout(adjustViewport, 300); // Delayed check
+                  setTimeout(adjustViewport, 500); // Final check
                 }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}

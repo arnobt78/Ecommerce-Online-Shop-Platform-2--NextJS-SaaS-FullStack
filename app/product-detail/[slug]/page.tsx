@@ -12,6 +12,16 @@ export default async function ProductDetailSlugPage({
   // Await params to comply with Next.js dynamic route requirements
   const { slug } = await Promise.resolve(params);
   const product = products.find((p) => p.slug === slug);
+
+  // Server-side logging
+  console.log("Server-side product finding:", {
+    slug,
+    foundProduct: !!product,
+    productName: product?.productName,
+    totalProducts: products.length,
+    timestamp: new Date().toISOString(),
+  });
+
   if (!product) return notFound();
 
   return (

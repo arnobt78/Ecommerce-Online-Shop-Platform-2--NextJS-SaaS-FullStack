@@ -14,6 +14,7 @@ interface ProductPosterCardProps {
  */
 const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
   const { t } = useLanguage();
+  const [imgError, setImgError] = React.useState(false);
   return (
     <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
       {/* Top badges */}
@@ -35,15 +36,36 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
       </div>
       {/* Product image as poster */}
       <div className="relative flex flex-col items-center justify-center w-full h-full z-0 ">
-        <Image
-          src={product.productImage}
-          alt={product.productName}
-          width={640}
-          height={640}
-          className="object-contain w-full h-full mx-auto drop-shadow-xl"
-          draggable={false}
-          loading="lazy"
-        />
+        {!imgError ? (
+          <Image
+            src={product.productImage}
+            alt={product.productName}
+            width={640}
+            height={640}
+            className="object-contain w-full h-full mx-auto drop-shadow-xl"
+            draggable={false}
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <img
+            src={product.productImage}
+            alt={product.productName}
+            width={640}
+            height={640}
+            style={{
+              objectFit: "contain",
+              width: "100%",
+              height: "100%",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.1)",
+            }}
+            draggable={false}
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.src = "/product-image.png";
+            }}
+          />
+        )}
       </div>
     </div>
   );

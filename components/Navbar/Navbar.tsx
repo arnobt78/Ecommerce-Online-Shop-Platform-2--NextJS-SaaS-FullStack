@@ -58,15 +58,15 @@ export default function Navbar({
         setShowNavbar(true); // Always visible on mobile
       }
 
-      // Simple: close mobile menu when scrolling down
-      if (!isAtTop && mobileMenuOpen) {
+      // Simple: close mobile menu when scrolling down (but not when search is focused)
+      if (!isAtTop && mobileMenuOpen && !searchFocused) {
         setMobileMenuOpen(false);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [mobileMenuOpen]);
+  }, [mobileMenuOpen, searchFocused]);
 
   // Add search functionality
   useEffect(() => {

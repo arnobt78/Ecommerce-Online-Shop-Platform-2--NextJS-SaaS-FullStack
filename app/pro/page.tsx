@@ -40,14 +40,23 @@ export default function SnuzzProLanding() {
       {/* Header is now rendered globally via layout, matching main page behavior */}
 
       {/* Hero Section */}
-      <div className="relative w-full bg-transparent">
+      <div className="relative w-full bg-transparent overflow-hidden">
         {/* Background Ellipse */}
         <div
-          className="absolute w-[1419px] h-[1512px] left-[-66px] top-[-713px] opacity-50 pointer-events-none z-0"
+          className="absolute w-[1419px] h-[1512px] left-[-66px] top-[-713px] opacity-50 pointer-events-none z-0 hidden sm:block"
           style={{
             background:
               "radial-gradient(50% 50% at 50% 50%, #3CF9FF 0%, #F5FFFF 100%)",
             transform: "matrix(0, 1, 1, 0, 0, 0)",
+          }}
+        />
+        {/* Mobile Background Ellipse */}
+        <div
+          className="absolute w-[400px] h-[600px] left-1/2 top-[-300px] transform -translate-x-1/2 opacity-50 pointer-events-none z-0 block sm:hidden"
+          style={{
+            background:
+              "radial-gradient(50% 50% at 50% 50%, #3CF9FF 0%, #F5FFFF 100%)",
+            transform: "translateX(-50%) matrix(0, 1, 1, 0, 0, 0)",
           }}
         />
         <section className="relative flex flex-col items-center justify-center px-2 sm:px-8 pt-20 sm:pt-32 text-center z-10">

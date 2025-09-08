@@ -56,7 +56,7 @@ export function LanguageSelector() {
               <button
                 key={option.code}
                 onClick={() => handleLanguageChange(option.code)}
-                className={`w-full flex items-center space-x-3 px-3 py-2 text-sm hover:bg-gray-50 transition-colors duration-150 ${
+                className={`w-full flex items-center space-x-3 px-3 py-3 text-sm hover:bg-gray-50 transition-colors duration-150 ${
                   language === option.code
                     ? "bg-[#3AF0F7]/10 text-[#3AF0F7]"
                     : "text-gray-700"

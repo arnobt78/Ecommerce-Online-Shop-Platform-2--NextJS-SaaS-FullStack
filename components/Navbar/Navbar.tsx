@@ -558,23 +558,25 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={(e) => {
                   setSearchFocused(true);
-                  // Keep search input visible when keyboard appears - immediate adjustment
-                  const searchInput = e.target as HTMLInputElement;
-                  if (searchInput) {
-                    // Get the input's position relative to the viewport
-                    const inputRect = searchInput.getBoundingClientRect();
-                    // Calculate how much to scroll to keep input visible
-                    const scrollAdjustment =
-                      inputRect.top - window.innerHeight / 2;
+                  // Keep search input visible when keyboard appears
+                  setTimeout(() => {
+                    const searchInput = e.target as HTMLInputElement;
+                    if (searchInput) {
+                      // Get the input's position relative to the viewport
+                      const inputRect = searchInput.getBoundingClientRect();
+                      // Calculate how much to scroll to keep input visible
+                      const scrollAdjustment =
+                        inputRect.top - window.innerHeight / 2;
 
-                    if (scrollAdjustment < 0) {
-                      // Scroll up to keep input visible - immediate, no delay
-                      window.scrollTo({
-                        top: window.scrollY + scrollAdjustment,
-                        behavior: "smooth",
-                      });
+                      if (scrollAdjustment < 0) {
+                        // Scroll up to keep input visible
+                        window.scrollTo({
+                          top: window.scrollY + scrollAdjustment,
+                          behavior: "smooth",
+                        });
+                      }
                     }
-                  }
+                  }, 200); // Shorter delay to reduce flicker but allow keyboard to appear
                 }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}

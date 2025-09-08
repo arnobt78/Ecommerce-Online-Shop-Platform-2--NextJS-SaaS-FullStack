@@ -47,65 +47,19 @@ export default function Navbar({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    let lastScrollY = window.scrollY;
-    let scrollTimeout: NodeJS.Timeout;
-
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isAtTop = currentScrollY === 0;
+      const isAtTop = window.scrollY === 0;
+      setShowNavbar(isAtTop);
 
-      // Clear any existing timeout
-      clearTimeout(scrollTimeout);
-
-      // Set a timeout to debounce scroll events
-      scrollTimeout = setTimeout(() => {
-        setShowNavbar(isAtTop);
-
-        // Keep search results visible if they're open and user scrolls
-        if (showSearchResults && searchQuery && !isAtTop) {
-          setKeepSearchResultsVisible(true);
-        } else if (isAtTop) {
-          setKeepSearchResultsVisible(false);
-        }
-
-        // Close mobile menu when scrolling (but keep search results if active)
-        // Only close if there's actual scroll movement and search is not focused
-        if (
-          !isAtTop &&
-          mobileMenuOpen &&
-          !searchFocused &&
-          Math.abs(currentScrollY - lastScrollY) > 5
-        ) {
-          setMobileMenuOpen(false);
-        }
-
-        lastScrollY = currentScrollY;
-      }, 100);
+      // Close mobile menu when scrolling down (simple and direct)
+      if (!isAtTop && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [showSearchResults, searchQuery, mobileMenuOpen, searchFocused]);
-
-  // Close search results when they should be hidden
-  useEffect(() => {
-    if (!keepSearchResultsVisible && !showNavbar) {
-      setShowSearchResults(false);
-      setSearchQuery("");
-      setSearchFocused(false);
-    }
-  }, [keepSearchResultsVisible, showNavbar]);
-
-  // Handle search focus state - keep mobile menu open when search is focused
-  useEffect(() => {
-    if (searchFocused && mobileMenuOpen) {
-      // Ensure mobile menu stays open when search is focused
-      // Don't close it due to scroll events
-    }
-  }, [searchFocused, mobileMenuOpen]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen]);
 
   // Add search functionality
   useEffect(() => {

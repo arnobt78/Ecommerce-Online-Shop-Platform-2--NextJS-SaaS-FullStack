@@ -156,7 +156,6 @@ export default function Navbar({
       style={{
         transform: showNavbar ? "translateY(0)" : "translateY(-100%)",
         pointerEvents: showNavbar ? "auto" : "none",
-        background: "transparent",
       }}
     >
       <div className="max-w-9xl w-full mx-auto py-2 sm:py-6 px-2 sm:px-12">

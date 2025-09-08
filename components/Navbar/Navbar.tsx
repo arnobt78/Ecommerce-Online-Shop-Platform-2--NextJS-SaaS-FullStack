@@ -524,14 +524,8 @@ export default function Navbar({
       {mobileMenuOpen && (
         <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden w-full bg-white border-b border-gray-200">
           <div className="mx-0 py-4">
-            {/* Navigation Items - Collapse when search is focused */}
-            <div
-              className={`transition-all duration-300 ease-in-out ${
-                searchFocused
-                  ? "max-h-0 overflow-hidden opacity-0 -mt-4"
-                  : "max-h-96 opacity-100"
-              }`}
-            >
+            {/* Navigation Items - Keep visible for better UX */}
+            <div className="transition-all duration-300 ease-in-out max-h-96 opacity-100">
               {[
                 { label: t("nav.shop"), href: "/products" },
                 { label: t("nav.brands"), href: "/products?filter=brands" },
@@ -548,7 +542,7 @@ export default function Navbar({
                 </a>
               ))}
 
-              {/* Language Selector for Mobile - Collapse when search is focused */}
+              {/* Language Selector for Mobile - Keep visible for better UX */}
               <div className="px-4 py-2">
                 <LanguageSelector />
               </div>

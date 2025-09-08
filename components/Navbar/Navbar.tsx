@@ -35,6 +35,9 @@ export default function Navbar({
   const [searchFocused, setSearchFocused] = useState(false);
   // State to control navbar visibility based on scroll position
   const [showNavbar, setShowNavbar] = useState(true);
+  // State to keep search results visible even when navbar is hidden
+  const [keepSearchResultsVisible, setKeepSearchResultsVisible] =
+    useState(false);
   // Hydration state to avoid SSR mismatch for cart badge
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => {
@@ -46,11 +49,28 @@ export default function Navbar({
 
     const handleScroll = () => {
       // Show navbar only when at the very top
-      setShowNavbar(window.scrollY === 0);
+      const isAtTop = window.scrollY === 0;
+      setShowNavbar(isAtTop);
+
+      // Keep search results visible if they're open and user scrolls
+      if (showSearchResults && searchQuery && !isAtTop) {
+        setKeepSearchResultsVisible(true);
+      } else if (isAtTop) {
+        setKeepSearchResultsVisible(false);
+      }
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [showSearchResults, searchQuery]);
+
+  // Close search results when they should be hidden
+  useEffect(() => {
+    if (!keepSearchResultsVisible && !showNavbar) {
+      setShowSearchResults(false);
+      setSearchQuery("");
+      setSearchFocused(false);
+    }
+  }, [keepSearchResultsVisible, showNavbar]);
 
   // Add search functionality
   useEffect(() => {
@@ -558,8 +578,8 @@ export default function Navbar({
                   {searchResults.length > 0 ? (
                     <div className="p-0">
                       <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
-                        {searchResults.length}{" "}
-                        {searchResults.length === 1
+                        {searchResultsTotal}{" "}
+                        {searchResultsTotal === 1
                           ? t("nav.search.results")
                           : t("nav.search.results.plural")}
                       </div>
@@ -719,6 +739,148 @@ export default function Navbar({
                 </div>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Search Results Overlay - Shows when navbar is hidden but search is active */}
+      {keepSearchResultsVisible && showSearchResults && searchQuery && (
+        <div className="[@media(max-width:1184px)]:block [@media(min-width:1185px)]:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 max-h-screen overflow-y-auto">
+          <div className="p-4">
+            {/* Search Input */}
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
+              <input
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t("nav.search.placeholder")}
+                className="w-full pl-10 pr-4 py-2 text-md text-gray-600 border border-[#3AF0F7] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] bg-blue-50/30"
+                autoFocus
+              />
+            </div>
+
+            {/* Search Results */}
+            {searchResults.length > 0 ? (
+              <div className="space-y-2">
+                <div className="text-sm text-gray-500 mb-4 border-b border-gray-200 pb-2 font-semibold text-center">
+                  {searchResultsTotal}{" "}
+                  {searchResultsTotal === 1
+                    ? t("nav.search.results")
+                    : t("nav.search.results.plural")}
+                </div>
+                {searchResults.map((product, index) => (
+                  <div
+                    key={`overlay-search-result-${
+                      product.slug ||
+                      product.name ||
+                      product.productName ||
+                      index
+                    }`}
+                    className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
+                    onClick={() => {
+                      addToCart(product);
+                      setSearchQuery("");
+                      setShowSearchResults(false);
+                      setKeepSearchResultsVisible(false);
+                    }}
+                  >
+                    <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+                      {(() => {
+                        const img = product.productImage || product.image || "";
+                        if (typeof img === "string" && img.length > 0) {
+                          return (
+                            <Image
+                              src={
+                                typeof img === "string" && img.length > 0
+                                  ? img.startsWith("http://") ||
+                                    img.startsWith("https://")
+                                    ? img
+                                    : "/" + img.replace(/^\/+/, "")
+                                  : ""
+                              }
+                              alt={
+                                product.productName || product.name || "Product"
+                              }
+                              width={48}
+                              height={48}
+                              className="object-contain w-full h-full"
+                              onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                              }}
+                            />
+                          );
+                        } else {
+                          return (
+                            <div className="text-gray-400 text-xs justify-center">
+                              {t("cart.noImage")}
+                            </div>
+                          );
+                        }
+                      })()}
+                    </div>
+                    <div className="flex flex-col flex-1 min-w-0 justify-center">
+                      <h4 className="text-sm font-semibold text-gray-900 truncate">
+                        {product.productName ||
+                          product.name ||
+                          "Unnamed Product"}
+                      </h4>
+                      <p className="text-xs text-gray-500 truncate">
+                        {product.brand || "Unknown Brand"}
+                      </p>
+                    </div>
+                    {product.originalPrice && (
+                      <div className="flex flex-col items-end">
+                        <span className="text-sm font-bold text-gray-900">
+                          €
+                          {parseFloat(
+                            String(product.originalPrice)
+                              .replace(/[^0-9,.-]+/g, "")
+                              .replace(",", ".")
+                          ).toFixed(2)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <div className="border-t border-gray-200 py-2 mt-4">
+                  <button
+                    onClick={() => {
+                      window.location.href = `/products?search=${encodeURIComponent(
+                        searchQuery
+                      )}`;
+                      setSearchQuery("");
+                      setShowSearchResults(false);
+                      setKeepSearchResultsVisible(false);
+                    }}
+                    className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
+                  >
+                    {t("nav.search.viewAll")}
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="p-6 text-center">
+                <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500 font-medium">
+                  {t("nav.search.noResults")}
+                </p>
+                <p className="text-gray-400 text-sm">
+                  {t("nav.search.tryDifferent")}
+                </p>
+              </div>
+            )}
+
+            {/* Close Button */}
+            <button
+              onClick={() => {
+                setSearchQuery("");
+                setShowSearchResults(false);
+                setKeepSearchResultsVisible(false);
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <X className="w-6 h-6" />
+            </button>
           </div>
         </div>
       )}

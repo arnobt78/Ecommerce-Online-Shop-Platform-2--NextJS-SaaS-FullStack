@@ -38,3 +38,5 @@ unused-deps.json
 
 /lib/generated/prisma
 prisma/migrations
+
+.cursorignore

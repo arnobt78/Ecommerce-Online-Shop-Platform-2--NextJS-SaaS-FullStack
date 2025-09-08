@@ -51,25 +51,31 @@ export function FooterSection({
               className="transition-colors text-sm sm:text-base hover:text-gray-900 font-semibold sm:font-normal block py-1"
               onClick={() => {
                 // Handle navigation for terms, privacy, refund, and FAQ links
-                if (item === "Terms of Service") router.push("/terms");
-                if (item === "Privacy Policy") router.push("/terms");
-                if (item === "Refund Policy") router.push("/contact");
-                if (item === "FAQ") router.push("/contact");
+                if (item === t("footer.information.terms"))
+                  router.push("/terms");
+                if (item === t("footer.information.privacy"))
+                  router.push("/terms");
+                if (item === t("footer.information.refund"))
+                  router.push("/contact");
+                if (item === t("footer.information.faq"))
+                  router.push("/contact");
 
                 // handle navigation for products, flavours, and strengths
-                if (item === "Brands") router.push("/products");
-                if (item === "Flavours") router.push("/products");
-                if (item === "Strength") router.push("/products");
-                if (item === "Snuzz PRO") router.push("/pro");
+                if (item === t("footer.shop.brands")) router.push("/products");
+                if (item === t("footer.shop.flavours"))
+                  router.push("/products");
+                if (item === t("footer.shop.strength"))
+                  router.push("/products");
+                if (item === t("footer.shop.snuzzpro")) router.push("/pro");
 
                 // handle navigation for favorites in product detail
-                if (item === "ZYN Apple Mint")
+                if (item === t("footer.favorites.zynAppleMint"))
                   router.push("/product-detail/zyn-apple-mint-mini");
-                if (item === "VELO Peppermint Storm")
+                if (item === t("footer.favorites.veloPeppermint"))
                   router.push("/product-detail/velo-peppermint-storm");
-                if (item === "Killa Grape Ice")
+                if (item === t("footer.favorites.killaGrape"))
                   router.push("/product-detail/killa-grape-ice");
-                if (item === "Puff & Pouch Grape")
+                if (item === t("footer.favorites.puffGrape"))
                   router.push("/product-detail/puff-pouch-grape");
               }}
             >
@@ -94,13 +100,6 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
 
   return (
     <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0">
-      {/* <button
-        onClick={onToggle}
-        className="flex items-center justify-between w-full sm:pointer-events-none"
-      >
-        <h4 className="font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 text-base md:text-lg">Contact Us</h4>
-        <ChevronDown className={`w-4 h-4 sm:hidden transition-transform ${open ? 'rotate-180' : ''}`} />
-      </button> */}
       <div className={`sm:block ${open ? "block" : "block sm:block"}`}>
         <Button
           variant="ghost"

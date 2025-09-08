@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n";
 import { getInitialLanguage } from "@/lib/language-detection";
 
-export type Language = "en" | "pl" | "ru";
+export type Language = "en" | "pl" | "de" | "cs";
 
 export interface LanguageContextType {
   language: Language;
@@ -44,7 +44,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // On client-side, try to get the current language from i18n instance
     // This prevents flicker during navigation
     const currentLang = i18nInstance.language as Language;
-    if (currentLang && ["en", "pl", "ru"].includes(currentLang)) {
+    if (currentLang && ["en", "pl", "de", "cs"].includes(currentLang)) {
       return currentLang;
     }
 
@@ -72,11 +72,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       const currentI18nLang = i18nInstance.language as Language;
 
       // If we have a saved language and it's different from current i18n language
-      if (savedLanguage && savedLanguage !== currentI18nLang) {
+      if (
+        savedLanguage &&
+        ["en", "pl", "de", "cs"].includes(savedLanguage) &&
+        savedLanguage !== currentI18nLang
+      ) {
         setLanguageState(savedLanguage);
         i18nInstance.changeLanguage(savedLanguage);
-      } else if (!savedLanguage) {
-        // Only detect language if we don't have a saved one
+      } else if (
+        !savedLanguage ||
+        !["en", "pl", "de", "cs"].includes(savedLanguage)
+      ) {
+        // Only detect language if we don't have a saved one or saved one is invalid
         const detectedLang = detectUserLanguage();
         setLanguageState(detectedLang);
         i18nInstance.changeLanguage(detectedLang);

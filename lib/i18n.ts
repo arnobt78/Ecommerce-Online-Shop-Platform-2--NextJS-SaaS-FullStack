@@ -14,7 +14,7 @@ function getInitialLanguageForI18n(): string {
 
   // On client-side, try to get from localStorage first
   const savedLanguage = localStorage.getItem("selectedLanguage");
-  if (savedLanguage && ["en", "pl", "ru"].includes(savedLanguage)) {
+  if (savedLanguage && ["en", "pl", "de", "cs"].includes(savedLanguage)) {
     return savedLanguage;
   }
 
@@ -31,8 +31,11 @@ i18n.use(initReactI18next).init({
     pl: {
       translation: translations.pl,
     },
-    ru: {
-      translation: translations.ru,
+    de: {
+      translation: translations.de,
+    },
+    cs: {
+      translation: translations.cs,
     },
   },
   lng: getInitialLanguageForI18n(), // Use detected language

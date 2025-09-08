@@ -50,7 +50,7 @@ export default function SnuzzProLanding() {
             transform: "matrix(0, 1, 1, 0, 0, 0)",
           }}
         />
-        <section className="relative flex flex-col items-center justify-center px-8 py-20 pt-32 text-center z-10">
+        <section className="relative flex flex-col items-center justify-center px-2 sm:px-8 pt-20 sm:pt-32 text-center z-10">
           <h1 className="text-[28px] sm:text-[40px] font-semibold text-gray-900 mb-6">
             {t("pro.hero.title")}
           </h1>
@@ -60,9 +60,9 @@ export default function SnuzzProLanding() {
             <p className="text-lg text-gray-700">{t("pro.hero.subtitle2")}</p>
           </div>
 
-          <div className="flex items-center space-x-4 mb-20">
+          <div className="flex items-center gap-1 sm:gap-4 mb-20">
             <Button
-              className="text-gray-900 font-medium px-8 py-3 rounded-md transition-all duration-300"
+              className="text-gray-900 font-medium px-6 sm:px-8 py-3 rounded-md transition-all duration-300"
               style={{
                 backgroundColor: "#22d3ee",
               }}

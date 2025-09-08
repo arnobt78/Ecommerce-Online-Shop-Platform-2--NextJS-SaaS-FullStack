@@ -8,14 +8,15 @@ export function detectAndSetInitialLanguage(): string {
 
   // Try to get from localStorage first
   const savedLanguage = localStorage.getItem("selectedLanguage");
-  if (savedLanguage && ["en", "pl", "ru"].includes(savedLanguage)) {
+  if (savedLanguage && ["en", "pl", "de", "cs"].includes(savedLanguage)) {
     return savedLanguage;
   }
 
   // Fallback to browser language detection
   const browserLang = navigator.language.toLowerCase();
   if (browserLang.startsWith("pl")) return "pl";
-  if (browserLang.startsWith("ru")) return "ru";
+  if (browserLang.startsWith("de")) return "de";
+  if (browserLang.startsWith("cs")) return "cs";
 
   return "en"; // Default fallback
 }

@@ -8,7 +8,8 @@ import { useLanguage, Language } from "@/context/LanguageContextNew";
 const languageOptions = [
   { code: "en" as Language, name: "English", flag: "🇬🇧" },
   { code: "pl" as Language, name: "Polski", flag: "🇵🇱" },
-  { code: "ru" as Language, name: "Русский", flag: "🇷🇺" },
+  { code: "de" as Language, name: "Deutsch", flag: "🇩🇪" },
+  { code: "cs" as Language, name: "Čeština", flag: "🇨🇿" },
 ];
 
 export function LanguageSelector() {
@@ -50,7 +51,7 @@ export function LanguageSelector() {
           />
 
           {/* Dropdown */}
-          <div className="absolute right-0 top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
+          <div className="absolute left-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
             {languageOptions.map((option) => (
               <button
                 key={option.code}

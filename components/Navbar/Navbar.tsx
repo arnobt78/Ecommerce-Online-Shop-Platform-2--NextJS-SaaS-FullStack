@@ -49,6 +49,11 @@ export default function Navbar({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
+    // Don't add scroll listener if search input is active
+    if (searchInputActive || searchFocused) {
+      return;
+    }
+
     let scrollTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
@@ -58,18 +63,13 @@ export default function Navbar({
       // Clear any existing timeout
       clearTimeout(scrollTimeout);
 
-      // Debounce the mobile menu closure to prevent keyboard-triggered scroll events
+      // Debounce the mobile menu closure
       scrollTimeout = setTimeout(() => {
-        // Close mobile menu when scrolling down (but not when search input is active)
-        if (
-          !isAtTop &&
-          mobileMenuOpen &&
-          !searchInputActive &&
-          !searchFocused
-        ) {
+        // Close mobile menu when scrolling down
+        if (!isAtTop && mobileMenuOpen) {
           setMobileMenuOpen(false);
         }
-      }, 150); // Small delay to prevent keyboard-triggered scroll events
+      }, 150);
     };
 
     window.addEventListener("scroll", handleScroll);

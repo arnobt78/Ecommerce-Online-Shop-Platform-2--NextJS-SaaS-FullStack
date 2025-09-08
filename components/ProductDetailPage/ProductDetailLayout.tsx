@@ -15,6 +15,14 @@ interface ProductPosterCardProps {
 const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
   const { t } = useLanguage();
   const [imgError, setImgError] = React.useState(false);
+  // Defensive: If product is missing or incomplete, render fallback
+  if (!product || !product.productImage || !product.productName) {
+    return (
+      <div className="flex items-center justify-center w-full h-64 bg-zinc-200">
+        <span className="text-gray-500">Product image unavailable</span>
+      </div>
+    );
+  }
   return (
     <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
       {/* Top badges */}
@@ -346,106 +354,51 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   slug,
 }) => {
   const { t } = useLanguage();
-
-  // Production debugging
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      console.log("ProductDetailLayout mounted:", {
-        slug,
-        hasPropProduct: !!propProduct,
-        productName: propProduct?.productName,
-        productSlug: propProduct?.slug,
-        productId: propProduct?.id,
-        timestamp: new Date().toISOString(),
-        userAgent: navigator.userAgent,
-        url: window.location.href,
-        pathname: window.location.pathname,
-        searchParams: window.location.search,
-        hash: window.location.hash,
-        referrer: document.referrer,
-        viewport: {
-          width: window.innerWidth,
-          height: window.innerHeight,
-        },
-        screen: {
-          width: window.screen.width,
-          height: window.screen.height,
-        },
-        devicePixelRatio: window.devicePixelRatio,
-        language: navigator.language,
-        platform: navigator.platform,
-        cookieEnabled: navigator.cookieEnabled,
-        onLine: navigator.onLine,
-      });
-    }
-  }, [slug, propProduct]);
-  // If slug is provided, find the product by slug
-  // Otherwise, fallback to idx from searchParams
-  const searchParams = useSearchParams();
+  let product: any = undefined;
   let idx = 0;
-  if (searchParams) {
-    idx = Number(searchParams.get("idx")) || 0;
-  }
-  // Use context for instant product rendering after navigation from reel
-  const { sharedProduct } = useProductContext();
-  let product = sharedProduct || propProduct;
-  if (!product && slug) {
-    // Find product from already imported products array
-    product = products.find((p: any) => p.slug === slug);
-
-    // Log product finding results
-    if (typeof window !== "undefined") {
-      console.log("Product finding results:", {
-        slug,
-        foundProduct: !!product,
-        productName: product?.productName,
-        totalProducts: products.length,
-        searchMethod: "slug",
-        timestamp: new Date().toISOString(),
-      });
+  try {
+    // Defensive: Use context, prop, or fallback
+    const searchParams = useSearchParams();
+    if (searchParams) {
+      idx = Number(searchParams.get("idx")) || 0;
     }
-  }
-  if (!product && typeof products !== "undefined") {
-    product = products[idx] || products[0];
-
-    // Log fallback product finding
-    if (typeof window !== "undefined") {
-      console.log("Fallback product finding:", {
-        idx,
-        foundProduct: !!product,
-        productName: product?.productName,
-        totalProducts: products.length,
-        searchMethod: "index",
-        timestamp: new Date().toISOString(),
-      });
+    const { sharedProduct } = useProductContext();
+    product = sharedProduct || propProduct;
+    if (!product && slug) {
+      product = products.find((p: any) => p.slug === slug);
     }
+    if (!product && typeof products !== "undefined") {
+      product = products[idx] || products[0];
+    }
+  } catch (err) {
+    // Defensive: log error
+    if (typeof window !== "undefined") {
+      console.error("Error finding product:", err);
+    }
+    product = undefined;
   }
-
-  // Final product validation
-  if (typeof window !== "undefined" && !product) {
-    console.error("No product found:", {
-      slug,
-      idx,
-      totalProducts: products.length,
-      availableSlugs: products.map((p: any) => p.slug),
-      timestamp: new Date().toISOString(),
-    });
+  // Defensive: If product is missing, render fallback
+  if (!product) {
+    return (
+      <div className="w-full h-96 flex items-center justify-center bg-gray-100">
+        <span className="text-gray-500 text-lg">
+          Product not found or unavailable.
+        </span>
+      </div>
+    );
   }
   const [quantity, setQuantity] = useState(1);
-
   // Memoize related products for the reel section for performance
   const relatedProducts = useMemo(
     () => getRelatedProducts(product, products),
     [product, products]
   );
-
   return (
-    <div className="w-full bg-white flex flex-col items-center">
+    <div className="w-full bg-white flex flex-col items-center pt-20 sm:pt-32">
       {/* Main Content */}
       <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto px-1 sm:px-32">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}
         <div className="flex flex-col gap-8 w-full bg-white lg:w-[687px]">
-          {/* Product Poster Card for Product Detail */}
           <ProductPosterCard product={product} />
           {/* Description Section with SVG background (hidden on mobile, shown on desktop) */}
           <ProductDetailDescriptionSection
@@ -457,20 +410,29 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
         <div className="flex-1 flex flex-col items-start min-w-full sm:min-w-[350px] max-w-full sm:max-w-[687px] mx-auto px-0 sm:px-0">
           <div className="relative w-full bg-white overflow-visible lg:sticky lg:top-0">
             <div className="relative z-10 w-full">
-              <ProductPurchaseSection
-                productName={product.productName}
-                productImage={product.productImage}
-                brand={product.brand}
-                stockStatus={product.stockStatus}
-                salePrice={product.salePrice || ""}
-                originalPrice={product.originalPrice || ""}
-                quantity={quantity}
-                onQuantityChange={setQuantity}
-                onBuyNow={() => {}}
-                onAddToCart={() => {}}
-                productId={idx}
-                slug={product.slug}
-              />
+              {/* Defensive: Only render if product fields exist */}
+              {product.productName && product.productImage && product.brand ? (
+                <ProductPurchaseSection
+                  productName={product.productName}
+                  productImage={product.productImage}
+                  brand={product.brand}
+                  stockStatus={product.stockStatus}
+                  salePrice={product.salePrice || ""}
+                  originalPrice={product.originalPrice || ""}
+                  quantity={quantity}
+                  onQuantityChange={setQuantity}
+                  onBuyNow={() => {}}
+                  onAddToCart={() => {}}
+                  productId={idx}
+                  slug={product.slug}
+                />
+              ) : (
+                <div className="w-full h-32 flex items-center justify-center bg-gray-100">
+                  <span className="text-gray-500">
+                    Product details unavailable
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           {/* Description Section for mobile only (below purchase section) */}
@@ -480,11 +442,13 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
           />
         </div>
       </div>
-      {/* Product Card Reel */}
-      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16">
-        {/* Select and shuffle related products on the server for instant SSG load */}
-        <ProductCardReelSection products={relatedProducts} />
+      {/* Product Card Reel - Centered on desktop */}
+      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16 flex justify-center items-center min-h-[400px]">
+        <div className="w-full flex justify-center items-center">
+          <ProductCardReelSection products={relatedProducts} />
+        </div>
       </div>
+
       {/* Reviews Section */}
       <div className="mt-8 sm:mt-16">
         <ReviewSection />

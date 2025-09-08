@@ -2,7 +2,8 @@
 // This prevents the flicker by setting the correct language immediately
 
 export function detectAndSetInitialLanguage(): string {
-  if (typeof window === "undefined") {
+  // Hydration safety: Only run client code after hydration
+  if (typeof window === "undefined" || !(typeof document !== "undefined")) {
     return "en"; // Default for SSR
   }
 
@@ -26,12 +27,18 @@ export function detectAndSetInitialLanguage(): string {
 }
 
 // Set a global variable that can be accessed before React hydration
-if (typeof window !== "undefined") {
+// Hydration safety: Only set global variable after DOM is available
+if (typeof window !== "undefined" && typeof document !== "undefined") {
   (window as any).__INITIAL_LANGUAGE__ = detectAndSetInitialLanguage();
 }
 
 export function getInitialLanguage(): string {
-  if (typeof window !== "undefined" && (window as any).__INITIAL_LANGUAGE__) {
+  // Hydration safety: Only use global variable after DOM is available
+  if (
+    typeof window !== "undefined" &&
+    typeof document !== "undefined" &&
+    (window as any).__INITIAL_LANGUAGE__
+  ) {
     return (window as any).__INITIAL_LANGUAGE__;
   }
   return detectAndSetInitialLanguage();

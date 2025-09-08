@@ -141,7 +141,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         isHydrated,
       }}
     >
-      {isHydrated ? children : null}
+      {children}
     </LanguageContext.Provider>
   );
 }

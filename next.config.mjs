@@ -9,7 +9,13 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  devIndicators: false
-}
+  devIndicators: false,
+  // Allow local IP for dev asset requests (fixes Safari crash)
+  allowedDevOrigins: [
+    "http://localhost:3000",
+    "http://192.168.2.87:3000",
+    "http://192.168.2.87",
+  ],
+};
 
-export default nextConfig
+export default nextConfig;

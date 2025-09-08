@@ -1,3 +1,5 @@
+"use client";
+
 import { ProductCardReelSkeleton } from "./ProductCardReelSkeleton";
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
@@ -149,7 +151,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
   }
 
   return (
-    <div className="relative w-full flex flex-row items-center justify-center max-w-[1180px]">
+    <div className="relative w-full flex flex-row items-center justify-center max-w-[1180px] min-h-[340px] sm:min-h-[400px]">
       {/* Left Arrow */}
       {showArrows && (
         <button
@@ -226,6 +228,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     </div>
   );
 };
+
 interface ProductCardReelSectionProps {
   products?: any[];
   onProductClick?: (product: any) => void;
@@ -235,74 +238,43 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   products,
   onProductClick,
 }) => {
-  const { isHydrated, t } = useLanguage();
+  const { t } = useLanguage();
+  // Hydration-safe mobile detection and product limiting
   const [isMobile, setIsMobile] = React.useState(false);
-  const [hasError, setHasError] = React.useState(false);
+  const [productsToUse, setProductsToUse] = React.useState<ProductData[]>(
+    Array.isArray(products) ? products : []
+  );
+  const [hydrated, setHydrated] = React.useState(false);
 
-  // Error boundary for this component
   React.useEffect(() => {
-    const handleError = (error: ErrorEvent) => {
-      console.error("ProductCardReelSection error:", error);
-      setHasError(true);
+    setHydrated(true);
+    const handleResize = () => {
+      const mobile =
+        typeof window !== "undefined" ? window.innerWidth < 640 : false;
+      setIsMobile(mobile);
+      let limitedProducts = Array.isArray(products) ? products : [];
+      if (mobile) {
+        limitedProducts = limitedProducts.slice(0, 40);
+      } else {
+        limitedProducts = limitedProducts.slice(0, 60);
+      }
+      setProductsToUse(limitedProducts);
     };
-
-    window.addEventListener("error", handleError);
-    return () => window.removeEventListener("error", handleError);
-  }, []);
-
-  React.useEffect(() => {
-    if (!isHydrated || typeof window === "undefined") return;
-
-    const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isHydrated]);
-  const cardsToShow = isMobile ? 2 : 5;
+  }, [products]);
 
-  let productsToUse: ProductData[] = Array.isArray(products) ? products : [];
-
-  // Don't render until hydrated to prevent mobile errors
-  if (!isHydrated) {
-    return <ProductCardReelSkeleton count={cardsToShow} />;
+  // Defensive: fallback to skeleton if not hydrated or no products
+  if (!hydrated || !productsToUse.length) {
+    return <ProductCardReelSkeleton count={isMobile ? 2 : 5} />;
   }
-
-  // Show error state if there was an error
-  if (hasError) {
-    return (
-      <div className="w-full flex flex-col items-center px-1 sm:px-0">
-        <div className="w-full flex flex-row items-center justify-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight text-center">
-            {t("productDetail.youMayAlsoLike")}
-          </h2>
-        </div>
-        <div className="text-center text-gray-500 py-8">
-          <p>Unable to load related products</p>
-          <button
-            onClick={() => setHasError(false)}
-            className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    );
-  }
-
+  // Render product reel grid
   return (
-    <ProductProvider>
-      <div className="w-full flex flex-col items-center px-1 sm:px-0">
-        <div className="w-full flex flex-row items-center justify-center mb-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 tracking-tight text-center">
-            {t("productDetail.youMayAlsoLike")}
-          </h2>
-        </div>
-        <ProductReelGrid
-          products={productsToUse}
-          cardsToShow={cardsToShow}
-          onProductClick={onProductClick}
-        />
-      </div>
-    </ProductProvider>
+    <ProductReelGrid
+      products={productsToUse}
+      cardsToShow={isMobile ? 2 : 5}
+      onProductClick={onProductClick}
+    />
   );
 };

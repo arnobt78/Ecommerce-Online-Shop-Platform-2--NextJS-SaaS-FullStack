@@ -12,9 +12,8 @@ export const ProductCardReelSkeleton: React.FC<{ count?: number }> = ({
       >
         <div className="w-full h-full flex flex-col items-center justify-center">
           <div className="bg-gray-300 rounded-full w-32 h-32 mb-4" />
-          <div className="bg-gray-300 rounded-md w-24 h-6 mb-2" />
-          <div className="bg-gray-300 rounded-md w-20 h-4 mb-1" />
-          <div className="bg-gray-300 rounded-md w-16 h-4" />
+          <div className="bg-gray-300 rounded-md w-24 h-4 mb-2" />
+          <div className="bg-gray-300 rounded-md w-20 h-4 mb-2" />
         </div>
       </div>
     ))}

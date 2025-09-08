@@ -1,7 +1,11 @@
 import { notFound } from "next/navigation";
 import { products } from "@/scripts/data/products";
+import { ProductCardReelSection } from "@/components/ProductDetailPage/ProductCardReelSection";
+import { ProductCardReelSkeleton } from "@/components/ProductDetailPage/ProductCardReelSkeleton";
+import { getRelatedProducts } from "@/components/ProductDetailPage/ProductCardReelServer";
 import { ProductDetailLayout } from "@/components/ProductDetailPage/ProductDetailLayout";
 import { ProductProvider } from "@/context/ProductContext";
+import { LanguageProvider } from "@/context/LanguageContextNew";
 import ErrorBoundary from "@/components/ErrorBoundary";
 
 export default async function ProductDetailSlugPage({
@@ -9,28 +13,19 @@ export default async function ProductDetailSlugPage({
 }: {
   params: { slug: string };
 }) {
-  // Await params to comply with Next.js dynamic route requirements
+  // Restore product image and title only
   const { slug } = await Promise.resolve(params);
   const product = products.find((p) => p.slug === slug);
-
-  // Server-side logging
-  console.log("Server-side product finding:", {
-    slug,
-    foundProduct: !!product,
-    productName: product?.productName,
-    totalProducts: products.length,
-    timestamp: new Date().toISOString(),
-  });
-
-  if (!product) return notFound();
-
+  if (!product) {
+    return (
+      <div style={{ padding: 40, textAlign: "center" }}>
+        <h1>Product not found</h1>
+      </div>
+    );
+  }
   return (
-    <ErrorBoundary>
-      <ProductProvider>
-        <div className="pt-20 sm:pt-32">
-          <ProductDetailLayout product={product} slug={slug} />
-        </div>
-      </ProductProvider>
-    </ErrorBoundary>
+    <ProductProvider>
+      <ProductDetailLayout product={product} slug={slug} />
+    </ProductProvider>
   );
 }

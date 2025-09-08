@@ -33,8 +33,6 @@ export default function Navbar({
   const [searchResultsTotal, setSearchResultsTotal] = useState(0);
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  // State to prevent menu from closing when search input is being interacted with
-  const [searchInputActive, setSearchInputActive] = useState(false);
   // State to control navbar visibility based on scroll position
   const [showNavbar, setShowNavbar] = useState(true);
   // State to keep search results visible even when navbar is hidden
@@ -49,53 +47,19 @@ export default function Navbar({
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    let scrollTimeout: NodeJS.Timeout;
-    let lastScrollY = window.scrollY;
-    let keyboardAppeared = false;
-
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isAtTop = currentScrollY === 0;
+      const isAtTop = window.scrollY === 0;
       setShowNavbar(isAtTop);
 
-      // Detect if keyboard appeared (small scroll down when search is focused)
-      if (
-        searchFocused &&
-        currentScrollY > lastScrollY &&
-        currentScrollY - lastScrollY < 50
-      ) {
-        keyboardAppeared = true;
-        lastScrollY = currentScrollY;
-        return; // Don't close menu for keyboard appearance
+      // Simple: close mobile menu when scrolling down
+      if (!isAtTop && mobileMenuOpen) {
+        setMobileMenuOpen(false);
       }
-
-      // Reset keyboard detection after a delay
-      if (keyboardAppeared) {
-        setTimeout(() => {
-          keyboardAppeared = false;
-        }, 1000);
-      }
-
-      // Clear any existing timeout
-      clearTimeout(scrollTimeout);
-
-      // Debounce the mobile menu closure
-      scrollTimeout = setTimeout(() => {
-        // Close mobile menu when scrolling down (but not for keyboard appearance)
-        if (!isAtTop && mobileMenuOpen && !keyboardAppeared) {
-          setMobileMenuOpen(false);
-        }
-      }, 150);
-
-      lastScrollY = currentScrollY;
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(scrollTimeout);
-    };
-  }, [mobileMenuOpen, searchFocused]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [mobileMenuOpen]);
 
   // Add search functionality
   useEffect(() => {
@@ -585,22 +549,8 @@ export default function Navbar({
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onClick={() => {
-                  setSearchFocused(true);
-                  setSearchInputActive(true);
-                  // Prevent menu from closing when search is clicked
-                }}
-                onFocus={() => {
-                  setSearchFocused(true);
-                  setSearchInputActive(true);
-                  // Prevent menu from closing when search is focused
-                }}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setSearchFocused(false);
-                    setSearchInputActive(false);
-                  }, 200);
-                }}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}
                 className={`w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${
                   searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""

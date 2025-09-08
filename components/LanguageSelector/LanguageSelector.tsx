@@ -51,7 +51,7 @@ export function LanguageSelector() {
           />
 
           {/* Dropdown */}
-          <div className="absolute left-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
+          <div className="absolute right-14 sm:right-0 -top-9 sm:top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
             {languageOptions.map((option) => (
               <button
                 key={option.code}

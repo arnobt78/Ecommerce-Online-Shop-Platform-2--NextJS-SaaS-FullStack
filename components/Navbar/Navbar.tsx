@@ -558,16 +558,27 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={(e) => {
                   setSearchFocused(true);
-                  // Scroll to keep search input visible when keyboard appears
+                  // Keep search input visible when keyboard appears
                   setTimeout(() => {
                     const searchInput = e.target as HTMLInputElement;
                     if (searchInput) {
-                      searchInput.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      });
+                      // Get the current scroll position
+                      const currentScrollY = window.scrollY;
+                      // Get the input's position relative to the viewport
+                      const inputRect = searchInput.getBoundingClientRect();
+                      // Calculate how much to scroll to keep input visible
+                      const scrollAdjustment =
+                        inputRect.top - window.innerHeight / 2;
+
+                      if (scrollAdjustment < 0) {
+                        // Scroll up to keep input visible
+                        window.scrollTo({
+                          top: currentScrollY + scrollAdjustment,
+                          behavior: "smooth",
+                        });
+                      }
                     }
-                  }, 300); // Small delay to let keyboard appear first
+                  }, 500); // Longer delay to ensure keyboard is fully visible
                 }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}

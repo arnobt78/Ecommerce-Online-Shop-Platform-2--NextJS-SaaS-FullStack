@@ -556,41 +556,65 @@ export default function Navbar({
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                // onFocus={(e) => {
+                //   setSearchFocused(true);
+
+                //   // Robust keyboard detection and viewport adjustment
+                //   const adjustViewport = () => {
+                //     const searchInput = e.target as HTMLInputElement;
+                //     if (searchInput) {
+                //       // Get the input's position relative to the viewport
+                //       const inputRect = searchInput.getBoundingClientRect();
+                //       const viewportHeight = window.innerHeight;
+
+                //       // Check if input is visible in viewport
+                //       const isInputVisible =
+                //         inputRect.top >= 0 &&
+                //         inputRect.bottom <= viewportHeight;
+
+                //       if (!isInputVisible) {
+                //         // Calculate scroll adjustment to center the input
+                //         const scrollAdjustment =
+                //           inputRect.top - viewportHeight / 2;
+
+                //         // Smooth scroll to keep input visible
+                //         window.scrollTo({
+                //           top: window.scrollY + scrollAdjustment,
+                //           behavior: "smooth",
+                //         });
+                //       }
+                //     }
+                //   };
+
+                //   // Try multiple times to catch keyboard appearance
+                //   adjustViewport(); // Immediate check
+                //   setTimeout(adjustViewport, 100); // Quick check
+                //   setTimeout(adjustViewport, 300); // Delayed check
+                //   setTimeout(adjustViewport, 500); // Final check
+                // }}
                 onFocus={(e) => {
                   setSearchFocused(true);
-
-                  // Robust keyboard detection and viewport adjustment
-                  const adjustViewport = () => {
+                  // Keep search input visible when keyboard appears
+                  setTimeout(() => {
                     const searchInput = e.target as HTMLInputElement;
                     if (searchInput) {
+                      // Get the current scroll position
+                      const currentScrollY = window.scrollY;
                       // Get the input's position relative to the viewport
                       const inputRect = searchInput.getBoundingClientRect();
-                      const viewportHeight = window.innerHeight;
+                      // Calculate how much to scroll to keep input visible
+                      const scrollAdjustment =
+                        inputRect.top - window.innerHeight / 2;
 
-                      // Check if input is visible in viewport
-                      const isInputVisible =
-                        inputRect.top >= 0 &&
-                        inputRect.bottom <= viewportHeight;
-
-                      if (!isInputVisible) {
-                        // Calculate scroll adjustment to center the input
-                        const scrollAdjustment =
-                          inputRect.top - viewportHeight / 2;
-
-                        // Smooth scroll to keep input visible
+                      if (scrollAdjustment < 0) {
+                        // Scroll up to keep input visible
                         window.scrollTo({
-                          top: window.scrollY + scrollAdjustment,
+                          top: currentScrollY + scrollAdjustment,
                           behavior: "smooth",
                         });
                       }
                     }
-                  };
-
-                  // Try multiple times to catch keyboard appearance
-                  adjustViewport(); // Immediate check
-                  setTimeout(adjustViewport, 100); // Quick check
-                  setTimeout(adjustViewport, 300); // Delayed check
-                  setTimeout(adjustViewport, 500); // Final check
+                  }, 500); // Longer delay to ensure keyboard is fully visible
                 }}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 placeholder={t("nav.search.placeholder")}

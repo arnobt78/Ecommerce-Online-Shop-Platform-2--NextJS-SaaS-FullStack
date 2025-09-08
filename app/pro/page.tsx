@@ -60,7 +60,7 @@ export default function SnuzzProLanding() {
             <p className="text-lg text-gray-700">{t("pro.hero.subtitle2")}</p>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-4 mb-20">
+          <div className="flex items-center gap-2 sm:gap-4 mb-20">
             <Button
               className="text-gray-900 font-medium px-6 sm:px-8 py-3 rounded-md transition-all duration-300"
               style={{

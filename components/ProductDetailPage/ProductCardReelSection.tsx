@@ -107,7 +107,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     setMounted(true);
   }, []);
   React.useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || typeof window === "undefined") return;
 
     const handleResize = () => {
       setItemsToShow(window.innerWidth < 640 ? 2 : 5);
@@ -143,7 +143,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
     return "220px";
   };
 
-  if (!mounted) {
+  if (!mounted || !isHydrated) {
     // Show skeleton loader while carousel is hydrating
     return <ProductCardReelSkeleton count={cardsToShow} />;
   }
@@ -239,7 +239,7 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
-    if (!isHydrated) return;
+    if (!isHydrated || typeof window === "undefined") return;
 
     const handleResize = () => setIsMobile(window.innerWidth < 640);
     handleResize();
@@ -249,6 +249,11 @@ export const ProductCardReelSection: React.FC<ProductCardReelSectionProps> = ({
   const cardsToShow = isMobile ? 2 : 5;
 
   let productsToUse: ProductData[] = Array.isArray(products) ? products : [];
+
+  // Don't render until hydrated to prevent mobile errors
+  if (!isHydrated) {
+    return <ProductCardReelSkeleton count={cardsToShow} />;
+  }
 
   return (
     <ProductProvider>

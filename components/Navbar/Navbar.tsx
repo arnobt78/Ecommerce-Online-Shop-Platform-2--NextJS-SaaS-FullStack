@@ -49,7 +49,14 @@ export default function Navbar({
 
     const handleScroll = () => {
       const isAtTop = window.scrollY === 0;
-      setShowNavbar(isAtTop);
+
+      // Keep navbar always visible on mobile (don't hide on scroll)
+      // Only hide navbar on desktop
+      if (window.innerWidth > 1184) {
+        setShowNavbar(isAtTop);
+      } else {
+        setShowNavbar(true); // Always visible on mobile
+      }
 
       // Simple: close mobile menu when scrolling down
       if (!isAtTop && mobileMenuOpen) {

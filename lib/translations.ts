@@ -22,8 +22,12 @@ export const translations = {
       'Never run out <br className="block sm:hidden" /> of snus again',
     "hero.subtitle":
       "Choose from huge sortiment of exclusive brands, flavors and strength for best price on market with free shipping.",
+    // "hero.subtitle.mobile":
+    //   'Choose from huge <br className="block sm:hidden" /> sortiment of exclusive <br /> brands, flavors and <br className="block sm:hidden" /> strength <br className="hidden sm:block" /> for best price on market <br className="hidden sm:block" /> with free shipping.',
+
     "hero.subtitle.mobile":
-      'Choose from huge <br className="block sm:hidden" /> sortiment of exclusive <br /> brands, flavors and <br className="block sm:hidden" /> strength <br className="hidden sm:block" /> for best price on market <br className="hidden sm:block" /> with free shipping.',
+      'Choose from huge <br className="block sm:hidden" /> sortiment of exclusive <br /> brands, flavors and  strength <br /> for best price on market <br /> with free shipping.',
+
     "hero.buyNow": "Buy now",
     "hero.stats.ordersToday": "Orders today",
     "hero.stats.orders": "Orders",
@@ -318,7 +322,7 @@ export const translations = {
     "hero.subtitle":
       "Wybierz z ogromnego asortymentu ekskluzywnych marek, smaków i mocy w najlepszej cenie na rynku z darmową dostawą.",
     "hero.subtitle.mobile":
-      'Wybierz z ogromnego <br className="block sm:hidden" /> asortymentu ekskluzywnych <br /> marek, smaków i <br className="block sm:hidden" /> mocy <br className="hidden sm:block" /> w najlepszej cenie na rynku <br className="hidden sm:block" /> z darmową dostawą.',
+      'Wybierz z ogromnego <br className="block sm:hidden" /> asortymentu ekskluzywnych <br /> marek, smaków i  mocy <br /> w najlepszej cenie na rynku <br /> z darmową dostawą.',
     "hero.buyNow": "Kup teraz",
     "hero.stats.ordersToday": "Zamówienia dzisiaj",
     "hero.stats.orders": "Zamówienia",
@@ -617,7 +621,7 @@ export const translations = {
     "hero.subtitle":
       "Wählen Sie aus einer riesigen Auswahl exklusiver Marken, Geschmacksrichtungen und Stärken zum besten Preis auf dem Markt mit kostenlosem Versand.",
     "hero.subtitle.mobile":
-      'Wählen Sie aus einer riesigen <br className="block sm:hidden" /> Auswahl exklusiver <br /> Marken, Geschmacksrichtungen und <br className="block sm:hidden" /> Stärken <br className="hidden sm:block" /> zum besten Preis auf dem Markt <br className="hidden sm:block" /> mit kostenlosem Versand.',
+      'Wählen Sie aus einer riesigen <br className="block sm:hidden" /> Auswahl exklusiver <br /> Marken, Geschmacksrichtungen und Stärken <br /> zum besten Preis auf dem Markt <br /> mit kostenlosem Versand.',
     "hero.buyNow": "Jetzt kaufen",
     "hero.stats.ordersToday": "Bestellungen heute",
     "hero.stats.orders": "Bestellungen",
@@ -920,7 +924,7 @@ export const translations = {
     "hero.subtitle":
       "Vyberte si z obrovského sortimentu exkluzivních značek, příchutí a sil za nejlepší cenu na trhu s bezplatnou dopravou.",
     "hero.subtitle.mobile":
-      'Vyberte si z obrovského <br className="block sm:hidden" /> sortimentu exkluzivních <br /> značek, příchutí a <br className="block sm:hidden" /> sil <br className="hidden sm:block" /> za nejlepší cenu na trhu <br className="hidden sm:block" /> s bezplatnou dopravou.',
+      'Vyberte si z obrovského <br className="block sm:hidden" /> sortimentu exkluzivních <br /> značek, příchutí a sil <br /> za nejlepší cenu na trhu <br /> s bezplatnou dopravou.',
     "hero.buyNow": "Koupit nyní",
     "hero.stats.ordersToday": "Objednávky dnes",
     "hero.stats.orders": "Objednávky",

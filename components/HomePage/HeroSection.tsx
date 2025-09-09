@@ -148,11 +148,7 @@ function HeroLeftContent() {
           Never run out <br className="block sm:hidden" /> of snus again
         </h1>
         <h3 className="text-xl sm:text-3xl text-gray-900 leading-tight whitespace-wrap sm:whitespace-nowrap mb-8 z-30 items-left sm:items-center">
-          Choose from huge <br className="block sm:hidden" /> sortiment of
-          exclusive <br /> brands, flavors and{" "}
-          <br className="block sm:hidden" /> strength{" "}
-          <br className="hidden sm:block" /> for best price on market{" "}
-          <br className="hidden sm:block" /> with free shipping.
+          {renderTranslation("hero.subtitle.mobile")}
         </h3>
         {/* CTA Button */}
         <div className="button-wrapper mb-12 relative inline-block">
@@ -362,7 +358,7 @@ export default function HeroSection() {
         }}
       />
 
-      <div className="max-w-9xl mx-auto px-2 sm:px-12 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-16 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
         {/* Left Content */}
         <HeroLeftContent />
       </div>

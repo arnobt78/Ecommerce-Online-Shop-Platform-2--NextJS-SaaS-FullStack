@@ -180,7 +180,7 @@ export default function Navbar({
           </div>
 
           <nav
-            className="flex items-center space-x-8 flex-nowrap overflow-x-auto scrollbar-hide"
+            className="flex items-center space-x-0 flex-nowrap overflow-x-auto scrollbar-hide"
             style={{ minWidth: 480, maxWidth: "100vw" }}
           >
             {[

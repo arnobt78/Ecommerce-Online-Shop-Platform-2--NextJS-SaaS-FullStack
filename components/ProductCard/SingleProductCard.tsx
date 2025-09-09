@@ -23,8 +23,8 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
         <div className="w-[48px] h-[16px] sm:h-[24px]" />
       )}
       {/* Free shipping badge */}
-      <div className="bg-white rounded-[6px] w-[68px] sm:w-[80px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
-        <span className="italic font-bold text-[9px] sm:text-[11px] text-gray-900">
+      <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[24px] px-2 sm:px-3 flex-shrink flex items-center justify-center">
+        <span className="italic font-bold text-[9px] sm:text-[11px] text-gray-900 whitespace-nowrap overflow-hidden truncate">
           {t("products.shipping.freeShipping")}
         </span>
       </div>

@@ -7,22 +7,6 @@ import { getInitialLanguage } from "./language-detection";
 
 // Helper function to get the initial language
 function getInitialLanguageForI18n(): string {
-  // During SSR, always use English
-  if (typeof window === "undefined") {
-    return "en";
-  }
-
-  // On client-side, try to get from localStorage first
-  try {
-    const savedLanguage = localStorage.getItem("selectedLanguage");
-    if (savedLanguage && ["en", "pl", "de", "cs"].includes(savedLanguage)) {
-      return savedLanguage;
-    }
-  } catch (e) {
-    // localStorage might not be available
-  }
-
-  // Fallback to browser language detection
   return getInitialLanguage();
 }
 
@@ -42,7 +26,7 @@ i18n.use(initReactI18next).init({
       translation: translations.cs,
     },
   },
-  lng: getInitialLanguageForI18n(), // Use detected language
+  lng: getInitialLanguageForI18n(), // Use detected language (cookie/localStorage/browser)
   fallbackLng: "en",
   debug: process.env.NODE_ENV === "development",
 

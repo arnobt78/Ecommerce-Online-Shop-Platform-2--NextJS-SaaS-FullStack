@@ -36,8 +36,8 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
         ) : (
           <div className="w-[70px] h-[24px]" />
         )}
-        <div className="bg-white rounded-[6px] w-[90px] sm:w-[110px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
-          <span className="italic font-medium text-xs sm:text-sm text-gray-900">
+        <div className="bg-white rounded-[6px] min-w-[90px] sm:min-w-[110px] h-[20px] sm:h-[24px] px-2 sm:px-3 flex items-center justify-center shadow-sm">
+          <span className="italic font-medium text-xs sm:text-sm text-gray-900 whitespace-nowrap overflow-hidden truncate">
             {t("products.shipping.freeShipping")}
           </span>
         </div>
@@ -443,14 +443,17 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
         </div>
       </div>
       {/* Product Card Reel - Centered on desktop */}
-      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16 flex justify-center items-center min-h-[400px]">
+      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16 flex flex-col items-center min-h-[400px]">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 text-center">
+          {t("productDetail.youMayAlsoLike")}
+        </h2>
         <div className="w-full flex justify-center items-center">
           <ProductCardReelSection products={relatedProducts} />
         </div>
       </div>
 
       {/* Reviews Section */}
-      <div className="mt-8 sm:mt-16">
+      <div className="mt-0 sm:mt-8">
         <ReviewSection />
       </div>
     </div>

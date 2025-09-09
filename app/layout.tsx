@@ -7,6 +7,7 @@ import LayoutWithConditionalNavbar from "@/components/DashboardPage/LayoutWithCo
 import { StaticDataPreloader } from "@/components/StaticDataPreloader";
 import { I18nProvider } from "@/components/I18nProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: {
@@ -43,11 +44,20 @@ export const metadata: Metadata = {
   publisher: "Snuzz Pro",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Read initial language from SSR header
+  let initialLanguage = "en";
+  try {
+    const hdrs = await headers();
+    const lang = hdrs.get("x-initial-language");
+    if (lang && ["en", "pl", "de", "cs"].includes(lang)) {
+      initialLanguage = lang;
+    }
+  } catch (e) {}
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -195,8 +205,8 @@ export default function RootLayout({
         style={{ fontFamily: "system-ui, sans-serif" }}
         suppressHydrationWarning
       >
-        <I18nProvider>
-          <LanguageProvider>
+        <I18nProvider initialLanguage={initialLanguage}>
+          <LanguageProvider initialLanguage={initialLanguage}>
             <QueryProvider>
               <StaticDataPreloader />
               <CartProvider>

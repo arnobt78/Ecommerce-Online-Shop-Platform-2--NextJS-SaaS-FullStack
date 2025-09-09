@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Globe, ChevronDown } from "lucide-react";
 import { useLanguage, Language } from "@/context/LanguageContextNew";
+import { setLanguageCookie } from "@/lib/language-cookie";
 
 const languageOptions = [
   { code: "en" as Language, name: "English", flag: "🇬🇧" },
@@ -22,6 +23,7 @@ export function LanguageSelector() {
 
   const handleLanguageChange = (langCode: Language) => {
     setLanguage(langCode);
+    setLanguageCookie(langCode);
     setIsOpen(false);
   };
 
@@ -51,7 +53,7 @@ export function LanguageSelector() {
           />
 
           {/* Dropdown */}
-          <div className="absolute right-0 -top-9 sm:top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden">
+          <div className="absolute left-0 top-full sm:mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 min-w-[140px] overflow-hidden max-h-[60vh] overflow-y-auto">
             {languageOptions.map((option) => (
               <button
                 key={option.code}

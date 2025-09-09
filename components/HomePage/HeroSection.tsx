@@ -9,55 +9,8 @@ import Image from "next/image";
 // --- HeroStats: Stats with animated numbers ---
 const HeroStats = () => {
   const { t } = useLanguage();
-  const [isHydrated, setIsHydrated] = React.useState(false);
-
-  // Ensure we only render translations after hydration
-  React.useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  // Show loading state until hydrated to prevent layout shift
-  if (!isHydrated) {
-    const stats = [
-      { num: 47, text: "Orders today" },
-      { num: 7000, text: "Orders", suffix: "+" },
-      { num: 4000, text: "Customers", suffix: "+" },
-    ];
-    return (
-      <div className="w-full bg-transparent min-w-0 overflow-hidden">
-        <div className="flex flex-row flex-nowrap min-w-0 w-full bg-transparent overflow-hidden">
-          {stats.map((item, idx) => (
-            <React.Fragment key={item.text}>
-              <div
-                className={`flex-1 min-w-0 flex-shrink flex flex-col items-center justify-center bg-transparent px-2 py-2`}
-              >
-                <div className="flex flex-col items-center justify-center h-full min-w-0">
-                  <div className="text-xl sm:text-4xl font-medium sm:font-semibold text-gray-900 mb-1 text-center truncate min-w-0">
-                    <CountUp
-                      end={item.num}
-                      duration={2}
-                      delay={0.5}
-                      suffix={item.suffix || ""}
-                      separator=""
-                    />
-                  </div>
-                  <div className="text-xs sm:text-base text-gray-600 text-center truncate min-w-0">
-                    {item.text}
-                  </div>
-                </div>
-              </div>
-              {idx < stats.length - 1 && (
-                <div className="flex items-center flex-shrink-0">
-                  <div className="h-10 sm:h-14 w-px bg-gray-200" />
-                </div>
-              )}
-            </React.Fragment>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
+  // ...existing code...
+  // Static stats, translation only, no counter animation
   const stats = [
     { num: 47, text: t("hero.stats.ordersToday") },
     { num: 7000, text: t("hero.stats.orders"), suffix: "+" },
@@ -65,21 +18,18 @@ const HeroStats = () => {
   ];
   return (
     <div className="w-full bg-transparent min-w-0 overflow-hidden">
-      <div className="flex flex-row flex-nowrap min-w-0 w-full bg-transparent overflow-hidden">
+      <div className="flex flex-row flex-nowrap min-w-0 w-full bg-transparent overflow-hidden min-h-[60px]">
         {stats.map((item, idx) => (
           <React.Fragment key={item.text}>
             <div
               className={`flex-1 min-w-0 flex-shrink flex flex-col items-center justify-center bg-transparent px-2 py-2`}
             >
               <div className="flex flex-col items-center justify-center h-full min-w-0">
-                <div className="text-xl sm:text-4xl font-medium sm:font-semibold text-gray-900 mb-1 text-center truncate min-w-0">
-                  <CountUp
-                    end={item.num}
-                    duration={2}
-                    delay={0.5}
-                    suffix={item.suffix || ""}
-                    separator=""
-                  />
+                <div className="text-xl sm:text-4xl font-medium sm:font-semibold text-gray-900 mb-1 text-center truncate min-w-[60px]">
+                  <span>
+                    {item.num}
+                    {item.suffix || ""}
+                  </span>
                 </div>
                 <div className="text-xs sm:text-base text-gray-600 text-center truncate min-w-0">
                   {item.text}
@@ -123,103 +73,10 @@ function HeroLeftContent() {
     });
   };
 
-  // Show loading state until hydrated to prevent layout shift
-  if (!isHydrated) {
-    return (
-      <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-lg lg:max-w-xl bg-transparent">
-        {/* Rating */}
-        <div className="flex items-center space-x-2">
-          <svg
-            width="20"
-            height="16"
-            viewBox="0 0 20 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M4.27372 15.7423L5.83717 10.0608L0.593597 6.23945L7.52088 5.73398L10.2148 0.376007L12.9088 5.73398L19.8361 6.23945L14.5925 10.0608L16.1559 15.7423L10.2148 12.7297L4.27372 15.7423Z"
-              fill="black"
-            />
-          </svg>
-          <span className="text-gray-500 text-xs">4.47 | 537 Reviews</span>
-        </div>
-        {/* Main Heading */}
-        <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 leading-none sm:leading-tight whitespace-wrap sm:whitespace-nowrap z-30 mb-2 items-left sm:items-center">
-          Never run out <br className="block sm:hidden" /> of snus again
-        </h1>
-        <h3 className="text-xl sm:text-3xl text-gray-900 leading-tight whitespace-wrap sm:whitespace-nowrap mb-8 z-30 items-left sm:items-center">
-          {renderTranslation("hero.subtitle.mobile")}
-        </h3>
-        {/* CTA Button */}
-        <div className="button-wrapper mb-12 relative inline-block">
-          <Link href="/products">
-            <button
-              className="buy-button px-6 py-3 text-gray-900 text-lg font-medium flex items-center justify-center bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] shadow-[0_0_620px_#0A0F8A,0_0_354px_#0A0F8A] whitespace-nowrap"
-              style={{
-                minWidth: "140px",
-                minHeight: "54px",
-                borderRadius: "16px",
-                zIndex: 10,
-              }}
-              type="button"
-            >
-              <span>Buy now</span>
-              <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-24 h-8 bg-white rounded-full z-10 blur-lg"></div>
-              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur-md"></div>
-              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur"></div>
-            </button>
-          </Link>
-
-          {/* Dynamic rotating border overlay - matches button size exactly */}
-          <div className="rotating-border pointer-events-none absolute inset-0 z-50">
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 100 100"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-              style={{ borderRadius: "16px" }}
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <linearGradient
-                  id="border-gradient"
-                  x1="0"
-                  y1="0"
-                  x2="100"
-                  y2="100"
-                >
-                  <stop offset="0%" stopColor="#3AF0F7" />
-                  <stop offset="50%" stopColor="#8ef7fb" />
-                  <stop offset="100%" stopColor="#3AF0F7" />
-                </linearGradient>
-              </defs>
-              <rect
-                x="1"
-                y="1"
-                width="98"
-                height="98"
-                rx="12"
-                fill="none"
-                stroke="url(#border-gradient)"
-                strokeWidth="2.5"
-                strokeDasharray="120 240"
-                strokeDashoffset="0"
-                className="svg-border-anim"
-              />
-            </svg>
-          </div>
-        </div>
-        {/* Stats */}
-        <HeroStats />
-      </div>
-    );
-  }
+  // SSR/client output unified: always render translation-based layout
 
   return (
-    <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-lg lg:max-w-xl bg-transparent">
+    <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-lg lg:max-w-xl bg-transparent min-h-[400px]">
       {/* Rating */}
       <div className="flex items-center space-x-2">
         <svg
@@ -263,7 +120,6 @@ function HeroLeftContent() {
             <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur"></div>
           </button>
         </Link>
-
         {/* Dynamic rotating border overlay - matches button size exactly */}
         <div className="rotating-border pointer-events-none absolute inset-0 z-50">
           <svg
@@ -303,7 +159,6 @@ function HeroLeftContent() {
             </defs>
           </svg>
         </div>
-
         <style jsx global>{`
           @keyframes move-border-segment {
             0% {
@@ -335,7 +190,7 @@ function HeroLeftContent() {
 // --- Main HeroSection component ---
 export default function HeroSection() {
   return (
-    <section className="relative flex items-center justify-center overflow-hidden w-full pt-20 sm:pt-0 sm:min-h-screen object-top bg-transparent">
+    <section className="relative flex items-center justify-center overflow-hidden w-full pt-20 sm:pt-0 object-top bg-transparent sm:min-h-[700px]">
       {/* Hero background image as full-section background */}
       <Image
         src="/hero-img-compressed.jpg"

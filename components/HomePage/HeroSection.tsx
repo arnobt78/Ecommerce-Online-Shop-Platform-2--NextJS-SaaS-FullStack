@@ -100,85 +100,99 @@ function HeroLeftContent() {
       <h3 className="text-xl sm:text-3xl text-gray-900 leading-tight whitespace-wrap sm:whitespace-nowrap mb-8 z-30 text-left">
         {renderTranslation("hero.subtitle.mobile")}
       </h3>
+
       {/* CTA Button */}
-      <div className="button-wrapper mb-12 relative inline-block">
-        <Link href="/products">
-          <button
-            className="buy-button px-6 py-3 text-gray-900 text-lg font-medium flex items-center justify-center bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] shadow-[0_0_620px_#0A0F8A,0_0_354px_#0A0F8A] whitespace-nowrap"
-            style={{
-              minWidth: "140px",
-              minHeight: "54px",
-              borderRadius: "16px",
-              zIndex: 10,
-            }}
-            type="button"
+      <div className="button-wrapper mb-12 flex">
+        <div className="button-container relative w-auto h-auto">
+          {/* Rotating border overlay - matches button size and border radius */}
+          <div
+            className="rotating-border pointer-events-none absolute top-0 left-0 w-full h-full z-50"
+            style={{ borderRadius: "16px", overflow: "hidden" }}
           >
-            <span>{t("hero.buyNow")}</span>
-            <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-            <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-24 h-8 bg-white rounded-full z-10 blur-lg"></div>
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur-md"></div>
-            <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur"></div>
-          </button>
-        </Link>
-        {/* Dynamic rotating border overlay - matches button size exactly */}
-        <div className="rotating-border pointer-events-none absolute inset-0 z-50">
-          <svg
-            width="100%"
-            height="100%"
-            viewBox="0 0 100 100"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full"
-            preserveAspectRatio="none"
-          >
-            <rect
-              x="1"
-              y="1"
-              width="98"
-              height="98"
-              rx="12"
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 144 58"
               fill="none"
-              stroke="url(#border-gradient)"
-              strokeWidth="2.5"
-              strokeDasharray="120 240"
-              strokeDashoffset="0"
-              className="svg-border-anim"
-            />
-            <defs>
-              <linearGradient
-                id="border-gradient"
-                x1="0"
-                y1="0"
-                x2="100"
-                y2="100"
-                gradientUnits="userSpaceOnUse"
-              >
-                <stop stopColor="#02000C" />
-                <stop offset="1" stopColor="#02000C" />
-              </linearGradient>
-            </defs>
-          </svg>
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-full h-full"
+              preserveAspectRatio="none"
+              shapeRendering="geometricPrecision"
+              style={{ display: "block" }}
+            >
+              <rect
+                x="1"
+                y="1"
+                width="142"
+                height="56"
+                rx="16"
+                fill="none"
+                stroke="url(#border-gradient)"
+                strokeWidth="2"
+                strokeDasharray="120 240"
+                strokeDashoffset="0"
+                className="svg-border-anim"
+              />
+              <defs>
+                <linearGradient
+                  id="border-gradient"
+                  x1="0"
+                  y1="0"
+                  x2="144"
+                  y2="58"
+                  gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#02000C" />
+                  <stop offset="1" stopColor="#02000C" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <Link href="/products">
+            <button
+              className="buy-button relative px-8 py-3 text-black text-lg font-inter font-medium flex items-center gap-2 rounded-2xl bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] overflow-hidden"
+              style={{
+                minWidth: "140px",
+                minHeight: "54px",
+                borderRadius: "16px",
+                zIndex: 1,
+                margin: "2px",
+              }}
+              type="button"
+            >
+              <span style={{ whiteSpace: "nowrap" }}>{t("hero.buyNow")}</span>
+              <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
+              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-24 h-8 bg-white rounded-full z-10 blur-lg"></div>
+              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur-md"></div>
+              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur"></div>
+            </button>
+          </Link>
+          <style jsx global>{`
+            @keyframes move-border-segment {
+              0% {
+                stroke-dashoffset: 0;
+              }
+              100% {
+                stroke-dashoffset: -360;
+              }
+            }
+            .svg-border-anim {
+              animation: move-border-segment 2.5s linear infinite;
+            }
+
+            .buy-button {
+              white-space: nowrap !important;
+            }
+            .buy-button span {
+              white-space: nowrap !important;
+            }
+            .rotating-border {
+              border-radius: 16px !important;
+            }
+          `}</style>
         </div>
-        <style jsx global>{`
-          @keyframes move-border-segment {
-            0% {
-              stroke-dashoffset: 0;
-            }
-            100% {
-              stroke-dashoffset: -360;
-            }
-          }
-          .svg-border-anim {
-            animation: move-border-segment 2.5s linear infinite;
-          }
-          .buy-button {
-            white-space: nowrap !important;
-          }
-          .buy-button span {
-            white-space: nowrap !important;
-          }
-        `}</style>
       </div>
+
       {/* Stats with vertical dividers */}
       <div className="w-full">
         <HeroStats />
@@ -192,26 +206,47 @@ export default function HeroSection() {
   return (
     <section className="relative flex items-center justify-center overflow-hidden w-full pt-20 sm:pt-0 object-top bg-transparent sm:min-h-[700px]">
       {/* Hero background image as full-section background */}
-      <Image
-        src="/hero-img-compressed.jpg"
-        alt="Hero background"
-        width={800}
-        height={800}
-        priority
-        className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-auto h-[80vh] max-h-[800px] z-0"
-        style={{
-          position: "absolute",
-          height: "100vh",
-          maxHeight: "800px",
-          width: "auto",
-          right: 0,
-          top: "50%",
-          transform: "translateY(-50%)",
-          objectFit: "contain",
-          objectPosition: "center",
-          color: "transparent",
-        }}
-      />
+      <>
+        {/* Desktop: full image on right */}
+        <Image
+          src="/hero-img-compressed.jpg"
+          alt="Hero background"
+          width={800}
+          height={800}
+          priority
+          className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-auto h-[80vh] max-h-[800px] z-0"
+          style={{
+            position: "absolute",
+            height: "100vh",
+            maxHeight: "800px",
+            width: "auto",
+            right: 0,
+            top: "50%",
+            transform: "translateY(-50%)",
+            objectFit: "contain",
+            objectPosition: "center",
+            color: "transparent",
+          }}
+        />
+        {/* Mobile: half-circle image on right, vertically centered */}
+        <div className="sm:hidden absolute -right-20 top-1/2 -translate-y-1/2 h-[300px] w-full overflow-hidden z-0 flex items-center justify-end">
+          <Image
+            src="/hero-img-compressed.jpg"
+            alt="Hero background"
+            width={180}
+            height={220}
+            priority
+            className="h-full w-full object-cover"
+            style={{
+              objectFit: "cover",
+              objectPosition: "right center",
+              borderTopLeftRadius: "9999px",
+              borderBottomLeftRadius: "9999px",
+              color: "transparent",
+            }}
+          />
+        </div>
+      </>
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-16 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
         {/* Left Content */}

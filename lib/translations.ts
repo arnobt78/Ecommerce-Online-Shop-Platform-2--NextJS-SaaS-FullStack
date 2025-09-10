@@ -621,7 +621,7 @@ export const translations = {
     "hero.subtitle":
       "Wählen Sie aus einer riesigen Auswahl exklusiver Marken, Geschmacksrichtungen und Stärken zum besten Preis auf dem Markt mit kostenlosem Versand.",
     "hero.subtitle.mobile":
-      'Wählen Sie aus einer riesigen <br className="block sm:hidden" /> Auswahl exklusiver <br /> Marken, Geschmacksrichtungen und Stärken <br /> zum besten Preis auf dem Markt <br /> mit kostenlosem Versand.',
+      'Wählen Sie aus einer riesigen <br className="block sm:hidden" /> Auswahl exklusiver <br /> Marken, Geschmacksrichtungen <br className="block sm:hidden" /> und Stärken <br /> zum besten Preis auf dem Markt <br /> mit kostenlosem Versand.',
     "hero.buyNow": "Jetzt kaufen",
     "hero.stats.ordersToday": "Bestellungen heute",
     "hero.stats.orders": "Bestellungen",

@@ -22,6 +22,16 @@ export default function AnimationsAndStyles() {
       .scrollbar-thumb-gray-300::-webkit-scrollbar-thumb { background-color: #d1d5db; border-radius: 6px; }
       .scrollbar-track-gray-100::-webkit-scrollbar-track { background-color: #f3f4f6; }
       ::-webkit-scrollbar { width: 6px; }
+      .rotating-border {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 16px;
+        overflow: hidden;
+        pointer-events: none;
+      }
       @keyframes heroLineMove1 {
         0% { transform: translateY(0) rotate(45deg); opacity: 0.6; }
         50% { transform: translateY(-20px) rotate(60deg); opacity: 1; }

@@ -4,6 +4,7 @@ import { useLanguage } from "@/context/LanguageContextNew";
 import Image from "next/image";
 
 import { useRouter } from "next/navigation";
+import { LanguageSelector } from "../LanguageSelector/LanguageSelector";
 
 // FooterSection
 interface FooterSectionProps {
@@ -99,7 +100,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
   const { t } = useLanguage();
 
   return (
-    <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0">
+    <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0 mt-4 sm:mt-0">
       <div className={`sm:block ${open ? "block" : "block sm:block"}`}>
         <Button
           variant="ghost"
@@ -119,25 +120,30 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
 // FooterLogoSocial
 export function FooterLogoSocial() {
   return (
-    <div className="sm:col-span-2 lg:col-span-1 text-center flex flex-col justify-center items-center h-full min-h-[120px]">
+    <div className="sm:col-span-2 lg:col-span-1 text-center flex flex-col relative h-full min-h-[120px]">
       <a href="/" aria-label="Go to homepage">
         <Image
           src="/logo.svg"
           alt="SNUZZ"
           width={120}
           height={40}
-          className="h-10 w-auto mb-4 sm:mb-6 mx-auto mt-4 sm:mt-8"
+          className="h-10 w-auto mb-2 sm:mb-2 mx-auto mt-4 sm:mt-0"
         />
       </a>
       <div className="flex gap-2 sm:gap-1 justify-center items-center">
         {[Instagram, Facebook].map((Icon, i) => (
           <div
             key={i}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer hover:bg-gray-200"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer hover:bg-gray-200 mb-2 sm:mb-2"
           >
             <Icon className="w-5 h-5 sm:w-5 sm:h-5 text-gray-900" />
           </div>
         ))}
+      </div>
+
+      {/* Language Selector */}
+      <div className="mb-2 sm:mb-0 justify-center items-center flex">
+        <LanguageSelector />
       </div>
     </div>
   );

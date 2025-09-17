@@ -14,8 +14,8 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
     <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between top-[8px] left-0 px-1 sm:px-2 z-30">
       {/* Sale badge (conditionally render) */}
       {saleLabel ? (
-        <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[24px] flex-shrink flex items-center justify-center">
-          <span className="italic font-bold text-[9px] sm:text-[11px] text-[#C02929]">
+        <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[20px] flex-shrink flex items-center justify-center">
+          <span className="italic font-medium text-[9px] sm:text-[11px] text-[#C02929]">
             {saleLabel}
           </span>
         </div>
@@ -23,8 +23,8 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
         <div className="w-[48px] h-[16px] sm:h-[24px]" />
       )}
       {/* Free shipping badge */}
-      <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[24px] px-2 sm:px-3 flex-shrink flex items-center justify-center">
-        <span className="italic font-bold text-[9px] sm:text-[11px] text-gray-900 whitespace-nowrap overflow-hidden truncate">
+      <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[20px] px-1 sm:px-2 flex-shrink flex items-center justify-center">
+        <span className="italic font-medium text-[9px] sm:text-[11px] text-gray-900 whitespace-nowrap overflow-hidden truncate">
           {t("products.shipping.freeShipping")}
         </span>
       </div>

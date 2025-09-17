@@ -19,6 +19,8 @@ export const products: ProductData[] = [
     productName: "ZYN Black Cherry Mini Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-black-cherry-mini-strong-980708.png?v=1754492834&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -31,6 +33,8 @@ export const products: ProductData[] = [
     productName: "ZYN Apple Mint Mini Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYN_Apple_Mint_Extra_Strong.png?v=1754492831&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -43,6 +47,8 @@ export const products: ProductData[] = [
     productName: "ZYN Peach Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-peach-mini-217582.png?v=1754492857&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -55,6 +61,8 @@ export const products: ProductData[] = [
     productName: "ZYN Lemon Spritz",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYNLemonSpritz.png?v=1755261372&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -79,6 +87,8 @@ export const products: ProductData[] = [
     productName: "ZYN Exotic Mango Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-exotic-mango-mini-274229.png?v=1754492846&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -91,6 +101,8 @@ export const products: ProductData[] = [
     productName: "ZYN Apple Mint Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-apple-mint-extra-strong-577684.png?v=1754492829&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -103,6 +115,8 @@ export const products: ProductData[] = [
     productName: "ZYN Apple Mint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYN_Apple_Mint_Mini.png?v=1754492830&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -115,6 +129,8 @@ export const products: ProductData[] = [
     productName: "Greatest Cold Dry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/greatest-cold-dry-16mg-755347.png?v=1754492589&width=1200",
+    salePrice: "€3,29",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,29",
     stockStatus: "in_stock",
     brand: "Greatest",
@@ -127,6 +143,8 @@ export const products: ProductData[] = [
     productName: "ZYN Black Cherry Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-black-cherry-mini-172576.png?v=1754492833&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -139,6 +157,8 @@ export const products: ProductData[] = [
     productName: "VELO Mclaren Sweet Papaya",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-mclaren-sweet-papaya-limited-edition.png?v=1754492775&width=1200",
+    salePrice: "€4,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,99",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -151,6 +171,8 @@ export const products: ProductData[] = [
     productName: "ZYN Cool Mint Mini Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-cool-mint-mini-strong-210565.png?v=1754492844&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -163,6 +185,8 @@ export const products: ProductData[] = [
     productName: "ZYN Coffee Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-coffee-mini-321422.png?v=1754492839&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -175,6 +199,8 @@ export const products: ProductData[] = [
     productName: "ZYN Citrus Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-citrus-strong-8993963.png?v=1755295476&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -187,6 +213,8 @@ export const products: ProductData[] = [
     productName: "VELO Purple Grape Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-purple-grape-mini-6mg-561259.png?v=1754492779&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -199,6 +227,8 @@ export const products: ProductData[] = [
     productName: "ZYN Citrus Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-citrus-extra-strong-898349.png?v=1754492837&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -247,6 +277,8 @@ export const products: ProductData[] = [
     productName: "VELO Icy Cherry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-icy-cherry-182845.png?v=1754492772&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -259,6 +291,8 @@ export const products: ProductData[] = [
     productName: "XQS Tropical",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-tropical-8mg-201264.png?v=1754492826&width=1200",
+    salePrice: "€3,39",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -271,6 +305,8 @@ export const products: ProductData[] = [
     productName: "ZYN Cool Mint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-cool-mint-mini-916114.png?v=1754492843&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -283,6 +319,8 @@ export const products: ProductData[] = [
     productName: "VELO Orange Spark",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-orange-spark-492562.png?v=1754492777&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -295,6 +333,8 @@ export const products: ProductData[] = [
     productName: "ZYN Cool Mint Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-cool-mint-extra-strong-705892.png?v=1754492842&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -307,6 +347,8 @@ export const products: ProductData[] = [
     productName: "ZYN Spearmint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-spearmint-718017.png?v=1754492861&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -319,6 +361,8 @@ export const products: ProductData[] = [
     productName: "VELO Freezing Peppermint Max",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-freezing-peppermint-max-17mg-287162.png?v=1754492769&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -343,6 +387,8 @@ export const products: ProductData[] = [
     productName: "Kelly White Sparkling Strawberry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kelly-white-sparkling-strawberry-373352.png?v=1754492641&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Kelly White",
@@ -355,6 +401,8 @@ export const products: ProductData[] = [
     productName: "ZYN Spearmint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYN_Spearmint_Mini.png?v=1754492861&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -439,6 +487,8 @@ export const products: ProductData[] = [
     productName: "ZYN Red Fruits Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-red-fruits-strong-193973.png?v=1754492860&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -475,6 +525,8 @@ export const products: ProductData[] = [
     productName: "Greatest Cold Dry Black",
     productImage:
       "https://snuzyn.com/cdn/shop/files/greatest-cold-dry-black-316736.png?v=1754492590&width=1200",
+    salePrice: "€3,29",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,29",
     stockStatus: "in_stock",
     brand: "Greatest",
@@ -487,6 +539,8 @@ export const products: ProductData[] = [
     productName: "VELO Freezing Peppermint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-freezing-peppermint-109mg-810070.png?v=1754492768&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -535,6 +589,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Black",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-black-714303.png?v=1754492611&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -571,6 +627,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Arasaka",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-arasaka-140446.png?v=1754492610&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -607,6 +665,8 @@ export const products: ProductData[] = [
     productName: "ZYN Blackcurrant Ice Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYN_Blackcurrant_Ice_Extra_Strong.png?v=1754492835&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -631,6 +691,8 @@ export const products: ProductData[] = [
     productName: "CUBA Cherry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/cuba-cherry-997381.png?v=1754492561&width=1200",
+    salePrice: "€3,79",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,79",
     stockStatus: "in_stock",
     brand: "CUBA",
@@ -655,6 +717,8 @@ export const products: ProductData[] = [
     productName: "VELO Tropical Mango Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-tropical-mango-strong-240784.png?v=1754492784&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -679,6 +743,8 @@ export const products: ProductData[] = [
     productName: "XQS Black Cherry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-black-cherry-8mg-573055.png?v=1754492806&width=1200",
+    salePrice: "€3,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -703,6 +769,8 @@ export const products: ProductData[] = [
     productName: "VELO Lime Flame",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-lime-flame-890119.png?v=1754492773&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -715,6 +783,8 @@ export const products: ProductData[] = [
     productName: "KURWA Just Berries",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kurwa-just-berries-124814.png?v=1754492664&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Kurwa",
@@ -739,6 +809,8 @@ export const products: ProductData[] = [
     productName: "White Fox Double Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/white-fox-double-mint-827008.png?v=1754492790&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "White Fox",
@@ -751,6 +823,8 @@ export const products: ProductData[] = [
     productName: "Après Cactus Lime Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-cactus-lime-extra-strong-698101.png?v=1754492537&width=1200",
+    salePrice: "€4,29",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -775,6 +849,8 @@ export const products: ProductData[] = [
     productName: "Après Ice Tea Peach Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-ice-tea-peach-extra-strong-364405.png?v=1754492542&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -787,6 +863,8 @@ export const products: ProductData[] = [
     productName: "ZYN Red Fruits Fizz Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-red-fruits-fizz-extra-strong-8916268.png?v=1754492858&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -799,6 +877,8 @@ export const products: ProductData[] = [
     productName: "VELO Freezing Peppermint Ultra",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-freezing-peppermint-ultra-14mg-811865.png?v=1754492770&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -811,6 +891,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Watermelon Mint Gum",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-watermelon-mint-gum-623391.png?v=1754492636&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -835,6 +917,8 @@ export const products: ProductData[] = [
     productName: "Pablo Exclusive Mango Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-mango-ice-284635.png?v=1754492710&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -847,6 +931,8 @@ export const products: ProductData[] = [
     productName: "Kelly White Cool Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kelly-white-cool-mint-192782.png?v=1754492637&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Kelly White",
@@ -859,6 +945,8 @@ export const products: ProductData[] = [
     productName: "77 Cola & Vanilla",
     productImage:
       "https://snuzyn.com/cdn/shop/files/77-cola-vanilla-181963.png?v=1754492519&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "77",
@@ -871,6 +959,8 @@ export const products: ProductData[] = [
     productName: "VELO Purple Grape",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-purple-grape-835086.png?v=1754492778&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -883,6 +973,8 @@ export const products: ProductData[] = [
     productName: "Killa Banana Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/killa-banana-ice-438029.png?v=1754492646&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Killa",
@@ -895,6 +987,8 @@ export const products: ProductData[] = [
     productName: "White Fox All White",
     productImage:
       "https://snuzyn.com/cdn/shop/files/white-fox-all-white-233766.png?v=1754492789&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "White Fox",
@@ -907,6 +1001,8 @@ export const products: ProductData[] = [
     productName: "VELO Tropical Mango",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-tropical-mango-510062.png?v=1754492784&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -919,6 +1015,8 @@ export const products: ProductData[] = [
     productName: "Pablo Exclusive Grape Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/Pablo_Exclusive_Grape_Ice.png?v=1754492707&width=2048",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -943,6 +1041,8 @@ export const products: ProductData[] = [
     productName: "XQS Hallonsoda",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-hallonsoda-658915.png?v=1754492818&width=1200",
+    salePrice: "€3,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -955,6 +1055,8 @@ export const products: ProductData[] = [
     productName: "ZYN Gentle Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-gentle-mint-267999.png?v=1754492849&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -967,6 +1069,8 @@ export const products: ProductData[] = [
     productName: "Helwit Cola",
     productImage:
       "https://snuzyn.com/cdn/shop/files/helwit-cola-669288.png?v=1754492596&width=1200",
+    salePrice: "€2,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€3,99",
     stockStatus: "in_stock",
     brand: "Helwit",
@@ -979,6 +1083,8 @@ export const products: ProductData[] = [
     productName: "Kelly White Raspberry Lemon Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kelly-white-raspberry-lemon-mini-906513.png?v=1754492640&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Kelly White",
@@ -1003,6 +1109,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Strawberry Mango Gum",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-strawberry-mango-gum-455586.png?v=1754492631&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -1015,6 +1123,8 @@ export const products: ProductData[] = [
     productName: "Killa Bubblegum",
     productImage:
       "https://snuzyn.com/cdn/shop/files/killa-bubblegum-249302.png?v=1754492648&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Killa",
@@ -1027,6 +1137,8 @@ export const products: ProductData[] = [
     productName: "VELO Icy Berries",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-icy-berries-942236.png?v=1754492772&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1039,6 +1151,8 @@ export const products: ProductData[] = [
     productName: "Pablo Exclusive Orange",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-orange-244282.png?v=1754492712&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -1063,6 +1177,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Crazy Mix",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-crazy-mix-541214.png?v=1754492618&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -1075,6 +1191,8 @@ export const products: ProductData[] = [
     productName: "Loop Red Chili Melon Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-red-chili-melon-mini-5010513.png?v=1755295785&width=1200",
+    salePrice: "€4,69",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -1087,6 +1205,8 @@ export const products: ProductData[] = [
     productName: "CUBA Blueberry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/cuba-blueberry-367884.png?v=1754492559&width=1200",
+    salePrice: "€4,79",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,79",
     stockStatus: "in_stock",
     brand: "CUBA",
@@ -1099,6 +1219,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Dragonfire",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-dragonfire-805858.png?v=1754492621&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -1111,6 +1233,8 @@ export const products: ProductData[] = [
     productName: "LOOP Jalapeno Lime Extra strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-jalapeno-lime-extra-strong-879367.png?v=1754492682&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -1123,6 +1247,8 @@ export const products: ProductData[] = [
     productName: "ZYN Menthol Ice Ultra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-menthol-ice-ultra-strong-409900.png?v=1754492853&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1135,6 +1261,8 @@ export const products: ProductData[] = [
     productName: "VELO Crispy Peppermint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-crispy-peppermint-396468.png?v=1754492767&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1147,6 +1275,8 @@ export const products: ProductData[] = [
     productName: "VELO Arctic Grapefruit",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-arctic-grapefruit-956900.png?v=1754492763&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1195,6 +1325,8 @@ export const products: ProductData[] = [
     productName: "VELO Peppermint Storm",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-peppermint-storm-285892.png?v=1754492777&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1219,6 +1351,8 @@ export const products: ProductData[] = [
     productName: "XQS Arctic Freeze Ultra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-arctic-freeze-112mg-868876.png?v=1754492803&width=1200",
+    salePrice: "€3,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -1243,6 +1377,8 @@ export const products: ProductData[] = [
     productName: "XQS Fruzzle",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-fruzzle.png?v=1754492816&width=1200",
+    salePrice: "€3,99",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -1255,6 +1391,8 @@ export const products: ProductData[] = [
     productName: "VELO Ruby Berry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-ruby-berry-6mg-850778.png?v=1754492780&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1267,6 +1405,8 @@ export const products: ProductData[] = [
     productName: "ZYN Black Licorice Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ZYN_Black_Licorice_Mini.png?v=1754492834&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1279,6 +1419,8 @@ export const products: ProductData[] = [
     productName: "XQS Elderflower",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-elderflower-215151.png?v=1754492813&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -1291,6 +1433,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Watermelon Lime",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-watermelon-lime-533724.png?v=1754492634&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -1303,6 +1447,8 @@ export const products: ProductData[] = [
     productName: "Kelly White Cucumber Mint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kelly-white-cucumber-mint-mini-123959.png?v=1754492638&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Kelly White",
@@ -1315,6 +1461,8 @@ export const products: ProductData[] = [
     productName: "77 Peach & Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/77-peach-mint.png?v=1754492520&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "77",
@@ -1339,6 +1487,8 @@ export const products: ProductData[] = [
     productName: "XPCT Classic Raspberry & Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xpct-classic-raspberry-mint-6914990.png?v=1754492801&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XPCT",
@@ -1351,6 +1501,8 @@ export const products: ProductData[] = [
     productName: "Loop Red Chili Melon Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/LoopRedChiliMelonExtraStrong.png?v=1754492687&width=2048",
+    salePrice: "€4,49",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -1363,6 +1515,8 @@ export const products: ProductData[] = [
     productName: "ZYN Spearmint Mini Low",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-spearmint-mini-low-736439.png?v=1754492862&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1375,6 +1529,8 @@ export const products: ProductData[] = [
     productName: "Après Cactus Lime",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-cactus-lime-587072.png?v=1754492536&width=1200",
+    salePrice: "€4,42",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -1387,6 +1543,8 @@ export const products: ProductData[] = [
     productName: "Pablo Exclusive Blue Raspberry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-exclusive-blue-raspberry-353823.png?v=1754492702&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -1399,6 +1557,8 @@ export const products: ProductData[] = [
     productName: "ZYN Blackcurrant Ice Super Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-blackcurrant-ice-extra-strong-201155.png?v=1754492836&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1411,6 +1571,8 @@ export const products: ProductData[] = [
     productName: "VELO Green Spearmint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-green-spearmint-6mg-289503.png?v=1754492771&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1423,6 +1585,8 @@ export const products: ProductData[] = [
     productName: "77 Apple Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/77-apple-mint.png?v=1754492516&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "77",
@@ -1435,6 +1599,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Raspberry Gum",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-raspberry-gum-580719.png?v=1754492629&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -1447,6 +1613,8 @@ export const products: ProductData[] = [
     productName: "ZYN Red Fruits Fizz Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-red-fruits-fizz-strong-7523899.png?v=1754492859&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1459,6 +1627,8 @@ export const products: ProductData[] = [
     productName: "77 Forest Fruit",
     productImage:
       "https://snuzyn.com/cdn/shop/files/77-forest-fruit-623938.png?v=1754492520&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "77",
@@ -1471,6 +1641,8 @@ export const products: ProductData[] = [
     productName: "ZYN Fresh Mint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-fresh-mint-mini-770219.png?v=1754492848&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1507,6 +1679,8 @@ export const products: ProductData[] = [
     productName: "FIX Pineapple Rum Coconut",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fix-pineapple-rum-coconut-165626.png?v=1754492574&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "FIX",
@@ -1543,6 +1717,8 @@ export const products: ProductData[] = [
     productName: "LOOP Hot Mango Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-hot-mango-strong-6120499.png?v=1755295478&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -1555,6 +1731,8 @@ export const products: ProductData[] = [
     productName: "XQS Twin Apple",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-twin-apple-8mg-640598.png?v=1754492828&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -1591,6 +1769,8 @@ export const products: ProductData[] = [
     productName: "77 Cola & Cherry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/77-cola-cherry-527860.png?v=1754492518&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "77",
@@ -1615,6 +1795,8 @@ export const products: ProductData[] = [
     productName: "ZYN Mint Fizz Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-mint-fizz-strong-4534484.png?v=1754492854&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1639,6 +1821,8 @@ export const products: ProductData[] = [
     productName: "XQS Black Cherry Light",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-black-cherry-light-571364.png?v=1754492806&width=1200",
+    salePrice: "€3,49",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -1651,6 +1835,8 @@ export const products: ProductData[] = [
     productName: "Après Cola Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-cola-extra-strong-719816.png?v=1754492540&width=1200",
+    salePrice: "€3,29",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -1675,6 +1861,8 @@ export const products: ProductData[] = [
     productName: "LOOP Jalapeno Lime Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-jalapeno-lime-hyper-strong-331698.png?v=1754492683&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -1819,6 +2007,8 @@ export const products: ProductData[] = [
     productName: "Velo Crispy Peppermint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-crispy-peppermint-mini-990271.png?v=1754492768&width=1200",
+    salePrice: "€3,69",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1831,6 +2021,8 @@ export const products: ProductData[] = [
     productName: "VELO Sweet Blackcurrant",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-sweet-blackcurrant-limited-edition-2427503.png?v=1754492783&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 50%",
     originalPrice: "€5,99",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -1855,6 +2047,8 @@ export const products: ProductData[] = [
     productName: "Pablo Gold Edition Grape Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-gold-edition-grape-ice-3300644.png?v=1754492718&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -1867,6 +2061,8 @@ export const products: ProductData[] = [
     productName: "Pablo Gold Edition Dark Cherry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-gold-edition-dark-cherry-9492722.png?v=1754492716&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -1879,6 +2075,8 @@ export const products: ProductData[] = [
     productName: "ACE X Red Apple Cinnamon",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-x-red-apple-cinnamon-516106.png?v=1754492533&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Ace",
@@ -1915,6 +2113,8 @@ export const products: ProductData[] = [
     productName: "Pablo Exclusive Mocca",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-exclusive-mocca-834541.png?v=1754492711&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -1927,6 +2127,8 @@ export const products: ProductData[] = [
     productName: "ZYN Fresh Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-fresh-mint-174328.png?v=1754492847&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1939,6 +2141,8 @@ export const products: ProductData[] = [
     productName: "Siberia Portion Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/siberia-portion-mini.png?v=1754492741&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,99",
     stockStatus: "in_stock",
     brand: "Siberia",
@@ -1951,6 +2155,8 @@ export const products: ProductData[] = [
     productName: "ZYN Gentle Mint Mini Low",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-gentle-mint-mini-low-814647.png?v=1754492850&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -1975,6 +2181,8 @@ export const products: ProductData[] = [
     productName: "Après Spritz Tangerine",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-spritz-tangerine-378399.png?v=1754492549&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -1987,6 +2195,8 @@ export const products: ProductData[] = [
     productName: "Après Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-mint-378097.png?v=1754492547&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -2035,6 +2245,8 @@ export const products: ProductData[] = [
     productName: "VELO Mango Flame",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-mango-flame-657871.png?v=1754492774&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -2083,6 +2295,8 @@ export const products: ProductData[] = [
     productName: "Après Cola Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-cola-hyper-strong-248284.png?v=1754492540&width=1200",
+    salePrice: "€3,09",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -2167,6 +2381,8 @@ export const products: ProductData[] = [
     productName: "ZYN Menthol Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-menthol-ice-extra-strong-939454.png?v=1754492851&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 30%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -2179,6 +2395,8 @@ export const products: ProductData[] = [
     productName: "LOOP Habanero Mint Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-habanero-mint-hyper-strong-902945.png?v=1754492676&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -2371,6 +2589,8 @@ export const products: ProductData[] = [
     productName: "XPCT Berry Mega Can",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xpct-berry-mega-can-495134.png?v=1754492795&width=1200",
+    salePrice: "€7,49",
+    saleLabel: "Sale 90%",
     originalPrice: "€37,99",
     stockStatus: "in_stock",
     brand: "XPCT",
@@ -2623,6 +2843,8 @@ export const products: ProductData[] = [
     productName: "FIX Chai Latte",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fix-chai-latte-690543.png?v=1754492574&width=1200",
+    salePrice: "€3,09",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "FIX",
@@ -2635,6 +2857,8 @@ export const products: ProductData[] = [
     productName: "Loop Hot Rhuharb Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-hot-rhuharb-strong-94mg-906344.png?v=1754492680&width=1200",
+    salePrice: "€4,09",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -2731,6 +2955,8 @@ export const products: ProductData[] = [
     productName: "XPCT Classic Berry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xpct-classic-berry-9232039.png?v=1754492796&width=1200",
+    salePrice: "€2,69",
+    saleLabel: "Sale 40%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XPCT",
@@ -2755,6 +2981,8 @@ export const products: ProductData[] = [
     productName: "LOOP Jalapeno Lime Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/Loop_Jalpeno_Lime.png?v=1754492685&width=2048",
+    salePrice: "€4,09",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -3007,6 +3235,8 @@ export const products: ProductData[] = [
     productName: "Greatest Cold Dry Black Mega Can",
     productImage:
       "https://snuzyn.com/cdn/shop/files/greatest-cold-dry-black-mega-can-8806016.png?v=1755210890&width=1200",
+    salePrice: "€6,49",
+    saleLabel: "Sale 90%",
     originalPrice: "€29,99",
     stockStatus: "in_stock",
     brand: "Greatest",
@@ -3127,6 +3357,8 @@ export const products: ProductData[] = [
     productName: "ACE Spearmint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-spearmint-221896.png?v=1754492527&width=1200",
+    salePrice: "€2,99",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Ace",
@@ -3187,6 +3419,8 @@ export const products: ProductData[] = [
     productName: "ZYN Menthol Ice Super Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/zyn-menthol-ice-super-strong-396743.png?v=1754492852&width=1200",
+    salePrice: "€2,99",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ZYN",
@@ -3211,6 +3445,8 @@ export const products: ProductData[] = [
     productName: "Fix Blueberry Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fix-blueberry-ice-616878.png?v=1754492573&width=1200",
+    salePrice: "€2,89",
+    saleLabel: "Sale 50%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "FIX",
@@ -3223,6 +3459,8 @@ export const products: ProductData[] = [
     productName: "Loop Spicy Apple Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-spicy-apple-strong-94mg-852037.png?v=1754492693&width=1200",
+    salePrice: "€2,99",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -3235,6 +3473,8 @@ export const products: ProductData[] = [
     productName: "Loop Hot Peach Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-hot-peach-mini-68mg-243311.png?v=1754492679&width=1200",
+    salePrice: "€2,99",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -3247,6 +3487,8 @@ export const products: ProductData[] = [
     productName: "Après Appletini Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-appletini-extra-strong-844538.png?v=1754492534&width=1200",
+    salePrice: "€3,09",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -3259,6 +3501,8 @@ export const products: ProductData[] = [
     productName: "LOOP Licorice Fusion",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-licorice-fusion-183158.png?v=1754492686&width=1200",
+    salePrice: "€3,39",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -3271,6 +3515,8 @@ export const products: ProductData[] = [
     productName: "ACE X Cool mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-x-cool-mint-113064.png?v=1754492530&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ACE",
@@ -3283,6 +3529,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Sour Berries",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-sour-berries-387064.png?v=1754492630&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -3307,6 +3555,8 @@ export const products: ProductData[] = [
     productName: "Helwit Mocha Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/helwit-mocha-extra-strong.png?v=1754492601&width=1200",
+    salePrice: "€2,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€3,99",
     stockStatus: "in_stock",
     brand: "Helwit",
@@ -3319,6 +3569,8 @@ export const products: ProductData[] = [
     productName: "Pablo Gold Edition Frosted Ice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-gold-edition-frosted-ice-8870986.png?v=1754492717&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -3331,6 +3583,8 @@ export const products: ProductData[] = [
     productName: "Pablo Gold Edition White Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-gold-edition-white-mint-7715332.png?v=1754492721&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -3343,6 +3597,8 @@ export const products: ProductData[] = [
     productName: "Pablo Mini Ice Cold",
     productImage:
       "https://snuzyn.com/cdn/shop/files/pablo-mini-ice-cold-683125.png?v=1754492724&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "Pablo",
@@ -3367,6 +3623,8 @@ export const products: ProductData[] = [
     productName: "Helwit Concept V3",
     productImage:
       "https://snuzyn.com/cdn/shop/files/helwit-concept-v3-502932.png?v=1754492598&width=1200",
+    salePrice: "€4,49",
+    saleLabel: "Sale 90%",
     originalPrice: "€24,99",
     stockStatus: "in_stock",
     brand: "Helwit",
@@ -3379,6 +3637,8 @@ export const products: ProductData[] = [
     productName: "Garant Extreme Grape",
     productImage:
       "https://snuzyn.com/cdn/shop/files/garant-extreme-grape.png?v=1754492581&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "Garant",
@@ -3415,6 +3675,8 @@ export const products: ProductData[] = [
     productName: "Après Very Berry",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-very-berry-458247.png?v=1754492551&width=1200",
+    salePrice: "€3,29",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -3427,6 +3689,8 @@ export const products: ProductData[] = [
     productName: "Loop Red Chili Melon Medium",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-red-chili-melon-medium-7426189.png?v=1754492688&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "LOOP",
@@ -3451,6 +3715,8 @@ export const products: ProductData[] = [
     productName: "Loop Smooth Mint Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-smooth-mint-hyper-strong-3789865.png?v=1754492691&width=1200",
+    salePrice: "€3,39",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "Loop",
@@ -3463,6 +3729,8 @@ export const products: ProductData[] = [
     productName: "ICEBERG Menthol",
     productImage:
       "https://snuzyn.com/cdn/shop/files/iceberg-menthol-330323.png?v=1754492628&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,49",
     stockStatus: "in_stock",
     brand: "ICEBERG",
@@ -3475,6 +3743,8 @@ export const products: ProductData[] = [
     productName: "ACE x Cosmic Cool Mint",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-x-cosmic-cool-mint-546948.png?v=1754492531&width=1200",
+    salePrice: "€2,79",
+    saleLabel: "Sale 50%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "ACE",
@@ -3487,6 +3757,8 @@ export const products: ProductData[] = [
     productName: "XQS Arctic Freeze X-Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-arctic-freeze-x-strong-4541025.png?v=1754492804&width=1200",
+    salePrice: "€2,69",
+    saleLabel: "Sale 45%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -3499,6 +3771,8 @@ export const products: ProductData[] = [
     productName: "XQS Cactus Sour Light",
     productImage:
       "https://snuzyn.com/cdn/shop/files/xqs-cactus-sour-4mg-572021.png?v=1754492810&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "XQS",
@@ -3523,6 +3797,8 @@ export const products: ProductData[] = [
     productName: "SKRUF No.08 Nordic Liqourice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/skruf-nordic-liqourice-910346.png?v=1754492753&width=1200",
+    salePrice: "€4,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "SKRUF",
@@ -3535,6 +3811,8 @@ export const products: ProductData[] = [
     productName: "Ace X Black Raspberry Chili",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-x-black-raspberry-chili-688871.png?v=1754492529&width=1200",
+    salePrice: "€3,09",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Ace",
@@ -3547,6 +3825,8 @@ export const products: ProductData[] = [
     productName: "ACE Eucalyptus",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-eucalyptus-265307.png?v=1754492526&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Ace",
@@ -3559,6 +3839,8 @@ export const products: ProductData[] = [
     productName: "Après Raspberry Liqorice Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-raspberry-liqorice-extra-strong-226698.png?v=1754492548&width=1200",
+    salePrice: "€2,89",
+    saleLabel: "Sale 50%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -3571,6 +3853,8 @@ export const products: ProductData[] = [
     productName: "ACE Cool Mint Low",
     productImage:
       "https://snuzyn.com/cdn/shop/files/ace-cool-mint-low-527915.png?v=1754492525&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Ace",
@@ -3643,6 +3927,8 @@ export const products: ProductData[] = [
     productName: "Fix Strawberry Kiwi",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fix-strawberry-kiwi-567854.png?v=1754492575&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,99",
     stockStatus: "in_stock",
     brand: "FIX",
@@ -3655,6 +3941,8 @@ export const products: ProductData[] = [
     productName: "VELO Simply Spearmint Mini",
     productImage:
       "https://snuzyn.com/cdn/shop/files/velo-simply-spearmint-mini-676182.png?v=1754492781&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "VELO",
@@ -3667,6 +3955,8 @@ export const products: ProductData[] = [
     productName: "SKRUF No.71 Purple Cassice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/skruf-purple-cassice-813954.png?v=1754492756&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "SKRUF",
@@ -3955,6 +4245,8 @@ export const products: ProductData[] = [
     productName: "Après Raspberry Liqorice",
     productImage:
       "https://snuzyn.com/cdn/shop/files/apres-raspberry-liqorice-100671.png?v=1754492548&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,29",
     stockStatus: "in_stock",
     brand: "Après",
@@ -4088,6 +4380,8 @@ export const products: ProductData[] = [
     productName: "Skruf No.60 Frozen Mint Superslim Xtra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/skruf-frozen-mint-superslim-xtra-strong-9395774.png?v=1754879357&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "Skruf",
@@ -4196,6 +4490,8 @@ export const products: ProductData[] = [
     productName: "FUMi Salty Raspberry Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fumi-salty-raspberry-strong-6904960.png?v=1754879356&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,39",
     stockStatus: "in_stock",
     brand: "FUMi",
@@ -4220,6 +4516,8 @@ export const products: ProductData[] = [
     productName: "FUMi Zingy Ginger Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fumi-zingy-ginger-strong-5964888.png?v=1754879351&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,39",
     stockStatus: "in_stock",
     brand: "FUMi",
@@ -4232,6 +4530,8 @@ export const products: ProductData[] = [
     productName: "FUMi Freezy Mint Extra Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fumi-freezy-mint-extra-strong-2195852.png?v=1754879356&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,39",
     stockStatus: "in_stock",
     brand: "FUMi",
@@ -4244,6 +4544,8 @@ export const products: ProductData[] = [
     productName: "FUMi Minty Blueberry Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/fumi-minty-blueberry-strong-6602760.png?v=1754879357&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€5,39",
     stockStatus: "in_stock",
     brand: "FUMi",
@@ -4256,6 +4558,8 @@ export const products: ProductData[] = [
     productName: "Lundgrens Höståker",
     productImage:
       "https://snuzyn.com/cdn/shop/files/lundgrens-hostaker-3579429.png?v=1754879346&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,80",
     stockStatus: "in_stock",
     brand: "Lundgrens",
@@ -4292,6 +4596,8 @@ export const products: ProductData[] = [
     productName: "Lundgrens Fjällskog",
     productImage:
       "https://snuzyn.com/cdn/shop/files/lundgrens-fjallskog-8290564.png?v=1754879347&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,80",
     stockStatus: "in_stock",
     brand: "Lundgrens",
@@ -4304,6 +4610,8 @@ export const products: ProductData[] = [
     productName: "Lundgrens Månskära",
     productImage:
       "https://snuzyn.com/cdn/shop/files/lundgrens-manskara-4180686.png?v=1754879348&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,80",
     stockStatus: "in_stock",
     brand: "Lundgrens",
@@ -4328,6 +4636,8 @@ export const products: ProductData[] = [
     productName: "Lundgrens Äng",
     productImage:
       "https://snuzyn.com/cdn/shop/files/lundgrens-ang-1899017.png?v=1754879349&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,80",
     stockStatus: "in_stock",
     brand: "Lundgrens",
@@ -4340,6 +4650,8 @@ export const products: ProductData[] = [
     productName: "Lundgrens Rimfrost",
     productImage:
       "https://snuzyn.com/cdn/shop/files/lundgrens-rimfrost-8638581.png?v=1754879349&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 35%",
     originalPrice: "€4,80",
     stockStatus: "in_stock",
     brand: "Lundgrens",
@@ -4364,6 +4676,8 @@ export const products: ProductData[] = [
     productName: "Loop Red Chili Melon Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-red-chili-melon-hyper-strong-8445846.png?v=1754492688&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "Loop",
@@ -4376,6 +4690,8 @@ export const products: ProductData[] = [
     productName: "Loop Hot Peach Hyper Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/loop-hot-peach-hyper-strong-2946580.png?v=1754492678&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 45%",
     originalPrice: "€5,69",
     stockStatus: "in_stock",
     brand: "Loop",
@@ -4388,6 +4704,8 @@ export const products: ProductData[] = [
     productName: "SKRUF No.57 Polar Eucalyptus Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/skruf-polar-eucalyptus-strong-438664.png?v=1754492755&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "SKRUF",
@@ -4400,6 +4718,8 @@ export const products: ProductData[] = [
     productName: "SKRUF No.63 Purple Cassice Strong",
     productImage:
       "https://snuzyn.com/cdn/shop/files/skruf-purple-cassice-strong-713737.png?v=1754492757&width=1200",
+    salePrice: "€3,19",
+    saleLabel: "Sale 40%",
     originalPrice: "€5,49",
     stockStatus: "in_stock",
     brand: "SKRUF",
@@ -4412,6 +4732,8 @@ export const products: ProductData[] = [
     productName: "KW Rebel Kelly",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kw-rebel-kelly-684583.png?v=1754492669&width=1200",
+    salePrice: "€6,49",
+    saleLabel: "Sale 80%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "KW",
@@ -4424,6 +4746,8 @@ export const products: ProductData[] = [
     productName: "Valentine Kelly Box",
     productImage:
       "https://snuzyn.com/cdn/shop/files/valentine-kelly-box-360718.webp?v=1754492763&width=1200",
+    salePrice: "€6,49",
+    saleLabel: "Sale 80%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "Valentine",
@@ -4436,6 +4760,8 @@ export const products: ProductData[] = [
     productName: "Weekend Kelly Box",
     productImage:
       "https://snuzyn.com/cdn/shop/files/weekend-kelly-box-992113.png?v=1754492788&width=555",
+    salePrice: "€6,49",
+    saleLabel: "Sale 80%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "Weekend",
@@ -4448,6 +4774,8 @@ export const products: ProductData[] = [
     productName: "KW Sky Kelly",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kw-sky-kelly-604417.png?v=1754492670&width=1200",
+    salePrice: "€6,49",
+    saleLabel: "Sale 80%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "KW",
@@ -4460,6 +4788,8 @@ export const products: ProductData[] = [
     productName: "KW Leopard Kelly",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kw-leopard-kelly-395064.png?v=1754492668&width=1200",
+    salePrice: "€5,49",
+    saleLabel: "Sale 90%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "KW",
@@ -4496,6 +4826,8 @@ export const products: ProductData[] = [
     productName: "KW Nightclub Kelly",
     productImage:
       "https://snuzyn.com/cdn/shop/files/kw-nightclub-kelly-156821.png?v=1754492668&width=1200",
+    salePrice: "€6,49",
+    saleLabel: "Sale 80%",
     originalPrice: "€25,99",
     stockStatus: "in_stock",
     brand: "KW",

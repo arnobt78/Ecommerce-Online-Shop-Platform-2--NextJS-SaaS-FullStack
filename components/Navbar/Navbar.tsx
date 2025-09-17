@@ -13,7 +13,7 @@ import {
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContextNew";
-import { LanguageSelector } from "@/components/LanguageSelector/LanguageSelector";
+// import { LanguageSelector } from "@/components/LanguageSelector/LanguageSelector";
 import Image from "next/image";
 
 type NavbarProps = {
@@ -180,7 +180,7 @@ export default function Navbar({
           </div>
 
           <nav
-            className="flex items-center space-x-0 flex-nowrap overflow-x-auto scrollbar-hide"
+            className="flex items-center space-x-4 flex-nowrap overflow-x-auto scrollbar-hide"
             style={{ minWidth: 480, maxWidth: "100vw" }}
           >
             {[
@@ -205,7 +205,6 @@ export default function Navbar({
                 }}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] group-hover:w-full transition-all duration-300"></span>
               </a>
             ))}
           </nav>
@@ -219,14 +218,14 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                placeholder={t("nav.search.placeholder")}
-                className="pl-8 pr-3 py-1.5 w-48 h-8 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
+                // placeholder={t("nav.search.placeholder")}
+                className="pl-8 pr-3 py-1.5 w-48 h-8 text-sm text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
               />
               {showSearchResults && (
-                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-2xl z-50 w-[350px] max-h-[420px] overflow-y-auto">
+                <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-2xl z-50 w-[300px] max-h-[390px] overflow-y-auto">
                   {searchResults.length > 0 ? (
                     <div className="p-0">
-                      <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
+                      <div className="text-sm text-gray-500 mx-4 border-b border-gray-200 py-2 font-semibold text-center">
                         {searchResultsTotal}{" "}
                         {searchResultsTotal === 1
                           ? t("nav.search.results")
@@ -278,7 +277,7 @@ export default function Navbar({
                                 }}
                                 style={{ textDecoration: "none" }}
                               >
-                                <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+                                <div className="w-12 h-12 bg-white border border-gray-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
                                   {(() => {
                                     const img =
                                       product.productImage ||
@@ -324,7 +323,7 @@ export default function Navbar({
                                 </div>
                                 <div className="flex flex-col flex-1 min-w-0 justify-center">
                                   <h4
-                                    className="font-semibold text-gray-900 text-sm truncate group-hover:text-[#3AF0F7] transition-colors max-w-[140px]"
+                                    className="font-semibold text-gray-900 text-sm truncate transition-colors max-w-[160px]"
                                     title={
                                       product.productName || product.name || ""
                                     }
@@ -336,8 +335,8 @@ export default function Navbar({
                                         "";
                                       return typeof pname === "string" &&
                                         pname.length > 0
-                                        ? pname.length > 28
-                                          ? pname.slice(0, 28) + "…"
+                                        ? pname.length > 32
+                                          ? pname.slice(0, 32) + "…"
                                           : pname
                                         : "Unnamed";
                                     })()}
@@ -346,10 +345,10 @@ export default function Navbar({
                                     {product.brand || ""}
                                   </p>
                                 </div>
-                                <div className="flex flex-col items-end min-w-[70px] ml-2">
+                                <div className="flex flex-col items-end min-w-[48px] ml-2">
                                   {product.salePrice ? (
                                     <>
-                                      <span className="text-[#3AF0F7] font-bold text-sm">
+                                      <span className="text-gray-900 font-semibold text-sm">
                                         €
                                         {parseFloat(
                                           (typeof product.salePrice === "string"
@@ -374,7 +373,7 @@ export default function Navbar({
                                       </span>
                                     </>
                                   ) : (
-                                    <span className="text-[#3AF0F7] font-bold text-sm">
+                                    <span className="text-gray-900 font-semibold text-sm">
                                       €
                                       {parseFloat(
                                         (typeof product.originalPrice ===
@@ -389,7 +388,7 @@ export default function Navbar({
                                   )}
                                 </div>
                               </a>
-                              <button
+                              {/* <button
                                 type="button"
                                 className="flex-shrink-0 ml-2 focus:outline-none"
                                 onClick={(e) => {
@@ -402,11 +401,11 @@ export default function Navbar({
                                 <div className="w-8 h-8 bg-[#3AF0F7] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:scale-110">
                                   <Plus className="w-4 h-4 text-gray-900" />
                                 </div>
-                              </button>
+                              </button> */}
                             </div>
                           ))}
                       </div>
-                      <div className="border-t border-gray-200 py-2">
+                      <div className="border-t border-gray-200 mx-2">
                         <button
                           onClick={() => {
                             // Navigate to /products with search param
@@ -416,7 +415,7 @@ export default function Navbar({
                             setSearchQuery("");
                             setShowSearchResults(false);
                           }}
-                          className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
+                          className="w-full text-center text-gray-900 font-semibold text-sm py-3 hover:bg-[#3AF0F7]/10 rounded-lg transition-colors"
                         >
                           {t("nav.search.viewAll")}
                         </button>
@@ -436,9 +435,6 @@ export default function Navbar({
                 </div>
               )}
             </div>
-
-            {/* Language Selector */}
-            <LanguageSelector />
 
             <Button
               variant="ghost"
@@ -543,238 +539,247 @@ export default function Navbar({
                 <a
                   key={index}
                   href={item.href}
-                  className="block text-gray-700 hover:text-[#3AF0F7] hover:bg-gray-100 font-medium p-4"
+                  className="block text-gray-700 hover:text-[#3AF0F7] hover:bg-gray-100 font-medium px-4 py-3"
                 >
                   {item.label}
                 </a>
               ))}
-
-              {/* Language Selector for Mobile - Collapse when search is focused */}
-              <div className="px-4 py-2">
-                <LanguageSelector />
-              </div>
             </div>
 
             {/* Search Section - Always visible */}
-            <div className="p-4 relative">
+            <div className="px-4 pt-1 pb-2 relative">
               <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                // onFocus={(e) => {
-                //   setSearchFocused(true);
+              <div className="w-full max-w-full overflow-x-hidden">
+                <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={(e) => {
+                    setSearchFocused(true);
+                    // Keep search input visible when keyboard appears
+                    setTimeout(() => {
+                      const searchInput = e.target as HTMLInputElement;
+                      if (searchInput) {
+                        // Get the current scroll position
+                        const currentScrollY = window.scrollY;
+                        // Get the input's position relative to the viewport
+                        const inputRect = searchInput.getBoundingClientRect();
+                        // Calculate how much to scroll to keep input visible
+                        const scrollAdjustment =
+                          inputRect.top - window.innerHeight / 2;
 
-                //   // Robust keyboard detection and viewport adjustment
-                //   const adjustViewport = () => {
-                //     const searchInput = e.target as HTMLInputElement;
-                //     if (searchInput) {
-                //       // Get the input's position relative to the viewport
-                //       const inputRect = searchInput.getBoundingClientRect();
-                //       const viewportHeight = window.innerHeight;
-
-                //       // Check if input is visible in viewport
-                //       const isInputVisible =
-                //         inputRect.top >= 0 &&
-                //         inputRect.bottom <= viewportHeight;
-
-                //       if (!isInputVisible) {
-                //         // Calculate scroll adjustment to center the input
-                //         const scrollAdjustment =
-                //           inputRect.top - viewportHeight / 2;
-
-                //         // Smooth scroll to keep input visible
-                //         window.scrollTo({
-                //           top: window.scrollY + scrollAdjustment,
-                //           behavior: "smooth",
-                //         });
-                //       }
-                //     }
-                //   };
-
-                //   // Try multiple times to catch keyboard appearance
-                //   adjustViewport(); // Immediate check
-                //   setTimeout(adjustViewport, 100); // Quick check
-                //   setTimeout(adjustViewport, 300); // Delayed check
-                //   setTimeout(adjustViewport, 500); // Final check
-                // }}
-                onFocus={(e) => {
-                  setSearchFocused(true);
-                  // Keep search input visible when keyboard appears
-                  setTimeout(() => {
-                    const searchInput = e.target as HTMLInputElement;
-                    if (searchInput) {
-                      // Get the current scroll position
-                      const currentScrollY = window.scrollY;
-                      // Get the input's position relative to the viewport
-                      const inputRect = searchInput.getBoundingClientRect();
-                      // Calculate how much to scroll to keep input visible
-                      const scrollAdjustment =
-                        inputRect.top - window.innerHeight / 2;
-
-                      if (scrollAdjustment < 0) {
-                        // Scroll up to keep input visible
-                        window.scrollTo({
-                          top: currentScrollY + scrollAdjustment,
-                          behavior: "smooth",
-                        });
+                        if (scrollAdjustment < 0) {
+                          // Scroll up to keep input visible
+                          window.scrollTo({
+                            top: currentScrollY + scrollAdjustment,
+                            behavior: "smooth",
+                          });
+                        }
                       }
-                    }
-                  }, 500); // Longer delay to ensure keyboard is fully visible
-                }}
-                onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
-                placeholder={t("nav.search.placeholder")}
-                className={`w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${
-                  searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""
-                }`}
-              />
+                    }, 500); // Longer delay to ensure keyboard is fully visible
+                  }}
+                  onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
+                  placeholder={t("nav.search.placeholder")}
+                  className={`w-full pl-8 pr-4 py-2 text-base text-[16px] text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${
+                    searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""
+                  }`}
+                />
+              </div>
 
               {showSearchResults && searchQuery && (
                 <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-md z-50 max-h-80 overflow-y-auto shadow-lg">
                   {searchResults.length > 0 ? (
                     <div className="p-0">
-                      <div className="text-sm text-gray-500 m-4 border-b border-gray-200 pb-2 font-semibold text-center">
+                      <div className="text-sm text-gray-500 mx-2 border-b border-gray-200 py-2 font-semibold text-center">
                         {searchResultsTotal}{" "}
                         {searchResultsTotal === 1
                           ? t("nav.search.results")
                           : t("nav.search.results.plural")}
                       </div>
                       <div className="space-y-2">
-                        {searchResults.map((product, index) => (
-                          <div
-                            key={
-                              product.id ||
-                              product.slug ||
-                              product.name ||
-                              product.productName ||
-                              `search-result-mobile-${
+                        {[...searchResults]
+                          .sort((a, b) => {
+                            const nameA = (
+                              a.productName ||
+                              a.name ||
+                              ""
+                            ).trim();
+                            const nameB = (
+                              b.productName ||
+                              b.name ||
+                              ""
+                            ).trim();
+                            const aNum = /^[0-9]/.test(nameA);
+                            const bNum = /^[0-9]/.test(nameB);
+                            if (aNum && !bNum) return -1;
+                            if (!aNum && bNum) return 1;
+                            return nameA.localeCompare(nameB, undefined, {
+                              sensitivity: "base",
+                            });
+                          })
+                          .map((product, index) => (
+                            <div
+                              key={
+                                product.id ||
                                 product.slug ||
                                 product.name ||
                                 product.productName ||
-                                index
-                              }`
-                            }
-                            className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group cursor-pointer"
-                            onClick={() => {
-                              addToCart(product);
-                              setSearchQuery("");
-                              setShowSearchResults(false);
-                              setMobileMenuOpen(false);
-                            }}
-                          >
-                            <div className="w-12 h-12 bg-gradient-to-br from-[#8cedf8] to-[#3AF0F7]/30 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
-                              {(() => {
-                                const img =
-                                  product.productImage || product.image || "";
-                                if (typeof img === "string" && img.length > 0) {
-                                  return (
-                                    <Image
-                                      src={
-                                        typeof img === "string" &&
-                                        img.length > 0
-                                          ? img.startsWith("http://") ||
-                                            img.startsWith("https://")
-                                            ? img
-                                            : "/" + img.replace(/^\/+/, "")
-                                          : ""
-                                      }
-                                      alt={
+                                `search-result-${
+                                  product.slug ||
+                                  product.name ||
+                                  product.productName ||
+                                  index
+                                }`
+                              }
+                              className="flex items-center gap-2 p-2 hover:bg-[#3AF0F7]/10 rounded-xl transition-all duration-300 group"
+                            >
+                              <a
+                                href={`/product-detail/${product.slug || ""}`}
+                                className="flex items-center flex-1 gap-2 min-w-0 cursor-pointer"
+                                onClick={() => {
+                                  setSearchQuery("");
+                                  setShowSearchResults(false);
+                                }}
+                                style={{ textDecoration: "none" }}
+                              >
+                                <div className="w-12 h-12 bg-white border border-gray-200 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-200 overflow-hidden">
+                                  {(() => {
+                                    const img =
+                                      product.productImage ||
+                                      product.image ||
+                                      "";
+                                    if (
+                                      typeof img === "string" &&
+                                      img.length > 0
+                                    ) {
+                                      return (
+                                        <Image
+                                          src={
+                                            typeof img === "string" &&
+                                            img.length > 0
+                                              ? img.startsWith("http://") ||
+                                                img.startsWith("https://")
+                                                ? img
+                                                : "/" + img.replace(/^\/+/, "")
+                                              : ""
+                                          }
+                                          alt={
+                                            product.productName ||
+                                            product.name ||
+                                            "Product"
+                                          }
+                                          width={48}
+                                          height={48}
+                                          className="object-contain w-full h-full"
+                                          onError={(e) => {
+                                            e.currentTarget.style.display =
+                                              "none";
+                                          }}
+                                        />
+                                      );
+                                    } else {
+                                      return (
+                                        <div className="text-gray-400 text-xs justify-center">
+                                          No Image
+                                        </div>
+                                      );
+                                    }
+                                  })()}
+                                </div>
+                                <div className="flex flex-col flex-1 min-w-0 justify-center">
+                                  <h4
+                                    className="font-semibold text-gray-900 text-sm truncate transition-colors max-w-[160px]"
+                                    title={
+                                      product.productName || product.name || ""
+                                    }
+                                  >
+                                    {(() => {
+                                      const pname =
                                         product.productName ||
                                         product.name ||
-                                        "Product"
-                                      }
-                                      width={48}
-                                      height={48}
-                                      className="object-contain w-full h-full"
-                                      onError={(e) => {
-                                        e.currentTarget.style.display = "none";
-                                      }}
-                                    />
-                                  );
-                                } else {
-                                  return (
-                                    <div className="text-gray-400 text-xs justify-center">
-                                      {t("cart.noImage")}
-                                    </div>
-                                  );
-                                }
-                              })()}
-                            </div>
-                            <div className="flex flex-col flex-1 min-w-0 justify-center">
-                              <h4
-                                className="font-semibold text-gray-900 text-sm truncate group-hover:text-[#3AF0F7] transition-colors max-w-[140px]"
-                                title={
-                                  product.productName || product.name || ""
-                                }
+                                        "";
+                                      return typeof pname === "string" &&
+                                        pname.length > 0
+                                        ? pname.length > 32
+                                          ? pname.slice(0, 32) + "…"
+                                          : pname
+                                        : "Unnamed";
+                                    })()}
+                                  </h4>
+                                  <p className="text-xs text-gray-500 mt-0.5">
+                                    {product.brand || ""}
+                                  </p>
+                                </div>
+                                <div className="flex flex-col items-end min-w-[48px] ml-2">
+                                  {product.salePrice ? (
+                                    <>
+                                      <span className="text-gray-900 font-semibold text-sm">
+                                        €
+                                        {parseFloat(
+                                          (typeof product.salePrice === "string"
+                                            ? product.salePrice
+                                            : String(product.salePrice)
+                                          )
+                                            .replace(/[^0-9,.-]+/g, "")
+                                            .replace(",", ".")
+                                        ).toFixed(2)}
+                                      </span>
+                                      <span className="text-gray-400 line-through text-xs">
+                                        €
+                                        {parseFloat(
+                                          (typeof product.originalPrice ===
+                                          "string"
+                                            ? product.originalPrice
+                                            : String(product.originalPrice)
+                                          )
+                                            .replace(/[^0-9,.-]+/g, "")
+                                            .replace(",", ".")
+                                        ).toFixed(2)}
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <span className="text-gray-900 font-semibold text-sm">
+                                      €
+                                      {parseFloat(
+                                        (typeof product.originalPrice ===
+                                        "string"
+                                          ? product.originalPrice
+                                          : String(product.originalPrice)
+                                        )
+                                          .replace(/[^0-9,.-]+/g, "")
+                                          .replace(",", ".")
+                                      ).toFixed(2)}
+                                    </span>
+                                  )}
+                                </div>
+                              </a>
+                              {/* <button
+                                type="button"
+                                className="flex-shrink-0 ml-2 focus:outline-none"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  addToCart(product);
+                                }}
+                                tabIndex={0}
+                                aria-label="Add to cart"
                               >
-                                {(() => {
-                                  const pname =
-                                    product.productName || product.name || "";
-                                  return typeof pname === "string" &&
-                                    pname.length > 0
-                                    ? pname.length > 28
-                                      ? pname.slice(0, 28) + "…"
-                                      : pname
-                                    : "Unnamed";
-                                })()}
-                              </h4>
-                              <p className="text-xs text-gray-500 mt-0.5">
-                                {product.brand || ""}
-                              </p>
+                                <div className="w-8 h-8 bg-[#3AF0F7] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:scale-110">
+                                  <Plus className="w-4 h-4 text-gray-900" />
+                                </div>
+                              </button> */}
                             </div>
-                            <div className="flex flex-col items-end min-w-[70px] ml-2">
-                              {product.salePrice ? (
-                                <>
-                                  <span className="text-[#3AF0F7] font-bold text-sm">
-                                    €
-                                    {parseFloat(
-                                      (typeof product.salePrice === "string"
-                                        ? product.salePrice
-                                        : String(product.salePrice)
-                                      )
-                                        .replace(/[^0-9,.-]+/g, "")
-                                        .replace(",", ".")
-                                    ).toFixed(2)}
-                                  </span>
-                                  <span className="text-gray-400 line-through text-xs">
-                                    €
-                                    {parseFloat(
-                                      (typeof product.originalPrice === "string"
-                                        ? product.originalPrice
-                                        : String(product.originalPrice)
-                                      )
-                                        .replace(/[^0-9,.-]+/g, "")
-                                        .replace(",", ".")
-                                    ).toFixed(2)}
-                                  </span>
-                                </>
-                              ) : (
-                                <span className="text-[#3AF0F7] font-bold text-sm">
-                                  €
-                                  {parseFloat(
-                                    (typeof product.originalPrice === "string"
-                                      ? product.originalPrice
-                                      : String(product.originalPrice)
-                                    )
-                                      .replace(/[^0-9,.-]+/g, "")
-                                      .replace(",", ".")
-                                  ).toFixed(2)}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+                          ))}
                       </div>
-                      <div className="border-t border-gray-200 py-2">
+                      <div className="border-t border-gray-200 mx-2">
                         <button
                           onClick={() => {
+                            // Navigate to /products with search param
                             window.location.href = `/products?search=${encodeURIComponent(
                               searchQuery
                             )}`;
                             setSearchQuery("");
                             setShowSearchResults(false);
-                            setMobileMenuOpen(false);
                           }}
-                          className="w-full text-center text-[#3AF0F7] hover:text-[#2de0e7] font-semibold text-sm py-2 hover:bg-[#3AF0F7]/5 rounded-lg transition-colors"
+                          className="w-full text-center text-gray-900 font-semibold text-sm py-3 hover:bg-[#3AF0F7]/10 rounded-lg transition-colors"
                         >
                           {t("nav.search.viewAll")}
                         </button>

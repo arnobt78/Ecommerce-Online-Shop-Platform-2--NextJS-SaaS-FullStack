@@ -245,6 +245,146 @@ export const translations = {
     "home.features.freeShipping": "Free Shipping in EU",
     "home.features.exclusiveBrands": "Exclusive Brands",
     "home.reviews.title": "Reviews",
+    "home.reviews.testimonials": [
+      {
+        name: "Seb",
+        review: "Large selection, great prices, fast shipping",
+        rating: 5,
+      },
+      {
+        name: "Tobias G.",
+        review: "Fast delivery and uncomplicated.",
+        rating: 5,
+      },
+      {
+        name: "Martin",
+        review: "Top shop with the best prices.",
+        rating: 5,
+      },
+      {
+        name: "S.L.",
+        review: "Super fast processing, top shipping, and good quality",
+        rating: 5,
+      },
+      {
+        name: "Clara",
+        review: "Absolutely top prices.",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "Unfortunately, I received the wrong order",
+        rating: 1,
+      },
+      {
+        name: "Daniel",
+        review: "Good selection, good prices, super fast delivery",
+        rating: 5,
+      },
+      {
+        name: "Thomas",
+        review:
+          "No problems with your order, fast shipping, and good quality. I'd be happy to order again.",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "Unfortunately, shipping was very slow. Otherwise, great!",
+        rating: 3,
+      },
+      {
+        name: "Verified Customer",
+        review: "Fast shipping and good prices",
+        rating: 5,
+      },
+      {
+        name: "Markus",
+        review: "Very large selection, good prices, free and fast delivery",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "Slow shipping",
+        rating: 1,
+      },
+      {
+        name: "Jakob H.",
+        review: "Super-fast order delivery",
+        rating: 5,
+      },
+      {
+        name: "Niklas",
+        review: "Everything perfect",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "Great prices, but a long wait",
+        rating: 4,
+      },
+      {
+        name: "Alex T.",
+        review: "Good price and fast delivery",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "The product is great, but I had to wait 2 weeks",
+        rating: 3,
+      },
+      {
+        name: "Julian",
+        review: "Very fast shipping. Great prices. Very satisfied",
+        rating: 5,
+      },
+      {
+        name: "Max",
+        review: "Great service, great prices, and super fast shipping",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "Long delivery times",
+        rating: 2,
+      },
+      {
+        name: "Verified Customer",
+        review: "Good snus, one order took 10 days to arrive",
+        rating: 2,
+      },
+      {
+        name: "Matteo",
+        review:
+          "Fast and reliable. Top supplier, fast delivery, product as expected.",
+        rating: 5,
+      },
+      {
+        name: "Ben",
+        review: "Unfortunately, it took a while to arrive.",
+        rating: 4,
+      },
+      {
+        name: "Oskar",
+        review: "Very fast delivery",
+        rating: 5,
+      },
+      {
+        name: "Verified Customer",
+        review: "I received a different flavor",
+        rating: 2,
+      },
+      {
+        name: "Verified Customer",
+        review: "Wrong product delivered",
+        rating: 3,
+      },
+      {
+        name: "Luisa",
+        review:
+          "Fast and free delivery, I was satisfied, and they gave me a free sample",
+        rating: 5,
+      },
+    ],
 
     // Product Detail Page
     "productDetail.brand": "Brand:",
@@ -543,6 +683,149 @@ export const translations = {
     "home.features.freeShipping": "Darmowa dostawa w EU",
     "home.features.exclusiveBrands": "Ekskluzywne marki",
     "home.reviews.title": "Opinie",
+    "home.reviews.testimonials": [
+      {
+        name: "Piotr",
+        review:
+          "jak zamawiać snusy to tylko z tej strony, duży wybór i dobre ceny",
+        rating: 5,
+      },
+      {
+        name: "Marek P.",
+        review:
+          "Zamawiam regularnie bardzo fajne , szybka dostawa zero problemów.",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "Bardzo dobre ceny i szeroki asortyment, gorąco polecam",
+        rating: 5,
+      },
+      {
+        name: "Michał",
+        review:
+          "świetnie działająca strona, dobre ceny oraz jedyne takie marki na rynku w PL",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review:
+          "Zamówiłem velo peppermint storm przyszly mi velo mighty peppermint",
+        rating: 1,
+      },
+      {
+        name: "Daniel",
+        review: "Wiele smaków i mark snusów",
+        rating: 5,
+      },
+      {
+        name: "Jan H.",
+        review: "szeroki wybór, atrakcyjne ceny",
+        rating: 5,
+      },
+      {
+        name: "Paweł",
+        review:
+          "ceny super, ciężko szukać konkurencji na takim poziomie w tej branży",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "wszystko ok",
+        rating: 4,
+      },
+      {
+        name: "Łukasz",
+        review: "Dostawa czasami zajmuje dużo czasu",
+        rating: 3,
+      },
+      {
+        name: "Jakub M.",
+        review: "Przejrzystość zakupów, dobre ceny, szeroki wybór.",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review:
+          "dobre ceny, ale jednak irytują nieprawdziwe informacje co do dostawy",
+        rating: 2,
+      },
+      {
+        name: "Krzysztof",
+        review: "Zamawiam często, nigdy nie miałem problemu z dostawou",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "polecam",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "top sklep, częste promocje i zniżki",
+        rating: 4,
+      },
+      {
+        name: "Adam L",
+        review: "Szybka wysyłka, polecam.",
+        rating: 5,
+      },
+      {
+        name: "Robert",
+        review: "Zamawiałem u nich 2 razy, za każdym czekałem długo",
+        rating: 2,
+      },
+      {
+        name: "R.S.",
+        review: "Bardzo szybka realizacja zamówienia",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "Opóźniona wysyłka, ale dobra cena.",
+        rating: 4,
+      },
+      {
+        name: "Szymon",
+        review: "super szybka wysyłka",
+        rating: 5,
+      },
+      {
+        name: "Aleks",
+        review: "wszystko git, szybka dostawa i dobra strona",
+        rating: 5,
+      },
+      {
+        name: "Weryfikowany klient",
+        review: "Super ceny ale niestety czekałem 10 dni.",
+        rating: 3,
+      },
+      {
+        name: "Filip K.",
+        review: "bardzo szybka realizacja",
+        rating: 4,
+      },
+      {
+        name: "Marcin",
+        review: "jeden z najlepszych jeśli nie najlepszy sklep na snusy",
+        rating: 5,
+      },
+      {
+        name: "Tomasz S",
+        review: "Extra szybka wysyłka.",
+        rating: 5,
+      },
+      {
+        name: "Anonim",
+        review: "długi czas wysylki",
+        rating: 2,
+      },
+      {
+        name: "Mateusz",
+        review: "szybko i sprawnie",
+        rating: 5,
+      },
+    ],
 
     // Product Detail Page
     "productDetail.brand": "Marka:",
@@ -845,6 +1128,148 @@ export const translations = {
     "home.features.freeShipping": "Kostenloser Versand in der EU",
     "home.features.exclusiveBrands": "Exklusive Marken",
     "home.reviews.title": "Bewertungen",
+    "home.reviews.testimonials": [
+      {
+        name: "Seb",
+        review: "große auswahl, super preise, schneller versand",
+        rating: 5,
+      },
+      {
+        name: "Tobias G.",
+        review: "Schnelle Lieferung und unkompliziert.",
+        rating: 5,
+      },
+      {
+        name: "Martin",
+        review: "Top Shop mit den besten Preisen.",
+        rating: 5,
+      },
+      {
+        name: "S.L.",
+        review: "super schnelle abwicklung, top versand und gute qualität",
+        rating: 5,
+      },
+      {
+        name: "Clara",
+        review: "Absolut top Preise.",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Habe leider die falsche Bestellung erhalten",
+        rating: 1,
+      },
+      {
+        name: "Daniel",
+        review: "gutes sortiment, gute preise, super schnelle lieferung",
+        rating: 5,
+      },
+      {
+        name: "Thomas",
+        review:
+          "Keine Probleme bei dir Bestellung, schneller Versand und gute Qualität gerne wieder.",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Der Versand erfolgte leider nur sehr langsam. Sonst top!",
+        rating: 3,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "schnellen versand und gute preise",
+        rating: 5,
+      },
+      {
+        name: "Markus",
+        review:
+          "Sehr großes Sortiment, gute Preise, kostenlose und schnelle Lieferung",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Langsamer Versand",
+        rating: 1,
+      },
+      {
+        name: "Jakob H.",
+        review: "superschnelle zusendung der bestellung",
+        rating: 5,
+      },
+      {
+        name: "Niklas",
+        review: "alles perfekt",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Top Preise, aber eine lange wartezeit",
+        rating: 4,
+      },
+      {
+        name: "Alex T.",
+        review: "guter preis und schnelle lieferung",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Die Ware ist super aber ich musste 2 Wochen warten",
+        rating: 3,
+      },
+      {
+        name: "Julian",
+        review: "Sehr schneller Versand.Super Preise. Sehr zufrieden",
+        rating: 5,
+      },
+      {
+        name: "Max",
+        review: "Super Service super Preise und mega schneller Versand",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Lange Lieferzeiten",
+        rating: 2,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review:
+          "gutes snus, eine bestellung hat 10 tage gedauert bis sie da war",
+        rating: 2,
+      },
+      {
+        name: "Matteo",
+        review:
+          "Schnell und zuverlässig. Top Lieferant, schnelle Lieferung, Produkt wie erwartet.",
+        rating: 5,
+      },
+      {
+        name: "Ben",
+        review: "Hat leider etwas auf sich warten lassen.",
+        rating: 4,
+      },
+      {
+        name: "Oskar",
+        review: "Sehr schnelle Lieferung",
+        rating: 5,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "Ich habe einen anderen Geschmack bekommen",
+        rating: 2,
+      },
+      {
+        name: "Verifizierter Kunde",
+        review: "falsches Produkt geliefert",
+        rating: 3,
+      },
+      {
+        name: "Luisa",
+        review:
+          "Schnelle und kostenlose Lieferung war zufrieden und es gab eine gratis Probe",
+        rating: 5,
+      },
+    ],
 
     // Product Detail Page
     "productDetail.brand": "Marke:",
@@ -1144,6 +1569,141 @@ export const translations = {
     "home.features.freeShipping": "Doprava zdarma v EU",
     "home.features.exclusiveBrands": "Exkluzivní značky",
     "home.reviews.title": "Recenze",
+    "home.reviews.testimonials": [
+      {
+        name: "Ověřený zákazník",
+        review:
+          "zřejmě popletli objednávku, místo pěti vel mighty peppermint přišly crispy peppermint",
+        rating: 4,
+      },
+      {
+        name: "Ondřej K.",
+        review: "Dobrá cena, ale na doručeni jsem čekal déle.",
+        rating: 4,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "za me dobry",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "Nejlepší eshop na puky",
+        rating: 5,
+      },
+      {
+        name: "Kuba",
+        review: "cena",
+        rating: 5,
+      },
+      {
+        name: "michal",
+        review: "nízka cena, rychle doručení",
+        rating: 5,
+      },
+      {
+        name: "Petr",
+        review: "Velký výběr značek",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "nechápu jak ten zyn může někomu chutnát je odpornej",
+        rating: 1,
+      },
+      {
+        name: "Honza B.",
+        review: "Nakupuju už po třetí, spokojenost",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "jediný obchod kde jsem našel supreme",
+        rating: 5,
+      },
+      {
+        name: "Míra",
+        review: "Velmi spokojen, objednávám uz poněkolikaté",
+        rating: 5,
+      },
+      {
+        name: "Bára T.",
+        review:
+          "Už po druhé mi byla zaslána jiná příchuť než jsem si objednala.",
+        rating: 2,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "vše ok.",
+        rating: 5,
+      },
+      {
+        name: "Vašek",
+        review: "obrovský výběr, i značek který v ČR nejsou k sehnání",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "Doporučuji - rozhodně nejlepší ceny",
+        rating: 5,
+      },
+      {
+        name: "Luky",
+        review: "Nejnižší cena ever",
+        rating: 5,
+      },
+      {
+        name: "Adam",
+        review: "vše super doporučuji",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "lepší ceny než u ostatních eshopu",
+        rating: 5,
+      },
+      {
+        name: "David",
+        review: "Doručeni někdy trvá dlouho.",
+        rating: 4,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "určitě nejnižší ceny na trhu co jsem viděl",
+        rating: 5,
+      },
+      {
+        name: "Karel",
+        review:
+          "už nikdy jinde, se slevou to někdy vycházi o půlku levněji než normalně",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "top ceny, top sortiment",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "objednavám často s dopravou jsem problem nikdy neměl",
+        rating: 5,
+      },
+      {
+        name: "Ověřený zákazník",
+        review: "v pořádku",
+        rating: 5,
+      },
+      {
+        name: "Tomáš",
+        review: "nejlepší kvalita a cena, jsem stálým zákazníkem",
+        rating: 5,
+      },
+      {
+        name: "Ladislav H.",
+        review: "kupuji po druhe, prijemna cena",
+        rating: 5,
+      },
+    ],
 
     // Product Detail Page
     "productDetail.brand": "Značka:",

@@ -6,202 +6,106 @@ import DashboardVideoListSidebar from "../../components/DashboardPage/DashboardV
 import DashboardSettingSidebar from "../../components/DashboardPage/DashboardSettingSidebar";
 import DashboardVideoScreen from "../../components/DashboardPage/DashboardVideoScreen";
 import DashboardSettingScreen from "../../components/DashboardPage/DashboardSettingScreen";
-import { useLanguage } from "@/context/LanguageContextNew";
 
-// const initialVideoList = [
-//   {
-//     title: "What is Nicotine?",
-//     duration: "9:33",
-//     src: "https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198",
-//   },
-//   {
-//     title: "History.",
-//     duration: "10:08",
-//     src: "https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2",
-//   },
-//   {
-//     title: "Effects.",
-//     duration: "9:28",
-//     src: "https://app.heygen.com/embeds/fff30d50262f45b583ea569528a07b90",
-//   },
-//   {
-//     title: "How they work?",
-//     duration: "9:36",
-//     src: "https://app.heygen.com/embeds/a31d7f575a7943a292219159e64e678a",
-//   },
-//   {
-//     title: "Smoking x vaping.",
-//     duration: "10:55",
-//     src: "https://app.heygen.com/embeds/4b0edd4ddc46423f8573b85580beb0ff",
-//   },
-//   {
-//     title: "Pros. and cons.",
-//     duration: "11:56",
-//     src: "https://app.heygen.com/embeds/e0b1e65bec434d4ba5e9f21b0d3bd04c",
-//   },
-//   {
-//     title: "Nicotine salt.",
-//     duration: "10:34",
-//     src: "https://app.heygen.com/embeds/44cf86330949487d923dd3955c34a246",
-//   },
-//   {
-//     title: "Freebase nicotine.",
-//     duration: "12:02",
-//     src: "https://app.heygen.com/embeds/1d5d6eed05854fe3aaf8060e77cf0b1b",
-//   },
-//   {
-//     title: "Strength and delivery.",
-//     duration: "11:31",
-//     src: "https://app.heygen.com/embeds/3589199deb5b4222b1a6d703583f2d96",
-//   },
-//   {
-//     title: "Natural vs synthetic.",
-//     duration: "11:28",
-//     src: "https://app.heygen.com/embeds/ac9745473c014745b6c6e312e5bf6693",
-//   },
-//   {
-//     title: "Manufacturing.",
-//     duration: "11:20",
-//     src: "https://app.heygen.com/embeds/cb8fd7f5bb3b47bea3b3356c0d301c00",
-//   },
-//   {
-//     title: "Quality control.",
-//     duration: "12:12",
-//     src: "https://app.heygen.com/embeds/b6239f1321aa49248c5deb09e763de88",
-//   },
-//   {
-//     title: "How to use responsibly.",
-//     duration: "11:17",
-//     src: "https://app.heygen.com/embeds/ae6ca86ffe904d99b221c0262289bcd3",
-//   },
-//   {
-//     title: "Dosage, strength, frequency.",
-//     duration: "13:02",
-//     src: "https://app.heygen.com/embeds/cbdc44b33b314e629545c96b2c890c4c",
-//   },
-//   {
-//     title: "Overuse risks.",
-//     duration: "11:27",
-//     src: "https://app.heygen.com/embeds/319a448d0ca543918f1a6a127d30eefd",
-//   },
-//   {
-//     title: "How it develops?",
-//     duration: "10:11",
-//     src: "https://app.heygen.com/embeds/65121c1911c04226890e7a6d741a2cc3",
-//   },
-//   {
-//     title: "Signs and Symptoms.",
-//     duration: "10:57",
-//     src: "https://app.heygen.com/embeds/a1758c22ad59435590afba9df9fdd419",
-//   },
-//   {
-//     title: "Prevention, treatment.",
-//     duration: "12:33",
-//     src: "https://app.heygen.com/embeds/01612629f1104d2289bc05a9903a32cc",
-//   },
-// ];
+const initialVideoList = [
+  {
+    title: "What is Nicotine?",
+    duration: "9:33",
+    src: "https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198",
+  },
+  {
+    title: "History.",
+    duration: "10:08",
+    src: "https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2",
+  },
+  {
+    title: "Effects.",
+    duration: "9:28",
+    src: "https://app.heygen.com/embeds/fff30d50262f45b583ea569528a07b90",
+  },
+  {
+    title: "How they work?",
+    duration: "9:36",
+    src: "https://app.heygen.com/embeds/a31d7f575a7943a292219159e64e678a",
+  },
+  {
+    title: "Smoking x vaping.",
+    duration: "10:55",
+    src: "https://app.heygen.com/embeds/4b0edd4ddc46423f8573b85580beb0ff",
+  },
+  {
+    title: "Pros. and cons.",
+    duration: "11:56",
+    src: "https://app.heygen.com/embeds/e0b1e65bec434d4ba5e9f21b0d3bd04c",
+  },
+  {
+    title: "Nicotine salt.",
+    duration: "10:34",
+    src: "https://app.heygen.com/embeds/44cf86330949487d923dd3955c34a246",
+  },
+  {
+    title: "Freebase nicotine.",
+    duration: "12:02",
+    src: "https://app.heygen.com/embeds/1d5d6eed05854fe3aaf8060e77cf0b1b",
+  },
+  {
+    title: "Strength and delivery.",
+    duration: "11:31",
+    src: "https://app.heygen.com/embeds/3589199deb5b4222b1a6d703583f2d96",
+  },
+  {
+    title: "Natural vs synthetic.",
+    duration: "11:28",
+    src: "https://app.heygen.com/embeds/ac9745473c014745b6c6e312e5bf6693",
+  },
+  {
+    title: "Manufacturing.",
+    duration: "11:20",
+    src: "https://app.heygen.com/embeds/cb8fd7f5bb3b47bea3b3356c0d301c00",
+  },
+  {
+    title: "Quality control.",
+    duration: "12:12",
+    src: "https://app.heygen.com/embeds/b6239f1321aa49248c5deb09e763de88",
+  },
+  {
+    title: "How to use responsibly.",
+    duration: "11:17",
+    src: "https://app.heygen.com/embeds/ae6ca86ffe904d99b221c0262289bcd3",
+  },
+  {
+    title: "Dosage, strength, frequency.",
+    duration: "13:02",
+    src: "https://app.heygen.com/embeds/cbdc44b33b314e629545c96b2c890c4c",
+  },
+  {
+    title: "Overuse risks.",
+    duration: "11:27",
+    src: "https://app.heygen.com/embeds/319a448d0ca543918f1a6a127d30eefd",
+  },
+  {
+    title: "How it develops?",
+    duration: "10:11",
+    src: "https://app.heygen.com/embeds/65121c1911c04226890e7a6d741a2cc3",
+  },
+  {
+    title: "Signs and Symptoms.",
+    duration: "10:57",
+    src: "https://app.heygen.com/embeds/a1758c22ad59435590afba9df9fdd419",
+  },
+  {
+    title: "Prevention, treatment.",
+    duration: "12:33",
+    src: "https://app.heygen.com/embeds/01612629f1104d2289bc05a9903a32cc",
+  },
+];
 
 type TabName = "Course" | "Setting" | "Logout";
 
 export default function DashboardClientPage() {
-  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState<TabName>("Course");
-
-  // Create translated video list
-  const videoList = [
-    {
-      title: t("dashboard.videos.whatIsNicotine"),
-      duration: "9:33",
-      src: "https://app.heygen.com/embeds/29aabbe5b45f47bea7c4b80edaae1198",
-    },
-    {
-      title: t("dashboard.videos.history"),
-      duration: "10:08",
-      src: "https://app.heygen.com/embeds/c752c47a77ad47f9a2e48db6ce259bf2",
-    },
-    {
-      title: t("dashboard.videos.effects"),
-      duration: "9:28",
-      src: "https://app.heygen.com/embeds/fff30d50262f45b583ea569528a07b90",
-    },
-    {
-      title: t("dashboard.videos.howTheyWork"),
-      duration: "9:36",
-      src: "https://app.heygen.com/embeds/a31d7f575a7943a292219159e64e678a",
-    },
-    {
-      title: t("dashboard.videos.smokingVaping"),
-      duration: "10:55",
-      src: "https://app.heygen.com/embeds/4b0edd4ddc46423f8573b85580beb0ff",
-    },
-    {
-      title: t("dashboard.videos.prosCons"),
-      duration: "11:56",
-      src: "https://app.heygen.com/embeds/e0b1e65bec434d4ba5e9f21b0d3bd04c",
-    },
-    {
-      title: t("dashboard.videos.nicotineSalt"),
-      duration: "10:34",
-      src: "https://app.heygen.com/embeds/44cf86330949487d923dd3955c34a246",
-    },
-    {
-      title: t("dashboard.videos.freebaseNicotine"),
-      duration: "12:02",
-      src: "https://app.heygen.com/embeds/1d5d6eed05854fe3aaf8060e77cf0b1b",
-    },
-    {
-      title: t("dashboard.videos.strengthDelivery"),
-      duration: "11:31",
-      src: "https://app.heygen.com/embeds/3589199deb5b4222b1a6d703583f2d96",
-    },
-    {
-      title: t("dashboard.videos.naturalSynthetic"),
-      duration: "11:28",
-      src: "https://app.heygen.com/embeds/ac9745473c014745b6c6e312e5bf6693",
-    },
-    {
-      title: t("dashboard.videos.manufacturing"),
-      duration: "11:20",
-      src: "https://app.heygen.com/embeds/cb8fd7f5bb3b47bea3b3356c0d301c00",
-    },
-    {
-      title: t("dashboard.videos.qualityControl"),
-      duration: "12:12",
-      src: "https://app.heygen.com/embeds/b6239f1321aa49248c5deb09e763de88",
-    },
-    {
-      title: t("dashboard.videos.responsibleUse"),
-      duration: "11:17",
-      src: "https://app.heygen.com/embeds/ae6ca86ffe904d99b221c0262289bcd3",
-    },
-    {
-      title: t("dashboard.videos.dosageStrength"),
-      duration: "13:02",
-      src: "https://app.heygen.com/embeds/cbdc44b33b314e629545c96b2c890c4c",
-    },
-    {
-      title: t("dashboard.videos.overuseRisks"),
-      duration: "11:27",
-      src: "https://app.heygen.com/embeds/319a448d0ca543918f1a6a127d30eefd",
-    },
-    {
-      title: t("dashboard.videos.howItDevelops"),
-      duration: "10:11",
-      src: "https://app.heygen.com/embeds/65121c1911c04226890e7a6d741a2cc3",
-    },
-    {
-      title: t("dashboard.videos.signsSymptoms"),
-      duration: "10:57",
-      src: "https://app.heygen.com/embeds/a1758c22ad59435590afba9df9fdd419",
-    },
-    {
-      title: t("dashboard.videos.preventionTreatment"),
-      duration: "12:33",
-      src: "https://app.heygen.com/embeds/01612629f1104d2289bc05a9903a32cc",
-    },
-  ];
-
-  const [selectedVideo, setSelectedVideo] = useState(videoList[0]);
+  const [videoList] = useState(initialVideoList);
+  const [selectedVideo, setSelectedVideo] = useState(initialVideoList[0]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
@@ -230,7 +134,7 @@ export default function DashboardClientPage() {
       <div className="min-h-screen bg-[#F8F9FB] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#01DAE3] mx-auto mb-4"></div>
-          <p className="text-gray-600">{t("dashboard.loading")}</p>
+          <p className="text-gray-600">Loading...</p>
         </div>
       </div>
     );
@@ -262,7 +166,7 @@ export default function DashboardClientPage() {
     mainContent = (
       <div className="w-full h-full flex flex-col items-center justify-center">
         <h2 className="text-2xl font-semibold mb-4">
-          {t("dashboard.loggedOut")}
+          You have been logged out.
         </h2>
         {/* You can add actual logout logic here */}
       </div>
@@ -367,7 +271,7 @@ export default function DashboardClientPage() {
                       </svg>
                     </span> */}
                     <span className="text-lg font-semibold text-gray-700">
-                      {t("dashboard.courses")}
+                      Courses
                     </span>
                   </div>
                 </div>

@@ -131,7 +131,7 @@ export default function LoginAuthOTP({
             placeholder={t("login.emailPlaceholder")}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border border-[#E0E0E0] rounded-lg px-4 py-3 text-base w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
+            className="border border-[#E0E0E0] rounded-lg px-4 py-3 text-md w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
             required
           />
           <button
@@ -167,7 +167,7 @@ export default function LoginAuthOTP({
               placeholder={t("login.otpPlaceholder")}
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="text-sm sm:text-md border border-[#E0E0E0] rounded-lg pl-2 sm:pl-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff] pr-32"
+              className="text-md border border-[#E0E0E0] rounded-lg pl-2 sm:pl-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-[#8ffaff] pr-32"
               required
             />
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-4">

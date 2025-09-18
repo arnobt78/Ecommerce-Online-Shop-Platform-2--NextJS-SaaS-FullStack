@@ -279,59 +279,6 @@ const ProductDetailDescriptionSection: React.FC<
   </div>
 );
 
-// --- Inlined: ProductDetailReviewsSection, ReviewCardSection, ReviewCardItem ---
-interface Testimonial {
-  name: string;
-  review: string;
-  rating: number;
-}
-const defaultTestimonials: Testimonial[] = [
-  { name: "M.B", review: "best price but delivery time take long", rating: 5 },
-  { name: "M.B", review: "best price but delivery time take long", rating: 5 },
-  { name: "M.B", review: "best price but delivery time take long", rating: 5 },
-  { name: "M.B", review: "best price but delivery time take long", rating: 5 },
-];
-const ReviewCardItem: React.FC<{ testimonial: Testimonial }> = ({
-  testimonial,
-}) => {
-  return (
-    <div className="border-0 transition-all duration-300 bg-transparent w-full max-w-[284px] rounded-[19px] shadow-md">
-      <div className="px-5 py-2">
-        <div className="flex items-center space-x-1 mb-1">
-          {[...Array(5)].map((_, j) => (
-            <span
-              key={j}
-              className={`size-4 ${
-                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
-              }`}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-        <p className="text-gray-700 mb-1 text-sm leading-relaxed">
-          {testimonial.review}
-        </p>
-        <div className="flex items-center">
-          <div className="flex items-center space-x-2">
-            <span>👤</span>
-            <p className="font-semibold text-sm text-gray-900">
-              {testimonial.name}
-            </p>
-            <Image
-              src="/signature.png"
-              alt="Verified signature"
-              width={32}
-              height={16}
-              className="h-4 w-auto ml-2"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // --- Inlined: Product Detail Page Layout ---
 
 import { ProductPurchaseSection } from "./ProductPurchaseSection";
@@ -453,7 +400,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
       </div>
 
       {/* Reviews Section */}
-      <div className="mt-0 sm:mt-8">
+      <div className="mt-0 sm:mt-8 w-full -mx-1 sm:-mx-32">
         <ReviewSection />
       </div>
     </div>

@@ -3,6 +3,20 @@
 import { useState, useEffect } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
+import { Star, CircleUserRound } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/context/LanguageContextNew";
+
+interface Testimonial {
+  name: string;
+  review: string;
+  rating: number;
+}
+
+interface ReviewCardProps {
+  testimonials?: Testimonial[];
+}
+
 // ReviewModal component displays a modal with the full review text
 function ReviewModal({
   open,
@@ -15,8 +29,14 @@ function ReviewModal({
 }) {
   if (!open || !testimonial) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-      <div className="bg-white rounded-xl shadow-lg max-w-md w-full px-4 sm:px-8 py-6 sm:py-8 relative text-justify">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-xl shadow-lg max-w-md w-full px-4 sm:px-8 py-6 sm:py-8 relative text-justify"
+        onClick={(e) => e.stopPropagation()}
+      >
         <button
           className="absolute top-2 right-6 text-gray-400 hover:text-gray-700 text-2xl font-bold"
           onClick={onClose}
@@ -35,7 +55,9 @@ function ReviewModal({
             <Star
               key={j}
               className={`size-4 ${
-                j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                j < testimonial.rating
+                  ? "fill-black text-gray-900"
+                  : "fill-none text-gray-900"
               }`}
             />
           ))}
@@ -47,21 +69,6 @@ function ReviewModal({
     </div>
   );
 }
-import { Star, CircleUserRound } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { useLanguage } from "@/context/LanguageContextNew";
-
-interface Testimonial {
-  name: string;
-  review: string;
-  rating: number;
-}
-
-interface ReviewCardProps {
-  testimonials?: Testimonial[];
-}
-
-import defaultTestimonials from "@/data/reviews";
 
 // ReviewCardItem component displays a single testimonial card with rating, review, and user info.
 function ReviewCardItem({
@@ -73,7 +80,7 @@ function ReviewCardItem({
 }) {
   return (
     <Card
-      className="border-0 transition-all duration-300 bg-transparent w-full rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hover:to-[#8ef7fb]/15"
+      className="border-0 transition-all duration-300 bg-transparent w-full h-[160px] rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hover:to-[#8ef7fb]/15"
       onClick={onClick}
     >
       <CardContent className="px-4 py-4 flex flex-col h-full justify-between">
@@ -90,7 +97,7 @@ function ReviewCardItem({
               />
             ))}
           </div>
-          <p className="text-gray-700 mb-2 text-sm leading-relaxed line-clamp-3 overflow-hidden min-h-[60px]">
+          <p className="text-gray-700 mb-2 text-sm leading-relaxed line-clamp-3 overflow-hidden h-[80px] flex items-start">
             {testimonial.review}
           </p>
         </div>
@@ -114,24 +121,36 @@ function ReviewCardItem({
   );
 }
 
-export default function ReviewCard({
-  testimonials = defaultTestimonials,
-}: ReviewCardProps) {
+export default function ReviewCard(props: ReviewCardProps) {
   const { t, isHydrated } = useLanguage();
   const [isMobile, setIsMobile] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] =
     useState<Testimonial | null>(null);
+
+  // Get testimonials from translations or fallback to props
+  const translatedTestimonials = t("home.reviews.testimonials");
+  const testimonials = Array.isArray(translatedTestimonials)
+    ? translatedTestimonials
+    : props.testimonials || [];
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "start",
     skipSnaps: false,
     containScroll: "trimSnaps",
     dragFree: false,
     slidesToScroll: 1,
+    breakpoints: {
+      "(max-width: 639px)": {
+        slidesToScroll: 1,
+      },
+      "(min-width: 640px)": {
+        slidesToScroll: 1,
+      },
+    },
   });
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const cardsPerView = isMobile ? 1 : 5;
-
+  // const cardsPerView = isMobile ? 1 : 5;
+  const cardsPerView = 1;
   useEffect(() => {
     if (!isHydrated || typeof window === "undefined") return;
     const checkIsMobile = () => setIsMobile(window.innerWidth < 640);
@@ -169,13 +188,30 @@ export default function ReviewCard({
     if (emblaApi) emblaApi.scrollTo(selectedIndex + 1);
   };
 
+  // Only render carousel after hydration and mobile detection
+  if (!isHydrated) {
+    // Render only a placeholder (no carousel markup) during SSR to avoid hydration error
+    return (
+      <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
+        <div className="w-full">
+          <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
+            {t("home.reviews.title")}
+          </h2>
+          <div className="w-full flex items-center justify-center min-h-[140px] sm:min-h-[180px]">
+            {/* SSR placeholder only, no carousel markup */}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full">
+    <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
       <div className="w-full">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
           {t("home.reviews.title")}
         </h2>
-        <div className="relative mx-auto w-full max-w-full flex items-center justify-center min-h-[140px] sm:min-h-[180px]">
+        <div className="relative mx-auto w-full max-w-[1280px] flex items-center justify-center min-h-[140px] sm:min-h-[180px] overflow-x-hidden">
           {/* Left Arrow */}
           {showArrows && (
             <button
@@ -200,19 +236,19 @@ export default function ReviewCard({
               </svg>
             </button>
           )}
-          <div className="w-full overflow-hidden" ref={emblaRef}>
+          <div className="w-full overflow-x-hidden" ref={emblaRef}>
             <div
-              className="flex flex-row gap-x-2 sm:gap-x-4"
-              style={{
-                willChange: "transform",
-                maxWidth: isMobile ? "100vw" : "1280px",
-              }}
+              className="flex flex-row gap-x-2 sm:gap-x-4 max-w-full"
+              style={{ willChange: "transform" }}
             >
               {testimonials.map((testimonial, i) => (
                 <div
                   key={i}
-                  className="flex justify-center flex-shrink-0 w-full max-w-[220px]"
-                  style={{ minWidth: isMobile ? "100vw" : "0" }}
+                  className={`flex justify-center flex-shrink-0 ${
+                    isMobile
+                      ? "w-full max-w-[95vw] min-w-[95vw]"
+                      : "w-full max-w-[280px] min-w-[280px]"
+                  }`}
                 >
                   <ReviewCardItem
                     testimonial={testimonial}

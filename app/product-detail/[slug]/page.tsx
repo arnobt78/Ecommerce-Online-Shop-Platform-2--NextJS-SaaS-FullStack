@@ -1,12 +1,6 @@
-import { notFound } from "next/navigation";
 import { products } from "@/scripts/data/products";
-import { ProductCardReelSection } from "@/components/ProductDetailPage/ProductCardReelSection";
-import { ProductCardReelSkeleton } from "@/components/ProductDetailPage/ProductCardReelSkeleton";
-import { getRelatedProducts } from "@/components/ProductDetailPage/ProductCardReelServer";
 import { ProductDetailLayout } from "@/components/ProductDetailPage/ProductDetailLayout";
 import { ProductProvider } from "@/context/ProductContext";
-import { LanguageProvider } from "@/context/LanguageContextNew";
-import ErrorBoundary from "@/components/ErrorBoundary";
 
 export default async function ProductDetailSlugPage({
   params,

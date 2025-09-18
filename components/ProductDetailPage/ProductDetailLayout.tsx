@@ -29,7 +29,7 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
       <div className="absolute flex flex-row w-full justify-between top-1 sm:top-2 left-0 pr-1 sm:pr-2 pl-1 sm:pl-2 z-10">
         {product.saleLabel ? (
           <div className="bg-white rounded-[6px] w-[70px] h-[20px] sm:h-[24px] flex items-center justify-center shadow-sm">
-            <span className="italic font-medium text-xs sm:text-sm text-[#C02929]">
+            <span className="italic font-semibold text-xs sm:text-sm text-[#C02929]">
               {product.saleLabel}
             </span>
           </div>
@@ -37,7 +37,7 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
           <div className="w-[70px] h-[24px]" />
         )}
         <div className="bg-white rounded-[6px] min-w-[90px] sm:min-w-[110px] h-[20px] sm:h-[24px] px-1 sm:px-2 flex items-center justify-center shadow-sm">
-          <span className="italic font-medium text-xs sm:text-sm text-gray-900 whitespace-nowrap overflow-hidden truncate">
+          <span className="italic font-semibold text-xs sm:text-sm text-gray-900 whitespace-nowrap overflow-hidden truncate">
             {t("products.shipping.freeShipping")}
           </span>
         </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
 // ReviewModal component displays a modal with the full review text
 function ReviewModal({
@@ -72,17 +73,19 @@ function ReviewCardItem({
 }) {
   return (
     <Card
-      className="border-0 transition-all duration-300 bg-transparent w-full max-w-[360px] rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hove:to-[#8ef7fb]/15"
+      className="border-0 transition-all duration-300 bg-transparent w-full rounded-[19px] flex flex-col justify-between bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 cursor-pointer hover:bg-gradient-to-r hover:from-[#3AF0F7]/15 hover:to-[#8ef7fb]/15"
       onClick={onClick}
     >
-      <CardContent className="px-4 py-4 flex flex-col h-full justify-between text-justify">
+      <CardContent className="px-4 py-4 flex flex-col h-full justify-between">
         <div>
           <div className="flex items-center space-x-1 mb-1">
             {[...Array(5)].map((_, j) => (
               <Star
                 key={j}
                 className={`size-4 ${
-                  j < 4 ? "fill-black text-gray-900" : "fill-none text-gray-900"
+                  j < testimonial.rating
+                    ? "fill-black text-gray-900"
+                    : "fill-none text-gray-900"
                 }`}
               />
             ))}
@@ -100,10 +103,9 @@ function ReviewCardItem({
             <Image
               src="/signature.png"
               alt="Verified signature"
-              width={32}
-              height={16}
-              className="h-4 w-auto ml-2"
-              style={{ width: "auto", height: "16px" }}
+              width={48}
+              height={24}
+              className="h-6 w-auto ml-2"
             />
           </div>
         </div>
@@ -120,73 +122,130 @@ export default function ReviewCard({
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedTestimonial, setSelectedTestimonial] =
     useState<Testimonial | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: "start",
+    skipSnaps: false,
+    containScroll: "trimSnaps",
+    dragFree: false,
+    slidesToScroll: 1,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const cardsPerView = isMobile ? 1 : 5;
 
   useEffect(() => {
     if (!isHydrated || typeof window === "undefined") return;
-
-    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 640);
     checkIsMobile();
     window.addEventListener("resize", checkIsMobile);
     return () => window.removeEventListener("resize", checkIsMobile);
   }, [isHydrated]);
 
-  const testimonialsToShow = isMobile ? testimonials.slice(0, 2) : testimonials;
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
 
   const handleCardClick = (testimonial: Testimonial) => {
     setSelectedTestimonial(testimonial);
     setModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedTestimonial(null);
   };
 
+  // Arrow navigation for embla
+  const totalSlides = testimonials.length - cardsPerView + 1;
+  const showArrows = totalSlides > 1;
+  const handleLeft = () => {
+    if (emblaApi) emblaApi.scrollTo(selectedIndex - 1);
+  };
+  const handleRight = () => {
+    if (emblaApi) emblaApi.scrollTo(selectedIndex + 1);
+  };
+
   return (
-    <section className="px-2 sm:px-4 bg-transparent">
-      <style jsx>{`
-        @keyframes scroll-left {
-          0% {
-            transform: translateX(100%);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
-        }
-        .animate-scroll-left {
-          animation: scroll-left 36s linear infinite;
-        }
-      `}</style>
-      <div className="max-w-[1400px] mx-auto">
+    <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full">
+      <div className="w-full">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
           {t("home.reviews.title")}
         </h2>
-
-        {/* Mobile Layout - Static Grid */}
-        <div className="md:hidden grid grid-cols-1 gap-6 justify-items-center">
-          {testimonialsToShow.map((testimonial, i) => (
-            <ReviewCardItem
-              key={i}
-              testimonial={testimonial}
-              onClick={() => handleCardClick(testimonial)}
-            />
-          ))}
-        </div>
-
-        {/* Desktop Layout - Animated Floating */}
-        <div className="hidden md:block relative overflow-hidden">
-          <div className="flex animate-scroll-left">
-            {[...testimonialsToShow, ...testimonialsToShow].map(
-              (testimonial, i) => (
-                <div key={i} className="w-[284px] flex-shrink-0 mx-4">
+        <div className="relative mx-auto w-full max-w-full flex items-center justify-center min-h-[140px] sm:min-h-[180px]">
+          {/* Left Arrow */}
+          {showArrows && (
+            <button
+              type="button"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-r from-white/90 to-transparent cursor-pointer"
+              onClick={handleLeft}
+              aria-label="Scroll left"
+              disabled={selectedIndex === 0}
+            >
+              <svg
+                className="w-8 h-8 text-gray-400 hover:text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+          )}
+          <div className="w-full overflow-hidden" ref={emblaRef}>
+            <div
+              className="flex flex-row gap-x-2 sm:gap-x-4"
+              style={{
+                willChange: "transform",
+                maxWidth: isMobile ? "100vw" : "1280px",
+              }}
+            >
+              {testimonials.map((testimonial, i) => (
+                <div
+                  key={i}
+                  className="flex justify-center flex-shrink-0 w-full max-w-[220px]"
+                  style={{ minWidth: isMobile ? "100vw" : "0" }}
+                >
                   <ReviewCardItem
                     testimonial={testimonial}
                     onClick={() => handleCardClick(testimonial)}
                   />
                 </div>
-              )
-            )}
+              ))}
+            </div>
           </div>
+          {/* Right Arrow */}
+          {showArrows && (
+            <button
+              type="button"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 h-5/6 bg-gradient-to-l from-white/90 to-transparent cursor-pointer"
+              onClick={handleRight}
+              aria-label="Scroll right"
+              disabled={selectedIndex >= totalSlides - 1}
+            >
+              <svg
+                className="w-8 h-8 text-gray-400 hover:text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          )}
         </div>
       </div>
       <ReviewModal

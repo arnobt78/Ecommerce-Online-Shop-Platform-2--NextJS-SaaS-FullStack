@@ -15,7 +15,7 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
       {/* Sale badge (conditionally render) */}
       {saleLabel ? (
         <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[20px] flex-shrink flex items-center justify-center">
-          <span className="italic font-medium text-[9px] sm:text-[11px] text-[#C02929]">
+          <span className="italic font-semibold text-[9px] sm:text-[11px] text-[#C02929]">
             {saleLabel}
           </span>
         </div>
@@ -24,7 +24,7 @@ const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
       )}
       {/* Free shipping badge */}
       <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[20px] px-1 sm:px-2 flex-shrink flex items-center justify-center">
-        <span className="italic font-medium text-[9px] sm:text-[11px] text-gray-900 whitespace-nowrap overflow-hidden truncate">
+        <span className="italic font-semibold text-[9px] sm:text-[11px] text-gray-900 whitespace-nowrap overflow-hidden truncate">
           {t("products.shipping.freeShipping")}
         </span>
       </div>

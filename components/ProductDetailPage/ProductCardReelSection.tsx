@@ -151,7 +151,7 @@ const ProductReelGrid: React.FC<ProductReelGridProps> = ({
   }
 
   return (
-    <div className="relative w-full flex flex-row items-center justify-center max-w-[1180px] min-h-[340px] sm:min-h-[400px]">
+    <div className="relative w-full flex flex-row items-center justify-center max-w-7xl min-h-[340px] sm:min-h-[400px]">
       {/* Left Arrow */}
       {showArrows && (
         <button

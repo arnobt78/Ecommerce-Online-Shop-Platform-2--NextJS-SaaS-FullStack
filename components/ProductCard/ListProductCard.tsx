@@ -51,8 +51,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   handleAddToCart,
   onCardClick,
 }) => (
-  // <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
-  <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-7xl pt-4 sm:pt-4">
+  // <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-9xl pt-4 sm:pt-4">
+  <div className="grid grid-cols-2 sm:grid-cols-5 gap-x-2 gap-y-2 sm:gap-x-4 sm:gap-y-4 justify-items-center w-full max-w-9xl pt-4 sm:pt-4">
     {products.length > 0 ? (
       products.map((product, idx) => (
         <ListProductCardItem
@@ -88,23 +88,8 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
 
   // Use products as-is, do not re-sort. Parent controls sort order.
 
-  // Responsive pagination: 16 per page on phone, 15 per page on laptop and up
-  const [perPage, setPerPage] = React.useState(16);
-
-  React.useEffect(() => {
-    if (!isHydrated) return;
-
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setPerPage(16); // phone (sm breakpoint)
-      } else {
-        setPerPage(15); // laptop/tablet and up
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isHydrated]);
+  // Always show 40 products per page on all screen sizes
+  const [perPage, setPerPage] = React.useState(40);
 
   const { page, setPage, totalPages, paginated } = useProductPagination(
     products,
@@ -114,7 +99,6 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
   // Reset to page 1 whenever products change (sort/filter)
   React.useEffect(() => {
     setPage(1);
-    console.log("[DEBUG] Pagination reset to page 1 due to products change");
   }, [products, setPage]);
   const { setCartItems } = useCart();
   // Use the provided addToCart or fallback to global context
@@ -164,10 +148,13 @@ export const ListProductCard: React.FC<ListProductCardProps> = ({
 
   const router = useRouter();
 
-  // ...existing code...
+  // Scroll to top of page when pagination changes
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [page]);
 
   return (
-    <div className="flex flex-col items-center w-full px-0">
+    <div className="flex flex-col items-center w-full">
       <ProductGrid
         products={paginated}
         handleAddToCart={handleAddToCart}

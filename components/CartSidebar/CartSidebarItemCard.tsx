@@ -1,5 +1,3 @@
-// Moved from components/Layout/CartSidebar/CartSidebarItem.tsx
-
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 

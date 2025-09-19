@@ -248,7 +248,7 @@ export default function HeroSection() {
         </div>
       </>
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-16 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
+      <div className="max-w-9xl mx-auto px-4 sm:px-24 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
         {/* Left Content */}
         <HeroLeftContent />
       </div>

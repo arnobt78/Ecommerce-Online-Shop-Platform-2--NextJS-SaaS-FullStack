@@ -192,7 +192,7 @@ export default function ReviewCard(props: ReviewCardProps) {
   if (!isHydrated) {
     // Render only a placeholder (no carousel markup) during SSR to avoid hydration error
     return (
-      <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
+      <section className="max-w-9xl mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
             {t("home.reviews.title")}
@@ -206,12 +206,12 @@ export default function ReviewCard(props: ReviewCardProps) {
   }
 
   return (
-    <section className="max-w-[1440px] mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
+    <section className="max-w-9xl mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
       <div className="w-full">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
           {t("home.reviews.title")}
         </h2>
-        <div className="relative mx-auto w-full max-w-[1280px] flex items-center justify-center min-h-[140px] sm:min-h-[180px] overflow-x-hidden">
+        <div className="relative mx-auto w-full max-w-7xl flex items-center justify-center min-h-[140px] sm:min-h-[180px] overflow-x-hidden">
           {/* Left Arrow */}
           {showArrows && (
             <button

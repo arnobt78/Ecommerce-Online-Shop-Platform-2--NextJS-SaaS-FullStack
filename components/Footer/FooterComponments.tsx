@@ -31,7 +31,7 @@ export function FooterSection({
         onClick={onToggle}
         className="flex items-center justify-between w-full sm:pointer-events-none"
       >
-        <h4 className="font-bold text-gray-900 mb-3 sm:mb-4 md:mb-6 text-base md:text-lg">
+        <h4 className="font-bold text-gray-900 mb-3 sm:mb-4 text-base md:text-lg">
           {title}
         </h4>
         <ChevronDown
@@ -41,7 +41,7 @@ export function FooterSection({
         />
       </button>
       <ul
-        className={`space-y-2 md:space-y-3 text-gray-600 sm:block ${
+        className={`space-y-2 sm:space-y-2 text-gray-600 sm:block ${
           open ? "block" : "hidden sm:block"
         }`}
       >

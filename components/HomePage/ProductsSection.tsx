@@ -54,7 +54,7 @@ export default function ProductsSection() {
 
   return (
     <section id="products-section" className="px-1 sm:px-4 py-4 sm:py-8 w-full">
-      <div className="max-w-[1440px] mx-auto w-full">
+      <div className="max-w-7xl mx-auto w-full">
         <ProductsSectionTitle />
         {/* Product Cards List */}
         <div className="flex flex-col items-center w-full">

@@ -1,9 +1,7 @@
-// Moved and renamed from components/cart-sidebar.tsx
 "use client";
 
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, ShoppingBag, X, CreditCard, Lock } from "lucide-react";
-import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 import CartSidebarItem from "@/components/CartSidebar/CartSidebarItemCard";
@@ -144,7 +142,7 @@ export default function CartSidebarLayout() {
               </div>
               <button
                 type="button"
-                className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-[#4F46E5] shadow-sm rounded-md relative transition-all duration-300 hover:bg-[#4338ca] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 mx-auto mt-4"
+                className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-blue-600 shadow-sm rounded-md relative transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mx-auto mt-4"
                 style={{ minHeight: 40, borderRadius: 6 }}
                 onClick={() => {
                   setCartOpen(false);
@@ -166,7 +164,7 @@ export default function CartSidebarLayout() {
                 {/* Continue Shopping button */}
                 <button
                   type="button"
-                  className="flex items-center text-[14px] leading-5 font-medium text-indigo-600 hover:text-indigo-500"
+                  className="flex items-center text-[14px] leading-5 font-medium text-blue-600 hover:text-blue-500"
                   style={{ height: 20, minWidth: 146 }}
                   onClick={() => {
                     setCartOpen(false);
@@ -176,11 +174,6 @@ export default function CartSidebarLayout() {
                   {t("cart.continueShopping")}
                 </button>
               </div>
-
-              {/* <div className="flex items-center justify-center mt-2 md:mt-3 text-xs text-gray-500 animate-fade-in">
-                <CreditCard className="w-3 md:w-4 h-3 md:h-4 mr-1" />
-                Secure payment with SSL encryption
-              </div> */}
             </div>
           )}
         </div>

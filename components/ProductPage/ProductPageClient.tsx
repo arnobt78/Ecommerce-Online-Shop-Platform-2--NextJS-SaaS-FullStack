@@ -155,14 +155,14 @@ export default function ProductPageClient({
         {/* Header and CartSidebar are now global in layout.tsx */}
         <main className="pt-20 sm:pt-24">
           {/* Hero Section */}
-          <section className="bg-gradient-to-r from-[#3AF0F7]/10 to-[#8ef7fb]/10 py-2 sm:py-4">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6">
-              <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900">
-                {t("products.title")}
-              </h1>
-              <p className="text-gray-600 text-md">{t("products.subtitle")}</p>
-            </div>
-          </section>
+          {/* <section className="py-2 sm:py-4"> */}
+          <div className="max-w-9xl mx-auto px-4 sm:px-6 flex items-center justify-center mb-2">
+            <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center">
+              {t("products.title")}
+            </h1>
+            {/* <p className="text-gray-600 text-md">{t("products.subtitle")}</p> */}
+          </div>
+          {/* </section> */}
 
           {/* Category Filter, Product List, and Pagination (Reusable Components) */}
           <div className="max-w-7xl mx-auto px-1 sm:px-4 py-2 sm:py-4">

@@ -343,7 +343,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   return (
     <div className="w-full bg-white flex flex-col items-center pt-20 sm:pt-32">
       {/* Main Content */}
-      <div className="w-full max-w-[1440px] bg-white flex flex-col lg:flex-row gap-8 mx-auto px-1 sm:px-32">
+      <div className="w-full max-w-9xl bg-white flex flex-col lg:flex-row gap-8 mx-auto px-1 sm:px-32">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}
         <div className="flex flex-col gap-8 w-full bg-white lg:w-[687px]">
           <ProductPosterCard product={product} />
@@ -390,7 +390,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
         </div>
       </div>
       {/* Product Card Reel - Centered on desktop */}
-      <div className="w-full max-w-[1440px] mx-auto mt-8 sm:mt-16 flex flex-col items-center min-h-[400px]">
+      <div className="mt-8 sm:mt-16 w-full">
         <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900 text-center">
           {t("productDetail.youMayAlsoLike")}
         </h2>
@@ -400,7 +400,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
       </div>
 
       {/* Reviews Section */}
-      <div className="mt-0 sm:mt-8 w-full -mx-1 sm:-mx-32">
+      <div className="mt-0 sm:mt-8 w-full">
         <ReviewSection />
       </div>
     </div>

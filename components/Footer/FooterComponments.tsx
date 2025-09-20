@@ -41,7 +41,7 @@ export function FooterSection({
         />
       </button>
       <ul
-        className={`space-y-2 sm:space-y-2 text-gray-600 sm:block ${
+        className={`space-y-4 sm:space-y-2 text-gray-600 sm:block ${
           open ? "block" : "hidden sm:block"
         }`}
       >

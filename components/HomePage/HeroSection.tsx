@@ -9,7 +9,7 @@ import Image from "next/image";
 // --- HeroStats: Stats with animated numbers ---
 const HeroStats = () => {
   const { t } = useLanguage();
-  // ...existing code...
+
   // Static stats, translation only, no counter animation
   const stats = [
     { num: 47, text: t("hero.stats.ordersToday") },
@@ -76,7 +76,7 @@ function HeroLeftContent() {
   // SSR/client output unified: always render translation-based layout
 
   return (
-    <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-lg lg:max-w-xl bg-transparent min-h-[400px]">
+    <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-md md:max-w-lg lg:max-w-xl bg-transparent min-h-[400px]">
       {/* Rating */}
       <div className="flex items-center space-x-2">
         <svg
@@ -94,10 +94,10 @@ function HeroLeftContent() {
         <span className="text-gray-500 text-xs">{t("hero.rating")}</span>
       </div>
       {/* Main Heading */}
-      <h1 className="text-4xl sm:text-5xl font-semibold text-gray-900 leading-none sm:leading-tight whitespace-wrap sm:whitespace-nowrap z-30 mb-2 text-left">
+      <h1 className="text-4xl sm:text-4xl md:text-5xl font-semibold text-gray-900 leading-none sm:leading-tight whitespace-wrap md:whitespace-nowrap z-30 mb-2 text-left">
         {renderTranslation("hero.title.mobile")}
       </h1>
-      <h3 className="text-xl sm:text-3xl text-gray-900 leading-tight whitespace-wrap sm:whitespace-nowrap mb-8 z-30 text-left">
+      <h3 className="text-xl sm:text-2xl md:text-3xl text-gray-900 leading-tight whitespace-wrap md:whitespace-nowrap mb-8 z-30 text-left">
         {renderTranslation("hero.subtitle.mobile")}
       </h3>
 
@@ -248,7 +248,7 @@ export default function HeroSection() {
         </div>
       </>
 
-      <div className="max-w-9xl mx-auto px-4 sm:px-24 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
+      <div className="max-w-9xl mx-auto px-4 md:px-4 lg:px-16 xl:px-24 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
         {/* Left Content */}
         <HeroLeftContent />
       </div>

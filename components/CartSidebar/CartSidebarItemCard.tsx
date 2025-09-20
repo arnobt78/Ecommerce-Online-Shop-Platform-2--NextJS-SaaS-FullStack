@@ -60,7 +60,7 @@ export default function CartSidebarItem({
         <div className="flex items-center justify-between">
           <button
             type="button"
-            className="font-semibold text-gray-900 hover:text-indigo-600 text-sm sm:text-md leading-tight truncate text-left"
+            className="font-semibold text-gray-900 hover:text-blue-700 text-sm sm:text-md leading-tight truncate text-left"
             onClick={handleViewProduct}
             style={{
               background: "none",

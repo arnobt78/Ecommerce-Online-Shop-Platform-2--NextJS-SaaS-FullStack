@@ -152,13 +152,13 @@ export default function Navbar({
 
   return (
     <header
-      className="w-full bg-white sm:bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
+      className="w-full bg-white [@media(max-width:1184px)]:bg-white sm:bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
       style={{
         transform: showNavbar ? "translateY(0)" : "translateY(-100%)",
         pointerEvents: showNavbar ? "auto" : "none",
       }}
     >
-      <div className="max-w-9xl w-full mx-auto py-2 sm:py-6 px-2 sm:px-24">
+      <div className="max-w-9xl w-full mx-auto [@media(max-width:1184px)]:py-2 sm:py-6 [@media(max-width:1184px)]:px-2 sm:px-16">
         {/* Desktop Navbar (≥1185px) */}
         <div className="hidden [@media(min-width:1185px)]:flex items-center justify-between">
           <div className="flex items-center space-x-12">

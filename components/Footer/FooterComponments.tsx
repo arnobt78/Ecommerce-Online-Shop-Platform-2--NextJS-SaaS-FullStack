@@ -100,7 +100,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
   const { t } = useLanguage();
 
   return (
-    <div className="text-center sm:text-left flex flex-col justify-center items-center h-full sm:min-h-[120px] pb-4 sm:py-0 mt-4 sm:mt-0">
+    <div className="text-center sm:text-left flex flex-col justify-center items-center sm:items-start h-full sm:min-h-[120px] py-4 sm:py-0">
       <div className={`sm:block ${open ? "block" : "block sm:block"}`}>
         <Button
           variant="ghost"

@@ -24,9 +24,9 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-transparent text-gray-900 px-2 sm:px-4 py-4 sm:pb-8 sm:pt-12">
-      <div className="max-w-9xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4 lg:gap-8 pb-0 sm:pb-8 items-center">
+    <footer className="max-w-9xl mx-auto bg-transparent text-gray-900 px-4 sm:px-4 py-4 sm:pb-8 sm:pt-12">
+      <div className="w-full mx">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2 md:gap-4 lg:gap-8 pb-0 sm:pb-8 items-center space-y-2 sm:space-y-0">
           <FooterLogoSocial />
           <FooterSection
             title={t("footer.shop.title")}

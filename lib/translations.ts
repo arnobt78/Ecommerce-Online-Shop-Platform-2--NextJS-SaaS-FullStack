@@ -898,7 +898,11 @@ export const translations = {
     "hero.rating": "4.47 | 537 Bewertungen",
     "hero.title": "Nie wieder ohne Nikotin-Pouches dastehen!",
     "hero.title.mobile":
-      'Nie wieder <br className="block sm:hidden" /> Nikotin-Pouches dastehen!',
+      'Nie wieder <br className="br-870 sm:hidden" /> Nikotin-Pouches dastehen!',
+    // "hero.title.mobile":
+    //   'Nie wieder <br className="block sm:hidden" /> Nikotin-Pouches dastehen!',
+    // "hero.title.mobile":
+    //   'Nie wieder <br className="[max-width:870px]:block sm:hidden" /> Nikotin-Pouches dastehen!',
     "hero.subtitle":
       "Wähle aus einer riesigen Auswahl exklusiver Marken, Geschmacksrichtungen und Stärken zum besten Preis am Markt und mit kostenlosem Versand",
     "hero.subtitle.mobile":

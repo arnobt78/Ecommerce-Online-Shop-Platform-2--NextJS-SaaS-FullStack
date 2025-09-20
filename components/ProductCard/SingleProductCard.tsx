@@ -11,16 +11,16 @@ interface TopBadgesProps {
 const TopBadges: React.FC<TopBadgesProps> = ({ saleLabel }) => {
   const { t } = useLanguage();
   return (
-    <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between top-[8px] left-0 px-1 sm:px-2 z-30">
+    <div className="absolute flex flex-row flex-nowrap min-w-0 overflow-hidden w-full justify-between gap-1 sm:gap-2 top-[8px] left-0 px-1 sm:px-2 z-30">
       {/* Sale badge (conditionally render) */}
       {saleLabel ? (
-        <div className="bg-white rounded-[6px] w-[48px] sm:w-[60px] h-[16px] sm:h-[20px] flex-shrink flex items-center justify-center">
-          <span className="italic font-semibold text-[9px] sm:text-[11px] text-[#C02929]">
-            {saleLabel}
+        <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[20px] px-1 sm:px-2 flex items-center justify-center flex-shrink whitespace-nowrap overflow-hidden">
+          <span className="italic font-semibold text-[9px] sm:text-[11px] text-[#C02929] truncate">
+            {t("products.sale")} {saleLabel}
           </span>
         </div>
       ) : (
-        <div className="w-[48px] h-[16px] sm:h-[24px]" />
+        <div className="min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[20px]" />
       )}
       {/* Free shipping badge */}
       <div className="bg-white rounded-[6px] min-w-[68px] sm:min-w-[80px] h-[16px] sm:h-[20px] px-1 sm:px-2 flex-shrink flex items-center justify-center">

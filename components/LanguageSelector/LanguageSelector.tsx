@@ -25,6 +25,10 @@ export function LanguageSelector() {
     setLanguage(langCode);
     setLanguageCookie(langCode);
     setIsOpen(false);
+    // Smooth scroll to top after language change
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (

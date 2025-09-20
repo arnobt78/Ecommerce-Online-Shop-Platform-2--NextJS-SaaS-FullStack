@@ -101,9 +101,9 @@ export default function CartSidebarLayout() {
                 <p className="text-gray-500 text-base md:text-lg font-semibold mb-2">
                   {t("cart.empty")}
                 </p>
-                <p className="text-gray-400 text-sm">
+                {/* <p className="text-gray-400 text-sm">
                   {t("cart.emptyDescription")}
-                </p>
+                </p> */}
               </div>
             ) : (
               <div className="flex flex-col">
@@ -135,11 +135,11 @@ export default function CartSidebarLayout() {
                   € {getTotalPrice().toFixed(2)}
                 </span>
               </div>
-              <div className="px-3 sm:px-4 mb-2">
+              {/* <div className="px-3 sm:px-4 mb-2">
                 <span className="block text-sm text-gray-600">
                   {t("cart.shippingTaxes")}
                 </span>
-              </div>
+              </div> */}
               <button
                 type="button"
                 className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-blue-600 shadow-sm rounded-md relative transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mx-auto mt-4"

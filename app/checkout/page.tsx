@@ -51,7 +51,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="min-h-screen bg-white pt-12 sm:pt-24">
-      <div className="max-w-9xl mx-auto py-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+      <div className="max-w-7xl mx-auto py-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
         {/* Left: Form & Payment */}
         <div className="w-full">
           <CheckoutForm />

@@ -35,15 +35,21 @@ export default function SnuzzProLanding() {
   const router = useRouter();
   return (
     <div className="">
-      {/* Header: Hide on any screen if cart is open */}
-      {/* {!cartOpen && <Navbar allProducts={allProducts} noBlur />} */}
-      {/* Header is now rendered globally via layout, matching main page behavior */}
-
       {/* Hero Section */}
-      <div className="relative w-full bg-transparent overflow-hidden">
-        {/* Background Ellipse */}
+      <div className="relative w-full bg-transparent overflow-hidden min-h-screen flex flex-col justify-center">
+        {/* Desktop Background Ellipse - Hanging from Top Center, single instance */}
         <div
-          className="absolute w-[1419px] h-[1512px] left-[-66px] top-[-713px] opacity-50 pointer-events-none z-0 hidden sm:block"
+          className="
+    absolute
+    left-0
+    top-[-713px]
+    w-screen
+    h-[1512px]
+    opacity-50
+    pointer-events-none
+    z-0
+    hidden sm:block
+  "
           style={{
             background:
               "radial-gradient(50% 50% at 50% 50%, #3CF9FF 0%, #F5FFFF 100%)",
@@ -59,8 +65,10 @@ export default function SnuzzProLanding() {
             transform: "translateX(-50%) matrix(0, 1, 1, 0, 0, 0)",
           }}
         />
-        <section className="relative flex flex-col items-center justify-center px-2 sm:px-8 pt-20 sm:pt-32 text-center z-10">
-          <h1 className="text-[28px] sm:text-[40px] font-semibold text-gray-900 mb-6">
+
+        {/* Content Section */}
+        <section className="relative flex flex-col items-center justify-center px-2 sm:px-8 pt-0 sm:pt-24 text-center z-10 h-full">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-gray-900 mb-6">
             {t("pro.hero.title")}
           </h1>
 
@@ -70,23 +78,12 @@ export default function SnuzzProLanding() {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4 mb-20">
-            <Button
-              className="text-gray-900 font-medium px-6 sm:px-8 py-3 rounded-md transition-all duration-300"
-              style={{
-                backgroundColor: "#22d3ee",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#06b6d4";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#22d3ee";
-              }}
-            >
+            <Button className="text-gray-900 font-medium px-6 sm:px-8 py-3 rounded-md transition-all duration-200 bg-[#3AF0F7] hover:bg-[#3AF0F7]/70 active:bg-[#3AF0F7]/10 text-sm sm:text-base">
               {t("pro.hero.tryFree")}
             </Button>
             <Button
               variant="outline"
-              className="bg-transparent border-gray-400 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-md transition-all duration-300"
+              className="bg-transparent border-gray-400 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-md transition-all duration-200 text-sm sm:text-base"
               onClick={() => {
                 router.push("/login");
                 setTimeout(() => {
@@ -99,7 +96,7 @@ export default function SnuzzProLanding() {
           </div>
 
           <div
-            className="flex flex-col items-center mt-24 cursor-pointer hover:opacity-75"
+            className="flex flex-col items-center mt-4 sm:mt-24 cursor-pointer hover:opacity-75"
             onClick={handleScrollDown}
           >
             <div className="bg-black rounded-full p-2 mb-2">
@@ -118,7 +115,7 @@ export default function SnuzzProLanding() {
         className="flex flex-col items-center justify-center px-4 sm:px-8 py-10 sm:py-20 bg-transparent relative z-40"
       >
         <div className="bg-white rounded-2xl shadow-lg p-8 sm:p-12 max-w-full sm:max-w-md w-full text-center items-center">
-          <div className="mb-8 item-center text-center">
+          <div className="mb-8 item-center text-center border-b border-gray-300 border-1">
             <Image
               src="/pro-logo.svg"
               alt="Snuzz PRO"
@@ -129,14 +126,14 @@ export default function SnuzzProLanding() {
               draggable={false}
             />
 
-            <div className="text-gray-500 border-b border-gray-300 border-1 pb-6">
+            {/* <div className="text-gray-500 border-b border-gray-300 border-1 pb-6">
               <p className="text-sm sm:text-base">
                 {t("pro.product.unleashPower")}
               </p>
               <p className="text-sm sm:text-base">
                 {t("pro.product.knowledge")}
               </p>
-            </div>
+            </div> */}
           </div>
 
           <div className="space-y-4 mb-8 text-base sm:text-lg">
@@ -192,6 +189,10 @@ export default function SnuzzProLanding() {
           >
             {t("pro.product.tryFree")}
           </Button>
+
+          <div className="text-gray-500 pt-4">
+            <span className="text-sm">{t("pro.product.cancelAnytime")}</span>
+          </div>
         </div>
       </section>
     </div>

@@ -104,13 +104,13 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
       <div className={`sm:block ${open ? "block" : "block sm:block"}`}>
         <Button
           variant="ghost"
-          className="h-auto px-4 sm:px-6 py-2 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-sm md:text-base justify-center sm:justify-start group"
+          className="h-auto px-4 sm:px-3 py-3 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-md md:text-base justify-center sm:justify-start group"
           onClick={() => {
             router.push("/contact");
           }}
         >
           {t("footer.contact.title")}
-          <ArrowRight className="ml-1 sm:ml-2 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
+          <ArrowRight className="ml-0 sm:ml-0 w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
         </Button>
       </div>
     </div>

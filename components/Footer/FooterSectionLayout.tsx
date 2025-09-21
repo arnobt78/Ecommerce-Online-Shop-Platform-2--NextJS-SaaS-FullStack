@@ -24,7 +24,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="max-w-9xl mx-auto bg-transparent text-gray-900 px-4 sm:px-4 py-4 sm:pb-8 sm:pt-12">
+    <footer className="max-w-7xl mx-auto bg-transparent text-gray-900 px-4 sm:px-0 py-4 sm:pb-8 sm:pt-12">
       <div className="w-full mx">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-2 md:gap-4 lg:gap-8 pb-0 sm:pb-8 items-center space-y-2 sm:space-y-0">
           <FooterLogoSocial />
@@ -69,7 +69,7 @@ export default function Footer() {
             onToggle={() => toggleDropdown("contact")}
           />
         </div>
-        <div className="border-t border-gray-300 pt-4 sm:pt-8  flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0 sm:px-20">
+        <div className="border-t border-gray-300 pt-4 sm:pt-8  flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
           <FooterPayments />
           <FooterCopyright />
         </div>

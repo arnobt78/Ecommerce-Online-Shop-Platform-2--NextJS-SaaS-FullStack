@@ -91,7 +91,7 @@ const CartPageComponents = () => {
     return (
       <div className="bg-transparent">
         {/* <Header /> */}
-        <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-0 py-12 pt-32">
           <div className="text-center py-20">
             <div className="relative">
               <div className="w-32 h-32 bg-gradient-to-br from-[#3AF0F7]/10 via-[#8ef7fb]/20 to-[#3AF0F7]/10 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl">
@@ -122,9 +122,9 @@ const CartPageComponents = () => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-gray-50 via-white to-gray-50">
+    <div className="bg-transparent">
       {/* <Header /> */}
-      <div className="max-w-7xl mx-auto px-2 sm:px-4 pt-20 sm:pt-32">
+      <div className="max-w-7xl mx-auto px-2 sm:px-0 pt-20 sm:pt-32">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl sm:text-4xl font-semibold text-gray-900 tracking-tight">

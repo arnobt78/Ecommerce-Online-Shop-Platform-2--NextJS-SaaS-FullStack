@@ -24,7 +24,7 @@ const ProductPosterCard: React.FC<ProductPosterCardProps> = ({ product }) => {
     );
   }
   return (
-    <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[640px] mx-auto">
+    <div className="relative flex flex-col items-center shadow-lg bg-zinc-200 overflow-visible w-full aspect-square max-w-[687px] mx-auto">
       {/* Top badges */}
       <div className="absolute flex flex-row w-full justify-between top-1 sm:top-2 left-0 pr-1 sm:pr-2 pl-1 sm:pl-2 z-10">
         {product.saleLabel ? (
@@ -266,7 +266,7 @@ const ProductDetailDescriptionSection: React.FC<
   ProductDetailDescriptionSectionProps
 > = ({ product, className = "" }) => (
   <div className={`relative bg-white overflow-visible ${className}`}>
-    <div className="relative z-10 m-1 sm:m-6">
+    <div className="relative z-10 mx-2 sm:m-0">
       <ProductCardDescriptionSection
         brand={product.brand}
         flavor={product.flavor}
@@ -343,7 +343,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   return (
     <div className="w-full bg-white flex flex-col items-center pt-20 sm:pt-32">
       {/* Main Content */}
-      <div className="w-full max-w-9xl bg-white flex flex-col lg:flex-row gap-8 mx-auto px-1 sm:px-32">
+      <div className="w-full max-w-7xl bg-white flex flex-col lg:flex-row gap-12 mx-auto px-2 sm:px-0">
         {/* Left: Product Card and Description (on desktop), only Product Poster Card on mobile */}
         <div className="flex flex-col gap-8 w-full bg-white lg:w-[687px]">
           <ProductPosterCard product={product} />

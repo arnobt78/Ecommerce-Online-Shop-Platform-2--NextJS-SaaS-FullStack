@@ -205,50 +205,47 @@ function HeroLeftContent() {
 export default function HeroSection() {
   return (
     <section className="relative flex items-center justify-center overflow-hidden w-full pt-20 sm:pt-0 object-top bg-transparent sm:min-h-[700px]">
-      {/* Hero background image as full-section background */}
-      <>
-        {/* Desktop: full image on right */}
+      {/* Hero background image as full-section background, w-screen for full width */}
+      <Image
+        src="/hero-img-compressed.jpg"
+        alt="Hero background"
+        width={1920}
+        height={800}
+        priority
+        className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-screen h-[80vh] max-h-[800px] z-0"
+        style={{
+          position: "absolute",
+          height: "100vh",
+          maxHeight: "800px",
+          width: "100vw",
+          right: 0,
+          top: "50%",
+          transform: "translateY(-50%)",
+          objectFit: "contain",
+          objectPosition: "right center",
+          color: "transparent",
+        }}
+      />
+      {/* Mobile: half-circle image on right, vertically centered */}
+      <div className="sm:hidden absolute -right-20 top-1/2 -translate-y-1/2 h-[300px] w-full overflow-hidden z-0 flex items-center justify-end">
         <Image
           src="/hero-img-compressed.jpg"
           alt="Hero background"
-          width={800}
-          height={800}
+          width={180}
+          height={220}
           priority
-          className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-auto h-[80vh] max-h-[800px] z-0"
+          className="h-full w-full object-cover"
           style={{
-            position: "absolute",
-            height: "100vh",
-            maxHeight: "800px",
-            width: "auto",
-            right: 0,
-            top: "50%",
-            transform: "translateY(-50%)",
-            objectFit: "contain",
-            objectPosition: "center",
+            objectFit: "cover",
+            objectPosition: "right center",
+            borderTopLeftRadius: "9999px",
+            borderBottomLeftRadius: "9999px",
             color: "transparent",
           }}
         />
-        {/* Mobile: half-circle image on right, vertically centered */}
-        <div className="sm:hidden absolute -right-20 top-1/2 -translate-y-1/2 h-[300px] w-full overflow-hidden z-0 flex items-center justify-end">
-          <Image
-            src="/hero-img-compressed.jpg"
-            alt="Hero background"
-            width={180}
-            height={220}
-            priority
-            className="h-full w-full object-cover"
-            style={{
-              objectFit: "cover",
-              objectPosition: "right center",
-              borderTopLeftRadius: "9999px",
-              borderBottomLeftRadius: "9999px",
-              color: "transparent",
-            }}
-          />
-        </div>
-      </>
+      </div>
 
-      <div className="max-w-9xl mx-auto px-4 md:px-4 lg:px-16 xl:px-24 relative z-10 w-full bg-transparent flex flex-row items-center justify-between">
+      <div className="max-w-7xl [@media(max-width:1184px)]:px-4 sm:px-0 relative z-10 w-full bg-transparent flex flex-row items-center justify-start">
         {/* Left Content */}
         <HeroLeftContent />
       </div>

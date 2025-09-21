@@ -158,7 +158,7 @@ export default function Navbar({
         pointerEvents: showNavbar ? "auto" : "none",
       }}
     >
-      <div className="max-w-9xl w-full mx-auto [@media(max-width:1184px)]:py-2 sm:py-6 [@media(max-width:1184px)]:px-2 sm:px-16">
+      <div className="max-w-7xl w-full mx-auto [@media(max-width:1184px)]:py-2 sm:py-6 [@media(max-width:1184px)]:px-2 sm:px-0">
         {/* Desktop Navbar (≥1185px) */}
         <div className="hidden [@media(min-width:1185px)]:flex items-center justify-between">
           <div className="flex items-center space-x-12">

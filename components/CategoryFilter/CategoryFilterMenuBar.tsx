@@ -145,7 +145,7 @@ export const CategoryFilterMenuBar: React.FC<CategoryFilterMenuBarProps> = ({
 
   return (
     <div
-      className="bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-4 sm:py-4 w-full max-w-9xl mx-auto flex flex-col justify-center items-center"
+      className="bg-[#E6FAFC] border-0 rounded-[20px] shadow-none px-2 py-4 sm:px-0 sm:py-4 w-full max-w-7xl mx-auto flex flex-col justify-center items-center"
       style={{ minWidth: 0, minHeight: 80 }}
     >
       {/* Responsive grid: 1 column for all screens below 911px, 4 columns for ≥911px */}

@@ -192,7 +192,7 @@ export default function ReviewCard(props: ReviewCardProps) {
   if (!isHydrated) {
     // Render only a placeholder (no carousel markup) during SSR to avoid hydration error
     return (
-      <section className="max-w-9xl mx-auto px-1 sm:px-4 py-4 sm:py-8 w-full overflow-x-hidden">
+      <section className="max-w-7xl mx-auto px-1 sm:px-0 py-4 sm:py-8 w-full overflow-x-hidden">
         <div className="w-full">
           <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
             {t("home.reviews.title")}
@@ -206,7 +206,7 @@ export default function ReviewCard(props: ReviewCardProps) {
   }
 
   return (
-    <section className="max-w-9xl mx-auto py-4 sm:py-8 w-full overflow-x-hidden">
+    <section className="max-w-7xl mx-auto py-4 sm:py-8 w-full overflow-x-hidden">
       <div className="w-full">
         <h2 className="text-3xl sm:text-4xl font-semibold text-gray-900 text-center pb-8">
           {t("home.reviews.title")}

@@ -5,6 +5,7 @@ import { Search, Menu, X, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContextNew";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 
 type NavbarProps = {
@@ -18,6 +19,9 @@ export default function Navbar({
 }: NavbarProps) {
   const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
   const { t } = useLanguage();
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  const [isInHeroSection, setIsInHeroSection] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
@@ -49,6 +53,13 @@ export default function Navbar({
         setShowNavbar(true); // Always visible on mobile
       }
 
+      // Check if we're in hero section (for homepage only)
+      if (isHomePage) {
+        // Estimate hero section height - adjust this value based on your hero section height
+        const heroSectionHeight = window.innerHeight * 0.8; // 80% of viewport height
+        setIsInHeroSection(window.scrollY < heroSectionHeight);
+      }
+
       // Close mobile menu when scrolling down (but not when search is focused)
       if (!isAtTop && mobileMenuOpen && !searchFocused) {
         setMobileMenuOpen(false);
@@ -57,7 +68,7 @@ export default function Navbar({
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [mobileMenuOpen, searchFocused]);
+  }, [mobileMenuOpen, searchFocused, isHomePage]);
 
   // Add search functionality
   useEffect(() => {
@@ -143,7 +154,13 @@ export default function Navbar({
 
   return (
     <header
-      className="w-full bg-white [@media(max-width:1184px)]:bg-white sm:bg-transparent text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300"
+      className={`w-full text-[1.1rem] fixed top-0 left-0 z-50 transition-transform duration-300 ${
+        isHomePage
+          ? isInHeroSection
+            ? "[@media(max-width:1184px)]:bg-transparent sm:bg-transparent"
+            : "[@media(max-width:1184px)]:bg-white sm:bg-transparent"
+          : "[@media(max-width:1184px)]:bg-white sm:bg-transparent"
+      }`}
       style={{
         transform: showNavbar ? "translateY(0)" : "translateY(-100%)",
         pointerEvents: showNavbar ? "auto" : "none",
@@ -159,7 +176,11 @@ export default function Navbar({
               style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
             >
               <Image
-                src="/logo-black.svg"
+                src={
+                  isHomePage && isInHeroSection
+                    ? "/logo-white.svg"
+                    : "/logo-black.svg"
+                }
                 alt="SNUZZ"
                 width={120}
                 height={48}
@@ -184,7 +205,9 @@ export default function Navbar({
               <a
                 key={index}
                 href={item.href}
-                className="relative font-large hover:text-[#3AF0F7] transition-all duration-300 flex items-center justify-center"
+                className={`relative font-large hover:text-[#3AF0F7] transition-all duration-300 flex items-center justify-center ${
+                  isHomePage && isInHeroSection ? "text-white" : "text-gray-900"
+                }`}
                 style={{
                   minWidth: 90,
                   maxWidth: 110,
@@ -203,14 +226,20 @@ export default function Navbar({
           {/* Search and Cart buttons (desktop) */}
           <div className="flex items-center space-x-4">
             <div className="relative hidden sm:block">
-              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
+              <Search
+                className={`absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 z-10 ${
+                  isHomePage && isInHeroSection ? "text-white" : "text-gray-400"
+                }`}
+              />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                 // placeholder={t("nav.search.placeholder")}
-                className="pl-8 pr-3 py-1.5 w-48 h-8 text-sm text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff]"
+                className={`pl-8 pr-3 py-1.5 w-48 h-8 text-md border border-[#E0E0E0] rounded-[6px] focus:outline-none focus:ring-2 focus:ring-gray-300 bg-transparent ${
+                  isHomePage && isInHeroSection ? "text-white" : "text-gray-600"
+                }`}
               />
               {showSearchResults && (
                 <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-2xl z-50 w-[300px] max-h-[390px] overflow-y-auto">
@@ -465,16 +494,28 @@ export default function Navbar({
           <Button
             variant="ghost"
             size="icon"
-            className=""
+            className={`${
+              isHomePage && isInHeroSection
+                ? "bg-white/22 hover:bg-slate-400 border border-[#A4EDF8] rounded-[6px] w-[47px] h-[38px] p-0"
+                : "bg-white/22 border border-[#A4EDF8] rounded-[6px] w-[47px] h-[38px] p-0"
+            }`}
             onClick={() => {
               // Ensure state is properly synchronized
               setMobileMenuOpen((prev) => !prev);
             }}
           >
             {mobileMenuOpen ? (
-              <X className="w-12 h-12" />
+              <X
+                className={`w-12 h-12 ${
+                  isHomePage && isInHeroSection ? "text-white" : "text-gray-900"
+                }`}
+              />
             ) : (
-              <Menu className="w-12 h-12" />
+              <Menu
+                className={`w-12 h-12 ${
+                  isHomePage && isInHeroSection ? "text-white" : "text-gray-900"
+                }`}
+              />
             )}
           </Button>
           {/* Center logo */}
@@ -484,7 +525,11 @@ export default function Navbar({
             style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
           >
             <Image
-              src="/logo-black.svg"
+              src={
+                isHomePage && isInHeroSection
+                  ? "/logo-white.svg"
+                  : "/logo-black.svg"
+              }
               alt="SNUZZ"
               width={120}
               height={48}
@@ -496,11 +541,11 @@ export default function Navbar({
           <Button
             variant="ghost"
             onClick={() => setCartOpen(true)}
-            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-gray-900 transition-all duration-300 transform hover:scale-110 rounded-md h-8 px-2"
+            className="relative bg-gradient-to-r from-[#3AF0F7] to-[#8ef7fb] hover:from-[#2de0e7] hover:to-[#7ee6ea] text-gray-900 transition-all duration-200 transform rounded-[6px] border border-gray-200 w-[47px] h-[38px] p-0"
           >
-            <ShoppingBag className="w-4 h-4" />
+            <ShoppingBag className="w-8 h-8" />
             {hydrated && getTotalItems() > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold animate-pulse">
                 {getTotalItems()}
               </span>
             )}
@@ -538,7 +583,7 @@ export default function Navbar({
             </div>
 
             {/* Search Section - Always visible */}
-            <div className="px-4 pt-1 pb-2 relative">
+            <div className="px-4 pt-2 pb-2 relative">
               <Search className="absolute left-6 top-[calc(50%)] transform -translate-y-1/2 text-gray-400 w-4 h-4 z-10" />
               <div className="w-full max-w-full overflow-x-hidden">
                 <input
@@ -556,7 +601,7 @@ export default function Navbar({
                         const inputRect = searchInput.getBoundingClientRect();
                         // Calculate how much to scroll to keep input visible
                         const scrollAdjustment =
-                          inputRect.top - window.innerHeight / 2;
+                          inputRect.top - window.innerHeight / 3;
 
                         if (scrollAdjustment < 0) {
                           // Scroll up to keep input visible
@@ -570,7 +615,7 @@ export default function Navbar({
                   }}
                   onBlur={() => setTimeout(() => setSearchFocused(false), 200)}
                   placeholder={t("nav.search.placeholder")}
-                  className={`w-full pl-8 pr-4 py-2 text-base text-[16px] text-gray-600 border border-[#E0E0E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8ffaff] transition-all duration-300 ${
+                  className={`w-full pl-8 pr-4 py-2 text-md text-gray-600 border border-[#E0E0E0] rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300 ${
                     searchFocused ? "border-[#3AF0F7] bg-blue-50/30" : ""
                   }`}
                 />

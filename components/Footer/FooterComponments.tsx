@@ -123,7 +123,7 @@ export function FooterLogoSocial() {
     <div className="sm:col-span-2 lg:col-span-1 text-center flex flex-col relative h-full min-h-[120px]">
       <a href="/" aria-label="Go to homepage">
         <Image
-          src="/logo.svg"
+          src="/logo-black.svg"
           alt="SNUZZ"
           width={120}
           height={40}

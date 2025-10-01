@@ -4,7 +4,7 @@ export const translations = {
     // Navigation
     "nav.shop": "Shop",
     "nav.brands": "Brands",
-    "nav.flavor": "Flavor",
+    "nav.flavor": "Flavours",
     "nav.strength": "Strength",
     "nav.snuzzpro": "snuzzPRO",
     "nav.search.placeholder": "Search products...",
@@ -40,7 +40,7 @@ export const translations = {
     "footer.favorites.killaGrape": "Killa Grape Ice",
     "footer.favorites.puffGrape": "Puff & Pouch Grape",
     "footer.information.title": "Information",
-    "footer.information.terms": "Terms of Service",
+    "footer.information.terms": "Terms and Conditions",
     "footer.information.privacy": "Privacy Policy",
     "footer.information.refund": "Refund Policy",
     "footer.information.faq": "FAQ",
@@ -52,7 +52,7 @@ export const translations = {
     "products.subtitle": "Discover our most popular nicotine products",
     "products.filteredBy": "Filtered by:",
     "products.filter.brands": "Brands:",
-    "products.filter.flavors": "Flavors:",
+    "products.filter.flavors": "Flavours:",
     "products.filter.strength": "Strength:",
     "products.filter.sort": "Sort:",
     "products.sort.priceLowToHigh": "Price Low to High",
@@ -244,8 +244,8 @@ export const translations = {
     "home.products.showAll": "Show all",
     "home.features.bestPrice.line1": "Best Price",
     "home.features.bestPrice.line2": "on Market",
-    "home.features.freeShipping.line1": "Free Shipping",
-    "home.features.freeShipping.line2": "in EU",
+    "home.features.freeShipping.line1": "Free",
+    "home.features.freeShipping.line2": "Shipping",
     "home.features.exclusiveBrands.line1": "Exclusive",
     "home.features.exclusiveBrands.line2": "Brands",
     "home.reviews.title": "Reviews",
@@ -294,7 +294,7 @@ export const translations = {
       {
         name: "Verified Customer",
         review: "Unfortunately, shipping was very slow. Otherwise, great!",
-        rating: 3,
+        rating: 4,
       },
       {
         name: "Verified Customer",
@@ -353,8 +353,8 @@ export const translations = {
       },
       {
         name: "Verified Customer",
-        review: "Good snus, one order took 10 days to arrive",
-        rating: 2,
+        review: "order took 10 days to arrive",
+        rating: 3,
       },
       {
         name: "Matteo",
@@ -375,7 +375,7 @@ export const translations = {
       {
         name: "Verified Customer",
         review: "I received a different flavor",
-        rating: 2,
+        rating: 3,
       },
       {
         name: "Verified Customer",
@@ -460,7 +460,7 @@ export const translations = {
     "hero.rating": "4.47 | 537 Opinii",
     "hero.title.line1": "Już nigdy nie",
     "hero.title.line2": "zabraknie Ci snusu",
-    "hero.subtitle.line1": "Ogromny wybór najlepszych marek,",
+    "hero.subtitle.line1": "Ogromny wybór najlepszych marek",
     "hero.subtitle.line2": "wyjątkowych smaków i różne moce w super cenach",
     "hero.subtitle.line3": "i z darmową dostawą",
     "hero.buyNow": "Kup teraz",
@@ -522,7 +522,7 @@ export const translations = {
     "pro.hero.scrollDown": "Przewijaj",
     "pro.product.unleashPower": "Weź odpowiedzialność za swoje zdrowie dzięki",
     "pro.product.knowledge": "za swoje zdrowie dzięki snuzz PRO",
-    "pro.product.cancelAnytime": "Anuluj w dowolnym momencie",
+    "pro.product.cancelAnytime": "Anuluj w każdej chwili",
     "pro.product.knowledgeHours": "Ponad 6 godzin teorii",
     "pro.product.knowRisks": "Poznaj ryzyko",
     "pro.product.avoidAddiction": "Unikaj uzależnienia",
@@ -568,7 +568,7 @@ export const translations = {
       "Zamówienia zazwyczaj docierają w ciągu 1-5 dni roboczych, — w zależności od wybranej metody dostawy i lokalizacji.",
     "contact.faq.refunds.question": "Czy oferujecie zwroty?",
     "contact.faq.refunds.answer":
-      "Tak. W Europie konsument ma prawo do 14-dniowego odstąpienia od umowy, co pozwala na zwrot zakupionego towaru bez podania przyczyny. Zwrot obejmuje pełną kwotę, łącznie z kosztami dostawy, pod warunkiem że produkt nie został uszkodzony lub użyty. Pamiętaj, że nie oferujemy zwrotów dla platformy snuzz PRO z powodu jej cyfrowego charakteru. Rozumiemy, że w życiu mogą zdarzyć się wyjątkowe sytuacje – dlatego w szczególnych przypadkach rozpatrujemy reklamacje indywidualnie. Jeśli uważasz, że Twoja sytuacja wymaga wyjątku od naszej polityki zwrotów, skontaktuj się z naszym zespołem wsparcia.",
+      "Tak. W Europie konsument ma prawo do 14-dniowego odstąpienia od umowy, co pozwala na zwrot zakupionego towaru bez podania przyczyny. Zwrot obejmuje pełną kwotę, łącznie z kosztami dostawy, pod warunkiem że produkt nie został uszkodzony lub użyty. Pamiętaj, że nie oferujemy zwrotów dla platformy snuzz PRO z powodu jej cyfrowego charakteru. Rozumiemy, że w życiu mogą zdarzyć się wyjątkowe sytuacje – dlatego w szczególnych przypadkach rozpatrujemy reklamacje indywidualnie. Jeśli uważasz, że Twoja sytuacja wymaga wyjątku od naszej polityki zwrotów, skontaktuj się z naszym działem obsługi klienta.",
     "contact.faq.response.question": "Jak długo trwa otrzymanie odpowiedzi?",
     "contact.faq.response.answer":
       "Zazwyczaj nasz zespół wsparcia odpowie na Twoją wiadomość w ciągu około 24 godzin.",
@@ -908,7 +908,7 @@ export const translations = {
     "hero.title.line1": "Nie wieder ohne",
     "hero.title.line2": "Nikotin-Pouches dastehen!",
     "hero.subtitle.line1":
-      "Wähle aus einer riesigen Auswahl exklusiver Marken,",
+      "Wähle aus einer riesigen Auswahl exklusiver Marken",
     "hero.subtitle.line2": "Geschmacksrichtungen und Stärken zum besten Preis",
     "hero.subtitle.line3": "am Markt und mit kostenlosem Versand",
     "hero.buyNow": "Jetzt kaufen",
@@ -1358,9 +1358,9 @@ export const translations = {
     "hero.title.line1": "Došli vám",
     "hero.title.line2": "nikotinové sáčky?",
     "hero.subtitle.line1":
-      "Vyberte si z obrovského sortimentu exkluzivních značek,",
+      "Vyberte si z obrovského sortimentu exkluzivních značek",
     "hero.subtitle.line2": "příchutí a intenzity za nejlepší ceny na trhu",
-    "hero.subtitle.line3": "s dopravou zdarma.",
+    "hero.subtitle.line3": "s dopravou zdarma",
     "hero.buyNow": "Nakupovat",
     "hero.stats.ordersToday": "Objednávek dnes",
     "hero.stats.orders": "Objednávek",
@@ -1370,7 +1370,7 @@ export const translations = {
     "footer.shop.title": "Obchod",
     "footer.shop.brands": "Značky",
     "footer.shop.flavours": "Příchutě",
-    "footer.shop.strength": "Síla",
+    "footer.shop.strength": "Intenzita",
     "footer.shop.snuzzpro": "snuzz PRO",
     "footer.favorites.title": "Oblíbené",
     "footer.favorites.zynAppleMint": "ZYN Apple Mint",
@@ -1420,7 +1420,7 @@ export const translations = {
     "pro.hero.scrollDown": "Skroluj",
     "pro.product.unleashPower": "Uvolněte sílu",
     "pro.product.knowledge": "znalostí s snuzz PRO",
-    "pro.product.cancelAnytime": "Zrušit kdykoli",
+    "pro.product.cancelAnytime": "Zrušte kdykoli",
     "pro.product.knowledgeHours": "6+ hodin teorie",
     "pro.product.knowRisks": "Poznejte rizika",
     "pro.product.avoidAddiction": "Vyhněte se závislosti",
@@ -1459,13 +1459,13 @@ export const translations = {
     "contact.faq.title": "Často kladené otázky (FAQ)",
     "contact.faq.shipping.question": "Zasíláte zboží do celého světa?",
     "contact.faq.shipping.answer":
-      "Zaměřujeme se především na evropský trh, můžeme ale zasílat zboží i do jiných regionů.  Upozorňujeme, že ceny za dopravu budou přepočítány na základě vaší adresy.",
+      "Zaměřujeme se především na evropský trh, můžeme ale zasílat zboží i do jiných regionů. Upozorňujeme, že ceny za dopravu budou přepočítány na základě vaší adresy.",
     "contact.faq.delivery.question": "Jak dlouho trva doručení objednávky?",
     "contact.faq.delivery.answer":
       "Objednávky jsou obvykle doručeny do 1–5 pracovních dnů, v závislosti na typu dopravy, který jste si vybrali, a na vaší lokalitě.",
-    "contact.faq.refunds.question": "Nabízíte vrácení peněz??",
+    "contact.faq.refunds.question": "Nabízíte vrácení peněz?",
     "contact.faq.refunds.answer":
-      "Ano, v Evropě mají spotřebitelé 14 denní právo na odstoupení od smlouvy, které jim umožňuje vrátit zboží zakoupené online bez udání důvodu.Toto právo zaručuje plnou náhradu, včetně nákladů na dopravu, pokud není vrácené zboží poškozené nebo použité.Upozorňujeme, z důvodu digitální povahy platformy snuzz PRO předplatné nevracíme.Chápeme, že život může být nepředvídatelný a mohou nastat výjimečné okolnosti, které vyžadují individuální posouzení.Pokud se domníváte, že vaše situace opravňuje výjimku z našich zásad vrácení peněz, kontaktujte prosím náš tým podpory.",
+      "Ano, v Evropě mají spotřebitelé 14 denní právo na odstoupení od smlouvy, které jim umožňuje vrátit zboží zakoupené online bez udání důvodu. Toto právo zaručuje plnou náhradu, včetně nákladů na dopravu, pokud není vrácené zboží poškozené nebo použité. Upozorňujeme, z důvodu digitální povahy platformy snuzz PRO předplatné nevracíme. Chápeme, že život může být nepředvídatelný a mohou nastat výjimečné okolnosti, které vyžadují individuální posouzení. Pokud se domníváte, že vaše situace opravňuje výjimku z našich zásad vrácení peněz, kontaktujte prosím náš tým podpory.",
     "contact.faq.response.question": "Jak dlouho trvá, než dostanu odpověď?",
     "contact.faq.response.answer":
       "Náš tým podpory obvykle odpoví na vaši zprávu do 24 hodin.",

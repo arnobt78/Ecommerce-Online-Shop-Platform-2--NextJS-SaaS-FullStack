@@ -47,22 +47,20 @@ export default function HeroSection() {
             <div className="max-w-[800px] flex flex-col items-start">
               {/* Hero left content */}
               {/* Review badge */}
-              <div className="bg-white/20 rounded px-2 py-1.5 text-white text-xs font-normal font-inter leading-none inline-block backdrop-blur-sm">
+              <div className="bg-white/20 rounded px-2 py-1.5 text-white text-md font-normal leading-none inline-block backdrop-blur-sm">
                 {/* ★★★★★ 4.47 | 537 Reviews */}
                 ★★★★★ {t("hero.rating")}
               </div>
 
               {/* Heading */}
-              <h1 className="text-white text-6xl font-bold font-inter">
+              <h1 className="text-white text-6xl font-bold">
                 {t("hero.title.line1")}
                 <br />
                 {t("hero.title.line2")}
               </h1>
-              {/* <h1 className="text-white text-6xl font-normal font-inter mb-4">
-            of snus again
-          </h1> */}
+
               {/* Subtitle */}
-              <div className="text-white text-xl font-normal font-inter leading-normal mb-8 max-w-[500px]">
+              <div className="text-white text-xl font-normal leading-normal mb-8 max-w-[500px]">
                 {t("hero.subtitle.line1")}
                 <br />
                 {t("hero.subtitle.line2")}
@@ -131,28 +129,26 @@ export default function HeroSection() {
               {/* Stats row */}
               <div className="flex flex-row items-center gap-8 mt-2">
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-bold font-inter">
-                    47
-                  </span>
-                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                  <span className="text-white text-5xl font-extrabold">47</span>
+                  <span className="text-white text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.ordersToday")}
                   </span>
                 </div>
                 <div className="h-14 w-px bg-white" />
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-bold font-inter">
+                  <span className="text-white text-5xl font-extrabold">
                     7000+
                   </span>
-                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                  <span className="text-white text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.orders")}
                   </span>
                 </div>
                 <div className="h-14 w-px bg-white" />
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-bold font-inter">
+                  <span className="text-white text-5xl font-extrabold">
                     4000+
                   </span>
-                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                  <span className="text-white text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.customers")}
                   </span>
                 </div>

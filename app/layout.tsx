@@ -63,7 +63,7 @@ export default async function RootLayout({
     "@type": "Organization",
     name: "Snuzz Pro",
     url: "https://snuzz-pro.vercel.app",
-    logo: "https://snuzz-pro.vercel.app/logo.svg",
+    logo: "https://snuzz-pro.vercel.app/logo-black.svg",
     description:
       "Premium nicotine pouches and snus online store with huge assortment of exclusive brands, flavors, and strengths. Best prices on market with free shipping.",
     foundingDate: "2025",

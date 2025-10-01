@@ -1,19 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Search,
-  ShoppingCart,
-  Menu,
-  X,
-  Plus,
-  Star,
-  ShoppingBag,
-} from "lucide-react";
+import { Search, Menu, X, ShoppingBag } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useLanguage } from "@/context/LanguageContextNew";
-// import { LanguageSelector } from "@/components/LanguageSelector/LanguageSelector";
 import Image from "next/image";
 
 type NavbarProps = {
@@ -168,7 +159,7 @@ export default function Navbar({
               style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
             >
               <Image
-                src="/logo.svg"
+                src="/logo-black.svg"
                 alt="SNUZZ"
                 width={120}
                 height={48}
@@ -493,7 +484,7 @@ export default function Navbar({
             style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
           >
             <Image
-              src="/logo.svg"
+              src="/logo-black.svg"
               alt="SNUZZ"
               width={120}
               height={48}

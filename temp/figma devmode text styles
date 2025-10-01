@@ -1,0 +1,98 @@
+// Never run out 
+text-white
+text-4xl
+font-bold
+font-['Inter']
+leading-9
+---
+// of snus again
+text-white
+text-4xl
+font-normal
+font-['Inter']
+leading-9
+---
+// Choose from huge sortiment of exclusive brands, flavors and strength for best price on market with free shipping.
+text-white
+text-base
+font-normal
+font-['Inter']
+leading-tight
+---
+// Buy now
+text-gray-900
+text-base
+font-normal
+font-['Inter']
+leading-tight
+[text-shadow:_0px_0px_5px_rgb(255_255_255_/_0.00)]
+---
+// 47
+text-white
+text-3xl
+font-bold
+font-['Inter']
+leading-loose
+---
+// Orders today
+text-white
+text-sm
+font-normal
+font-['Inter']
+leading-none
+---
+// 7000+
+text-white
+text-3xl
+font-bold
+font-['Inter']
+leading-loose
+---
+// Orders
+text-white
+text-sm
+font-normal
+font-['Inter']
+leading-none
+---
+// 4000+
+text-white
+text-3xl
+font-bold
+font-['Inter']
+leading-loose
+---
+// Customers
+text-white
+text-sm
+font-normal
+font-['Inter']
+leading-none
+---
+// Best Price on Market
+text-gray-900
+text-base
+font-normal
+font-['Inter']
+leading-tight
+---
+// Free Shipping in EU
+text-gray-900
+text-base
+font-normal
+font-['Inter']
+leading-tight
+---
+// Exclusive Brands
+text-gray-900
+text-base
+font-normal
+font-['Inter']
+leading-tight
+---
+// 4.47 | 537 Reviews
+text-white
+text-xs
+font-normal
+font-['Inter']
+leading-none

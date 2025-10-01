@@ -1,4 +1,5 @@
 export const translations = {
+  // - - - - - - - - - - - - - - - - - - - - - English Texts - - - - - - - - - - - - - - - - - - - - -
   en: {
     // Navigation
     "nav.shop": "Shop",
@@ -17,13 +18,11 @@ export const translations = {
 
     // Hero Section
     "hero.rating": "4.47 | 537 Reviews",
-    "hero.title": "Never run out of snus again",
-    "hero.title.mobile":
-      'Never run out <br className="block sm:hidden" /> of snus again',
-    "hero.subtitle":
-      "Choose from huge sortiment of exclusive brands, flavors and strength for best price on market with free shipping.",
-    "hero.subtitle.mobile":
-      'Choose from huge <br className="block sm:hidden" /> sortiment of exclusive <br /> brands, flavors and  strength <br /> for best price on market <br /> with free shipping.',
+    "hero.title.line1": "Never run out",
+    "hero.title.line2": "of snus again",
+    "hero.subtitle.line1": "Choose from huge sortiment of exclusive brands,",
+    "hero.subtitle.line2": "flavors and strength for best price on market with",
+    "hero.subtitle.line3": "free shipping.",
     "hero.buyNow": "Buy now",
     "hero.stats.ordersToday": "Orders today",
     "hero.stats.orders": "Orders",
@@ -243,9 +242,12 @@ export const translations = {
     "home.loading": "Loading...",
     "home.products.bestSelling": "Best Selling",
     "home.products.showAll": "Show all",
-    "home.features.bestPrice": "Best Price on Market",
-    "home.features.freeShipping": "Free Shipping in EU",
-    "home.features.exclusiveBrands": "Exclusive Brands",
+    "home.features.bestPrice.line1": "Best Price",
+    "home.features.bestPrice.line2": "on Market",
+    "home.features.freeShipping.line1": "Free Shipping",
+    "home.features.freeShipping.line2": "in EU",
+    "home.features.exclusiveBrands.line1": "Exclusive",
+    "home.features.exclusiveBrands.line2": "Brands",
     "home.reviews.title": "Reviews",
     "home.reviews.testimonials": [
       {
@@ -436,6 +438,8 @@ export const translations = {
     "common.next": "Next",
     "common.previous": "Previous",
   },
+
+  // - - - - - - - - - - - - - - - - - - - - - Polish Texts - - - - - - - - - - - - - - - - - - - - -
   pl: {
     // Navigation
     "nav.shop": "Sklep",
@@ -454,13 +458,11 @@ export const translations = {
 
     // Hero Section
     "hero.rating": "4.47 | 537 Opinii",
-    "hero.title": "Już nigdy nie zabraknie Ci snusu",
-    "hero.title.mobile":
-      'Już nigdy <br className="block sm:hidden" /> nie zabraknie Ci snusu',
-    "hero.subtitle":
-      "Ogromny wybór najlepszych marek, wyjątkowych smaków i różne moce w super cenach i z darmową dostawą",
-    "hero.subtitle.mobile":
-      'Ogromny wybór <br className="block sm:hidden" /> najlepszych marek, <br /> wyjątkowych smaków <br className="block sm:hidden" /> i różne moce <br /> w super cenach <br /> i z darmową dostawą.',
+    "hero.title.line1": "Już nigdy nie",
+    "hero.title.line2": "zabraknie Ci snusu",
+    "hero.subtitle.line1": "Ogromny wybór najlepszych marek,",
+    "hero.subtitle.line2": "wyjątkowych smaków i różne moce w super cenach",
+    "hero.subtitle.line3": "i z darmową dostawą",
     "hero.buyNow": "Kup teraz",
     "hero.stats.ordersToday": "Zamówienia dzisiaj",
     "hero.stats.orders": "Zamówienia",
@@ -683,9 +685,12 @@ export const translations = {
     "home.loading": "Ładowanie...",
     "home.products.bestSelling": "Bestsellery",
     "home.products.showAll": "Pokaż wszystkie",
-    "home.features.bestPrice": "Najlepsze ceny na rynku",
-    "home.features.freeShipping": "Darmowa dostawa w EU",
-    "home.features.exclusiveBrands": "Ekskluzywne marki",
+    "home.features.bestPrice.line1": "Najlepsze ceny",
+    "home.features.bestPrice.line2": "na rynku",
+    "home.features.freeShipping.line1": "Darmowa dostawa",
+    "home.features.freeShipping.line2": "w EU",
+    "home.features.exclusiveBrands.line1": "Ekskluzywne",
+    "home.features.exclusiveBrands.line2": "marki",
     "home.reviews.title": "Opinie",
     "home.reviews.testimonials": [
       {
@@ -880,6 +885,8 @@ export const translations = {
     "common.next": "Dalej",
     "common.previous": "Poprzedni",
   },
+
+  // - - - - - - - - - - - - - - - - - - - - - German Texts - - - - - - - - - - - - - - - - - - - - -
   de: {
     // Navigation
     "nav.shop": "Shop",
@@ -898,17 +905,12 @@ export const translations = {
 
     // Hero Section
     "hero.rating": "4.47 | 537 Bewertungen",
-    "hero.title": "Nie wieder ohne Nikotin-Pouches dastehen!",
-    "hero.title.mobile":
-      'Nie wieder <br className="br-870 sm:hidden" /> Nikotin-Pouches dastehen!',
-    // "hero.title.mobile":
-    //   'Nie wieder <br className="block sm:hidden" /> Nikotin-Pouches dastehen!',
-    // "hero.title.mobile":
-    //   'Nie wieder <br className="[max-width:870px]:block sm:hidden" /> Nikotin-Pouches dastehen!',
-    "hero.subtitle":
-      "Wähle aus einer riesigen Auswahl exklusiver Marken, Geschmacksrichtungen und Stärken zum besten Preis am Markt und mit kostenlosem Versand",
-    "hero.subtitle.mobile":
-      'Wähle aus einer riesigen <br className="block sm:hidden" /> Auswahl exklusiver Marken, <br /> Geschmacksrichtungen  <br className="block sm:hidden" /> und Stärken <br /> zum besten Preis am Markt und <br /> mit kostenlosem Versand',
+    "hero.title.line1": "Nie wieder ohne",
+    "hero.title.line2": "Nikotin-Pouches dastehen!",
+    "hero.subtitle.line1":
+      "Wähle aus einer riesigen Auswahl exklusiver Marken,",
+    "hero.subtitle.line2": "Geschmacksrichtungen und Stärken zum besten Preis",
+    "hero.subtitle.line3": "am Markt und mit kostenlosem Versand",
     "hero.buyNow": "Jetzt kaufen",
     "hero.stats.ordersToday": "Bestellungen heute",
     "hero.stats.orders": "Bestellungen",
@@ -1134,9 +1136,12 @@ export const translations = {
     "home.loading": "Laden...",
     "home.products.bestSelling": "Bestsellers",
     "home.products.showAll": "Alle",
-    "home.features.bestPrice": "Beste Marktpreise",
-    "home.features.freeShipping": "Kostenloser Versand in der EU",
-    "home.features.exclusiveBrands": "Exklusive Marken",
+    "home.features.bestPrice.line1": "Beste",
+    "home.features.bestPrice.line2": "Marktpreise",
+    "home.features.freeShipping.line1": "Kostenloser Versand",
+    "home.features.freeShipping.line2": "in der EU",
+    "home.features.exclusiveBrands.line1": "Exklusive",
+    "home.features.exclusiveBrands.line2": "Marken",
     "home.reviews.title": "Bewertungen",
     "home.reviews.testimonials": [
       {
@@ -1330,6 +1335,8 @@ export const translations = {
     "common.next": "Weiter",
     "common.previous": "Vorherige",
   },
+
+  // - - - - - - - - - - - - - - - - - - - - - Czech Texts - - - - - - - - - - - - - - - - - - - - -
   cs: {
     // Navigation
     "nav.shop": "Obchod",
@@ -1348,13 +1355,12 @@ export const translations = {
 
     // Hero Section
     "hero.rating": "4.47 | 537 Recenzí",
-    "hero.title": "Došli vám nikotinové sáčky?",
-    "hero.title.mobile":
-      'Došli vám <br className="block sm:hidden" /> nikotinové sáčky?',
-    "hero.subtitle":
-      "Vyberte si z obrovského sortimentu exkluzivních značek, příchutí a intenzity za nejlepší ceny na trhu s dopravou zdarma.",
-    "hero.subtitle.mobile":
-      'Vyberte si z obrovského <br className="block sm:hidden" /> sortimentu exkluzivních <br /> značek, příchutí a sil <br /> za nejlepší cenu na trhu <br /> s dopravou zdarma.',
+    "hero.title.line1": "Došli vám",
+    "hero.title.line2": "nikotinové sáčky?",
+    "hero.subtitle.line1":
+      "Vyberte si z obrovského sortimentu exkluzivních značek,",
+    "hero.subtitle.line2": "příchutí a intenzity za nejlepší ceny na trhu",
+    "hero.subtitle.line3": "s dopravou zdarma.",
     "hero.buyNow": "Nakupovat",
     "hero.stats.ordersToday": "Objednávek dnes",
     "hero.stats.orders": "Objednávek",
@@ -1577,9 +1583,12 @@ export const translations = {
     "home.loading": "Načítání...",
     "home.products.bestSelling": "Nejprodávanější",
     "home.products.showAll": "Zobrazit všechny",
-    "home.features.bestPrice": "Nejlepší ceny na trhu",
-    "home.features.freeShipping": "Doprava zdarma v EU",
-    "home.features.exclusiveBrands": "Exkluzivní značky",
+    "home.features.bestPrice.line1": "Nejlepší ceny",
+    "home.features.bestPrice.line2": "na trhu",
+    "home.features.freeShipping.line1": "Doprava zdarma",
+    "home.features.freeShipping.line2": "v EU",
+    "home.features.exclusiveBrands.line1": "Exkluzivní",
+    "home.features.exclusiveBrands.line2": "značky",
     "home.reviews.title": "Recenze",
     "home.reviews.testimonials": [
       {

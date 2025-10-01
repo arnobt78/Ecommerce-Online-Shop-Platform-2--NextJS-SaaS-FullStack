@@ -1,254 +1,326 @@
-// --- Imports for merged components ---
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import CountUp from "react-countup";
 import * as React from "react";
 import { useLanguage } from "@/context/LanguageContextNew";
 import Image from "next/image";
 
-// --- HeroStats: Stats with animated numbers ---
-const HeroStats = () => {
+export default function HeroSection() {
   const { t } = useLanguage();
+  // const [isHydrated, setIsHydrated] = React.useState(false);
 
-  // Static stats, translation only, no counter animation
-  const stats = [
-    { num: 47, text: t("hero.stats.ordersToday") },
-    { num: 7000, text: t("hero.stats.orders"), suffix: "+" },
-    { num: 4000, text: t("hero.stats.customers"), suffix: "+" },
-  ];
+  // Ensure we only render translations after hydration
+  // React.useEffect(() => {
+  //   setIsHydrated(true);
+  // }, []);
+
+  // // Helper function to render HTML from translation strings
+  // const renderTranslation = (key: string) => {
+  //   const text = t(key);
+  //   // Parse HTML tags from the translation string
+  //   return text.split(/(<br[^>]*\/>)/).map((part, index) => {
+  //     if (part.startsWith("<br")) {
+  //       // Extract className from the br tag
+  //       const classNameMatch = part.match(/className="([^"]*)"/);
+  //       const className = classNameMatch ? classNameMatch[1] : "";
+  //       return <br key={index} className={className} />;
+  //     }
+  //     return part;
+  //   });
+  // };
+
   return (
-    <div className="w-full bg-transparent min-w-0 overflow-hidden">
-      <div className="flex flex-row flex-nowrap min-w-0 w-full bg-transparent overflow-hidden min-h-[60px]">
-        {stats.map((item, idx) => (
-          <React.Fragment key={item.text}>
-            <div
-              className={`flex-1 min-w-0 flex-shrink flex flex-col items-center justify-center bg-transparent px-2 py-2`}
-            >
-              <div className="flex flex-col items-center justify-center h-full min-w-0">
-                <div className="text-xl sm:text-4xl font-medium sm:font-semibold text-gray-900 mb-1 text-center truncate min-w-[60px]">
-                  <span>
-                    {item.num}
-                    {item.suffix || ""}
+    <div className="w-full bg-white pb-16">
+      {/* Hero image section */}
+      <div
+        className="relative w-full overflow-hidden"
+        style={{ height: "90vh", minHeight: "800px" }}
+      >
+        <img
+          src="/hero-section-img/hero-1.webp"
+          alt="Hero"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ objectPosition: "0px -450px" }}
+        />
+        {/* Content wrapper with max-w-7xl */}
+        <div className="absolute inset-0 w-full flex justify-center z-10">
+          <div className="max-w-7xl w-full flex items-start pt-[120px]">
+            <div className="max-w-[800px] flex flex-col items-start">
+              {/* Hero left content */}
+              {/* Review badge */}
+              <div className="bg-white/20 rounded px-2 py-1.5 text-white text-xs font-normal font-inter leading-none inline-block backdrop-blur-sm">
+                {/* ★★★★★ 4.47 | 537 Reviews */}
+                ★★★★★ {t("hero.rating")}
+              </div>
+
+              {/* Heading */}
+              <h1 className="text-white text-6xl font-bold font-inter">
+                {t("hero.title.line1")}
+                <br />
+                {t("hero.title.line2")}
+              </h1>
+              {/* <h1 className="text-white text-6xl font-normal font-inter mb-4">
+            of snus again
+          </h1> */}
+              {/* Subtitle */}
+              <div className="text-white text-xl font-normal font-inter leading-normal mb-8 max-w-[500px]">
+                {t("hero.subtitle.line1")}
+                <br />
+                {t("hero.subtitle.line2")}
+                <br />
+                {t("hero.subtitle.line3")}
+              </div>
+
+              {/* Buy now button */}
+              <Link href="/products">
+                <button
+                  className="relative w-full h-[51px] bg-[#42E5EE] rounded-[10px] flex items-center overflow-hidden mb-10 border-2 border-[#A4EDF8]"
+                  style={{ fontFamily: "Inter, sans-serif" }}
+                  type="button"
+                >
+                  {/* Background ellipse effect */}
+                  <div className="absolute right-[-25px] top-1/2 transform -translate-y-1/2 w-[77px] h-[75px] rounded-full bg-white opacity-30 mix-blend-soft-light" />
+
+                  {/* Button content */}
+                  <div className="flex w-full h-full items-center justify-between pl-6 pr-4 z-10 gap-2">
+                    <span className="text-text-gray-800 text-[20px] font-normal whitespace-nowrap">
+                      {t("hero.buyNow")}
+                    </span>
+                    <div className="relative flex items-center justify-center w-[52px] h-[52px] flex-shrink-0">
+                      <div className="pulse-circle absolute inset-0 rounded-full bg-[#BDF8FF] opacity-60"></div>
+                      <div className="absolute inset-0 rounded-full bg-[#A4EDF8] opacity-80 z-5"></div>
+                      <svg
+                        width="32"
+                        height="32"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="relative z-10"
+                      >
+                        <path
+                          d="M10 6.5L13.5 10M13.5 10H6.5M13.5 10L10 13.5"
+                          stroke="#111827"
+                          strokeWidth="1"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </button>
+                <style jsx>{`
+                  @keyframes pulse {
+                    0% {
+                      transform: scale(1);
+                      opacity: 0.6;
+                    }
+                    70% {
+                      transform: scale(2);
+                      opacity: 0;
+                    }
+                    100% {
+                      transform: scale(1);
+                      opacity: 0;
+                    }
+                  }
+                  .pulse-circle {
+                    animation: pulse 1.2s infinite;
+                  }
+                `}</style>
+              </Link>
+
+              {/* Stats row */}
+              <div className="flex flex-row items-center gap-8 mt-2">
+                <div className="flex flex-col items-center">
+                  <span className="text-white text-5xl font-bold font-inter">
+                    47
+                  </span>
+                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                    {t("hero.stats.ordersToday")}
                   </span>
                 </div>
-                <div className="text-xs sm:text-base text-gray-600 text-center truncate min-w-0">
-                  {item.text}
+                <div className="h-14 w-px bg-white" />
+                <div className="flex flex-col items-center">
+                  <span className="text-white text-5xl font-bold font-inter">
+                    7000+
+                  </span>
+                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                    {t("hero.stats.orders")}
+                  </span>
+                </div>
+                <div className="h-14 w-px bg-white" />
+                <div className="flex flex-col items-center">
+                  <span className="text-white text-5xl font-bold font-inter">
+                    4000+
+                  </span>
+                  <span className="text-white text-base font-normal font-inter leading-tight opacity-80">
+                    {t("hero.stats.customers")}
+                  </span>
                 </div>
               </div>
             </div>
-            {idx < stats.length - 1 && (
-              <div className="flex items-center flex-shrink-0">
-                <div className="h-10 sm:h-14 w-px bg-gray-200" />
-              </div>
-            )}
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-// --- HeroLeftContent: Main hero text, CTA, and stats ---
-function HeroLeftContent() {
-  const { t, language } = useLanguage();
-  const [isHydrated, setIsHydrated] = React.useState(false);
-
-  // Ensure we only render translations after hydration
-  React.useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  // Helper function to render HTML from translation strings
-  const renderTranslation = (key: string) => {
-    const text = t(key);
-    // Parse HTML tags from the translation string
-    return text.split(/(<br[^>]*\/>)/).map((part, index) => {
-      if (part.startsWith("<br")) {
-        // Extract className from the br tag
-        const classNameMatch = part.match(/className="([^"]*)"/);
-        const className = classNameMatch ? classNameMatch[1] : "";
-        return <br key={index} className={className} />;
-      }
-      return part;
-    });
-  };
-
-  // SSR/client output unified: always render translation-based layout
-
-  return (
-    <div className="flex flex-col justify-center items-start w-full max-w-xl sm:max-w-md md:max-w-lg lg:max-w-xl bg-transparent min-h-[400px]">
-      {/* Rating */}
-      <div className="flex items-center space-x-2">
-        <svg
-          width="20"
-          height="16"
-          viewBox="0 0 20 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M4.27372 15.7423L5.83717 10.0608L0.593597 6.23945L7.52088 5.73398L10.2148 0.376007L12.9088 5.73398L19.8361 6.23945L14.5925 10.0608L16.1559 15.7423L10.2148 12.7297L4.27372 15.7423Z"
-            fill="black"
-          />
-        </svg>
-        <span className="text-gray-500 text-xs">{t("hero.rating")}</span>
-      </div>
-      {/* Main Heading */}
-      <h1 className="text-4xl sm:text-4xl md:text-5xl font-semibold text-gray-900 leading-none sm:leading-tight whitespace-wrap md:whitespace-nowrap z-30 mb-2 text-left">
-        {renderTranslation("hero.title.mobile")}
-      </h1>
-      <h3 className="text-xl sm:text-2xl md:text-3xl text-gray-900 leading-tight whitespace-wrap md:whitespace-nowrap mb-8 z-30 text-left">
-        {renderTranslation("hero.subtitle.mobile")}
-      </h3>
-
-      {/* CTA Button */}
-      <div className="button-wrapper mb-12 flex">
-        <div className="button-container relative w-auto h-auto">
-          {/* Rotating border overlay - matches button size and border radius */}
-          <div
-            className="rotating-border pointer-events-none absolute top-0 left-0 w-full h-full z-50"
-            style={{ borderRadius: "16px", overflow: "hidden" }}
-          >
-            <svg
-              width="100%"
-              height="100%"
-              viewBox="0 0 144 58"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-full h-full"
-              preserveAspectRatio="none"
-              shapeRendering="geometricPrecision"
-              style={{ display: "block" }}
-            >
-              <rect
-                x="1"
-                y="1"
-                width="142"
-                height="56"
-                rx="16"
-                fill="none"
-                stroke="url(#border-gradient)"
-                strokeWidth="2"
-                strokeDasharray="120 240"
-                strokeDashoffset="0"
-                className="svg-border-anim"
-              />
-              <defs>
-                <linearGradient
-                  id="border-gradient"
-                  x1="0"
-                  y1="0"
-                  x2="144"
-                  y2="58"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#02000C" />
-                  <stop offset="1" stopColor="#02000C" />
-                </linearGradient>
-              </defs>
-            </svg>
           </div>
-          <Link href="/products">
-            <button
-              className="buy-button relative px-8 py-3 text-black text-lg font-inter font-medium flex items-center gap-2 rounded-2xl bg-[radial-gradient(38.76%_67.86%_at_48.35%_100%,_#FFFFFF_0%,_#3AD8E9_100%)] overflow-hidden"
-              style={{
-                minWidth: "140px",
-                minHeight: "54px",
-                borderRadius: "16px",
-                zIndex: 1,
-                margin: "2px",
-              }}
-              type="button"
-            >
-              <span style={{ whiteSpace: "nowrap" }}>{t("hero.buyNow")}</span>
-              <ArrowRight className="ml-2 h-5 w-5 flex-shrink-0" />
-              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-24 h-8 bg-white rounded-full z-10 blur-lg"></div>
-              <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur-md"></div>
-              <div className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-12 h-8 bg-white rounded-full z-10 blur"></div>
-            </button>
-          </Link>
-          <style jsx global>{`
-            @keyframes move-border-segment {
-              0% {
-                stroke-dashoffset: 0;
-              }
-              100% {
-                stroke-dashoffset: -360;
-              }
-            }
-            .svg-border-anim {
-              animation: move-border-segment 2.5s linear infinite;
-            }
-
-            .buy-button {
-              white-space: nowrap !important;
-            }
-            .buy-button span {
-              white-space: nowrap !important;
-            }
-            .rotating-border {
-              border-radius: 16px !important;
-            }
-          `}</style>
         </div>
       </div>
 
-      {/* Stats with vertical dividers */}
-      <div className="w-full">
-        <HeroStats />
+      {/* Feature cards section overlapping hero background */}
+      <div className="w-full flex justify-center mt-[-120px] relative z-20">
+        <div className="max-w-7xl w-full flex justify-center items-end relative">
+          <div
+            className="hidden md:block absolute left-0 bottom-0"
+            style={{ marginBottom: "0px" }}
+          >
+            <Image
+              src="/hero-section-img/pouch-left.webp"
+              alt="Snus pouch left"
+              width={90}
+              height={90}
+              style={{ pointerEvents: "none" }}
+            />
+          </div>
+          <div className="flex flex-row gap-16 bg-transparent pointer-events-auto">
+            {/* SVG 1: Best Price on Market */}
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+              <div className="flex items-center justify-center w-full flex-1">
+                <svg
+                  width="145"
+                  height="104"
+                  viewBox="0 0 145 104"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M78.711 13.4125C78.218 13.6918 77.7593 14.0288 77.3447 14.4165L75.0114 16.598L86.2273 26.8579C87.7971 28.294 88.9897 30.1216 89.6759 32.1435C90.3621 34.1654 90.5303 36.3465 90.1623 38.451L83.7369 75.189C82.6747 81.2615 77.4688 85.6691 71.3582 85.6691C70.6269 85.6691 69.8891 85.6038 69.1657 85.4752L67.1172 85.1111L67.572 87.7109C68.1867 91.2268 71.2193 93.7003 74.6418 93.7003C75.056 93.7003 113.06 86.983 113.06 86.983C116.969 86.2881 119.579 82.5298 118.89 78.5886L109.922 27.3173C109.715 26.1292 109.216 25.0122 108.471 24.0677C107.727 23.1231 106.76 22.3809 105.659 21.9084L85.0472 13.0625C84.7269 12.9254 84.3972 12.812 84.0607 12.723L83.1674 7.08725L82.5572 3.23731C82.3222 1.75527 80.9397 0.746231 79.4704 0.982821C78.0003 1.21959 76.9993 2.61287 77.2342 4.09491L77.8296 7.85136L78.711 13.4125ZM54.9942 43.9165L56.4677 35.492C56.4386 35.4953 56.4105 35.4976 56.3812 35.5011C54.444 35.7328 53.2268 37.2231 52.7338 38.5407C52.2051 39.9532 52.3507 41.3633 53.1136 42.2209C53.5936 42.7604 54.2079 43.3158 54.9942 43.9165ZM57.5965 49.9028L55.6598 60.976C58.2901 60.6903 60.1403 58.7643 60.8414 56.7728C61.1866 55.7924 62.0259 52.4298 58.3327 50.326C58.0866 50.186 57.8413 50.045 57.5965 49.9028Z"
+                    fill="#F0F1F1"
+                  />
+                  <path
+                    d="M59.84 14.13C59.4326 14.2171 59.0335 14.3397 58.6471 14.4965L37.918 22.9422C36.7877 23.4027 35.7922 24.1454 35.0251 25.1006C34.258 26.0557 33.7444 27.1919 33.5327 28.4022L27.1103 65.1228C26.421 69.064 29.0314 72.8223 32.9405 73.5172L70.1016 80.1233C70.5165 80.1971 70.9369 80.2343 71.3582 80.2345C74.7803 80.2345 77.8133 77.7608 78.428 74.2453L84.8534 37.5071C85.0643 36.3013 84.9687 35.0613 84.5755 33.9028C84.1822 32.7443 83.5043 31.7052 82.6048 30.8824L66.1697 15.8481C65.853 15.5589 65.5114 15.2988 65.1489 15.0707L66.1251 9.48896L67.0611 4.1376C67.3195 2.65973 66.3408 1.25033 64.8749 0.989827C63.4095 0.728418 62.011 1.7159 61.7526 3.19396L60.8166 8.54604L59.84 14.13ZM61.0587 30.1076L60.6876 32.2297C63.126 32.9514 64.4878 34.4012 65.1394 35.0952C65.2305 35.1923 65.3248 35.2927 65.3699 35.3347C66.0985 36.0139 66.1431 37.16 65.4695 37.8946C64.7958 38.6292 63.6591 38.6741 62.9303 37.995C62.7973 37.8711 62.6672 37.7325 62.5296 37.5859C62.0462 37.0711 61.3198 36.2992 60.0578 35.8305L58.2626 46.095C58.8706 46.4618 59.4834 46.8206 60.1006 47.1715C64.1155 49.4584 65.7358 53.7029 64.2282 57.9847C63.4877 60.0877 62.0547 61.9065 60.1928 63.1058C58.6286 64.1134 56.8662 64.6308 55.0196 64.6366L54.5653 67.2333C54.4117 68.1122 53.6534 68.7305 52.7979 68.7305C52.694 68.7305 52.5893 68.7213 52.4838 68.7028C51.5065 68.5291 50.8539 67.5896 51.0262 66.6043L51.4565 64.1438C49.1111 63.6168 47.4218 62.8248 45.0929 60.6205C44.3693 59.9357 44.3334 58.7894 45.0128 58.0599C45.692 57.3303 46.829 57.2943 47.5526 57.9791C49.2638 59.5986 50.3308 60.1683 52.0809 60.575L54.3042 47.8631C52.5778 46.701 51.3663 45.6824 50.4388 44.64C48.7765 42.7717 48.3677 39.9444 49.3718 37.2615C50.4763 34.3099 53.0002 32.2567 55.9584 31.9031C56.3414 31.8576 56.7261 31.8277 57.1115 31.8134L57.5199 29.4785C57.692 28.4932 58.6241 27.8354 59.6014 28.0089C60.5784 28.1827 61.231 29.1223 61.0587 30.1076Z"
+                    fill="#8EF7FB"
+                  />
+                  <path
+                    d="M1.5 7C2.32843 7 3 6.32843 3 5.5C3 4.67157 2.32843 4 1.5 4C0.671573 4 0 4.67157 0 5.5C0 6.32843 0.671573 7 1.5 7Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div className="w-full flex flex-col items-center justify-center">
+                <p className="text-md sm:text-lg font-normal text-gray-900 leading-tight">
+                  {t("home.features.bestPrice.line1")}
+                  <br />
+                  {t("home.features.bestPrice.line2")}
+                </p>
+              </div>
+            </div>
+            {/* SVG 2: Free Shipping in EU */}
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+              <div className="flex items-center justify-center w-full flex-1">
+                <svg
+                  width="145"
+                  height="104"
+                  viewBox="0 0 165 93"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M75.5153 72.5C79.3453 68.9006 79.935 63.2626 76.8326 59.9073C73.7302 56.552 68.1104 56.7499 64.2804 60.3493C60.4505 63.9487 59.8607 69.5866 62.9632 72.9419C66.0656 76.2972 71.6854 76.0994 75.5153 72.5Z"
+                    fill="#F0F1F1"
+                  />
+                  <path
+                    d="M126.191 72.5037C130.021 68.9043 130.611 63.2664 127.509 59.911C124.406 56.5557 118.787 56.7536 114.957 60.353C111.127 63.9524 110.537 69.5903 113.639 72.9456C116.742 76.301 122.362 76.1031 126.191 72.5037Z"
+                    fill="#F0F1F1"
+                  />
+                  <path
+                    d="M35.3281 28.4468C35.3281 26.2185 33.5364 24.4121 31.3262 24.4121C29.116 24.4121 27.3242 26.2185 27.3242 28.4468C27.3242 30.6751 29.116 32.4814 31.3262 32.4814C33.5364 32.4814 35.3281 30.6751 35.3281 28.4468Z"
+                    fill="#F0F1F1"
+                  />
+                  <path
+                    d="M107.262 65.5811C108.685 58.4924 115.327 52.8592 122.466 52.8592C129.341 52.8592 134.295 58.0836 134.159 64.8013C141.594 64.9975 143.663 55.1276 143.663 55.1276C144.289 52.3677 145.224 46.9874 146.007 41.7063C146.264 40.0758 146.066 38.4055 145.437 36.8812C143.494 32.3075 141.146 27.9199 138.42 23.7718C135.842 19.8942 131.518 17.5975 126.582 17.5148C123.638 17.4675 120.748 17.4392 118.566 17.4392L118.548 17.4203C118.266 12.6756 114.835 9.04141 110.019 8.60663C106.885 8.32545 94.4726 8.11987 88.5148 8.11987C86.1477 8.11987 82.7516 8.15295 79.3156 8.20966V8.19549H37.9766C37.4508 8.19518 36.9301 8.29935 36.4443 8.50206C35.9584 8.70477 35.517 9.00204 35.1452 9.37686C34.7735 9.75169 34.4786 10.1967 34.2775 10.6865C34.0765 11.1763 33.9731 11.7013 33.9734 12.2313V12.2502C33.9734 13.3156 34.3932 14.3373 35.1404 15.0906C35.8876 15.844 36.9011 16.2672 37.9578 16.2672H46.2852C47.2879 16.3417 48.2256 16.7957 48.9102 17.5381C49.5948 18.2804 49.9757 19.2563 49.9766 20.2699V20.2912C49.9781 20.8218 49.8759 21.3475 49.6757 21.8382C49.4755 22.3289 49.1813 22.775 48.8099 23.151C48.4385 23.5269 47.9972 23.8253 47.5113 24.0292C47.0254 24.233 46.5044 24.3383 45.9781 24.3389H41.7078C40.6467 24.3389 39.6291 24.7638 38.8788 25.5203C38.1285 26.2767 37.707 27.3026 37.707 28.3724C37.7067 28.9022 37.81 29.427 38.0109 29.9166C38.2118 30.4063 38.5065 30.8512 38.878 31.226C39.2495 31.6008 39.6907 31.8981 40.1762 32.101C40.6618 32.3038 41.1822 32.4082 41.7078 32.4082H45.9781C47.0398 32.4082 48.058 32.8334 48.8088 33.5903C49.5595 34.3472 49.9813 35.3737 49.9813 36.4441C49.9813 37.5144 49.5595 38.541 48.8088 39.2978C48.058 40.0547 47.0398 40.4799 45.9781 40.4799H30.0031C28.9418 40.4799 27.924 40.9048 27.1733 41.6611C26.4227 42.4175 26.0006 43.4434 26 44.5134C26 45.5838 26.4218 46.6103 27.1725 47.3672C27.9232 48.124 28.9414 48.5492 30.0031 48.5492H45.9781C47.0398 48.5492 48.058 48.9744 48.8088 49.7313C49.5595 50.4882 49.9813 51.5147 49.9813 52.5851C49.98 53.6546 49.5577 54.68 48.8071 55.4358C48.0565 56.1917 47.039 56.6162 45.9781 56.6162H41.0375C39.9764 56.6162 38.9588 57.0412 38.2085 57.7976C37.4582 58.554 37.0367 59.5799 37.0367 60.6497C37.0367 61.7197 37.4582 62.7458 38.2084 63.5026C38.9586 64.2594 39.9762 64.6849 41.0375 64.6855L56.8016 64.6737L58.1117 61.3822C60.7953 56.3917 66.1344 52.8568 71.7875 52.8568C78.9289 52.8568 84.0008 58.4947 83.443 65.5882H107.26M67.557 26.2174H62.1852C62.1801 26.2178 62.1753 26.2199 62.1715 26.2233C62.1677 26.2267 62.1651 26.2313 62.1641 26.2363L61.6695 29.7807C61.6688 29.7835 61.6687 29.7865 61.6693 29.7893C61.67 29.7922 61.6712 29.7949 61.673 29.7972C61.6749 29.7995 61.6772 29.8013 61.6798 29.8026C61.6825 29.8038 61.6854 29.8044 61.6883 29.8043H65.6867C65.883 29.7987 66.078 29.8373 66.2576 29.9173C66.4372 29.9973 66.5968 30.1167 66.7248 30.2668C66.8528 30.4169 66.9459 30.5939 66.9975 30.7849C67.049 30.9759 67.0576 31.1761 67.0227 31.3709C66.9541 31.799 66.7397 32.1897 66.4163 32.4756C66.0929 32.7616 65.6808 32.9249 65.2508 32.9375H61.2477C61.2428 32.9374 61.238 32.939 61.2342 32.942C61.2303 32.945 61.2276 32.9493 61.2266 32.954L60.5094 38.1028C60.4409 38.531 60.2264 38.9216 59.903 39.2076C59.5796 39.4935 59.1675 39.6568 58.7375 39.6694C58.5413 39.6751 58.3463 39.6366 58.1668 39.5565C57.9873 39.4765 57.8278 39.357 57.7 39.2069C57.5722 39.0567 57.4792 38.8796 57.428 38.6886C57.3768 38.4976 57.3686 38.2975 57.4039 38.1028L59.2648 24.7477C59.3386 24.2955 59.5659 23.8833 59.908 23.5815C60.2501 23.2798 60.6855 23.1073 61.1398 23.0936H67.9906C68.1868 23.0879 68.3818 23.1265 68.5613 23.2065C68.7408 23.2866 68.9003 23.406 69.0281 23.5562C69.156 23.7063 69.2489 23.8834 69.3001 24.0744C69.3513 24.2654 69.3596 24.4656 69.3242 24.6602C69.2547 25.0862 69.0404 25.4746 68.718 25.7587C68.3955 26.0429 67.9851 26.205 67.557 26.2174ZM81.9148 24.1569C82.4729 24.6561 82.8656 25.3159 83.0398 26.0473C83.2345 26.8758 83.2663 27.7347 83.1336 28.5756C82.9706 29.884 82.4395 31.118 81.6031 32.1318C81.0924 32.7406 80.4436 33.2164 79.7117 33.5188C79.7084 33.5223 79.7066 33.5269 79.7066 33.5318C79.7066 33.5366 79.7084 33.5413 79.7117 33.5448L81.043 37.4176C81.4016 38.4573 80.4805 39.6694 79.3344 39.6694H79.2594C78.9813 39.6777 78.7079 39.5965 78.4787 39.4376C78.2494 39.2787 78.0763 39.0504 77.9844 38.7857L76.3742 34.0599C76.3719 34.0563 76.3688 34.0534 76.3651 34.0513C76.3615 34.0493 76.3573 34.0482 76.3531 34.0481H72.9313C72.9265 34.0483 72.9219 34.0501 72.9181 34.053C72.9144 34.056 72.9116 34.06 72.9102 34.0646L72.3477 38.1005C72.2791 38.5286 72.0647 38.9193 71.7413 39.2052C71.4179 39.4911 71.0058 39.6545 70.5758 39.6671C70.3796 39.6728 70.1846 39.6342 70.0051 39.5542C69.8256 39.4741 69.6661 39.3547 69.5383 39.2045C69.4105 39.0543 69.3175 38.8773 69.2663 38.6863C69.2151 38.4952 69.2068 38.2951 69.2422 38.1005L71.1031 24.7453C71.1769 24.2931 71.4042 23.8809 71.7463 23.5791C72.0883 23.2774 72.5238 23.1049 72.9781 23.0913H78.275C78.275 23.0913 80.6 23.018 81.9148 24.1569ZM96.493 24.5492C96.4293 24.9491 96.2291 25.314 95.927 25.5811C95.6249 25.8481 95.2399 26.0004 94.8383 26.0118H88.6766C88.6718 26.0121 88.6672 26.0138 88.6634 26.0168C88.6597 26.0197 88.6569 26.0238 88.6555 26.0284L88.1656 29.5349C88.1649 29.5378 88.1648 29.5407 88.1654 29.5436C88.166 29.5465 88.1673 29.5492 88.1691 29.5515C88.171 29.5538 88.1733 29.5556 88.1759 29.5568C88.1786 29.558 88.1815 29.5586 88.1844 29.5585H92.9703C93.1536 29.5531 93.3358 29.589 93.5035 29.6636C93.6713 29.7383 93.8204 29.8498 93.9399 29.99C94.0594 30.1301 94.1463 30.2955 94.1943 30.4739C94.2423 30.6523 94.2501 30.8393 94.2172 31.0212C94.1535 31.4211 93.9533 31.786 93.6512 32.0531C93.3492 32.3201 92.9641 32.4724 92.5625 32.4838H87.7742C87.7694 32.4841 87.7649 32.4858 87.7611 32.4888C87.7573 32.4917 87.7545 32.4958 87.7531 32.5004L87.1648 36.7205C87.1648 36.7264 87.167 36.7321 87.1709 36.7364C87.1748 36.7408 87.1801 36.7436 87.1859 36.7441H93.343C93.5262 36.7387 93.7084 36.7746 93.8762 36.8492C94.0439 36.9239 94.193 37.0354 94.3125 37.1756C94.432 37.3158 94.519 37.4811 94.567 37.6595C94.6149 37.838 94.6228 38.0249 94.5898 38.2068C94.5261 38.6067 94.326 38.9717 94.0239 39.2387C93.7218 39.5057 93.3367 39.658 92.9352 39.6694H85.2945C85.0884 39.6723 84.8841 39.6295 84.6962 39.544C84.5083 39.4584 84.3413 39.3323 84.2071 39.1745C84.073 39.0167 83.9748 38.831 83.9197 38.6307C83.8646 38.4304 83.8539 38.2203 83.8883 38.0154L85.7375 24.7548C85.8112 24.3026 86.0386 23.8903 86.3807 23.5886C86.7227 23.2868 87.1582 23.1144 87.6125 23.1007H95.2508C95.4323 23.0964 95.6124 23.1326 95.7784 23.2067C95.9444 23.2808 96.092 23.3911 96.2108 23.5295C96.3295 23.668 96.4164 23.8312 96.4652 24.0075C96.514 24.1838 96.5234 24.3688 96.493 24.5492ZM109.292 24.5492C109.228 24.9491 109.028 25.314 108.726 25.5811C108.424 25.8481 108.039 26.0004 107.637 26.0118H101.476C101.471 26.0121 101.466 26.0138 101.463 26.0168C101.459 26.0197 101.456 26.0238 101.455 26.0284L100.967 29.5349C100.966 29.5378 100.966 29.5407 100.967 29.5436C100.968 29.5465 100.969 29.5492 100.971 29.5515C100.973 29.5538 100.975 29.5556 100.977 29.5568C100.98 29.558 100.983 29.5586 100.986 29.5585H105.772C105.955 29.5531 106.137 29.589 106.305 29.6636C106.473 29.7383 106.622 29.8498 106.741 29.99C106.861 30.1301 106.948 30.2955 107.996 30.4739C107.044 30.6523 107.052 30.8393 107.019 31.0212C106.955 31.4211 106.755 31.786 106.453 32.0531C106.151 32.3201 105.766 32.4724 105.364 32.4838H100.573C100.569 32.4841 100.564 32.4858 100.56 32.4888C100.557 32.4917 100.554 32.4958 100.552 32.5004L99.9641 36.7205C99.964 36.7264 99.9662 36.7321 99.9701 36.7364C99.974 36.7408 99.9793 36.7436 99.9852 36.7441H106.142C106.325 36.7387 106.508 36.7746 106.675 36.8492C106.843 36.9239 106.992 37.0354 107.112 37.1756C107.231 37.3158 107.318 37.4811 107.366 37.6595C107.414 37.838 107.422 38.0249 107.389 38.2068C107.325 38.6067 107.125 38.9717 106.823 39.2387C106.521 39.5057 106.136 39.658 105.734 39.6694H98.0937C97.8876 39.6723 97.6833 39.6295 97.4954 39.544C97.3075 39.4584 97.1405 39.3323 97.0063 39.1745C96.8722 39.0167 96.7741 38.831 96.719 38.6307C96.6639 38.4304 96.6531 38.2203 96.6875 38.0154L98.5367 24.7548C98.6105 24.3026 98.8378 23.8903 99.1799 23.5886C99.5219 23.2868 99.9574 23.1144 100.412 23.1007H108.05C108.231 23.0964 108.412 23.1326 108.578 23.2067C108.744 23.2808 108.891 23.3911 109.01 23.5295C109.129 23.668 109.216 23.8312 109.264 24.0075C109.313 24.1838 109.323 24.3688 109.292 24.5492ZM118.198 23.0346C120.291 23.0346 123.001 23.0629 125.72 23.1078C129.015 23.1622 131.898 24.6886 133.627 27.2925C135.475 30.1004 137.136 33.029 138.598 36.0589C139.372 37.6468 137.949 39.7143 136.086 39.7143H116.105L118.198 23.0346Z"
+                    fill="#6DF4F9"
+                  />
+                  <path
+                    d="M77.0211 31.1252H73.318L74.0211 26.0119H77.7219C77.7219 26.0119 80.4383 25.8346 79.993 28.5685C80.0047 28.5685 79.693 31.1252 77.0211 31.1252Z"
+                    fill="#01DAE3"
+                  />
+                  <path
+                    d="M111.77 17.9658H53.9134V41.7299H111.77V17.9658Z"
+                    fill="#6DF4F9"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M111.078 23.3667L96.0699 31.6499L103.276 29.4548L101.95 31.3027L94.5346 33.4676L101.536 24.3579L90.5723 29.6323L87.4514 31.1338L90.2363 30.8288L93.7333 30.446L87.9637 38.4893L101.448 32.0019L97.506 37.4982L113.913 29.6047L104.077 32.4764L111.078 23.3667ZM86.3897 31.9145L86.1713 32.6921C85.9388 33.5203 85.3772 33.9344 84.4867 33.9344C83.5827 33.9344 83.247 33.5203 83.4795 32.6921L85.2765 26.2927H81.7346L79.9958 32.4851C79.6505 33.7148 79.6816 34.6371 80.0892 35.2519C80.4967 35.8668 81.1997 36.1742 82.1981 36.1742C83.0212 36.1742 83.715 35.986 84.2794 35.6095C84.8439 35.2331 85.2981 34.7688 85.642 34.2167H85.7432L85.22 36.0801H88.7618L90.0438 31.5144L86.3897 31.9145ZM86.7141 30.759L90.8091 28.7889L91.5101 26.2927H87.9683L86.7141 30.759ZM71.1064 26.2927H74.6483L74.125 28.1561H74.2262C74.5702 27.604 75.0244 27.1397 75.5888 26.7633C76.1533 26.3868 76.847 26.1986 77.6701 26.1986C78.6685 26.1986 79.3715 26.506 79.7791 27.1209C80.1866 27.7357 80.2177 28.658 79.8725 29.8877L78.1336 36.0801H74.5918L76.3888 29.6806C76.6213 28.8525 76.2855 28.4384 75.3815 28.4384C74.491 28.4384 73.9295 28.8525 73.6969 29.6806L71.9 36.0801H68.3581L71.1064 26.2927ZM58.1991 36.0801L59.1166 32.8804C59.1248 32.8804 59.1545 32.8805 59.2032 32.8807C59.9596 32.8836 65.2841 32.9042 65.3171 32.7863C65.3524 32.6608 65.3026 32.598 65.1676 32.598L61.8555 32.4286C60.9386 32.3785 60.3042 32.115 59.9524 31.6381C59.6175 31.1487 59.5823 30.4335 59.8465 29.4924C60.139 28.4509 60.651 27.6604 61.3827 27.1209C62.1179 26.5688 63.0522 26.2927 64.1856 26.2927H70.0752L69.0029 29.4924C68.9948 29.4924 68.9656 29.4923 68.918 29.4921H68.9169C68.1719 29.4892 62.9902 29.4687 62.9571 29.5865C62.9466 29.6242 62.9477 29.6681 62.9606 29.7183C62.9905 29.7559 63.0392 29.7748 63.1067 29.7748L66.4188 29.9441C67.3357 29.9944 67.9616 30.2641 68.2964 30.7535C68.6483 31.2303 68.692 31.9392 68.4278 32.8804C68.1353 33.9218 67.6215 34.7186 66.8863 35.2708C66.1546 35.8103 65.222 36.0801 64.0887 36.0801H58.1991Z"
+                    fill="#101010"
+                  />
+                  <path
+                    d="M1.5 3C2.32843 3 3 2.32843 3 1.5C3 0.671573 2.32843 0 1.5 0C0.671573 0 0 0.671573 0 1.5C0 2.32843 0.671573 3 1.5 3Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div className="w-full flex flex-col items-center justify-center">
+                <p className="text-md sm:text-lg font-normal text-gray-900 leading-tight">
+                  {t("home.features.freeShipping.line1")}
+                  <br />
+                  {t("home.features.freeShipping.line2")}
+                </p>
+              </div>
+            </div>
+            {/* SVG 3: Exclusive Brands */}
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+              <div className="flex items-center justify-center w-full flex-1">
+                <svg
+                  width="145"
+                  height="104"
+                  viewBox="0 0 156 86"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M73.3125 0.0217896C48.2093 0.0217896 27 9.88977 27 21.5715C27 33.2533 48.2093 43.1212 73.3125 43.1212C98.4157 43.1212 119.625 33.2533 119.625 21.5715C119.625 9.88977 98.4157 0.0217896 73.3125 0.0217896Z"
+                    fill="#6DF4F9"
+                  />
+                  <path
+                    d="M73.3125 46.7129C52.0426 46.7129 34.2889 40.3216 27 31.0606V35.938C27 39.2046 28.6067 42.3634 31.7738 45.3247C39.7698 52.8276 55.6852 57.4878 73.3125 57.4878C90.9398 57.4878 106.855 52.8276 114.849 45.3265C118.018 42.3634 119.625 39.2046 119.625 35.938V31.0606C112.336 40.3216 94.5824 46.7129 73.3125 46.7129Z"
+                    fill="#F0F1F1"
+                  />
+                  <path
+                    d="M30.5625 49.0061V61.9772C30.5625 73.3806 49.6931 82.6291 73.3125 82.6291C96.9141 82.6291 116.062 73.3806 116.062 61.9772V49.0061C107.137 56.4785 90.9861 61.0793 73.3125 61.0793C55.6407 61.0793 39.4901 56.4785 30.5625 49.0061Z"
+                    fill="#6DF4F9"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M95.3535 5.2475L85.5077 16.7669L91.5383 12.3198L91.4856 14.0161L85.2107 18.5354L85.9656 9.97165L78.2054 17.9143L75.9964 20.1753L78.7248 18.7871L82.1507 17.0439L81.9207 24.4272L91.4655 14.6579L91.3085 19.7031L102.922 7.81648L94.5986 13.8112L95.3535 5.2475ZM75.4423 21.1087L75.7799 21.6759C76.1394 22.28 75.8472 22.7743 74.9035 23.1589C73.9454 23.5494 73.2866 23.4426 72.9272 22.8385L70.1496 18.1707L66.396 19.7005L69.0837 24.2172C69.6174 25.1141 70.3251 25.6616 71.2069 25.8595C72.0886 26.0574 73.0585 25.9407 74.1166 25.5095C74.9889 25.154 75.5866 24.7399 75.9093 24.2672C76.2321 23.7944 76.3737 23.3159 76.3343 22.8316L76.4415 22.788L77.2503 24.1471L81.0039 22.6174L79.0224 19.2871L75.4423 21.1087ZM74.9409 20.2659L77.8394 17.2992L76.7559 15.4784L73.0024 17.0081L74.9409 20.2659ZM55.1323 24.2908L58.8858 22.7611L59.6946 24.1202L59.8019 24.0765C59.7624 23.5922 59.9042 23.1137 60.227 22.641C60.5498 22.1683 61.1473 21.7542 62.0196 21.3987C63.0777 20.9675 64.0476 20.8508 64.9294 21.0487C65.8111 21.2466 66.5188 21.794 67.0526 22.6909L69.7403 27.2077L65.9867 28.7374L63.2092 24.0696C62.8497 23.4656 62.1908 23.3588 61.2328 23.7492C60.289 24.1338 59.9969 24.6282 60.3564 25.2322L63.1339 29.9L59.3802 31.4298L55.1323 24.2908ZM48.6138 35.8175L47.2452 33.4754C47.2539 33.4718 47.2855 33.459 47.3372 33.4381C48.141 33.1132 53.7989 30.8261 53.7477 30.7401C53.6932 30.6486 53.5945 30.6319 53.4515 30.6902L49.8174 32.0177C48.809 32.3832 47.9439 32.497 47.2221 32.3589C46.5092 32.2059 45.9486 31.7863 45.5401 31.0998C45.0881 30.3402 45.0524 29.6383 45.4331 28.9941C45.8083 28.3408 46.5965 27.7694 47.7977 27.2799L54.0393 24.7362L55.244 27.1451C55.2354 27.1487 55.2044 27.1612 55.1538 27.1817L55.1526 27.1821C54.3609 27.5021 48.8544 29.7276 48.9056 29.8135C48.9219 29.841 48.9553 29.8672 49.0057 29.8922C49.0649 29.9021 49.1303 29.8926 49.2018 29.8634L52.8359 28.5359C53.8443 28.1705 54.705 28.0642 55.4179 28.2172C56.1396 28.3552 56.7047 28.7674 57.1132 29.4538C57.5652 30.2135 57.6035 30.92 57.2282 31.5733C56.8475 32.2174 56.0567 32.7842 54.8555 33.2737L48.6138 35.8175Z"
+                    fill="#101010"
+                  />
+                  <path
+                    d="M1.5 6C2.32843 6 3 5.32843 3 4.5C3 3.67157 2.32843 3 1.5 3C0.671573 3 0 3.67157 0 4.5C0 5.32843 0.671573 6 1.5 6Z"
+                    fill="white"
+                  />
+                </svg>
+              </div>
+              <div className="w-full flex flex-col items-center justify-center">
+                <p className="text-md sm:text-lg font-normal text-gray-900 leading-tight">
+                  {t("home.features.exclusiveBrands.line1")}
+                  <br />
+                  {t("home.features.exclusiveBrands.line2")}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            className="hidden md:block absolute right-0 bottom-0"
+            style={{ marginBottom: "-80px" }}
+          >
+            <Image
+              src="/hero-section-img/pouch-right.webp"
+              alt="Snus pouch right"
+              width={160}
+              height={160}
+              style={{ pointerEvents: "none" }}
+            />
+          </div>
+        </div>
       </div>
     </div>
-  );
-}
-
-// --- Main HeroSection component ---
-export default function HeroSection() {
-  return (
-    <section className="relative flex items-center justify-center overflow-hidden w-full pt-20 sm:pt-0 object-top bg-transparent sm:min-h-[700px]">
-      {/* Hero background image as full-section background, w-screen for full width */}
-      <Image
-        src="/hero-img-compressed.jpg"
-        alt="Hero background"
-        width={1920}
-        height={800}
-        priority
-        className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-screen h-[80vh] max-h-[800px] z-0"
-        style={{
-          position: "absolute",
-          height: "100vh",
-          maxHeight: "800px",
-          width: "100vw",
-          right: 0,
-          top: "50%",
-          transform: "translateY(-50%)",
-          objectFit: "contain",
-          objectPosition: "right center",
-          color: "transparent",
-        }}
-      />
-      {/* Mobile: half-circle image on right, vertically centered */}
-      <div className="sm:hidden absolute -right-20 top-1/2 -translate-y-1/2 h-[300px] w-full overflow-hidden z-0 flex items-center justify-end">
-        <Image
-          src="/hero-img-compressed.jpg"
-          alt="Hero background"
-          width={180}
-          height={220}
-          priority
-          className="h-full w-full object-cover"
-          style={{
-            objectFit: "cover",
-            objectPosition: "right center",
-            borderTopLeftRadius: "9999px",
-            borderBottomLeftRadius: "9999px",
-            color: "transparent",
-          }}
-        />
-      </div>
-
-      <div className="max-w-7xl [@media(max-width:1184px)]:px-4 sm:px-0 relative z-10 w-full bg-transparent flex flex-row items-center justify-start">
-        {/* Left Content */}
-        <HeroLeftContent />
-      </div>
-    </section>
   );
 }

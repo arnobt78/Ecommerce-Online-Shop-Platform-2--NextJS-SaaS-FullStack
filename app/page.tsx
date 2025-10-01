@@ -2,9 +2,8 @@
 
 import HeroSection from "@/components/HomePage/HeroSection";
 import ProductsSection from "@/components/HomePage/ProductsSection";
-import FeatureSection from "@/components/HomePage/FeatureSection";
 import ReviewSection from "@/components/Review/ReviewCardSection";
-import AnimationsAndStyles from "@/components/HomePage/AnimationsAndStyles";
+// import AnimationsAndStyles from "@/components/HomePage/AnimationsAndStyles";
 import { PageCache, usePagePreload } from "@/components/PageCache";
 
 export default function Home() {
@@ -13,10 +12,9 @@ export default function Home() {
   return (
     <PageCache pageKey="home" preloadData={preloadAllData}>
       <HeroSection />
-      <FeatureSection />
       <ProductsSection />
       <ReviewSection />
-      <AnimationsAndStyles />
+      {/* <AnimationsAndStyles /> */}
     </PageCache>
   );
 }

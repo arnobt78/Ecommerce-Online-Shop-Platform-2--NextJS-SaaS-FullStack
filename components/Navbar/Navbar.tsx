@@ -172,7 +172,7 @@ export default function Navbar({
                 alt="SNUZZ"
                 width={120}
                 height={48}
-                className="h-12 w-auto"
+                // className="h-12 w-auto"
                 style={{ width: 120, height: 48, minWidth: 120, maxWidth: 120 }}
                 priority
               />

@@ -35,12 +35,25 @@ export default function HeroSection() {
         className="relative w-full overflow-hidden"
         style={{ height: "90vh", minHeight: "800px" }}
       >
+        {/* Sky background */}
         <img
-          src="/hero-section-img/hero-1.webp"
-          alt="Hero"
+          src="/hero-section-img/hero-bg-img-sky.webp"
+          alt="Hero sky background"
           className="absolute inset-0 w-full h-full object-cover z-0"
-          style={{ objectPosition: "0px -450px" }}
         />
+
+        {/* Hand image - positioned on right side */}
+        <div className="hidden [@media(min-width:1185px)]:block absolute right-0 top-[120px] z-20">
+          <Image
+            src="/hero-section-img/hero-bg-img-hand.webp"
+            alt="Hand holding snus product"
+            width={600}
+            height={600}
+            className="object-contain"
+            priority
+          />
+        </div>
+
         {/* Content wrapper with max-w-7xl */}
         <div className="absolute inset-0 w-full flex justify-center z-10">
           <div className="max-w-7xl w-full flex items-start pt-[120px]">
@@ -48,7 +61,6 @@ export default function HeroSection() {
               {/* Hero left content */}
               {/* Review badge */}
               <div className="bg-white/20 rounded px-2 py-1.5 text-white text-md font-normal leading-none inline-block backdrop-blur-sm">
-                {/* ★★★★★ 4.47 | 537 Reviews */}
                 ★★★★★ {t("hero.rating")}
               </div>
 

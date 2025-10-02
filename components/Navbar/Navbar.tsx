@@ -56,7 +56,7 @@ export default function Navbar({
       // Check if we're in hero section (for homepage only)
       if (isHomePage) {
         // Estimate hero section height - adjust this value based on your hero section height
-        const heroSectionHeight = window.innerHeight * 0.8; // 80% of viewport height
+        const heroSectionHeight = window.innerHeight * 0.9; // 90% of viewport height
         setIsInHeroSection(window.scrollY < heroSectionHeight);
       }
 

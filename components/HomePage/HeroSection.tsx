@@ -31,53 +31,50 @@ export default function HeroSection() {
   return (
     <div className="w-full bg-white pb-16">
       {/* Hero image section */}
-      <div
-        className="relative w-full overflow-hidden"
-        style={{ height: "90vh", minHeight: "800px" }}
-      >
-        {/* Sky background */}
-        <img
-          src="/hero-section-img/hero-bg-img-sky.webp"
-          alt="Hero sky background"
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        />
-
-        {/* Hand image - positioned on right side */}
-        <div className="hidden [@media(min-width:1185px)]:block absolute right-0 top-[120px] z-20">
+      <div className="relative w-full overflow-hidden h-full min-h-[1200px] sm:min-h-[800px]">
+        {/* Hero Sky-Hand image background */}
+        <div className="absolute inset-0 w-full h-full z-0">
           <Image
-            src="/hero-section-img/hero-bg-img-hand.webp"
-            alt="Hand holding snus product"
-            width={600}
-            height={600}
-            className="object-contain"
-            priority
+            src="/hero-section-img/hero-bg-sky-hand.webp"
+            alt="Hero sky background"
+            width={1920}
+            height={1080}
+            className="w-full h-full object-cover bg-img-mobile"
           />
         </div>
 
+        {/* Dark gradient overlay for better text readability */}
+        <div className="hero-gradient-overlay" />
+
         {/* Content wrapper with max-w-7xl */}
-        <div className="absolute inset-0 w-full flex justify-center z-10">
-          <div className="max-w-7xl w-full flex items-start pt-[120px]">
-            <div className="max-w-[800px] flex flex-col items-start">
+        <div className="absolute inset-0 w-full flex justify-center z-10 px-4 sm:px-0">
+          <div className="max-w-7xl w-full flex items-start pt-[80px]  sm:pt-[160px]">
+            <div className="max-w-[800px] flex flex-col items-center sm:items-start">
               {/* Hero left content */}
               {/* Review badge */}
-              <div className="bg-white/20 rounded px-2 py-1.5 text-white text-md font-normal leading-none inline-block backdrop-blur-sm">
+              <div className="bg-white/20 rounded px-2 py-1.5 text-white text-sm sm:text-md text-center sm:text-left font-normal leading-none inline-block backdrop-blur-sm">
                 ★★★★★ {t("hero.rating")}
               </div>
 
               {/* Heading */}
-              <h1 className="text-white text-6xl font-bold">
+              <h1 className="text-white text-3xl sm:text-6xl font-bold text-center sm:text-left">
                 {t("hero.title.line1")}
                 <br />
                 {t("hero.title.line2")}
               </h1>
 
               {/* Subtitle */}
-              <div className="text-white text-xl font-normal leading-normal mb-8 max-w-[500px]">
-                {t("hero.subtitle.line1")}
-                <br />
-                {t("hero.subtitle.line2")}
-                <br />
-                {t("hero.subtitle.line3")}
+              <div className="text-white text-base sm:text-xl font-normal leading-normal mb-4 sm:mb-8 text-center sm:text-left">
+                <div className="block sm:hidden">
+                  {t("hero.subtitle.phone")}
+                </div>
+                <div className="hidden sm:block">
+                  {t("hero.subtitle.line1")}
+                  <br />
+                  {t("hero.subtitle.line2")}
+                  <br />
+                  {t("hero.subtitle.line3")}
+                </div>
               </div>
 
               {/* Buy now button */}
@@ -138,32 +135,64 @@ export default function HeroSection() {
                 `}</style>
               </Link>
 
-              {/* Stats row */}
-              <div className="flex flex-row items-center gap-8 mt-2">
+              {/* Desktop Stats row */}
+              <div className="hidden sm:flex flex-row items-center gap-8 mt-2">
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-extrabold">47</span>
-                  <span className="text-white text-base font-normal leading-tight opacity-80">
+                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                    47
+                  </span>
+                  <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.ordersToday")}
                   </span>
                 </div>
                 <div className="h-14 w-px bg-white" />
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-extrabold">
+                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
                     7000+
                   </span>
-                  <span className="text-white text-base font-normal leading-tight opacity-80">
+                  <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.orders")}
                   </span>
                 </div>
                 <div className="h-14 w-px bg-white" />
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-5xl font-extrabold">
+                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
                     4000+
                   </span>
-                  <span className="text-white text-base font-normal leading-tight opacity-80">
+                  <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.customers")}
                   </span>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Stats row - positioned separately outside main content */}
+          <div className="absolute left-2 top-[540px] px-12 sm:hidden z-10 w-full max-w-sm">
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col items-start">
+                <span className="text-white text-3xl font-extrabold">47</span>
+                <span className="text-white text-sm font-normal leading-tight opacity-80">
+                  {t("hero.stats.ordersToday")}
+                </span>
+              </div>
+              <div className="w-20 h-0 border-t border-linear border-white" />
+              <div className="flex flex-col items-start">
+                <span className="text-white text-3xl font-extrabold">
+                  7000+
+                </span>
+                <span className="text-white text-sm font-normal leading-tight opacity-80">
+                  {t("hero.stats.orders")}
+                </span>
+              </div>
+              <div className="w-20 h-0 border-t border-linear border-white" />
+              <div className="flex flex-col items-start">
+                <span className="text-white text-3xl font-extrabold">
+                  4000+
+                </span>
+                <span className="text-white text-sm font-normal leading-tight opacity-80">
+                  {t("hero.stats.customers")}
+                </span>
               </div>
             </div>
           </div>
@@ -171,23 +200,20 @@ export default function HeroSection() {
       </div>
 
       {/* Feature cards section overlapping hero background */}
-      <div className="w-full flex justify-center mt-[-120px] relative z-20">
+      <div className="w-full flex justify-center mt-[-420px] sm:mt-[-100px] relative z-20">
         <div className="max-w-7xl w-full flex justify-center items-end relative">
-          <div
-            className="hidden md:block absolute left-0 bottom-0"
-            style={{ marginBottom: "0px" }}
-          >
+          <div className="absolute left-0 bottom-0 -mb-[80px] sm:mb-0">
             <Image
               src="/hero-section-img/pouch-left.webp"
               alt="Snus pouch left"
-              width={90}
-              height={90}
-              style={{ pointerEvents: "none" }}
+              width={100}
+              height={100}
+              className="w-[110px] sm:w-[100px] h-[180px] sm:h-[180px] pointer-events-none"
             />
           </div>
-          <div className="flex flex-row gap-16 bg-transparent pointer-events-auto">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-16 bg-transparent pointer-events-auto">
             {/* SVG 1: Best Price on Market */}
-            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl p-4 min-h-[120px] border-2 border-gray-200">
               <div className="flex items-center justify-center w-full flex-1">
                 <svg
                   width="145"
@@ -219,7 +245,7 @@ export default function HeroSection() {
               </div>
             </div>
             {/* SVG 2: Free Shipping in EU */}
-            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl p-4 min-h-[120px] border-2 border-gray-200">
               <div className="flex items-center justify-center w-full flex-1">
                 <svg
                   width="145"
@@ -273,7 +299,7 @@ export default function HeroSection() {
               </div>
             </div>
             {/* SVG 3: Exclusive Brands */}
-            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl px-6 py-6 min-h-[180px] border-2 border-gray-200">
+            <div className="flex flex-col items-center justify-between text-center flex-1 bg-white rounded-[10px] shadow-2xl p-4 min-h-[120px] border-2 border-gray-200">
               <div className="flex items-center justify-center w-full flex-1">
                 <svg
                   width="145"
@@ -315,16 +341,13 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-          <div
-            className="hidden md:block absolute right-0 bottom-0"
-            style={{ marginBottom: "-80px" }}
-          >
+          <div className="absolute right-0 bottom-0 mb-[480px] sm:mb-[-80px]">
             <Image
               src="/hero-section-img/pouch-right.webp"
               alt="Snus pouch right"
-              width={160}
-              height={160}
-              style={{ pointerEvents: "none" }}
+              width={100}
+              height={100}
+              className="w-[120px] sm:w-[200px] h-[180px] sm:h-[220px] pointer-events-none"
             />
           </div>
         </div>

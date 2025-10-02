@@ -23,6 +23,8 @@ export const translations = {
     "hero.subtitle.line1": "Choose from huge sortiment of exclusive brands,",
     "hero.subtitle.line2": "flavors and strength for best price on market with",
     "hero.subtitle.line3": "free shipping.",
+    "hero.subtitle.phone":
+      "Choose from huge sortiment of exclusive brands, flavors and strength for best price on market with free shipping.",
     "hero.buyNow": "Buy now",
     "hero.stats.ordersToday": "Orders today",
     "hero.stats.orders": "Orders",
@@ -463,6 +465,8 @@ export const translations = {
     "hero.subtitle.line1": "Ogromny wybór najlepszych marek",
     "hero.subtitle.line2": "wyjątkowych smaków i różne moce w super cenach",
     "hero.subtitle.line3": "i z darmową dostawą",
+    "hero.subtitle.phone":
+      "Ogromny wybór najlepszych marek wyjątkowych smaków i różne moce w super cenach i z darmową dostawą",
     "hero.buyNow": "Kup teraz",
     "hero.stats.ordersToday": "Zamówienia dzisiaj",
     "hero.stats.orders": "Zamówienia",
@@ -907,10 +911,11 @@ export const translations = {
     "hero.rating": "4.47 | 537 Bewertungen",
     "hero.title.line1": "Nie wieder ohne",
     "hero.title.line2": "Nikotin-Pouches dastehen!",
-    "hero.subtitle.line1":
-      "Wähle aus einer riesigen Auswahl exklusiver Marken",
+    "hero.subtitle.line1": "Wähle aus einer riesigen Auswahl exklusiver Marken",
     "hero.subtitle.line2": "Geschmacksrichtungen und Stärken zum besten Preis",
     "hero.subtitle.line3": "am Markt und mit kostenlosem Versand",
+    "hero.subtitle.phone":
+      "Wähle aus einer riesigen Auswahl exklusiver Marken Geschmacksrichtungen und Stärken zum besten Preis am Markt und mit kostenlosem Versand",
     "hero.buyNow": "Jetzt kaufen",
     "hero.stats.ordersToday": "Bestellungen heute",
     "hero.stats.orders": "Bestellungen",
@@ -1361,6 +1366,8 @@ export const translations = {
       "Vyberte si z obrovského sortimentu exkluzivních značek",
     "hero.subtitle.line2": "příchutí a intenzity za nejlepší ceny na trhu",
     "hero.subtitle.line3": "s dopravou zdarma",
+    "hero.subtitle.phone":
+      "Vyberte si z obrovského sortimentu exkluzivních značek příchutí a intenzity za nejlepší ceny na trhu s dopravou zdarma",
     "hero.buyNow": "Nakupovat",
     "hero.stats.ordersToday": "Objednávek dnes",
     "hero.stats.orders": "Objednávek",

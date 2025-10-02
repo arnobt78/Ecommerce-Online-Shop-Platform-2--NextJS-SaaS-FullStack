@@ -30,6 +30,52 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Mobile hero background positioning - horizontal panning */
+  .bg-img-mobile {
+    object-position: 70% calc(-10vh - 60px) !important;
+    object-fit: cover;
+    width: 150% !important;
+    height: 100% !important;
+    left: -25% !important;
+  }
+
+  /* Dark gradient overlay for better text readability */
+  .hero-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4),
+      rgba(0, 0, 0, 0.1),
+      transparent
+    );
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Desktop hero background positioning */
+  @media (min-width: 640px) {
+    .bg-img-mobile {
+      object-position: center !important;
+      width: 100% !important;
+      left: 0 !important;
+    }
+
+    /* Less gradient needed on desktop */
+    .hero-gradient-overlay {
+      height: 40%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.05),
+        transparent
+      );
+    }
+  }
 }
 
 @layer base {

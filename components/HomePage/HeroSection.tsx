@@ -3,9 +3,12 @@ import Link from "next/link";
 import * as React from "react";
 import { useLanguage } from "@/context/LanguageContextNew";
 import Image from "next/image";
+import AnimatedCounter from "@/components/ui/AnimatedCounter";
+import { useDynamicStats } from "@/hooks/use-dynamic-stats";
 
 export default function HeroSection() {
   const { t } = useLanguage();
+  const { currentOrders, isLoading } = useDynamicStats();
   // const [isHydrated, setIsHydrated] = React.useState(false);
 
   // Ensure we only render translations after hydration
@@ -138,9 +141,18 @@ export default function HeroSection() {
               {/* Desktop Stats row */}
               <div className="hidden sm:flex flex-row items-center gap-8 mt-2">
                 <div className="flex flex-col items-center">
-                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
-                    47
-                  </span>
+                  {isLoading ? (
+                    <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                      13
+                    </span>
+                  ) : (
+                    <AnimatedCounter
+                      target={currentOrders}
+                      duration={2500}
+                      className="text-white text-3xl sm:text-5xl font-extrabold"
+                      hasPulse={true}
+                    />
+                  )}
                   <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.ordersToday")}
                   </span>
@@ -171,7 +183,16 @@ export default function HeroSection() {
           <div className="absolute left-2 top-[540px] px-12 sm:hidden z-10 w-full max-w-sm">
             <div className="flex flex-col gap-2">
               <div className="flex flex-col items-start">
-                <span className="text-white text-3xl font-extrabold">47</span>
+                {isLoading ? (
+                  <span className="text-white text-3xl font-extrabold">13</span>
+                ) : (
+                  <AnimatedCounter
+                    target={currentOrders}
+                    duration={2500}
+                    className="text-white text-3xl font-extrabold"
+                    hasPulse={true}
+                  />
+                )}
                 <span className="text-white text-sm font-normal leading-tight opacity-80">
                   {t("hero.stats.ordersToday")}
                 </span>

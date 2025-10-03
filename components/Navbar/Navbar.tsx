@@ -170,11 +170,7 @@ export default function Navbar({
         {/* Desktop Navbar (≥1185px) */}
         <div className="hidden [@media(min-width:1185px)]:flex items-center justify-between">
           <div className="flex items-center space-x-12">
-            <a
-              href="/"
-              className="flex items-center justify-center"
-              style={{ minWidth: 120, maxWidth: 120, width: 120, height: 48 }}
-            >
+            <a href="/" className="flex items-center justify-center">
               <Image
                 src={
                   isHomePage && isInHeroSection
@@ -182,10 +178,9 @@ export default function Navbar({
                     : "/logo-black.svg"
                 }
                 alt="SNUZZ"
-                width={120}
-                height={48}
-                // className="h-12 w-auto"
-                style={{ width: 120, height: 48, minWidth: 120, maxWidth: 120 }}
+                width={100}
+                height={100}
+                style={{ width: 160, height: 48, minWidth: 120, maxWidth: 160 }}
                 priority
               />
             </a>

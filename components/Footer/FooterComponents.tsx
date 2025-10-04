@@ -104,7 +104,7 @@ export function FooterContact({ open, onToggle }: FooterContactProps) {
       <div className={`sm:block ${open ? "block" : "block sm:block"}`}>
         <Button
           variant="ghost"
-          className="h-auto px-4 sm:px-3 py-3 sm:py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-md md:text-base justify-center sm:justify-start group"
+          className="h-auto px-6 py-2 border-2 border-[#6DF4F9] rounded-[7.7px] text-gray-900 hover:text-gray-700 font-normal text-md sm:text-base justify-center sm:justify-start group"
           onClick={() => {
             router.push("/contact");
           }}
@@ -124,17 +124,19 @@ export function FooterLogoSocial() {
       <a href="/" aria-label="Go to homepage">
         <Image
           src="/logo-black.svg"
-          alt="SNUZZ"
-          width={120}
-          height={40}
-          className="h-10 w-auto mb-2 sm:mb-2 mx-auto mt-4 sm:mt-0"
+          alt="SNUZZ Logo"
+          width={100}
+          height={100}
+          style={{ width: 140, height: 40, minWidth: 120, maxWidth: 160 }}
+          className="mb-2 sm:mb-0 mx-auto mt-4 sm:mt-0"
+          priority
         />
       </a>
       <div className="flex gap-2 sm:gap-1 justify-center items-center">
         {[Instagram, Facebook].map((Icon, i) => (
           <div
             key={i}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer hover:bg-gray-200 mb-2 sm:mb-2"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform cursor-pointer hover:bg-gray-200 mb-2 sm:mb-0"
           >
             <Icon className="w-5 h-5 sm:w-5 sm:h-5 text-gray-900" />
           </div>
@@ -166,14 +168,14 @@ export function FooterPayments() {
       {payments.map((payment, i) => (
         <div
           key={i}
-          className="w-10 sm:w-8 md:w-10 h-6 sm:h-5 md:h-6 rounded flex items-center justify-center bg-white shadow-sm border border-gray-200"
+          className="w-10 h-6 rounded flex items-center justify-center bg-white shadow-lg border-2 border-gray-200"
         >
           <Image
             src={payment.image}
             alt={payment.name}
             width={20}
             height={20}
-            className="size-5 object-contain"
+            className="size-6 object-contain"
           />
         </div>
       ))}
@@ -186,7 +188,7 @@ export function FooterCopyright() {
   const { t } = useLanguage();
 
   return (
-    <p className="text-gray-500 text-xs sm:text-sm text-center sm:text-right">
+    <p className="text-gray-500 text-sm sm:text-base text-center sm:text-right">
       {t("footer.copyright")}
     </p>
   );

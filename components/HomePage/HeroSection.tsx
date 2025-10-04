@@ -89,7 +89,6 @@ export default function HeroSection() {
               <Link href="/products">
                 <button
                   className="relative w-full h-[51px] bg-[#42E5EE] rounded-[10px] flex items-center overflow-hidden mb-10 border-2 border-[#A4EDF8]"
-                  style={{ fontFamily: "Inter, sans-serif" }}
                   type="button"
                 >
                   {/* Background ellipse effect */}

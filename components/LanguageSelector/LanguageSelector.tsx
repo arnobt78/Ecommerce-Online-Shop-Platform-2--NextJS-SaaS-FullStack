@@ -37,7 +37,7 @@ export function LanguageSelector() {
         variant="ghost"
         size="sm"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-1 px-2 py-1 h-8 text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
+        className="flex items-center space-x-1 px-4 py-4 text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-all duration-200"
       >
         <Globe className="w-4 h-4" />
         <span className="text-sm font-medium">{currentLanguage.flag}</span>

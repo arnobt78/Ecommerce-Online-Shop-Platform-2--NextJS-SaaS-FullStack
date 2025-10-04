@@ -46,7 +46,7 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
           <span className="text-md sm:text-lg text-gray-400 line-through mr-2 sm:mr-2">
             {currency} {totalOriginal.toFixed(2).replace(".", ",")}
           </span>
-          <span className="text-md sm:text-lg font-semibold text-red-500">
+          <span className="text-md sm:text-lg font-semibold text-[#C02929]">
             {currency} {totalSale.toFixed(2).replace(".", ",")}
           </span>
         </>

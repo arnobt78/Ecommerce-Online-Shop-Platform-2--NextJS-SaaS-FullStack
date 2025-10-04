@@ -26,12 +26,6 @@ export default function AnimatedCounter({
   const [current, setCurrent] = useState(startValue);
 
   useEffect(() => {
-    console.log("🎯 AnimatedCounter target changed:", {
-      target,
-      current,
-      startValue,
-    });
-
     // If target is the same as current, no need to animate
     if (target === current) return;
 

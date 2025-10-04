@@ -200,8 +200,10 @@ export default function Navbar({
               <a
                 key={index}
                 href={item.href}
-                className={`relative font-large hover:text-[#3AF0F7] transition-all duration-300 flex items-center justify-center ${
-                  isHomePage && isInHeroSection ? "text-white" : "text-gray-900"
+                className={`relative font-large hover:backdrop-blur-sm flex items-center justify-center hover:rounded-[7.7px] hover:px-3 hover:py-1.5 ${
+                  isHomePage && isInHeroSection
+                    ? "text-white hover:bg-white/20"
+                    : "text-gray-900 hover:bg-gray-200/50"
                 }`}
                 style={{
                   minWidth: 90,

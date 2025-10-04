@@ -165,7 +165,7 @@ export default function ProductPageClient({
           {/* </section> */}
 
           {/* Category Filter, Product List, and Pagination (Reusable Components) */}
-          <div className="max-w-7xl mx-auto px-1 sm:px-4 py-2 sm:py-4">
+          <div className="max-w-7xl mx-auto px-1 sm:px-0 py-2 sm:py-4">
             {/* Category Filter */}
             <div className="mb-0 flex justify-center w-full">
               <CategoryFilterMenuBar

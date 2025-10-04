@@ -53,7 +53,7 @@ export default function ProductsSection() {
   const displayProducts = randomizedProducts.slice(0, productCount);
 
   return (
-    <section id="products-section" className="px-1 sm:px-4 py-4 sm:py-8 w-full">
+    <section id="products-section" className="px-1 sm:px-0 py-4 sm:py-8 w-full">
       <div className="max-w-7xl mx-auto w-full">
         <ProductsSectionTitle />
         {/* Product Cards List */}
@@ -64,7 +64,7 @@ export default function ProductsSection() {
           <Link href="/products" passHref legacyBehavior>
             <Button
               variant="ghost"
-              className="h-auto px-4 sm:px-6 py-2 border border-teal-400 rounded-sm text-gray-600 hover:text-gray-900 font-normal text-xs sm:text-sm md:text-base justify-center sm:justify-start group mt-8 sm:mt-12"
+              className="h-auto px-6 py-2 border-2 border-[#6DF4F9] rounded-[7.7px] text-gray-900 hover:text-gray-700 font-normal text-md sm:text-base justify-center sm:justify-start group mt-8 sm:mt-12"
             >
               {t("home.products.showAll")}
               <ArrowRight className="ml-0 sm:ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

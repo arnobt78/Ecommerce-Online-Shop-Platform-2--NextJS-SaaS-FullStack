@@ -7,7 +7,7 @@ import {
   FooterContact,
   FooterPayments,
   FooterCopyright,
-} from "@/components/Footer/FooterComponments";
+} from "@/components/Footer/FooterComponents";
 import { useLanguage } from "@/context/LanguageContextNew";
 
 export default function Footer() {

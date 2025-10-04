@@ -131,7 +131,7 @@ export default function CartSidebarItem({
           </div>
           <button
             onClick={() => removeFromCart(item.slug)}
-            className="text-red-500 hover:text-red-600 transition ml-2"
+            className="text-red-400 hover:text-red-500 transition ml-2"
             aria-label={t("cart.removeFromCart")}
           >
             <Trash2 className="w-5 h-5" />

@@ -5,6 +5,7 @@ interface AnimatedCounterProps {
   duration?: number;
   className?: string;
   hasPulse?: boolean;
+  suffix?: string;
 }
 
 /**
@@ -16,12 +17,27 @@ export default function AnimatedCounter({
   duration = 2000,
   className = "",
   hasPulse = false,
+  suffix = "",
 }: AnimatedCounterProps) {
-  const [current, setCurrent] = useState(0);
+  // For large numbers (like 7000, 4000), start from target-20 for smooth animation
+  // For small numbers (like 13), start from target-5 for smooth animation
+  const startValue =
+    target > 100 ? Math.max(0, target - 20) : Math.max(0, target - 6);
+  const [current, setCurrent] = useState(startValue);
 
   useEffect(() => {
+    console.log("🎯 AnimatedCounter target changed:", {
+      target,
+      current,
+      startValue,
+    });
+
+    // If target is the same as current, no need to animate
+    if (target === current) return;
+
     let startTime: number;
     let animationId: number;
+    const animationStartValue = current;
 
     const animate = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
@@ -31,7 +47,9 @@ export default function AnimatedCounter({
 
       // Ease-out animation curve for smoother effect
       const easeOut = 1 - Math.pow(1 - progress, 3);
-      const newValue = Math.floor(target * easeOut);
+      const newValue = Math.floor(
+        animationStartValue + (target - animationStartValue) * easeOut
+      );
 
       setCurrent(newValue);
 
@@ -47,11 +65,12 @@ export default function AnimatedCounter({
         cancelAnimationFrame(animationId);
       }
     };
-  }, [target, duration]);
+  }, [target, duration, current]);
 
   return (
     <span className={`${className} ${hasPulse ? "stat-pulse" : ""}`}>
       {current}
+      {suffix}
     </span>
   );
 }

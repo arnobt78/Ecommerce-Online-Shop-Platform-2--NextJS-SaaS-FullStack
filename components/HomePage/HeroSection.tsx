@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+//import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import * as React from "react";
 import { useLanguage } from "@/context/LanguageContextNew";
@@ -9,7 +9,12 @@ import { useDynamicStats } from "@/hooks/use-dynamic-stats";
 export default function HeroSection() {
   const { t } = useLanguage();
   const { currentOrders, isLoading } = useDynamicStats();
+  const [isClient, setIsClient] = React.useState(false);
   // const [isHydrated, setIsHydrated] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Ensure we only render translations after hydration
   // React.useEffect(() => {
@@ -139,38 +144,68 @@ export default function HeroSection() {
               </Link>
 
               {/* Desktop Stats row */}
-              <div className="hidden sm:flex flex-row items-center gap-8 mt-2">
-                <div className="flex flex-col items-center">
-                  {isLoading ? (
-                    <span className="text-white text-3xl sm:text-5xl font-extrabold">
-                      13
-                    </span>
-                  ) : (
-                    <AnimatedCounter
-                      target={currentOrders}
-                      duration={2500}
-                      className="text-white text-3xl sm:text-5xl font-extrabold"
-                      hasPulse={true}
-                    />
-                  )}
+              <div className="hidden sm:flex flex-row items-center justify-center mt-2">
+                <div className="flex-1 flex flex-col items-center">
+                  <div className="text-center">
+                    {!isClient ? (
+                      <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                        13
+                      </span>
+                    ) : isLoading ? (
+                      <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                        13
+                      </span>
+                    ) : (
+                      <AnimatedCounter
+                        target={currentOrders}
+                        duration={2500}
+                        className="text-white text-3xl sm:text-5xl font-extrabold"
+                        hasPulse={true}
+                      />
+                    )}
+                  </div>
                   <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.ordersToday")}
                   </span>
                 </div>
-                <div className="h-14 w-px bg-white" />
-                <div className="flex flex-col items-center">
-                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
-                    7000+
-                  </span>
+                <div className="h-14 w-px bg-white mx-8" />
+                <div className="flex-1 flex flex-col items-center">
+                  <div className="text-center">
+                    {!isClient ? (
+                      <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                        7000+
+                      </span>
+                    ) : (
+                      <AnimatedCounter
+                        target={7000}
+                        duration={2500}
+                        className="text-white text-3xl sm:text-5xl font-extrabold"
+                        hasPulse={true}
+                        suffix="+"
+                      />
+                    )}
+                  </div>
                   <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.orders")}
                   </span>
                 </div>
-                <div className="h-14 w-px bg-white" />
-                <div className="flex flex-col items-center">
-                  <span className="text-white text-3xl sm:text-5xl font-extrabold">
-                    4000+
-                  </span>
+                <div className="h-14 w-px bg-white mx-8" />
+                <div className="flex-1 flex flex-col items-center">
+                  <div className="text-center">
+                    {!isClient ? (
+                      <span className="text-white text-3xl sm:text-5xl font-extrabold">
+                        4000+
+                      </span>
+                    ) : (
+                      <AnimatedCounter
+                        target={4000}
+                        duration={2500}
+                        className="text-white text-3xl sm:text-5xl font-extrabold"
+                        hasPulse={true}
+                        suffix="+"
+                      />
+                    )}
+                  </div>
                   <span className="text-white text-sm sm:text-base font-normal leading-tight opacity-80">
                     {t("hero.stats.customers")}
                   </span>
@@ -183,34 +218,66 @@ export default function HeroSection() {
           <div className="absolute left-2 top-[540px] px-12 sm:hidden z-10 w-full max-w-sm">
             <div className="flex flex-col gap-2">
               <div className="flex flex-col items-start">
-                {isLoading ? (
-                  <span className="text-white text-3xl font-extrabold">13</span>
-                ) : (
-                  <AnimatedCounter
-                    target={currentOrders}
-                    duration={2500}
-                    className="text-white text-3xl font-extrabold"
-                    hasPulse={true}
-                  />
-                )}
+                <div className="w-16 text-left">
+                  {!isClient ? (
+                    <span className="text-white text-3xl font-extrabold">
+                      13
+                    </span>
+                  ) : isLoading ? (
+                    <span className="text-white text-3xl font-extrabold">
+                      13
+                    </span>
+                  ) : (
+                    <AnimatedCounter
+                      target={currentOrders}
+                      duration={2500}
+                      className="text-white text-3xl font-extrabold"
+                      hasPulse={true}
+                    />
+                  )}
+                </div>
                 <span className="text-white text-sm font-normal leading-tight opacity-80">
                   {t("hero.stats.ordersToday")}
                 </span>
               </div>
               <div className="w-20 h-0 border-t border-linear border-white" />
               <div className="flex flex-col items-start">
-                <span className="text-white text-3xl font-extrabold">
-                  7000+
-                </span>
+                <div className="w-20 text-left">
+                  {!isClient ? (
+                    <span className="text-white text-3xl font-extrabold">
+                      7000+
+                    </span>
+                  ) : (
+                    <AnimatedCounter
+                      target={7000}
+                      duration={2500}
+                      className="text-white text-3xl font-extrabold"
+                      hasPulse={true}
+                      suffix="+"
+                    />
+                  )}
+                </div>
                 <span className="text-white text-sm font-normal leading-tight opacity-80">
                   {t("hero.stats.orders")}
                 </span>
               </div>
               <div className="w-20 h-0 border-t border-linear border-white" />
               <div className="flex flex-col items-start">
-                <span className="text-white text-3xl font-extrabold">
-                  4000+
-                </span>
+                <div className="w-20 text-left">
+                  {!isClient ? (
+                    <span className="text-white text-3xl font-extrabold">
+                      4000+
+                    </span>
+                  ) : (
+                    <AnimatedCounter
+                      target={4000}
+                      duration={2500}
+                      className="text-white text-3xl font-extrabold"
+                      hasPulse={true}
+                      suffix="+"
+                    />
+                  )}
+                </div>
                 <span className="text-white text-sm font-normal leading-tight opacity-80">
                   {t("hero.stats.customers")}
                 </span>

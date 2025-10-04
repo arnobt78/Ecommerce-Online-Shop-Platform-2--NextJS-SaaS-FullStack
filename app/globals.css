@@ -176,6 +176,7 @@ body {
   }
 }
 
+/* Mobile breakpoint */
 @media (max-width: 870px) {
   .br-870 {
     display: block !important;

@@ -1,91 +1,51 @@
-// API route to get current order count using PostgreSQL database
+// API route to calculate order count based on current timestamp
+// No database dependency - calculates counter value dynamically
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 export async function GET() {
   try {
     const now = new Date();
-    const currentDate = now.toDateString();
 
-    // Get or create the order counter record
-    let orderCounter = await prisma.orderCounter.findFirst({
-      orderBy: { createdAt: "desc" },
+    // Get start of today (00:00:00)
+    const startOfDay = new Date(now);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    // Calculate time difference from start of day
+    const timeDiff = now.getTime() - startOfDay.getTime();
+
+    // Calculate how many 1.15-hour (75-minute) intervals have passed
+    const incrementInterval = 75 * 60 * 1000; // 75 minutes (1.15 hours) in milliseconds
+    const intervalsPassed = Math.floor(timeDiff / incrementInterval);
+
+    // Calculate counter value: 13 + (intervals × 2) - increments every 1.15 hours
+    const counterValue = 13 + intervalsPassed * 2;
+
+    console.log(`[API] Timestamp calculation:`, {
+      currentTime: now.toISOString(),
+      startOfDay: startOfDay.toISOString(),
+      timeDiff: timeDiff,
+      intervalsPassed: intervalsPassed,
+      counterValue: counterValue,
     });
 
-    // If no counter exists, create one
-    if (!orderCounter) {
-      orderCounter = await prisma.orderCounter.create({
-        data: {
-          counter: 13,
-          lastUpdate: now,
-          lastResetDate: now,
-        },
-      });
-      console.log(`[API] Created new order counter with value 13`);
-    }
-
-    // Reset to 13 at midnight (new day)
-    if (currentDate !== orderCounter.lastResetDate.toDateString()) {
-      orderCounter = await prisma.orderCounter.update({
-        where: { id: orderCounter.id },
-        data: {
-          counter: 13,
-          lastUpdate: now,
-          lastResetDate: now,
-        },
-      });
-      console.log(`[API] New day detected, reset counter to 13`);
-    }
-
-    // Calculate increments based on time passed
-    const timeDiff = now.getTime() - orderCounter.lastUpdate.getTime();
-    const incrementInterval = 15 * 60 * 1000; // 15 minutes
-    const increments = Math.floor(timeDiff / incrementInterval);
-
-    if (increments > 0) {
-      const newCounter = orderCounter.counter + increments * 2;
-      orderCounter = await prisma.orderCounter.update({
-        where: { id: orderCounter.id },
-        data: {
-          counter: newCounter,
-          lastUpdate: now,
-        },
-      });
-      console.log(
-        `[API] Incremented counter by ${
-          increments * 2
-        }, new value: ${newCounter}`
-      );
-    }
-
-    console.log(
-      `[API] Current counter: ${orderCounter.counter}, timeDiff: ${timeDiff}ms, increments: ${increments}`
-    );
-
     return NextResponse.json({
-      orders: orderCounter.counter,
-      lastUpdate: orderCounter.lastUpdate.getTime(),
-      isNewDay: currentDate !== orderCounter.lastResetDate.toDateString(),
-      timeDiff,
-      increments,
-      source: "database",
+      orders: counterValue,
+      intervalsPassed: intervalsPassed,
+      timeDiff: timeDiff,
+      startOfDay: startOfDay.toISOString(),
+      currentTime: now.toISOString(),
+      source: "timestamp-calculation",
     });
   } catch (error) {
-    console.error("[API] Database error:", error);
+    console.error("[API] Calculation error:", error);
 
-    // Fallback to default values if database fails
+    // Fallback to base value if calculation fails
     return NextResponse.json({
       orders: 13,
-      lastUpdate: Date.now(),
-      isNewDay: false,
+      intervalsPassed: 0,
       timeDiff: 0,
-      increments: 0,
       source: "fallback",
-      error: "Database connection failed",
+      error: "Calculation failed",
     });
-  } finally {
-    await prisma.$disconnect();
   }
 }

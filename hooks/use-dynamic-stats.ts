@@ -7,11 +7,11 @@ interface DynamicStatsHook {
 }
 
 /**
- * Custom hook for dynamic order statistics using server-side API
- * - Fetches current order count from server API
- * - Automatically increments every 15 minutes by 2
+ * Custom hook for dynamic order statistics
+ * - Calculates counter value based on current timestamp
+ * - No database dependency - pure timestamp calculation
  * - Resets to 13 daily at midnight
- * - Consistent across all users and devices
+ * - Always shows correct value regardless of user visits
  */
 export function useDynamicStats(): DynamicStatsHook {
   const [currentOrders, setCurrentOrders] = useState<number>(13);
@@ -44,13 +44,8 @@ export function useDynamicStats(): DynamicStatsHook {
   }, []);
 
   useEffect(() => {
-    // Initial fetch
+    // Initial fetch - no need for frequent updates since it's timestamp-based
     fetchOrders();
-
-    // Fetch every 5 minutes to keep data fresh (since counter changes every 15 minutes)
-    const interval = setInterval(fetchOrders, 5 * 60 * 1000);
-
-    return () => clearInterval(interval);
   }, [fetchOrders]);
 
   return { currentOrders, isLoading };

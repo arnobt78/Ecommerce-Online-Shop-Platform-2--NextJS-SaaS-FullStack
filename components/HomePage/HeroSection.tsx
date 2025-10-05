@@ -10,7 +10,6 @@ export default function HeroSection() {
   const { t } = useLanguage();
   const { currentOrders, isLoading } = useDynamicStats();
   const [isClient, setIsClient] = React.useState(false);
-  // const [isHydrated, setIsHydrated] = React.useState(false);
 
   React.useEffect(() => {
     setIsClient(true);
@@ -146,11 +145,7 @@ export default function HeroSection() {
               <div className="hidden sm:flex flex-row items-center justify-center mt-2">
                 <div className="flex-1 flex flex-col items-center">
                   <div className="text-center">
-                    {!isClient ? (
-                      <span className="text-white text-3xl sm:text-5xl font-extrabold">
-                        13
-                      </span>
-                    ) : isLoading ? (
+                    {!isClient || isLoading ? (
                       <span className="text-white text-3xl sm:text-5xl font-extrabold">
                         13
                       </span>
@@ -218,11 +213,7 @@ export default function HeroSection() {
             <div className="flex flex-col gap-2">
               <div className="flex flex-col items-start">
                 <div className="w-16 text-left">
-                  {!isClient ? (
-                    <span className="text-white text-3xl font-extrabold">
-                      13
-                    </span>
-                  ) : isLoading ? (
+                  {!isClient || isLoading ? (
                     <span className="text-white text-3xl font-extrabold">
                       13
                     </span>

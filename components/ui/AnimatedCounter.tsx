@@ -19,14 +19,20 @@ export default function AnimatedCounter({
   hasPulse = false,
   suffix = "",
 }: AnimatedCounterProps) {
-  // For large numbers (like 7000, 4000), start from target-20 for smooth animation
-  // For small numbers (like 13), start from target-5 for smooth animation
-  const startValue =
-    target > 100 ? Math.max(0, target - 20) : Math.max(0, target - 6);
-  const [current, setCurrent] = useState(startValue);
+  // Start from target value to avoid hydration issues and immediate jumps
+  // Only animate when target actually changes (not on initial load)
+  const [current, setCurrent] = useState(target);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    // If target is the same as current, no need to animate
+    // On first load, just set the target value without animation
+    if (!isInitialized) {
+      setCurrent(target);
+      setIsInitialized(true);
+      return;
+    }
+
+    // Only animate when target actually changes (not on initial load)
     if (target === current) return;
 
     let startTime: number;
@@ -59,7 +65,7 @@ export default function AnimatedCounter({
         cancelAnimationFrame(animationId);
       }
     };
-  }, [target, duration, current]);
+  }, [target, duration, current, isInitialized]);
 
   return (
     <span className={`${className} ${hasPulse ? "stat-pulse" : ""}`}>

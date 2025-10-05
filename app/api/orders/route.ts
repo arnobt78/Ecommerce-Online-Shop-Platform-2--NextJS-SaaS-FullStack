@@ -19,15 +19,15 @@ export async function GET() {
   }
 
   const timeDiff = now - lastUpdateTime;
-  const incrementInterval = 2 * 60 * 1000; // 2 minutes for testing
+  const incrementInterval = 20 * 60 * 1000; // 20 minutes for production
   const increments = Math.floor(timeDiff / incrementInterval);
 
   if (increments > 0) {
-    orderCounter += increments * 6;
+    orderCounter += increments * 2;
     lastUpdateTime = now;
     console.log(
       `[API] Incremented counter by ${
-        increments * 6
+        increments * 2
       }, new value: ${orderCounter}`
     );
   }

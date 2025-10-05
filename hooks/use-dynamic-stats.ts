@@ -9,7 +9,7 @@ interface DynamicStatsHook {
 /**
  * Custom hook for dynamic order statistics using server-side API
  * - Fetches current order count from server API
- * - Automatically increments every 2 minutes (testing)
+ * - Automatically increments every 20 minutes by 2
  * - Resets to 13 daily at midnight
  * - Consistent across all users and devices
  */
@@ -47,10 +47,8 @@ export function useDynamicStats(): DynamicStatsHook {
     // Initial fetch
     fetchOrders();
 
-    // Fetch every 30 seconds to keep data fresh (since counter changes every 2 minutes)
-    const interval = setInterval(fetchOrders, 30 * 1000);
-    // Fetch every 5 minutes to keep data fresh (since counter changes every 1.5 hours)
-    // const interval = setInterval(fetchOrders, 5 * 60 * 1000);
+    // Fetch every 5 minutes to keep data fresh (since counter changes every 20 minutes)
+    const interval = setInterval(fetchOrders, 5 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, [fetchOrders]);

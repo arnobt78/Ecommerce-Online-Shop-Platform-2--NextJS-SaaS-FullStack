@@ -21,9 +21,9 @@ export default function AnimatedCounter({
 }: AnimatedCounterProps) {
   // Start from a lower value for smooth animation effect
   // For large numbers (like 7000, 4000), start from target-20
-  // For small numbers (like 13), start from target-6
+  // For small numbers (like 13), start from target-13
   const startValue =
-    target > 100 ? Math.max(0, target - 20) : Math.max(0, target - 10);
+    target > 100 ? Math.max(0, target - 20) : Math.max(0, target - 13);
   const [current, setCurrent] = useState(startValue);
 
   useEffect(() => {

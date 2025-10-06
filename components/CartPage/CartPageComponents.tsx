@@ -29,9 +29,15 @@ function parsePrice(price: string | undefined) {
 
 const CartPageComponents = () => {
   const { t } = useLanguage();
-  const { cartItems, setCartItems, cartOpen, setCartOpen } = useCart();
+  const {
+    cartItems,
+    setCartItems,
+    cartOpen,
+    setCartOpen,
+    appliedPromo,
+    setAppliedPromo,
+  } = useCart();
   const [promoCode, setPromoCode] = useState("");
-  const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
 
   // Use slug as id for cart operations
   const updateQuantity = (slug: string, newQuantity: number) => {
@@ -409,6 +415,8 @@ const CartPageComponents = () => {
                     <button
                       onClick={applyPromoCode}
                       className="bg-gray-300 hover:bg-blue-400 text-gray-900 hover:text-white text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-blue-700"
+                      type="button"
+                      disabled={!promoCode}
                     >
                       {t("cartPage.apply")}
                     </button>

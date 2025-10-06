@@ -13,11 +13,11 @@ export async function GET() {
     // Calculate time difference from start of day
     const timeDiff = now.getTime() - startOfDay.getTime();
 
-    // Calculate how many 1.15-hour (75-minute) intervals have passed
-    const incrementInterval = 75 * 60 * 1000; // 75 minutes (1.15 hours) in milliseconds
+    // Calculate how many 45-minute intervals have passed
+    const incrementInterval = 45 * 60 * 1000; // 45 minutes in milliseconds
     const intervalsPassed = Math.floor(timeDiff / incrementInterval);
 
-    // Calculate counter value: 13 + (intervals × 2) - increments every 1.15 hours
+    // Calculate counter value: 13 + (intervals × 2) - increments every 45 minutes
     const counterValue = 13 + intervalsPassed * 2;
 
     console.log(`[API] Timestamp calculation:`, {

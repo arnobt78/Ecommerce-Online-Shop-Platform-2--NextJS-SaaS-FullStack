@@ -5,12 +5,29 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreditCard, Lock, Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import CheckoutForm from "./CheckoutForm";
 
 const schema = z.object({
-  cardNumber: z.string().min(12, "Card number required").max(19),
-  expiry: z.string().min(5, "MM/YY required").max(5),
-  cvc: z.string().min(3, "CVC required").max(4),
-  name: z.string().min(1, "Name required"),
+  cardNumber: z.string().min(12, "Enter a card number").max(19),
+  expiry: z.string().min(5, "Enter a valid expiration date").max(5),
+  cvc: z
+    .string()
+    .min(3, "Enter the CVV or security code on your card required")
+    .max(4),
+  name: z
+    .string()
+    .min(1, "Enter your name exactly as it's written on your card"),
   useShipping: z.boolean().optional(),
 });
 
@@ -20,27 +37,35 @@ const cardIcons = [
   { src: "/payment-icons/visa-card.svg", alt: "Visa" },
   { src: "/payment-icons/mastercard.svg", alt: "Mastercard" },
   { src: "/payment-icons/amex.svg", alt: "Amex" },
-  { src: "/payment-icons/discover.svg", alt: "Discover" },
-  { src: "/payment-icons/maestro.svg", alt: "Maestro" },
-  { src: "/payment-icons/apple-pay.svg", alt: "Apple Pay" },
-  { src: "/payment-icons/bank-transfer.svg", alt: "Bank Transfer" },
-  { src: "/payment-icons/ideal.svg", alt: "iDEAL" },
+  // { src: "/payment-icons/discover.svg", alt: "Discover" },
+  // { src: "/payment-icons/maestro.svg", alt: "Maestro" },
+  // { src: "/payment-icons/apple-pay.svg", alt: "Apple Pay" },
+  // { src: "/payment-icons/bank-transfer.svg", alt: "Bank Transfer" },
+  // { src: "/payment-icons/ideal.svg", alt: "iDEAL" },
   { src: "/payment-icons/jcb.svg", alt: "JCB" },
-  { src: "/payment-icons/klarna.svg", alt: "Klarna" },
-  { src: "/payment-icons/mir.svg", alt: "MIR" },
-  { src: "/payment-icons/trustly.svg", alt: "Trustly" },
+  { src: "/payment-icons/unionpay.svg", alt: "UnionPay" },
+  // { src: "/payment-icons/klarna.svg", alt: "Klarna" },
+  // { src: "/payment-icons/mir.svg", alt: "MIR" },
+  // { src: "/payment-icons/trustly.svg", alt: "Trustly" },
 ];
 
 export default function PaymentMethods() {
   const [selected, setSelected] = useState("card");
   const [isMobile, setIsMobile] = useState(false);
+  const [useShippingAddress, setUseShippingAddress] = useState(true);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { useShipping: true },
+    defaultValues: {
+      useShipping: true,
+      cardNumber: "",
+      expiry: "",
+      cvc: "",
+      name: "",
+    },
   });
   // Only run on client
   React.useEffect(() => {
@@ -51,7 +76,7 @@ export default function PaymentMethods() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-  const visibleCount = isMobile ? 2 : 6;
+  const visibleCount = isMobile ? 3 : 3;
   const hiddenCount = cardIcons.length - visibleCount;
   const hiddenIcons = cardIcons.slice(visibleCount);
   const onSubmit = (data: FormData) => {
@@ -59,15 +84,19 @@ export default function PaymentMethods() {
   };
   return (
     <div className="mt-6">
-      <h3 className="text-lg font-bold mb-1">Payment</h3>
-      <p className="text-xs text-gray-500 mb-4">
-        All transactions are secure and encrypted.
-      </p>
-      <div className="border rounded-xl overflow-hidden">
-        {/* Card Option */}
+      {/* Payment title */}
+      <div className="flex flex-col px-4 sm:px-0">
+        <h3 className="text-lg font-bold mb-1">Payment</h3>
+        <p className="text-sm text-gray-500 mb-4">
+          All transactions are secure and encrypted.
+        </p>
+      </div>
+
+      {/* Card Option */}
+      <div className="border rounded-xl">
         <div
           className={`flex items-center px-4 py-3 border-b ${
-            selected === "card" ? "bg-gray-50" : "bg-white"
+            selected === "card" ? "bg-[#65bbe6]/10" : "bg-white"
           }`}
         >
           <input
@@ -81,12 +110,14 @@ export default function PaymentMethods() {
           <label
             htmlFor="card"
             className={`${
-              selected === "card" ? "font-semibold" : "font-normal"
+              selected === "card"
+                ? "font-medium text-gray-900"
+                : "font-normal text-gray-900"
             } flex-1 cursor-pointer`}
           >
             Credit Card
           </label>
-          <div className="flex items-center gap-1 relative group">
+          <div className="flex items-center gap-2 relative group">
             {/* Show 2 icons on mobile, 6 on sm+ */}
             {cardIcons.slice(0, visibleCount).map((icon) => (
               <Image
@@ -94,33 +125,37 @@ export default function PaymentMethods() {
                 src={icon.src}
                 alt={icon.alt}
                 width={40}
-                height={32}
-                className={`h-8 w-10 object-cover border border-gray-200 rounded${
+                height={40}
+                className={`h-8 w-10 object-cover border-2 border-gray-200 rounded shadow-xl${
                   isMobile ? "" : " hidden sm:inline-block"
                 }`}
               />
             ))}
-            {/* Dynamic +N badge and hover tooltip */}
+            {/* Dynamic +N badge and Shadcn tooltip */}
             {hiddenCount > 0 && (
-              <div className="ml-1 relative">
-                <span className="text-xs bg-gray-200 px-2 py-0.5 rounded cursor-pointer group-hover:bg-gray-300 transition-colors">
-                  +{hiddenCount}
-                </span>
-                <div className="absolute -left-3 -translate-x-1/2 top-6 z-20 hidden group-hover:flex flex-col items-center">
-                  <div className="bg-gray-700 text-white rounded-lg shadow-lg p-2 grid grid-cols-3 gap-2 min-w-[120px]">
-                    {hiddenIcons.map((icon) => (
-                      <Image
-                        key={icon.alt}
-                        src={icon.src}
-                        alt={icon.alt}
-                        width={40}
-                        height={32}
-                        className="h-8 w-10 object-cover bg-white rounded p-1"
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="text-xs bg-black text-white/80 hover:text-[#65bbe6] h-8 w-10 rounded cursor-pointer hover:bg-gray-900 transition-colors text-md font-bold flex items-center justify-center">
+                      +{hiddenCount}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent className="bg-black text-white p-2 rounded-lg shadow-xl">
+                    <div className="grid grid-cols-2 gap-2 min-w-[80px]">
+                      {hiddenIcons.map((icon) => (
+                        <Image
+                          key={icon.alt}
+                          src={icon.src}
+                          alt={icon.alt}
+                          width={40}
+                          height={40}
+                          className="h-6 w-10 object-cover border-2 border-gray-200 rounded shadow-xl"
+                        />
+                      ))}
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             )}
           </div>
         </div>
@@ -129,93 +164,198 @@ export default function PaymentMethods() {
             onSubmit={handleSubmit(onSubmit)}
             className="px-4 pt-4 pb-2 bg-gray-50"
           >
-            <div className="mb-3 relative">
-              <input
-                {...register("cardNumber")}
-                placeholder="Card number"
-                className={`w-full border rounded px-3 py-2 pr-10 ${
-                  errors.cardNumber ? "border-red-500" : "border-gray-300"
-                }`}
-                maxLength={19}
-              />
-              <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <div className="mb-4">
+              <div className="relative">
+                <input
+                  {...register("cardNumber")}
+                  placeholder="Card number"
+                  className={`w-full border rounded px-3 py-2 pr-10 text-gray-900 text-md${
+                    errors.cardNumber ? "border-red-500" : "border-gray-300"
+                  }`}
+                  maxLength={19}
+                />
+                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+              </div>
               {errors.cardNumber && (
-                <p className="text-xs text-red-600 mt-1">
+                <p className="text-sm text-red-600 mt-1">
                   {errors.cardNumber.message}
                 </p>
               )}
             </div>
-            <div className="flex gap-2 mb-3">
-              <div className="flex-1 relative">
-                <input
-                  {...register("expiry")}
-                  placeholder="MM/YY"
-                  className={`w-full border rounded px-3 py-2 pr-8 ${
-                    errors.expiry ? "border-red-500" : "border-gray-300"
-                  }`}
-                  maxLength={5}
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
-                  MM/YY
-                </span>
+            <div className="flex gap-2 mb-4">
+              <div className="flex-1">
+                <div className="relative">
+                  <input
+                    {...register("expiry")}
+                    placeholder="Expiration date"
+                    className={`w-full border rounded px-3 py-2 pr-8 text-gray-900 text-md${
+                      errors.expiry ? "border-red-500" : "border-gray-300"
+                    }`}
+                    maxLength={5}
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold pointer-events-none">
+                    MM/YY
+                  </span>
+                </div>
                 {errors.expiry && (
-                  <p className="text-xs text-red-600 mt-1">
+                  <p className="text-sm text-red-600 mt-1">
                     {errors.expiry.message}
                   </p>
                 )}
               </div>
-              <div className="flex-1 relative">
-                <input
-                  {...register("cvc")}
-                  placeholder="CVC"
-                  className={`w-full border rounded px-3 py-2 pr-8 ${
-                    errors.cvc ? "border-red-500" : "border-gray-300"
-                  }`}
-                  maxLength={4}
-                />
-                <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <div className="flex-1">
+                <div className="relative">
+                  <input
+                    {...register("cvc")}
+                    placeholder="Security code"
+                    className={`w-full border rounded px-3 py-2 pr-8 text-gray-900 text-md${
+                      errors.cvc ? "border-red-500" : "border-gray-300"
+                    }`}
+                    maxLength={4}
+                  />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-help pointer-events-auto" />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
+                        <p className="text-xs text-white justify-center text-justify">
+                          3-digit security code usually found on the back of
+                          your card. American Express cards have a 4-digit code
+                          located on the front.
+                        </p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
                 {errors.cvc && (
-                  <p className="text-xs text-red-600 mt-1">
+                  <p className="text-sm text-red-600 mt-1">
                     {errors.cvc.message}
                   </p>
                 )}
               </div>
             </div>
-            <div className="mb-3">
-              <input
-                {...register("name")}
-                placeholder="Name on card"
-                className={`w-full border rounded px-3 py-2 ${
-                  errors.name ? "border-red-500" : "border-gray-300"
-                }`}
-              />
+            <div className="mb-4">
+              <div className="relative">
+                <input
+                  {...register("name")}
+                  placeholder="Name on card"
+                  className={`w-full border rounded px-3 py-2 pr-10 text-gray-900 text-md${
+                    errors.name ? "border-red-500" : "border-gray-300"
+                  }`}
+                />
+                <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+              </div>
               {errors.name && (
-                <p className="text-xs text-red-600 mt-1">
+                <p className="text-sm text-red-600 mt-1">
                   {errors.name.message}
                 </p>
               )}
             </div>
-            <label className="flex items-center mb-3 cursor-pointer">
-              <input
-                type="checkbox"
-                {...register("useShipping")}
-                className="accent-black mr-2"
-                defaultChecked
-              />
-              <span className="text-sm">
-                Use shipping address as billing address
-              </span>
-            </label>
+            {/* Use shipping address as billing address checkbox */}
+            <Collapsible
+              open={!useShippingAddress}
+              onOpenChange={(open) => setUseShippingAddress(!open)}
+            >
+              <CollapsibleTrigger asChild>
+                <label className="flex items-center mb-6 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    {...register("useShipping")}
+                    className="accent-black mr-2"
+                    checked={useShippingAddress}
+                    onChange={(e) => setUseShippingAddress(e.target.checked)}
+                  />
+                  <span className="text-sm">
+                    Use shipping address as billing address
+                  </span>
+                </label>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="mb-6">
+                <CheckoutForm
+                  title="Billing Address"
+                  showFormWrapper={false}
+                  showContactSection={false}
+                />
+              </CollapsibleContent>
+            </Collapsible>
+
+            {/* Secure and encrypted text */}
+            <div className="flex items-center mb-2 text-gray-400 text-sm">
+              <Lock className=" w-4 h-4 mr-2 text-gray-400 text-sm" /> Secure
+              and encrypted
+            </div>
+
+            {/* Pay Now button */}
             <button
               type="submit"
-              className="w-full bg-black text-white py-2 rounded font-bold flex items-center justify-center gap-2"
+              className="w-full bg-[#65bbe6]/60 hover:bg-[#65bbe6] transition transform duration-200 cursor-pointer text-gray-900 py-3 rounded-lg text-md font-bold flex items-center justify-center"
             >
-              <Lock className="w-4 h-4 mr-1" /> Pay Securely
+              {/* <Lock className="w-4 h-4 mr-1" /> Pay Now */}
+              Pay Now
             </button>
+
+            {/* Legal Text */}
+            <div className="mt-4 text-sm text-gray-600 leading-relaxed text-justify">
+              <p>
+                By clicking "Pay now" you agree to ourTerms and Conditions,
+                Refund Policy, Privacy Policy, Cookie Policy and other
+                applicable policies. You are enrolling in recurring billing
+                program on snuzz PRO platform, if you don't cancel prior to the
+                end of 3-day free trial you will be charged $9.99 every 14 days.
+                You can terminate snuzz PRO plan at anytime, in your account. If
+                you would have any questions please contact our{" "}
+                <a
+                  href="/contact"
+                  className="text-gray-600 underline hover:text-gray-800"
+                >
+                  support team
+                </a>
+                .
+              </p>
+            </div>
+
+            {/* Separator Line */}
+            <div className="border-t border-gray-200 my-4"></div>
+
+            {/* Policy Links */}
+            <div className="flex flex-wrap gap-4 text-sm">
+              <a
+                href="/terms"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Terms and Conditions
+              </a>
+              <a
+                href="/refund-policy"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Refund Policy
+              </a>
+              <a
+                href="/privacy-policy"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Privacy Policy
+              </a>
+              <a
+                href="/cookie-policy"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Cookie Policy
+              </a>
+              <a
+                href="/contact"
+                className="text-blue-600 underline hover:text-blue-800"
+              >
+                Support Team
+              </a>
+            </div>
           </form>
         )}
+
         {/* Klarna Option */}
-        <div
+        {/* <div
           className={`border-t border-b ${
             selected === "klarna" ? "bg-pink-50" : "bg-white"
           }`}
@@ -291,9 +431,10 @@ export default function PaymentMethods() {
               </p>
             </div>
           )}
-        </div>
+        </div> */}
+
         {/* Online Bank Transfer Option */}
-        <div
+        {/* <div
           className={`border-b ${
             selected === "bank" ? "bg-blue-50" : "bg-white"
           }`}
@@ -353,9 +494,10 @@ export default function PaymentMethods() {
               </p>
             </div>
           )}
-        </div>
+        </div> */}
+
         {/* Wire Transfer Option */}
-        <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}>
+        {/* <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}>
           <div className="flex items-center px-4 py-3">
             <input
               type="radio"
@@ -393,7 +535,7 @@ export default function PaymentMethods() {
               </p>
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

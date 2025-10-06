@@ -3,6 +3,13 @@
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Info } from "lucide-react";
 
 const schema = z.object({
   email: z.string().email(),
@@ -15,14 +22,30 @@ const schema = z.object({
   country: z.string().min(1),
   phone: z.string().optional(),
   news: z.boolean().optional(),
+  company: z.string().optional(),
+  apartment: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
 
-export default function CheckoutForm() {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+interface CheckoutFormProps {
+  title?: string;
+  showFormWrapper?: boolean;
+  showContactSection?: boolean;
+}
+
+export default function CheckoutForm({
+  title = "Delivery",
+  showFormWrapper = true,
+  showContactSection = true,
+}: CheckoutFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: { country: "United States" },
+    defaultValues: { country: "" },
   });
 
   const onSubmit = (data: FormData) => {
@@ -30,77 +53,278 @@ export default function CheckoutForm() {
     alert("Submitted!" + JSON.stringify(data));
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-bold mb-4">Contact</h2>
+  const formContent = (
+    <>
+      {showContactSection && (
+        <>
+          <h2 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-4">
+            Contact
+          </h2>
+          <div className="mb-4">
+            <input
+              {...register("email")}
+              placeholder="Email"
+              className={`w-full border rounded px-3 py-2 ${
+                errors.email ? "border-red-500" : "border-gray-300"
+              }`}
+            />
+            {errors.email && (
+              <p className="text-xs text-red-600 mt-1">Enter an email</p>
+            )}
+            <label className="flex items-center mt-2">
+              <input type="checkbox" {...register("news")} className="mr-2" />
+              <span className="text-sm">Email me with news and offers</span>
+            </label>
+          </div>
+        </>
+      )}
+
+      {/* Delivery Details */}
+      <h2 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-4">
+        {title}
+      </h2>
+      {/* Country */}
       <div className="mb-4">
-        <input {...register("email")}
-          placeholder="Email"
-          className={`w-full border rounded px-3 py-2 ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
-        />
-        {errors.email && <p className="text-xs text-red-600 mt-1">Enter an email</p>}
-        <label className="flex items-center mt-2">
-          <input type="checkbox" {...register("news")} className="mr-2" />
-          <span className="text-sm">Email me with news and offers</span>
-        </label>
+        <div className="relative">
+          <select
+            {...register("country")}
+            className={`w-full border rounded px-3 pt-6 pb-2 appearance-none bg-white text-gray-900 text-md ${
+              errors.country ? "border-red-500" : "border-gray-300"
+            }`}
+          >
+            <option value="">Select Country</option>
+            {/* Countries in Alphabetical Order (A-Z) */}
+            <option value="Albania">Albania</option>
+            <option value="Andorra">Andorra</option>
+            <option value="Armenia">Armenia</option>
+            <option value="Austria">Austria</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Belarus">Belarus</option>
+            <option value="Belgium">Belgium</option>
+            <option value="Bosnia and Herzegovina">
+              Bosnia and Herzegovina
+            </option>
+            <option value="Bulgaria">Bulgaria</option>
+            <option value="Croatia">Croatia</option>
+            <option value="Cyprus">Cyprus</option>
+            <option value="Czech Republic">Czech Republic</option>
+            <option value="Denmark">Denmark</option>
+            <option value="Estonia">Estonia</option>
+            <option value="Finland">Finland</option>
+            <option value="France">France</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Germany">Germany</option>
+            <option value="Greece">Greece</option>
+            <option value="Hungary">Hungary</option>
+            <option value="Iceland">Iceland</option>
+            <option value="Ireland">Ireland</option>
+            <option value="Italy">Italy</option>
+            <option value="Kosovo">Kosovo</option>
+            <option value="Latvia">Latvia</option>
+            <option value="Liechtenstein">Liechtenstein</option>
+            <option value="Lithuania">Lithuania</option>
+            <option value="Luxembourg">Luxembourg</option>
+            <option value="Malta">Malta</option>
+            <option value="Moldova">Moldova</option>
+            <option value="Monaco">Monaco</option>
+            <option value="Montenegro">Montenegro</option>
+            <option value="Netherlands">Netherlands</option>
+            <option value="North Macedonia">North Macedonia</option>
+            <option value="Norway">Norway</option>
+            <option value="Poland">Poland</option>
+            <option value="Portugal">Portugal</option>
+            <option value="Romania">Romania</option>
+            <option value="Russia">Russia</option>
+            <option value="San Marino">San Marino</option>
+            <option value="Serbia">Serbia</option>
+            <option value="Slovakia">Slovakia</option>
+            <option value="Slovenia">Slovenia</option>
+            <option value="Spain">Spain</option>
+            <option value="Sweden">Sweden</option>
+            <option value="Switzerland">Switzerland</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Ukraine">Ukraine</option>
+            <option value="United Kingdom">United Kingdom</option>
+            <option value="Vatican City">Vatican City</option>
+            {/* Non-European Countries (Commented Out) */}
+            {/* <option value="United States">United States</option>
+            <option value="Canada">Canada</option>
+            <option value="Australia">Australia</option>
+            <option value="New Zealand">New Zealand</option>
+            <option value="Japan">Japan</option>
+            <option value="South Korea">South Korea</option>
+            <option value="Singapore">Singapore</option> */}
+            <option value="Other">Other</option>
+          </select>
+          {/* Floating Label */}
+          <label className="absolute left-3 top-2 text-xs text-gray-500 pointer-events-none">
+            Country/Region
+          </label>
+          {/* Custom Dropdown Arrow */}
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg
+              className="w-4 h-4 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+        {errors.country && (
+          <p className="text-xs text-red-600 mt-1">Enter a country</p>
+        )}
       </div>
-      <h2 className="text-lg font-bold mb-4">Shipping Address</h2>
+
+      {/* First Name and Last Name */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-          <input {...register("firstName")}
+          <input
+            {...register("firstName")}
             placeholder="First name"
-            className={`w-full border rounded px-3 py-2 ${errors.firstName ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full border rounded px-3 py-2 text-gray-900 text-md ${
+              errors.firstName ? "border-red-500" : "border-gray-300"
+            }`}
           />
-          {errors.firstName && <p className="text-xs text-red-600 mt-1">Enter a first name</p>}
+          {errors.firstName && (
+            <p className="text-xs text-red-600 mt-1">Enter a first name</p>
+          )}
         </div>
         <div>
-          <input {...register("lastName")}
+          <input
+            {...register("lastName")}
             placeholder="Last name"
-            className={`w-full border rounded px-3 py-2 ${errors.lastName ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full border rounded px-3 py-2 text-gray-900 text-md ${
+              errors.lastName ? "border-red-500" : "border-gray-300"
+            }`}
           />
-          {errors.lastName && <p className="text-xs text-red-600 mt-1">Enter a last name</p>}
+          {errors.lastName && (
+            <p className="text-xs text-red-600 mt-1">Enter a last name</p>
+          )}
         </div>
       </div>
+
+      {/* Company Name */}
       <div className="mb-4">
-        <input {...register("address")}
+        <input
+          {...register("company", { required: false })}
+          placeholder="Company (optional)"
+          className={`w-full border rounded px-3 py-2 text-gray-900 text-md border-gray-300`}
+        />
+        {errors.company && (
+          <p className="text-xs text-red-600 mt-1">Enter a company name</p>
+        )}
+      </div>
+
+      {/* Address */}
+      <div className="mb-4">
+        <input
+          {...register("address")}
           placeholder="Address"
-          className={`w-full border rounded px-3 py-2 ${errors.address ? 'border-red-500' : 'border-gray-300'}`}
+          className={`w-full border rounded px-3 py-2 text-gray-900 text-md ${
+            errors.address ? "border-red-500" : "border-gray-300"
+          }`}
         />
-        {errors.address && <p className="text-xs text-red-600 mt-1">Enter an address</p>}
+        {errors.address && (
+          <p className="text-xs text-red-600 mt-1">Enter an address</p>
+        )}
       </div>
+
+      {/* Apartment, Suite, etc. */}
       <div className="mb-4">
-        <input {...register("city")}
-          placeholder="City"
-          className={`w-full border rounded px-3 py-2 ${errors.city ? 'border-red-500' : 'border-gray-300'}`}
+        <input
+          {...register("apartment", { required: false })}
+          placeholder="Apartment, Suite, etc. (optional)"
+          className={`w-full border rounded px-3 py-2 text-gray-900 text-md border-gray-300`}
         />
-        {errors.city && <p className="text-xs text-red-600 mt-1">Enter a city</p>}
+        {errors.apartment && (
+          <p className="text-xs text-red-600 mt-1">
+            Enter an apartment, suite, etc.
+          </p>
+        )}
       </div>
+
+      {/* City and ZIP */}
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <select {...register("country")}
-            className={`w-full border rounded px-3 py-2 ${errors.country ? 'border-red-500' : 'border-gray-300'}`}
-          >
-            <option value="">Country</option>
-            <option value="United States">United States</option>
-            <option value="Canada">Canada</option>
-            {/* Add more countries as needed */}
-          </select>
-        </div>
-        <div>
-          <input {...register("zip")}
+          <input
+            {...register("zip")}
             placeholder="ZIP code"
-            className={`w-full border rounded px-3 py-2 ${errors.zip ? 'border-red-500' : 'border-gray-300'}`}
+            className={`w-full border rounded px-3 py-2 text-gray-900 text-md ${
+              errors.zip ? "border-red-500" : "border-gray-300"
+            }`}
           />
-          {errors.zip && <p className="text-xs text-red-600 mt-1">Enter a ZIP / postal code</p>}
+          {errors.zip && (
+            <p className="text-xs text-red-600 mt-1">
+              Enter a ZIP / postal code
+            </p>
+          )}
+        </div>
+
+        <div>
+          <input
+            {...register("city")}
+            placeholder="City"
+            className={`w-full border rounded px-3 py-2 text-gray-900 text-md ${
+              errors.city ? "border-red-500" : "border-gray-300"
+            }`}
+          />
+          {errors.city && (
+            <p className="text-xs text-red-600 mt-1">Enter a city</p>
+          )}
         </div>
       </div>
-      <div className="mb-4">
-        <input {...register("phone")}
+
+      {/* Phone */}
+      <div className="mb-4 relative">
+        <input
+          {...register("phone", { required: false })}
           placeholder="Phone (optional)"
-          className="w-full border border-gray-300 rounded px-3 py-2"
+          className="w-full border border-gray-300 rounded px-3 py-2 text-gray-900 text-md"
         />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-help" />
+            </TooltipTrigger>
+            <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
+              <p className="text-xs text-white justify-center text-justify">
+                In case we need to contact you about your order.
+              </p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        {errors.phone && (
+          <p className="text-xs text-red-600 mt-1">Enter a phone number</p>
+        )}
       </div>
-      <button type="submit" className="w-full bg-black text-white py-3 rounded font-bold mt-2">Continue to Shipping</button>
-    </form>
+
+      {/* Continue to Shipping */}
+      {/* <button
+        type="submit"
+        className="w-full bg-black text-white py-3 rounded font-bold mt-2"
+      >
+        Continue to Payment
+      </button> */}
+    </>
   );
+
+  if (showFormWrapper) {
+    return (
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white rounded-xl border border-gray-200 p-6"
+      >
+        {formContent}
+      </form>
+    );
+  }
+
+  return formContent;
 }

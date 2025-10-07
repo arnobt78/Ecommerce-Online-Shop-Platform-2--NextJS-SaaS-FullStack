@@ -95,8 +95,8 @@ export default function CheckoutSummery() {
   return (
     <div>
       {/* Right: Cart Summary */}
-      <div className="w-full bg-gray-50 rounded-xl border border-gray-200 p-6 sticky self-start">
-        <h2 className="text-lg text-gray-900 font-semibold mb-4">
+      <div className="w-full">
+        <h2 className="block sm:hidden text-lg text-gray-900 font-semibold mb-4">
           {t("cartPage.orderSummary")}
         </h2>
         <div className="divide-y divide-gray-200">
@@ -153,11 +153,11 @@ export default function CheckoutSummery() {
               placeholder={t("cartPage.enterPromoCode")}
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 text-sm w-full"
+              className="border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] text-md text-gray-600 px-3 py-2 w-full"
             />
             <button
               onClick={applyPromoCode}
-              className="bg-gray-200 text-gray-700 font-semibold px-4 rounded disabled:opacity-50"
+              className="bg-gray-200 text-gray-700 font-semibold px-6 py-2 disabled:opacity-50 rounded-[8px]"
               disabled={!promoCode}
               type="button"
             >
@@ -179,7 +179,7 @@ export default function CheckoutSummery() {
         </div>
         {/* Subtotal, Shipping, Total (with icons and tax) */}
         <div className="space-y-4 mb-6 mt-6">
-          <div className="flex justify-between text-gray-700">
+          <div className="flex justify-between text-md text-gray-700">
             <span className="flex items-center">
               <ShoppingBag className="w-4 h-4 mr-1" />
               {t("cartPage.subtotal")} ({getTotalItems()}{" "}
@@ -188,7 +188,7 @@ export default function CheckoutSummery() {
             <span className="font-semibold">€ {getSubtotal().toFixed(2)}</span>
           </div>
 
-          <div className="flex justify-between items-center text-gray-700">
+          <div className="flex justify-between items-center text-md text-gray-700">
             <span className="flex items-center">
               <Truck className="w-4 h-4 mr-1" />
               {t("cartPage.shipping")}

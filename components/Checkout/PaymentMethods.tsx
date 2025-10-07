@@ -1,10 +1,17 @@
 "use client";
-import React, { useState } from "react";
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useRef,
+} from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreditCard, Lock, Info } from "lucide-react";
+import { useMediaQuery } from "../../hooks/use-media-query";
 import {
   Tooltip,
   TooltipContent,
@@ -17,6 +24,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import CheckoutForm from "./CheckoutForm";
+import CheckoutSummery from "./CheckoutSummery";
 
 const schema = z.object({
   cardNumber: z.string().min(12, "Enter a card number").max(19),
@@ -49,313 +57,400 @@ const cardIcons = [
   // { src: "/payment-icons/trustly.svg", alt: "Trustly" },
 ];
 
-export default function PaymentMethods() {
-  const [selected, setSelected] = useState("card");
-  const [isMobile, setIsMobile] = useState(false);
-  const [useShippingAddress, setUseShippingAddress] = useState(true);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      useShipping: true,
-      cardNumber: "",
-      expiry: "",
-      cvc: "",
-      name: "",
-    },
-  });
-  // Only run on client
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
+export interface PaymentMethodsRef {
+  triggerValidation: () => Promise<boolean>;
+  getData: () => FormData | null;
+  submitPayment: () => void;
+}
 
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-  const visibleCount = isMobile ? 3 : 3;
-  const hiddenCount = cardIcons.length - visibleCount;
-  const hiddenIcons = cardIcons.slice(visibleCount);
-  const onSubmit = (data: FormData) => {
-    alert("Payment submitted: " + JSON.stringify(data));
-  };
-  return (
-    <div className="mt-6">
-      {/* Payment title */}
-      <div className="flex flex-col px-4 sm:px-0">
-        <h3 className="text-lg font-bold mb-1">Payment</h3>
-        <p className="text-sm text-gray-500 mb-4">
-          All transactions are secure and encrypted.
-        </p>
-      </div>
+interface PaymentMethodsProps {
+  onPaymentSubmit?: (data: FormData) => void;
+}
 
-      {/* Card Option */}
-      <div className="border rounded-xl">
-        <div
-          className={`flex items-center px-4 py-3 border-b ${
-            selected === "card" ? "bg-[#65bbe6]/10" : "bg-white"
-          }`}
-        >
-          <input
-            type="radio"
-            id="card"
-            name="payment-method"
-            checked={selected === "card"}
-            onChange={() => setSelected("card")}
-            className="accent-black mr-2"
-          />
-          <label
-            htmlFor="card"
-            className={`${
-              selected === "card"
-                ? "font-medium text-gray-900"
-                : "font-normal text-gray-900"
-            } flex-1 cursor-pointer`}
-          >
-            Credit Card
-          </label>
-          <div className="flex items-center gap-2 relative group">
-            {/* Show 2 icons on mobile, 6 on sm+ */}
-            {cardIcons.slice(0, visibleCount).map((icon) => (
-              <Image
-                key={icon.alt}
-                src={icon.src}
-                alt={icon.alt}
-                width={40}
-                height={40}
-                className={`h-8 w-10 object-cover border-2 border-gray-200 rounded shadow-xl${
-                  isMobile ? "" : " hidden sm:inline-block"
-                }`}
-              />
-            ))}
-            {/* Dynamic +N badge and Shadcn tooltip */}
-            {hiddenCount > 0 && (
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span className="text-xs bg-black text-white/80 hover:text-[#65bbe6] h-8 w-10 rounded cursor-pointer hover:bg-gray-900 transition-colors text-md font-bold flex items-center justify-center">
-                      +{hiddenCount}
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent className="bg-black text-white p-2 rounded-lg shadow-xl">
-                    <div className="grid grid-cols-2 gap-2 min-w-[80px]">
-                      {hiddenIcons.map((icon) => (
-                        <Image
-                          key={icon.alt}
-                          src={icon.src}
-                          alt={icon.alt}
-                          width={40}
-                          height={40}
-                          className="h-6 w-10 object-cover border-2 border-gray-200 rounded shadow-xl"
-                        />
-                      ))}
-                    </div>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
-          </div>
+const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
+  ({ onPaymentSubmit }, ref) => {
+    const [selected, setSelected] = useState("card");
+    const [isMobile, setIsMobile] = useState(false);
+    const [useShippingAddress, setUseShippingAddress] = useState(true);
+    const [isTooltipOpen, setIsTooltipOpen] = useState(false);
+    const [isPaymentIconsTooltipOpen, setIsPaymentIconsTooltipOpen] =
+      useState(false);
+    const isMobileDevice = useMediaQuery("(max-width: 768px)");
+    const tooltipRef = useRef<HTMLDivElement>(null);
+    const paymentIconsTooltipRef = useRef<HTMLDivElement>(null);
+
+    // Close CVC tooltip when clicking outside on mobile
+    useEffect(() => {
+      if (!isMobileDevice || !isTooltipOpen) return;
+
+      const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+        if (
+          tooltipRef.current &&
+          !tooltipRef.current.contains(event.target as Node)
+        ) {
+          setIsTooltipOpen(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("touchstart", handleClickOutside);
+      };
+    }, [isMobileDevice, isTooltipOpen]);
+
+    // Close payment icons tooltip when clicking outside on mobile
+    useEffect(() => {
+      if (!isMobileDevice || !isPaymentIconsTooltipOpen) return;
+
+      const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+        if (
+          paymentIconsTooltipRef.current &&
+          !paymentIconsTooltipRef.current.contains(event.target as Node)
+        ) {
+          setIsPaymentIconsTooltipOpen(false);
+        }
+      };
+
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("touchstart", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("touchstart", handleClickOutside);
+      };
+    }, [isMobileDevice, isPaymentIconsTooltipOpen]);
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+      trigger,
+      getValues,
+    } = useForm<FormData>({
+      resolver: zodResolver(schema),
+      defaultValues: {
+        useShipping: true,
+        cardNumber: "",
+        expiry: "",
+        cvc: "",
+        name: "",
+      },
+    });
+
+    // Expose validation method to parent component
+    useImperativeHandle(ref, () => ({
+      triggerValidation: async () => {
+        const isValid = await trigger();
+        return isValid;
+      },
+      getData: () => {
+        const values = getValues();
+        return values;
+      },
+      submitPayment: () => {
+        handleSubmit(onSubmit)();
+      },
+    }));
+    // Only run on client
+    React.useEffect(() => {
+      if (typeof window === "undefined") return;
+
+      const checkMobile = () => setIsMobile(window.innerWidth < 640);
+      checkMobile();
+      window.addEventListener("resize", checkMobile);
+      return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+    const visibleCount = isMobile ? 3 : 3;
+    const hiddenCount = cardIcons.length - visibleCount;
+    const hiddenIcons = cardIcons.slice(visibleCount);
+    const onSubmit = (data: FormData) => {
+      console.log("🔍 PaymentMethods onSubmit called with data:", data);
+      if (onPaymentSubmit) {
+        console.log("🔍 Calling parent onPaymentSubmit");
+        onPaymentSubmit(data);
+      } else {
+        console.log("🔍 No parent onPaymentSubmit, using default alert");
+        alert("Payment submitted: " + JSON.stringify(data));
+      }
+    };
+    return (
+      <div className="mt-6">
+        {/* Payment title */}
+        <div className="flex flex-col px-4 sm:px-0">
+          <h3 className="text-lg font-bold mb-1">Payment</h3>
+          <p className="text-sm text-gray-500 mb-4">
+            All transactions are secure and encrypted.
+          </p>
         </div>
-        {selected === "card" && (
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="px-4 pt-4 pb-2 bg-gray-50"
+
+        {/* Card Option */}
+        <div className="border border-gray-200 rounded-xl">
+          <div
+            className={`flex items-center px-4 py-3 border-b ${
+              selected === "card" ? "bg-[#65bbe6]/10" : "bg-white"
+            }`}
           >
-            <div className="mb-4">
-              <div className="relative">
-                <input
-                  {...register("cardNumber")}
-                  placeholder="Card number"
-                  className={`w-full border rounded px-3 py-2 pr-10 text-gray-900 text-md${
-                    errors.cardNumber ? "border-red-500" : "border-gray-300"
+            <input
+              type="radio"
+              id="card"
+              name="payment-method"
+              checked={selected === "card"}
+              onChange={() => setSelected("card")}
+              className="accent-black mr-2"
+            />
+            <label
+              htmlFor="card"
+              className={`${
+                selected === "card"
+                  ? "font-medium text-gray-900"
+                  : "font-normal text-gray-900"
+              } flex-1 cursor-pointer`}
+            >
+              Credit Card
+            </label>
+            <div className="flex items-center gap-2 relative group">
+              {/* Show 2 icons on mobile, 6 on sm+ */}
+              {cardIcons.slice(0, visibleCount).map((icon) => (
+                <Image
+                  key={icon.alt}
+                  src={icon.src}
+                  alt={icon.alt}
+                  width={40}
+                  height={40}
+                  className={`h-8 w-10 object-cover border-2 border-gray-200 rounded shadow-xl${
+                    isMobile ? "" : " hidden sm:inline-block"
                   }`}
-                  maxLength={19}
                 />
-                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
-              </div>
-              {errors.cardNumber && (
-                <p className="text-sm text-red-600 mt-1">
-                  {errors.cardNumber.message}
-                </p>
-              )}
-            </div>
-            <div className="flex gap-2 mb-4">
-              <div className="flex-1">
-                <div className="relative">
-                  <input
-                    {...register("expiry")}
-                    placeholder="Expiration date"
-                    className={`w-full border rounded px-3 py-2 pr-8 text-gray-900 text-md${
-                      errors.expiry ? "border-red-500" : "border-gray-300"
-                    }`}
-                    maxLength={5}
-                  />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm font-semibold pointer-events-none">
-                    MM/YY
-                  </span>
-                </div>
-                {errors.expiry && (
-                  <p className="text-sm text-red-600 mt-1">
-                    {errors.expiry.message}
-                  </p>
-                )}
-              </div>
-              <div className="flex-1">
-                <div className="relative">
-                  <input
-                    {...register("cvc")}
-                    placeholder="Security code"
-                    className={`w-full border rounded px-3 py-2 pr-8 text-gray-900 text-md${
-                      errors.cvc ? "border-red-500" : "border-gray-300"
-                    }`}
-                    maxLength={4}
-                  />
+              ))}
+              {/* Dynamic +N badge and Shadcn tooltip */}
+              {hiddenCount > 0 && (
+                <div ref={paymentIconsTooltipRef}>
                   <TooltipProvider>
-                    <Tooltip>
+                    <Tooltip
+                      open={
+                        isMobileDevice ? isPaymentIconsTooltipOpen : undefined
+                      }
+                      onOpenChange={
+                        isMobileDevice
+                          ? setIsPaymentIconsTooltipOpen
+                          : undefined
+                      }
+                    >
                       <TooltipTrigger asChild>
-                        <Info className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-help pointer-events-auto" />
+                        <span
+                          className="text-xs bg-black text-white/80 hover:text-[#65bbe6] h-8 w-10 rounded cursor-pointer hover:bg-gray-900 transition-colors text-md font-bold flex items-center justify-center"
+                          onClick={
+                            isMobileDevice
+                              ? () =>
+                                  setIsPaymentIconsTooltipOpen(
+                                    !isPaymentIconsTooltipOpen
+                                  )
+                              : undefined
+                          }
+                        >
+                          +{hiddenCount}
+                        </span>
                       </TooltipTrigger>
-                      <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
-                        <p className="text-xs text-white justify-center text-justify">
-                          3-digit security code usually found on the back of
-                          your card. American Express cards have a 4-digit code
-                          located on the front.
-                        </p>
+                      <TooltipContent className="bg-black text-white p-2 rounded-lg shadow-xl">
+                        <div className="grid grid-cols-2 gap-2 min-w-[80px]">
+                          {hiddenIcons.map((icon) => (
+                            <Image
+                              key={icon.alt}
+                              src={icon.src}
+                              alt={icon.alt}
+                              width={40}
+                              height={40}
+                              className="h-6 w-10 object-cover border-2 border-gray-200 rounded shadow-xl"
+                            />
+                          ))}
+                        </div>
                       </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 </div>
-                {errors.cvc && (
+              )}
+            </div>
+          </div>
+          {selected === "card" && (
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("🔍 PaymentMethods form submitted");
+                // Always call the parent handler, regardless of validation
+                if (onPaymentSubmit) {
+                  console.log("🔍 Calling parent onPaymentSubmit directly");
+                  const formData = getValues();
+                  onPaymentSubmit(formData);
+                } else {
+                  // Fallback to normal form submission
+                  handleSubmit(onSubmit)(e);
+                }
+              }}
+              className="px-4 pt-4 pb-2 bg-gray-50"
+            >
+              <div className="mb-4">
+                <div className="relative">
+                  <input
+                    {...register("cardNumber")}
+                    placeholder=" "
+                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md${
+                      errors.cardNumber ? "border-red-500" : "border-gray-300"
+                    }`}
+                    maxLength={19}
+                  />
+                  {/* Floating Label */}
+                  <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
+                    Card number
+                  </label>
+                  <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                </div>
+                {errors.cardNumber && (
                   <p className="text-sm text-red-600 mt-1">
-                    {errors.cvc.message}
+                    {errors.cardNumber.message}
                   </p>
                 )}
               </div>
-            </div>
-            <div className="mb-4">
-              <div className="relative">
-                <input
-                  {...register("name")}
-                  placeholder="Name on card"
-                  className={`w-full border rounded px-3 py-2 pr-10 text-gray-900 text-md${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+              <div className="flex flex-col sm:flex-row gap-2 mb-4">
+                <div className="flex-1">
+                  <div className="relative">
+                    <input
+                      {...register("expiry")}
+                      placeholder=" "
+                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md${
+                        errors.expiry ? "border-red-500" : "border-gray-300"
+                      }`}
+                      maxLength={5}
+                      onChange={(e) => {
+                        let value = e.target.value.replace(/\D/g, ""); // Remove non-digits
+                        if (value.length >= 2) {
+                          value =
+                            value.substring(0, 2) + "/" + value.substring(2, 4);
+                        }
+                        e.target.value = value;
+                        // Update the form state
+                        const { onChange } = register("expiry");
+                        onChange(e);
+                      }}
+                    />
+                    {/* Floating Label */}
+                    <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
+                      Expiration date
+                    </label>
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs sm:text-sm font-semibold pointer-events-none">
+                      MM/YY
+                    </span>
+                  </div>
+                  {errors.expiry && (
+                    <p className="text-sm text-red-600 mt-1">
+                      {errors.expiry.message}
+                    </p>
+                  )}
+                </div>
+                <div className="flex-1">
+                  <div className="relative">
+                    <input
+                      {...register("cvc")}
+                      placeholder=" "
+                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md${
+                        errors.cvc ? "border-red-500" : "border-gray-300"
+                      }`}
+                      maxLength={4}
+                    />
+                    {/* Floating Label */}
+                    <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
+                      Security code
+                    </label>
+                    <div ref={tooltipRef}>
+                      <TooltipProvider>
+                        <Tooltip
+                          open={isMobileDevice ? isTooltipOpen : undefined}
+                          onOpenChange={
+                            isMobileDevice ? setIsTooltipOpen : undefined
+                          }
+                        >
+                          <TooltipTrigger asChild>
+                            <Info
+                              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-help pointer-events-auto"
+                              onClick={
+                                isMobileDevice
+                                  ? () => setIsTooltipOpen(!isTooltipOpen)
+                                  : undefined
+                              }
+                            />
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
+                            <p className="text-xs text-white justify-center text-justify">
+                              3-digit security code usually found on the back of
+                              your card. American Express cards have a 4-digit
+                              code located on the front.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                  </div>
+                  {errors.cvc && (
+                    <p className="text-sm text-red-600 mt-1">
+                      {errors.cvc.message}
+                    </p>
+                  )}
+                </div>
               </div>
-              {errors.name && (
-                <p className="text-sm text-red-600 mt-1">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
-            {/* Use shipping address as billing address checkbox */}
-            <Collapsible
-              open={!useShippingAddress}
-              onOpenChange={(open) => setUseShippingAddress(!open)}
-            >
-              <CollapsibleTrigger asChild>
-                <label className="flex items-center mb-6 cursor-pointer">
+              <div className="mb-4">
+                <div className="relative">
                   <input
-                    type="checkbox"
-                    {...register("useShipping")}
-                    className="accent-black mr-2"
-                    checked={useShippingAddress}
-                    onChange={(e) => setUseShippingAddress(e.target.checked)}
+                    {...register("name")}
+                    placeholder=" "
+                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md${
+                      errors.name ? "border-red-500" : "border-gray-300"
+                    }`}
                   />
-                  <span className="text-sm">
-                    Use shipping address as billing address
-                  </span>
-                </label>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="mb-6">
-                <CheckoutForm
-                  title="Billing Address"
-                  showFormWrapper={false}
-                  showContactSection={false}
-                />
-              </CollapsibleContent>
-            </Collapsible>
-
-            {/* Secure and encrypted text */}
-            <div className="flex items-center mb-2 text-gray-400 text-sm">
-              <Lock className=" w-4 h-4 mr-2 text-gray-400 text-sm" /> Secure
-              and encrypted
-            </div>
-
-            {/* Pay Now button */}
-            <button
-              type="submit"
-              className="w-full bg-[#65bbe6]/60 hover:bg-[#65bbe6] transition transform duration-200 cursor-pointer text-gray-900 py-3 rounded-lg text-md font-bold flex items-center justify-center"
-            >
-              {/* <Lock className="w-4 h-4 mr-1" /> Pay Now */}
-              Pay Now
-            </button>
-
-            {/* Legal Text */}
-            <div className="mt-4 text-sm text-gray-600 leading-relaxed text-justify">
-              <p>
-                By clicking "Pay now" you agree to ourTerms and Conditions,
-                Refund Policy, Privacy Policy, Cookie Policy and other
-                applicable policies. You are enrolling in recurring billing
-                program on snuzz PRO platform, if you don't cancel prior to the
-                end of 3-day free trial you will be charged $9.99 every 14 days.
-                You can terminate snuzz PRO plan at anytime, in your account. If
-                you would have any questions please contact our{" "}
-                <a
-                  href="/contact"
-                  className="text-gray-600 underline hover:text-gray-800"
-                >
-                  support team
-                </a>
-                .
-              </p>
-            </div>
-
-            {/* Separator Line */}
-            <div className="border-t border-gray-200 my-4"></div>
-
-            {/* Policy Links */}
-            <div className="flex flex-wrap gap-4 text-sm">
-              <a
-                href="/terms"
-                className="text-blue-600 underline hover:text-blue-800"
+                  {/* Floating Label */}
+                  <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
+                    Name on card
+                  </label>
+                  <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+                </div>
+                {errors.name && (
+                  <p className="text-sm text-red-600 mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
+              </div>
+              {/* Use shipping address as billing address checkbox */}
+              <Collapsible
+                open={!useShippingAddress}
+                onOpenChange={(open) => setUseShippingAddress(!open)}
               >
-                Terms and Conditions
-              </a>
-              <a
-                href="/refund-policy"
-                className="text-blue-600 underline hover:text-blue-800"
-              >
-                Refund Policy
-              </a>
-              <a
-                href="/privacy-policy"
-                className="text-blue-600 underline hover:text-blue-800"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="/cookie-policy"
-                className="text-blue-600 underline hover:text-blue-800"
-              >
-                Cookie Policy
-              </a>
-              <a
-                href="/contact"
-                className="text-blue-600 underline hover:text-blue-800"
-              >
-                Support Team
-              </a>
-            </div>
-          </form>
-        )}
+                <CollapsibleTrigger asChild>
+                  <label className="flex items-center mb-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      {...register("useShipping")}
+                      className="accent-black mr-2"
+                      checked={useShippingAddress}
+                      onChange={(e) => setUseShippingAddress(e.target.checked)}
+                    />
+                    <span className="text-sm">
+                      Use shipping address as billing address
+                    </span>
+                  </label>
+                </CollapsibleTrigger>
+                <CollapsibleContent className="mb-2">
+                  <CheckoutForm
+                    title="Billing Address"
+                    showFormWrapper={false}
+                    showContactSection={false}
+                  />
+                </CollapsibleContent>
+              </Collapsible>
+            </form>
+          )}
 
-        {/* Klarna Option */}
-        {/* <div
+          {/* Klarna Option */}
+          {/* <div
           className={`border-t border-b ${
             selected === "klarna" ? "bg-pink-50" : "bg-white"
           }`}
@@ -433,8 +528,8 @@ export default function PaymentMethods() {
           )}
         </div> */}
 
-        {/* Online Bank Transfer Option */}
-        {/* <div
+          {/* Online Bank Transfer Option */}
+          {/* <div
           className={`border-b ${
             selected === "bank" ? "bg-blue-50" : "bg-white"
           }`}
@@ -496,8 +591,8 @@ export default function PaymentMethods() {
           )}
         </div> */}
 
-        {/* Wire Transfer Option */}
-        {/* <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}>
+          {/* Wire Transfer Option */}
+          {/* <div className={`${selected === "wire" ? "bg-yellow-50" : "bg-white"}`}>
           <div className="flex items-center px-4 py-3">
             <input
               type="radio"
@@ -536,7 +631,105 @@ export default function PaymentMethods() {
             </div>
           )}
         </div> */}
+        </div>
+
+        {/* Secure and encrypted text */}
+        <div className="flex items-center justify-center mt-2 mb-2 text-gray-400 text-sm">
+          <Lock className=" w-4 h-4 mr-2 text-gray-400 text-sm" /> Secure and
+          encrypted
+        </div>
+
+        {/* Right: Cart Summary - 40% width - Only visible on desktop */}
+        <div className="block sm:hidden w-full mt-4">
+          <CheckoutSummery />
+        </div>
+
+        {/* Pay Now button */}
+        <button
+          type="button"
+          onClick={() => {
+            console.log("🔍 Pay Now button clicked");
+            // Always call parent onPaymentSubmit to trigger unified validation
+            // The parent will validate both forms and show all errors
+            if (onPaymentSubmit) {
+              console.log("🔍 Calling parent onPaymentSubmit directly");
+              const formData = getValues();
+              onPaymentSubmit(formData);
+            } else {
+              console.log(
+                "🔍 No parent onPaymentSubmit, using form validation"
+              );
+              // Fallback: validate and submit normally
+              handleSubmit(onSubmit)();
+            }
+          }}
+          className="w-full bg-[#65bbe6]/60 hover:bg-[#65bbe6] transition transform duration-200 cursor-pointer text-gray-900 py-3 rounded-lg text-md font-bold flex items-center justify-center"
+        >
+          {/* <Lock className="w-4 h-4 mr-1" /> Pay Now */}
+          Pay Now
+        </button>
+
+        {/* Legal Text */}
+        <div className="mt-4 text-sm text-gray-600 leading-relaxed text-justify">
+          <p>
+            By clicking "Pay now" you agree to our Terms and Conditions, Refund
+            Policy, Privacy Policy, Cookie Policy and other applicable policies.
+            You are enrolling in recurring billing program on snuzz PRO
+            platform, if you don't cancel prior to the end of 3-day free trial
+            you will be charged $9.99 every 14 days. You can terminate snuzz PRO
+            plan at anytime, in your account. If you would have any questions
+            please contact our{" "}
+            <a
+              href="/contact"
+              className="text-gray-600 underline hover:text-gray-800"
+            >
+              support team
+            </a>
+            .
+          </p>
+        </div>
+
+        {/* Separator Line */}
+        <div className="border-t border-gray-200 my-4"></div>
+
+        {/* Policy Links */}
+        <div className="flex flex-wrap gap-4 text-sm items-center justify-center">
+          <a
+            href="/terms"
+            className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
+          >
+            Terms and Conditions
+          </a>
+          <a
+            href="/refund-policy"
+            className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
+          >
+            Refund Policy
+          </a>
+          <a
+            href="/privacy-policy"
+            className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
+          >
+            Privacy Policy
+          </a>
+          <a
+            href="/cookie-policy"
+            className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
+          >
+            Cookie Policy
+          </a>
+          <a
+            href="/contact"
+            className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
+          >
+            Support Team
+          </a>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+);
+
+PaymentMethods.displayName = "PaymentMethods";
+
+export default PaymentMethods;

@@ -4,6 +4,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useRef,
   ReactNode,
 } from "react";
 
@@ -39,6 +40,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
+  const previousCartRef = useRef<CartItem[]>([]);
 
   // Load cart items and promo code from localStorage after hydration
   useEffect(() => {
@@ -83,6 +85,42 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
     }
   }, [appliedPromo, isHydrated]);
+
+  // Clear promo code when cart items change or cart becomes empty (only after hydration)
+  useEffect(() => {
+    if (isHydrated && appliedPromo) {
+      // Clear promo code when cart becomes empty
+      if (cartItems.length === 0) {
+        setAppliedPromo(null);
+        return;
+      }
+
+      // Check if cart items have actually changed (not just quantity updates)
+      const previousCart = previousCartRef.current;
+      const currentCart = cartItems;
+
+      // If this is the first time (no previous cart), just store current cart
+      if (previousCart.length === 0) {
+        previousCartRef.current = [...currentCart];
+        return;
+      }
+
+      // Check if the actual items have changed (different products, not just quantities)
+      const previousSlugs = previousCart.map((item) => item.slug).sort();
+      const currentSlugs = currentCart.map((item) => item.slug).sort();
+
+      const itemsChanged =
+        JSON.stringify(previousSlugs) !== JSON.stringify(currentSlugs);
+
+      if (itemsChanged) {
+        // Cart items have changed (different products), clear promo code
+        setAppliedPromo(null);
+      }
+
+      // Update the previous cart reference
+      previousCartRef.current = [...currentCart];
+    }
+  }, [cartItems, isHydrated, appliedPromo]);
 
   return (
     <CartContext.Provider

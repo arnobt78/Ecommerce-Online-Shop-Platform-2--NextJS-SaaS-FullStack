@@ -18,23 +18,26 @@ import {
 } from "@/components/ui/tooltip";
 import { Info } from "lucide-react";
 import { useMediaQuery } from "../../hooks/use-media-query";
+import { useLanguage } from "@/context/LanguageContextNew";
 
-const schema = z.object({
-  email: z.string().email(),
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  address: z.string().min(1),
-  city: z.string().min(1),
-  state: z.string().min(1),
-  zip: z.string().min(1),
-  country: z.string().min(1),
-  phone: z.string().optional(),
-  news: z.boolean().optional(),
-  company: z.string().optional(),
-  apartment: z.string().optional(),
-});
+// Function to create schema with translations
+const createSchema = (t: (key: string) => string) =>
+  z.object({
+    email: z.string().email(t("checkoutPage.delivery.errors.email")),
+    firstName: z.string().min(1, t("checkoutPage.delivery.errors.firstName")),
+    lastName: z.string().min(1, t("checkoutPage.delivery.errors.lastName")),
+    address: z.string().min(1, t("checkoutPage.delivery.errors.address")),
+    city: z.string().min(1, t("checkoutPage.delivery.errors.city")),
+    state: z.string().min(1),
+    zip: z.string().min(1, t("checkoutPage.delivery.errors.zip")),
+    country: z.string().min(1, t("checkoutPage.delivery.errors.country")),
+    phone: z.string().optional(),
+    news: z.boolean().optional(),
+    company: z.string().optional(),
+    apartment: z.string().optional(),
+  });
 
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<ReturnType<typeof createSchema>>;
 
 interface CheckoutFormProps {
   title?: string;
@@ -56,6 +59,7 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
     }: CheckoutFormProps,
     ref
   ) => {
+    const { t } = useLanguage();
     const [isPhoneTooltipOpen, setIsPhoneTooltipOpen] = useState(false);
     const isMobileDevice = useMediaQuery("(max-width: 768px)");
     const phoneTooltipRef = useRef<HTMLDivElement>(null);
@@ -66,10 +70,27 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
       formState: { errors },
       trigger,
       getValues,
+      watch,
     } = useForm<FormData>({
-      resolver: zodResolver(schema),
-      defaultValues: { country: "" },
+      resolver: zodResolver(createSchema(t)),
+      defaultValues: {
+        email: "",
+        firstName: "",
+        lastName: "",
+        address: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: "",
+        phone: "",
+        company: "",
+        apartment: "",
+        news: false,
+      },
     });
+
+    // Watch all form fields to hide error messages when user starts typing
+    const watchedValues = watch();
 
     // Close phone tooltip when clicking outside on mobile
     useEffect(() => {
@@ -119,7 +140,7 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
         {showContactSection && (
           <>
             <h2 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-4">
-              Contact
+              {t("checkoutPage.delivery.contact")}
             </h2>
             {/* Email */}
             <div className="mb-4">
@@ -127,22 +148,27 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                 <input
                   {...register("email")}
                   placeholder=" "
-                  className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+                  autoComplete="off"
+                  className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                     errors.email ? "border-red-500" : "border-gray-300"
                   }`}
                 />
                 {/* Floating Label with Animation */}
                 <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                  Email
+                  {t("checkoutPage.delivery.email")}
                 </label>
               </div>
-              {errors.email && (
-                <p className="text-sm text-red-600 mt-1">Enter an email</p>
+              {errors.email && !watchedValues.email && (
+                <p className="text-sm text-red-600 mt-1">
+                  {errors.email.message}
+                </p>
               )}
               {/* Email me with news and offers */}
               <label className="flex items-center mt-2">
                 <input type="checkbox" {...register("news")} className="mr-2" />
-                <span className="text-sm">Email me with news and offers</span>
+                <span className="text-sm">
+                  {t("checkoutPage.delivery.emailNews")}
+                </span>
               </label>
             </div>
           </>
@@ -157,11 +183,14 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
           <div className="relative">
             <select
               {...register("country")}
-              className={`w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 appearance-none bg-white text-gray-900 text-md ${
+              autoComplete="off"
+              className={`w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 appearance-none bg-white text-gray-900 text-md ${
                 errors.country ? "border-red-500" : "border-gray-300"
               }`}
             >
-              <option value="">Select Country</option>
+              <option value="">
+                {t("checkoutPage.delivery.selectCountry")}
+              </option>
               {/* Countries in Alphabetical Order (A-Z) */}
               <option value="Albania">Albania</option>
               <option value="Andorra">Andorra</option>
@@ -227,7 +256,7 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
             </select>
             {/* Floating Label */}
             <label className="absolute left-3 top-2 text-xs text-gray-500 pointer-events-none">
-              Country/Region
+              {t("checkoutPage.delivery.countryRegion")}
             </label>
             {/* Custom Dropdown Arrow */}
             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
@@ -246,8 +275,10 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               </svg>
             </div>
           </div>
-          {errors.country && (
-            <p className="text-sm text-red-600 mt-1">Enter a country</p>
+          {errors.country && !watchedValues.country && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.country.message}
+            </p>
           )}
         </div>
 
@@ -258,17 +289,20 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               <input
                 {...register("firstName")}
                 placeholder=" "
-                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+                autoComplete="off"
+                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                   errors.firstName ? "border-red-500" : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
               <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                First name
+                {t("checkoutPage.delivery.firstName")}
               </label>
             </div>
-            {errors.firstName && (
-              <p className="text-sm text-red-600 mt-1">Enter a first name</p>
+            {errors.firstName && !watchedValues.firstName && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.firstName.message}
+              </p>
             )}
           </div>
           <div>
@@ -276,17 +310,20 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               <input
                 {...register("lastName")}
                 placeholder=" "
-                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+                autoComplete="off"
+                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                   errors.lastName ? "border-red-500" : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
               <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                Last name
+                {t("checkoutPage.delivery.lastName")}
               </label>
             </div>
-            {errors.lastName && (
-              <p className="text-sm text-red-600 mt-1">Enter a last name</p>
+            {errors.lastName && !watchedValues.lastName && (
+              <p className="text-sm text-red-600 mt-1">
+                {errors.lastName.message}
+              </p>
             )}
           </div>
         </div>
@@ -297,15 +334,18 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
             <input
               {...register("company", { required: false })}
               placeholder=" "
-              className="peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md border-gray-300"
+              autoComplete="off"
+              className="peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md border-gray-300"
             />
             {/* Floating Label */}
             <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-              Company (optional)
+              {t("checkoutPage.delivery.company")}
             </label>
           </div>
-          {errors.company && (
-            <p className="text-sm text-red-600 mt-1">Enter a company name</p>
+          {errors.company && !watchedValues.company && (
+            <p className="text-sm text-red-600 mt-1">
+              {t("checkoutPage.delivery.errors.company")}
+            </p>
           )}
         </div>
 
@@ -315,17 +355,20 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
             <input
               {...register("address")}
               placeholder=" "
-              className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+              autoComplete="off"
+              className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                 errors.address ? "border-red-500" : "border-gray-300"
               }`}
             />
             {/* Floating Label */}
             <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-              Address
+              {t("checkoutPage.delivery.address")}
             </label>
           </div>
-          {errors.address && (
-            <p className="text-sm text-red-600 mt-1">Enter an address</p>
+          {errors.address && !watchedValues.address && (
+            <p className="text-sm text-red-600 mt-1">
+              {errors.address.message}
+            </p>
           )}
         </div>
 
@@ -335,16 +378,17 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
             <input
               {...register("apartment", { required: false })}
               placeholder=" "
-              className="peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md border-gray-300"
+              autoComplete="off"
+              className="peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md border-gray-300"
             />
             {/* Floating Label */}
             <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-              Apartment, Suite, etc. (optional)
+              {t("checkoutPage.delivery.apartment")}
             </label>
           </div>
-          {errors.apartment && (
+          {errors.apartment && !watchedValues.apartment && (
             <p className="text-sm text-red-600 mt-1">
-              Enter an apartment, suite, etc.
+              {t("checkoutPage.delivery.errors.apartment")}
             </p>
           )}
         </div>
@@ -356,19 +400,18 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               <input
                 {...register("zip")}
                 placeholder=" "
-                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+                autoComplete="off"
+                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                   errors.zip ? "border-red-500" : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
               <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                ZIP code
+                {t("checkoutPage.delivery.zipCode")}
               </label>
             </div>
-            {errors.zip && (
-              <p className="text-sm text-red-600 mt-1">
-                Enter a ZIP / postal code
-              </p>
+            {errors.zip && !watchedValues.zip && (
+              <p className="text-sm text-red-600 mt-1">{errors.zip.message}</p>
             )}
           </div>
 
@@ -377,17 +420,18 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               <input
                 {...register("city")}
                 placeholder=" "
-                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
+                autoComplete="off"
+                className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
                   errors.city ? "border-red-500" : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
               <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                City
+                {t("checkoutPage.delivery.city")}
               </label>
             </div>
-            {errors.city && (
-              <p className="text-sm text-red-600 mt-1">Enter a city</p>
+            {errors.city && !watchedValues.city && (
+              <p className="text-sm text-red-600 mt-1">{errors.city.message}</p>
             )}
           </div>
         </div>
@@ -398,11 +442,12 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
             <input
               {...register("phone", { required: false })}
               placeholder=" "
-              className="peer w-full border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md pr-10"
+              autoComplete="off"
+              className="peer w-full border border-gray-300 rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md pr-10"
             />
             {/* Floating Label */}
             <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-              Phone (optional)
+              {t("checkoutPage.delivery.phone")}
             </label>
             <div ref={phoneTooltipRef}>
               <TooltipProvider>
@@ -424,15 +469,17 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                   </TooltipTrigger>
                   <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
                     <p className="text-xs text-white justify-center text-justify">
-                      In case we need to contact you about your order.
+                      {t("checkoutPage.delivery.phoneTooltip")}
                     </p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             </div>
           </div>
-          {errors.phone && (
-            <p className="text-sm text-red-600 mt-1">Enter a phone number</p>
+          {errors.phone && !watchedValues.phone && (
+            <p className="text-sm text-red-600 mt-1">
+              {t("checkoutPage.delivery.errors.phone")}
+            </p>
           )}
         </div>
       </>

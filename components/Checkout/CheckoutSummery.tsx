@@ -5,7 +5,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { ShoppingBag, Truck } from "lucide-react";
 import Image from "next/image";
@@ -18,6 +18,28 @@ export default function CheckoutSummery() {
   const { t } = useLanguage();
   // Promo code logic (same as cart page)
   const [promoCode, setPromoCode] = useState("");
+
+  // Clear local promo code input when global appliedPromo is cleared (but not on initial load)
+  const [hasAppliedPromo, setHasAppliedPromo] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [promoErrorKey, setPromoErrorKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+      return;
+    }
+
+    if (appliedPromo) {
+      setHasAppliedPromo(true);
+      setPromoErrorKey(null); // Clear any errors when promo is successfully applied
+    } else if (hasAppliedPromo && !appliedPromo) {
+      // Only clear local promo code if we previously had an applied promo and now it's cleared
+      setPromoCode("");
+      setHasAppliedPromo(false);
+      setPromoErrorKey(null); // Clear any errors when promo is cleared
+    }
+  }, [appliedPromo, hasAppliedPromo, isInitialized]);
 
   function parsePrice(price: string | undefined) {
     if (!price) return 0;
@@ -49,12 +71,26 @@ export default function CheckoutSummery() {
     cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const applyPromoCode = () => {
+    const trimmedCode = promoCode.trim().toLowerCase();
+
+    // Clear any previous errors
+    setPromoErrorKey(null);
+
+    // Check if promo code is empty
+    if (!trimmedCode) {
+      setPromoErrorKey("promoCode.empty");
+      return;
+    }
+
     // Support SAVE30 promo code interactively
-    if (promoCode.trim().toLowerCase() === "save30") {
+    if (trimmedCode === "save30") {
       setAppliedPromo("SAVE30");
       setPromoCode("");
+      setPromoErrorKey(null);
     } else {
+      // Invalid promo code
       setAppliedPromo(null);
+      setPromoErrorKey("promoCode.invalid");
     }
   };
 
@@ -124,7 +160,7 @@ export default function CheckoutSummery() {
                   {item.brand || ""}
                 </span>
                 <span className="font-normal text-xs text-gray-600">
-                  Discount: 10%
+                  {t("cartPage.discount")}: 10%
                 </span>
               </div>
               <div className="font-normal text-base text-gray-900">
@@ -157,13 +193,20 @@ export default function CheckoutSummery() {
             />
             <button
               onClick={applyPromoCode}
-              className="bg-gray-200 text-gray-700 font-semibold px-6 py-2 disabled:opacity-50 rounded-[8px]"
+              className="bg-gray-200 text-gray-700 font-semibold px-4 py-2 disabled:opacity-50 rounded-[8px]"
               disabled={!promoCode}
               type="button"
             >
               {t("cartPage.apply")}
             </button>
           </div>
+          {promoErrorKey && (
+            <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600 font-medium">
+                {t(promoErrorKey)}
+              </p>
+            </div>
+          )}
           {appliedPromo && (
             <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl flex items-center">
               <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mr-2">
@@ -183,7 +226,8 @@ export default function CheckoutSummery() {
             <span className="flex items-center">
               <ShoppingBag className="w-4 h-4 mr-1" />
               {t("cartPage.subtotal")} ({getTotalItems()}{" "}
-              {getTotalItems() === 1 ? "item" : "items"})
+              {getTotalItems() === 1 ? t("cartPage.item") : t("cartPage.items")}
+              )
             </span>
             <span className="font-semibold">€ {getSubtotal().toFixed(2)}</span>
           </div>

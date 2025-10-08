@@ -286,8 +286,9 @@ import { ProductCardReelSection } from "./ProductCardReelSection";
 import { getRelatedProducts } from "./ProductCardReelServer";
 import ReviewSection from "@/components/Review/ReviewCardSection";
 
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { products } from "@/scripts/data/products";
+import { useCart } from "@/context/CartContext";
 
 // Get product index from query param, fallback to 0
 
@@ -301,6 +302,8 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
   slug,
 }) => {
   const { t } = useLanguage();
+  const router = useRouter();
+  const { setCartItems } = useCart();
   let product: any = undefined;
   let idx = 0;
   try {
@@ -335,6 +338,40 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
     );
   }
   const [quantity, setQuantity] = useState(1);
+
+  // Buy Now handler: Add item to cart and redirect to checkout
+  const handleBuyNow = () => {
+    // Add the product to cart
+    setCartItems((prev: any[]) => {
+      const existingItem = prev.find((item) => item.slug === product.slug);
+      if (existingItem) {
+        // If item already exists, update quantity
+        return prev.map((item) =>
+          item.slug === product.slug
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        // If item doesn't exist, add it
+        return [
+          ...prev,
+          {
+            productName: product.productName,
+            productImage: product.productImage,
+            brand: product.brand,
+            slug: product.slug,
+            stockStatus: product.stockStatus,
+            salePrice: product.salePrice || "",
+            originalPrice: product.originalPrice || "",
+            quantity: quantity,
+          },
+        ];
+      }
+    });
+
+    // Navigate to checkout page
+    router.push("/checkout");
+  };
   // Memoize related products for the reel section for performance
   const relatedProducts = useMemo(
     () => getRelatedProducts(product, products),
@@ -368,7 +405,7 @@ export const ProductDetailLayout: React.FC<ProductDetailLayoutProps> = ({
                   originalPrice={product.originalPrice || ""}
                   quantity={quantity}
                   onQuantityChange={setQuantity}
-                  onBuyNow={() => {}}
+                  onBuyNow={handleBuyNow}
                   onAddToCart={() => {}}
                   productId={idx}
                   slug={product.slug}

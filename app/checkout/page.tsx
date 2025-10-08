@@ -23,8 +23,10 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useCart } from "@/context/CartContext";
+import { useLanguage } from "@/context/LanguageContextNew";
 
 export default function CheckoutPage() {
+  const { t } = useLanguage();
   const { cartItems } = useCart();
   const checkoutFormRef = useRef<CheckoutFormRef>(null);
   const paymentMethodsRef = useRef<PaymentMethodsRef>(null);
@@ -142,7 +144,7 @@ export default function CheckoutPage() {
               <div className="w-full bg-gray-200 px-4 py-6 flex items-center justify-between cursor-pointer hover:bg-gray-300 transition-colors border-b border-gray-300">
                 <div className="flex items-center">
                   <span className="text-[#65bbe6] hover:text-[#65bbe6]/80 transition-colors duration-200 text-md font-medium mr-2">
-                    Order summary
+                    {t("cartPage.orderSummary")}
                   </span>
 
                   <ChevronDown

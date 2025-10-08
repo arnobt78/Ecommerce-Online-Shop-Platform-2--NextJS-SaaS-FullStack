@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -39,6 +39,28 @@ const CartPageComponents = () => {
   } = useCart();
   const [promoCode, setPromoCode] = useState("");
 
+  // Clear local promo code input when global appliedPromo is cleared (but not on initial load)
+  const [hasAppliedPromo, setHasAppliedPromo] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const [promoErrorKey, setPromoErrorKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isInitialized) {
+      setIsInitialized(true);
+      return;
+    }
+
+    if (appliedPromo) {
+      setHasAppliedPromo(true);
+      setPromoErrorKey(null); // Clear any errors when promo is successfully applied
+    } else if (hasAppliedPromo && !appliedPromo) {
+      // Only clear local promo code if we previously had an applied promo and now it's cleared
+      setPromoCode("");
+      setHasAppliedPromo(false);
+      setPromoErrorKey(null); // Clear any errors when promo is cleared
+    }
+  }, [appliedPromo, hasAppliedPromo, isInitialized]);
+
   // Use slug as id for cart operations
   const updateQuantity = (slug: string, newQuantity: number) => {
     if (newQuantity === 0) {
@@ -57,12 +79,26 @@ const CartPageComponents = () => {
   };
 
   const applyPromoCode = () => {
+    const trimmedCode = promoCode.trim().toLowerCase();
+
+    // Clear any previous errors
+    setPromoErrorKey(null);
+
+    // Check if promo code is empty
+    if (!trimmedCode) {
+      setPromoErrorKey("promoCode.empty");
+      return;
+    }
+
     // Support SAVE30 promo code interactively
-    if (promoCode.trim().toLowerCase() === "save30") {
+    if (trimmedCode === "save30") {
       setAppliedPromo("SAVE30");
       setPromoCode("");
+      setPromoErrorKey(null);
     } else {
+      // Invalid promo code
       setAppliedPromo(null);
+      setPromoErrorKey("promoCode.invalid");
     }
   };
 
@@ -421,6 +457,13 @@ const CartPageComponents = () => {
                       {t("cartPage.apply")}
                     </button>
                   </div>
+                  {promoErrorKey && (
+                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-sm text-red-600 font-medium">
+                        {t(promoErrorKey)}
+                      </p>
+                    </div>
+                  )}
                   {appliedPromo && (
                     <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl flex items-center">
                       <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center mr-2">

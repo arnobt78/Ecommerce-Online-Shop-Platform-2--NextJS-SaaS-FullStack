@@ -25,21 +25,22 @@ import {
 } from "@/components/ui/collapsible";
 import CheckoutForm from "./CheckoutForm";
 import CheckoutSummery from "./CheckoutSummery";
+import { useLanguage } from "@/context/LanguageContextNew";
 
-const schema = z.object({
-  cardNumber: z.string().min(12, "Enter a card number").max(19),
-  expiry: z.string().min(5, "Enter a valid expiration date").max(5),
-  cvc: z
-    .string()
-    .min(3, "Enter the CVV or security code on your card required")
-    .max(4),
-  name: z
-    .string()
-    .min(1, "Enter your name exactly as it's written on your card"),
-  useShipping: z.boolean().optional(),
-});
+// Function to create schema with translations
+const createSchema = (t: (key: string) => string) =>
+  z.object({
+    cardNumber: z
+      .string()
+      .min(12, t("checkoutPage.payment.errors.cardNumber"))
+      .max(19),
+    expiry: z.string().min(5, t("checkoutPage.payment.errors.expiry")).max(5),
+    cvc: z.string().min(3, t("checkoutPage.payment.errors.cvc")).max(4),
+    name: z.string().min(1, t("checkoutPage.payment.errors.name")),
+    useShipping: z.boolean().optional(),
+  });
 
-type FormData = z.infer<typeof schema>;
+type FormData = z.infer<ReturnType<typeof createSchema>>;
 
 const cardIcons = [
   { src: "/payment-icons/visa-card.svg", alt: "Visa" },
@@ -69,6 +70,7 @@ interface PaymentMethodsProps {
 
 const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
   ({ onPaymentSubmit }, ref) => {
+    const { t } = useLanguage();
     const [selected, setSelected] = useState("card");
     const [isMobile, setIsMobile] = useState(false);
     const [useShippingAddress, setUseShippingAddress] = useState(true);
@@ -128,8 +130,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
       formState: { errors },
       trigger,
       getValues,
+      watch,
     } = useForm<FormData>({
-      resolver: zodResolver(schema),
+      resolver: zodResolver(createSchema(t)),
       defaultValues: {
         useShipping: true,
         cardNumber: "",
@@ -138,6 +141,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
         name: "",
       },
     });
+
+    // Watch all form fields to hide error messages when user starts typing
+    const watchedValues = watch();
 
     // Expose validation method to parent component
     useImperativeHandle(ref, () => ({
@@ -179,9 +185,11 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
       <div className="mt-6">
         {/* Payment title */}
         <div className="flex flex-col px-4 sm:px-0">
-          <h3 className="text-lg font-bold mb-1">Payment</h3>
+          <h3 className="text-lg font-bold mb-1">
+            {t("checkoutPage.payment.title")}
+          </h3>
           <p className="text-sm text-gray-500 mb-4">
-            All transactions are secure and encrypted.
+            {t("checkoutPage.payment.secure")}
           </p>
         </div>
 
@@ -208,7 +216,7 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                   : "font-normal text-gray-900"
               } flex-1 cursor-pointer`}
             >
-              Credit Card
+              {t("checkoutPage.payment.creditCard")}
             </label>
             <div className="flex items-center gap-2 relative group">
               {/* Show 2 icons on mobile, 6 on sm+ */}
@@ -295,18 +303,19 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                   <input
                     {...register("cardNumber")}
                     placeholder=" "
-                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md${
+                    autoComplete="off"
+                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md ${
                       errors.cardNumber ? "border-red-500" : "border-gray-300"
                     }`}
                     maxLength={19}
                   />
                   {/* Floating Label */}
                   <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                    Card number
+                    {t("checkoutPage.payment.cardNumber")}
                   </label>
                   <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
-                {errors.cardNumber && (
+                {errors.cardNumber && !watchedValues.cardNumber && (
                   <p className="text-sm text-red-600 mt-1">
                     {errors.cardNumber.message}
                   </p>
@@ -318,7 +327,8 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                     <input
                       {...register("expiry")}
                       placeholder=" "
-                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md${
+                      autoComplete="off"
+                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md ${
                         errors.expiry ? "border-red-500" : "border-gray-300"
                       }`}
                       maxLength={5}
@@ -336,13 +346,13 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                     />
                     {/* Floating Label */}
                     <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                      Expiration date
+                      {t("checkoutPage.payment.expirationDate")}
                     </label>
                     <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs sm:text-sm font-semibold pointer-events-none">
                       MM/YY
                     </span>
                   </div>
-                  {errors.expiry && (
+                  {errors.expiry && !watchedValues.expiry && (
                     <p className="text-sm text-red-600 mt-1">
                       {errors.expiry.message}
                     </p>
@@ -353,14 +363,15 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                     <input
                       {...register("cvc")}
                       placeholder=" "
-                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md${
+                      autoComplete="off"
+                      className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md ${
                         errors.cvc ? "border-red-500" : "border-gray-300"
                       }`}
                       maxLength={4}
                     />
                     {/* Floating Label */}
                     <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                      Security code
+                      {t("checkoutPage.payment.securityCode")}
                     </label>
                     <div ref={tooltipRef}>
                       <TooltipProvider>
@@ -382,16 +393,14 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                           </TooltipTrigger>
                           <TooltipContent className="bg-black text-white p-3 max-w-xs text-xs">
                             <p className="text-xs text-white justify-center text-justify">
-                              3-digit security code usually found on the back of
-                              your card. American Express cards have a 4-digit
-                              code located on the front.
+                              {t("checkoutPage.payment.securityCodeTooltip")}
                             </p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     </div>
                   </div>
-                  {errors.cvc && (
+                  {errors.cvc && !watchedValues.cvc && (
                     <p className="text-sm text-red-600 mt-1">
                       {errors.cvc.message}
                     </p>
@@ -403,17 +412,18 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                   <input
                     {...register("name")}
                     placeholder=" "
-                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md${
+                    autoComplete="off"
+                    className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md ${
                       errors.name ? "border-red-500" : "border-gray-300"
                     }`}
                   />
                   {/* Floating Label */}
                   <label className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-md transition-all duration-200 ease-in-out peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-md peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:-translate-y-0 peer-focus:text-xs peer-focus:text-gray-500 peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:-translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 pointer-events-none">
-                    Name on card
+                    {t("checkoutPage.payment.nameOnCard")}
                   </label>
                   <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 </div>
-                {errors.name && (
+                {errors.name && !watchedValues.name && (
                   <p className="text-sm text-red-600 mt-1">
                     {errors.name.message}
                   </p>
@@ -434,13 +444,13 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                       onChange={(e) => setUseShippingAddress(e.target.checked)}
                     />
                     <span className="text-sm">
-                      Use shipping address as billing address
+                      {t("checkoutPage.payment.useShippingAddress")}
                     </span>
                   </label>
                 </CollapsibleTrigger>
                 <CollapsibleContent className="mb-2">
                   <CheckoutForm
-                    title="Billing Address"
+                    title={t("checkoutPage.payment.billingAddress")}
                     showFormWrapper={false}
                     showContactSection={false}
                   />
@@ -635,8 +645,8 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
 
         {/* Secure and encrypted text */}
         <div className="flex items-center justify-center mt-2 mb-2 text-gray-400 text-sm">
-          <Lock className=" w-4 h-4 mr-2 text-gray-400 text-sm" /> Secure and
-          encrypted
+          <Lock className=" w-4 h-4 mr-2 text-gray-400 text-sm" />{" "}
+          {t("checkoutPage.payment.secureEncrypted")}
         </div>
 
         {/* Right: Cart Summary - 40% width - Only visible on desktop */}
@@ -666,24 +676,18 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
           className="w-full bg-[#65bbe6]/60 hover:bg-[#65bbe6] transition transform duration-200 cursor-pointer text-gray-900 py-3 rounded-lg text-md font-bold flex items-center justify-center"
         >
           {/* <Lock className="w-4 h-4 mr-1" /> Pay Now */}
-          Pay Now
+          {t("checkoutPage.payment.payNow")}
         </button>
 
         {/* Legal Text */}
         <div className="mt-4 text-sm text-gray-600 leading-relaxed text-justify">
           <p>
-            By clicking "Pay now" you agree to our Terms and Conditions, Refund
-            Policy, Privacy Policy, Cookie Policy and other applicable policies.
-            You are enrolling in recurring billing program on snuzz PRO
-            platform, if you don't cancel prior to the end of 3-day free trial
-            you will be charged $9.99 every 14 days. You can terminate snuzz PRO
-            plan at anytime, in your account. If you would have any questions
-            please contact our{" "}
+            {t("checkoutPage.payment.legalText")}{" "}
             <a
               href="/contact"
               className="text-gray-600 underline hover:text-gray-800"
             >
-              support team
+              {t("checkoutPage.payment.supportTeam")}
             </a>
             .
           </p>
@@ -698,31 +702,31 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
             href="/terms"
             className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
           >
-            Terms and Conditions
+            {t("checkoutPage.payment.termsConditions")}
           </a>
           <a
             href="/refund-policy"
             className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
           >
-            Refund Policy
+            {t("checkoutPage.payment.refundPolicy")}
           </a>
           <a
             href="/privacy-policy"
             className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
           >
-            Privacy Policy
+            {t("checkoutPage.payment.privacyPolicy")}
           </a>
           <a
             href="/cookie-policy"
             className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
           >
-            Cookie Policy
+            {t("checkoutPage.payment.cookiePolicy")}
           </a>
           <a
             href="/contact"
             className="text-[#8EF7FB] font-semibold text-md underline hover:text-[#65bbe6]"
           >
-            Support Team
+            {t("checkoutPage.payment.supportTeam")}
           </a>
         </div>
       </div>

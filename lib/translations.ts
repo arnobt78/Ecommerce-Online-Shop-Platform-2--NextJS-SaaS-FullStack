@@ -439,6 +439,64 @@ export const translations = {
     "common.back": "Back",
     "common.next": "Next",
     "common.previous": "Previous",
+
+    // Checkout Page
+    "checkoutPage.discount": "Discount",
+    "promoCode.empty": "Please enter a promo code",
+    "promoCode.invalid": "Invalid or expired promo code",
+    "checkoutPage.payment.title": "Payment",
+    "checkoutPage.payment.secure": "All transactions are secure and encrypted.",
+    "checkoutPage.payment.creditCard": "Credit Card",
+    "checkoutPage.payment.cardNumber": "Card number",
+    "checkoutPage.payment.expirationDate": "Expiration date",
+    "checkoutPage.payment.securityCode": "Security code",
+    "checkoutPage.payment.nameOnCard": "Name on card",
+    "checkoutPage.payment.useShippingAddress":
+      "Use shipping address as billing address",
+    "checkoutPage.payment.billingAddress": "Billing Address",
+    "checkoutPage.payment.secureEncrypted": "Secure and encrypted",
+    "checkoutPage.payment.payNow": "Pay Now",
+    "checkoutPage.payment.legalText":
+      'By clicking "Pay now" you agree to our Terms and Conditions, Refund Policy, Privacy Policy, Cookie Policy and other applicable policies. You are enrolling in recurring billing program on snuzz PRO platform, if you don\'t cancel prior to the end of 3-day free trial you will be charged $9.99 every 14 days. You can terminate snuzz PRO plan at anytime, in your account. If you would have any questions please contact our ',
+    "checkoutPage.payment.termsConditions": "Terms and Conditions",
+    "checkoutPage.payment.refundPolicy": "Refund Policy",
+    "checkoutPage.payment.privacyPolicy": "Privacy Policy",
+    "checkoutPage.payment.cookiePolicy": "Cookie Policy",
+    "checkoutPage.payment.supportTeam": "Support Team",
+    "checkoutPage.payment.securityCodeTooltip":
+      "3-digit security code usually found on the back of your card. American Express cards have a 4-digit code located on the front.",
+    "checkoutPage.payment.errors.cardNumber": "Enter a card number",
+    "checkoutPage.payment.errors.expiry": "Enter a valid expiration date",
+    "checkoutPage.payment.errors.cvc":
+      "Enter the CVV or security code on your card required",
+    "checkoutPage.payment.errors.name":
+      "Enter your name exactly as it's written on your card",
+    "checkoutPage.delivery.contact": "Contact",
+    "checkoutPage.delivery.email": "Email",
+    "checkoutPage.delivery.emailNews": "Email me with news and offers",
+    "checkoutPage.delivery.title": "Delivery",
+    "checkoutPage.delivery.countryRegion": "Country/Region",
+    "checkoutPage.delivery.selectCountry": "Select Country",
+    "checkoutPage.delivery.firstName": "First name",
+    "checkoutPage.delivery.lastName": "Last name",
+    "checkoutPage.delivery.company": "Company (optional)",
+    "checkoutPage.delivery.address": "Address",
+    "checkoutPage.delivery.apartment": "Apartment, Suite, etc. (optional)",
+    "checkoutPage.delivery.zipCode": "ZIP code",
+    "checkoutPage.delivery.city": "City",
+    "checkoutPage.delivery.phone": "Phone (optional)",
+    "checkoutPage.delivery.phoneTooltip":
+      "In case we need to contact you about your order.",
+    "checkoutPage.delivery.errors.email": "Enter an email",
+    "checkoutPage.delivery.errors.country": "Enter a country",
+    "checkoutPage.delivery.errors.firstName": "Enter a first name",
+    "checkoutPage.delivery.errors.lastName": "Enter a last name",
+    "checkoutPage.delivery.errors.company": "Enter a company name",
+    "checkoutPage.delivery.errors.address": "Enter an address",
+    "checkoutPage.delivery.errors.apartment": "Enter an apartment, suite, etc.",
+    "checkoutPage.delivery.errors.zip": "Enter a ZIP / postal code",
+    "checkoutPage.delivery.errors.city": "Enter a city",
+    "checkoutPage.delivery.errors.phone": "Enter a phone number",
   },
 
   // - - - - - - - - - - - - - - - - - - - - - Polish Texts - - - - - - - - - - - - - - - - - - - - -
@@ -684,6 +742,8 @@ export const translations = {
     "cartPage.apply": "Zastosuj",
     "cartPage.promoApplied":
       'Kod promocyjny "{code}" zastosowany! Oszczędziłeś €{amount}',
+    "cartPage.promoCode.empty": "Wprowadź kod promocyjny",
+    "cartPage.promoCode.invalid": "Nieprawidłowy lub wygasły kod promocyjny",
 
     // Home Page Components
     "home.loading": "Ładowanie...",
@@ -888,6 +948,68 @@ export const translations = {
     "common.back": "Wstecz",
     "common.next": "Dalej",
     "common.previous": "Poprzedni",
+
+    // Checkout Page
+    "checkoutPage.discount": "Zniżka",
+    "promoCode.empty": "Wprowadź kod promocyjny",
+    "promoCode.invalid": "Nieprawidłowy lub wygasły kod promocyjny",
+    "checkoutPage.payment.title": "Płatność",
+    "checkoutPage.payment.secure":
+      "Wszystkie transakcje są bezpieczne i szyfrowane.",
+    "checkoutPage.payment.creditCard": "Karta kredytowa",
+    "checkoutPage.payment.cardNumber": "Numer karty",
+    "checkoutPage.payment.expirationDate": "Data ważności",
+    "checkoutPage.payment.securityCode": "Kod bezpieczeństwa",
+    "checkoutPage.payment.nameOnCard": "Imię i nazwisko na karcie",
+    "checkoutPage.payment.useShippingAddress":
+      "Użyj adresu dostawy jako adresu rozliczeniowego",
+    "checkoutPage.payment.billingAddress": "Adres rozliczeniowy",
+    "checkoutPage.payment.secureEncrypted": "Bezpieczne i szyfrowane",
+    "checkoutPage.payment.payNow": "Zapłać teraz",
+    "checkoutPage.payment.legalText":
+      'Klikając "Zapłać teraz" zgadzasz się na nasze Warunki i Zasady, Politykę Zwrotów, Politykę Prywatności, Politykę Plików Cookie i inne obowiązujące zasady. Zapisujesz się na program cyklicznego rozliczania na platformie snuzz PRO, jeśli nie anulujesz przed końcem 3-dniowego bezpłatnego okresu próbnego, będziesz obciążany $9.99 co 14 dni. Możesz zakończyć plan snuzz PRO w każdej chwili w swoim koncie. Jeśli masz jakiekolwiek pytania, skontaktuj się z naszym ',
+    "checkoutPage.payment.termsConditions": "Warunki i Zasady",
+    "checkoutPage.payment.refundPolicy": "Polityka Zwrotów",
+    "checkoutPage.payment.privacyPolicy": "Polityka Prywatności",
+    "checkoutPage.payment.cookiePolicy": "Polityka Plików Cookie",
+    "checkoutPage.payment.supportTeam": "Zespół Wsparcia",
+    "checkoutPage.payment.securityCodeTooltip":
+      "3-cyfrowy kod bezpieczeństwa zwykle znajduje się na odwrocie karty. Karty American Express mają 4-cyfrowy kod znajdujący się na przodzie.",
+    "checkoutPage.payment.errors.cardNumber": "Wprowadź numer karty",
+    "checkoutPage.payment.errors.expiry": "Wprowadź prawidłową datę ważności",
+    "checkoutPage.payment.errors.cvc":
+      "Wprowadź kod CVV lub kod bezpieczeństwa z karty",
+    "checkoutPage.payment.errors.name":
+      "Wprowadź swoje imię dokładnie tak, jak jest napisane na karcie",
+    "checkoutPage.delivery.contact": "Kontakt",
+    "checkoutPage.delivery.email": "E-mail",
+    "checkoutPage.delivery.emailNews":
+      "Chcę otrzymywać wiadomości i oferty e-mailem",
+    "checkoutPage.delivery.title": "Dostawa",
+    "checkoutPage.delivery.countryRegion": "Kraj/Region",
+    "checkoutPage.delivery.selectCountry": "Wybierz kraj",
+    "checkoutPage.delivery.firstName": "Imię",
+    "checkoutPage.delivery.lastName": "Nazwisko",
+    "checkoutPage.delivery.company": "Firma (opcjonalnie)",
+    "checkoutPage.delivery.address": "Adres",
+    "checkoutPage.delivery.apartment":
+      "Mieszkanie, apartament itp. (opcjonalnie)",
+    "checkoutPage.delivery.zipCode": "Kod pocztowy",
+    "checkoutPage.delivery.city": "Miasto",
+    "checkoutPage.delivery.phone": "Telefon (opcjonalnie)",
+    "checkoutPage.delivery.phoneTooltip":
+      "Na wypadek, gdybyśmy musieli skontaktować się z Tobą w sprawie zamówienia.",
+    "checkoutPage.delivery.errors.email": "Wprowadź adres e-mail",
+    "checkoutPage.delivery.errors.country": "Wprowadź kraj",
+    "checkoutPage.delivery.errors.firstName": "Wprowadź imię",
+    "checkoutPage.delivery.errors.lastName": "Wprowadź nazwisko",
+    "checkoutPage.delivery.errors.company": "Wprowadź nazwę firmy",
+    "checkoutPage.delivery.errors.address": "Wprowadź adres",
+    "checkoutPage.delivery.errors.apartment":
+      "Wprowadź mieszkanie, apartament itp.",
+    "checkoutPage.delivery.errors.zip": "Wprowadź kod pocztowy",
+    "checkoutPage.delivery.errors.city": "Wprowadź miasto",
+    "checkoutPage.delivery.errors.phone": "Wprowadź numer telefonu",
   },
 
   // - - - - - - - - - - - - - - - - - - - - - German Texts - - - - - - - - - - - - - - - - - - - - -
@@ -1339,6 +1461,68 @@ export const translations = {
     "common.back": "Zurück",
     "common.next": "Weiter",
     "common.previous": "Vorherige",
+
+    // Checkout Page
+    "checkoutPage.discount": "Rabatt",
+    "promoCode.empty": "Bitte geben Sie einen Gutscheincode ein",
+    "promoCode.invalid": "Ungültiger oder abgelaufener Gutscheincode",
+    "checkoutPage.payment.title": "Zahlung",
+    "checkoutPage.payment.secure":
+      "Alle Transaktionen sind sicher und verschlüsselt.",
+    "checkoutPage.payment.creditCard": "Kreditkarte",
+    "checkoutPage.payment.cardNumber": "Kartennummer",
+    "checkoutPage.payment.expirationDate": "Ablaufdatum",
+    "checkoutPage.payment.securityCode": "Sicherheitscode",
+    "checkoutPage.payment.nameOnCard": "Name auf der Karte",
+    "checkoutPage.payment.useShippingAddress":
+      "Lieferadresse als Rechnungsadresse verwenden",
+    "checkoutPage.payment.billingAddress": "Rechnungsadresse",
+    "checkoutPage.payment.secureEncrypted": "Sicher und verschlüsselt",
+    "checkoutPage.payment.payNow": "Jetzt bezahlen",
+    "checkoutPage.payment.legalText":
+      'Durch Klicken auf "Jetzt bezahlen" stimmen Sie unseren Allgemeinen Geschäftsbedingungen, Rückerstattungsrichtlinie, Datenschutzrichtlinie, Cookie-Richtlinie und anderen geltenden Richtlinien zu. Sie melden sich für das wiederkehrende Abrechnungsprogramm auf der snuzz PRO-Plattform an. Wenn Sie nicht vor Ende der 3-tägigen kostenlosen Testversion kündigen, werden Ihnen alle 14 Tage 9,99 $ berechnet. Sie können den snuzz PRO-Plan jederzeit in Ihrem Konto kündigen. Wenn Sie Fragen haben, wenden Sie sich bitte an unser ',
+    "checkoutPage.payment.termsConditions": "Allgemeine Geschäftsbedingungen",
+    "checkoutPage.payment.refundPolicy": "Rückerstattungsrichtlinie",
+    "checkoutPage.payment.privacyPolicy": "Datenschutzrichtlinie",
+    "checkoutPage.payment.cookiePolicy": "Cookie-Richtlinie",
+    "checkoutPage.payment.supportTeam": "Support-Team",
+    "checkoutPage.payment.securityCodeTooltip":
+      "3-stelliger Sicherheitscode, der sich normalerweise auf der Rückseite Ihrer Karte befindet. American Express-Karten haben einen 4-stelligen Code auf der Vorderseite.",
+    "checkoutPage.payment.errors.cardNumber": "Geben Sie eine Kartennummer ein",
+    "checkoutPage.payment.errors.expiry":
+      "Geben Sie ein gültiges Ablaufdatum ein",
+    "checkoutPage.payment.errors.cvc":
+      "Geben Sie den CVV- oder Sicherheitscode Ihrer Karte ein",
+    "checkoutPage.payment.errors.name":
+      "Geben Sie Ihren Namen genau so ein, wie er auf Ihrer Karte steht",
+    "checkoutPage.delivery.contact": "Kontakt",
+    "checkoutPage.delivery.email": "E-Mail",
+    "checkoutPage.delivery.emailNews":
+      "Senden Sie mir Neuigkeiten und Angebote per E-Mail",
+    "checkoutPage.delivery.title": "Lieferung",
+    "checkoutPage.delivery.countryRegion": "Land/Region",
+    "checkoutPage.delivery.selectCountry": "Land auswählen",
+    "checkoutPage.delivery.firstName": "Vorname",
+    "checkoutPage.delivery.lastName": "Nachname",
+    "checkoutPage.delivery.company": "Firma (optional)",
+    "checkoutPage.delivery.address": "Adresse",
+    "checkoutPage.delivery.apartment": "Wohnung, Suite usw. (optional)",
+    "checkoutPage.delivery.zipCode": "Postleitzahl",
+    "checkoutPage.delivery.city": "Stadt",
+    "checkoutPage.delivery.phone": "Telefon (optional)",
+    "checkoutPage.delivery.phoneTooltip":
+      "Falls wir Sie bezüglich Ihrer Bestellung kontaktieren müssen.",
+    "checkoutPage.delivery.errors.email": "Geben Sie eine E-Mail ein",
+    "checkoutPage.delivery.errors.country": "Geben Sie ein Land ein",
+    "checkoutPage.delivery.errors.firstName": "Geben Sie einen Vornamen ein",
+    "checkoutPage.delivery.errors.lastName": "Geben Sie einen Nachnamen ein",
+    "checkoutPage.delivery.errors.company": "Geben Sie einen Firmennamen ein",
+    "checkoutPage.delivery.errors.address": "Geben Sie eine Adresse ein",
+    "checkoutPage.delivery.errors.apartment":
+      "Geben Sie eine Wohnung, Suite usw. ein",
+    "checkoutPage.delivery.errors.zip": "Geben Sie eine Postleitzahl ein",
+    "checkoutPage.delivery.errors.city": "Geben Sie eine Stadt ein",
+    "checkoutPage.delivery.errors.phone": "Geben Sie eine Telefonnummer ein",
   },
 
   // - - - - - - - - - - - - - - - - - - - - - Czech Texts - - - - - - - - - - - - - - - - - - - - -
@@ -1779,5 +1963,65 @@ export const translations = {
     "common.back": "Zpět",
     "common.next": "Další",
     "common.previous": "Předchozí",
+
+    // Checkout Page
+    "checkoutPage.discount": "Sleva",
+    "promoCode.empty": "Zadejte prosím promo kód",
+    "promoCode.invalid": "Neplatný nebo vypršený promo kód",
+    "checkoutPage.payment.title": "Platba",
+    "checkoutPage.payment.secure":
+      "Všechny transakce jsou bezpečné a šifrované.",
+    "checkoutPage.payment.creditCard": "Kreditní karta",
+    "checkoutPage.payment.cardNumber": "Číslo karty",
+    "checkoutPage.payment.expirationDate": "Datum expirace",
+    "checkoutPage.payment.securityCode": "Bezpečnostní kód",
+    "checkoutPage.payment.nameOnCard": "Jméno na kartě",
+    "checkoutPage.payment.useShippingAddress":
+      "Použít dodací adresu jako fakturační adresu",
+    "checkoutPage.payment.billingAddress": "Fakturační adresa",
+    "checkoutPage.payment.secureEncrypted": "Bezpečné a šifrované",
+    "checkoutPage.payment.payNow": "Zaplatit nyní",
+    "checkoutPage.payment.legalText":
+      'Kliknutím na "Zaplatit nyní" souhlasíte s našimi Obchodními podmínkami, Podmínkami vrácení, Zásadami ochrany osobních údajů, Zásadami cookies a dalšími platnými zásadami. Přihlašujete se k programu opakovaného účtování na platformě snuzz PRO, pokud nezrušíte před koncem 3denní bezplatné zkušební verze, bude vám účtováno 9,99 $ každých 14 dní. Můžete ukončit plán snuzz PRO kdykoli ve svém účtu. Pokud máte jakékoli otázky, kontaktujte náš ',
+    "checkoutPage.payment.termsConditions": "Obchodní podmínky",
+    "checkoutPage.payment.refundPolicy": "Podmínky vrácení",
+    "checkoutPage.payment.privacyPolicy": "Zásady ochrany osobních údajů",
+    "checkoutPage.payment.cookiePolicy": "Zásady cookies",
+    "checkoutPage.payment.supportTeam": "Tým podpory",
+    "checkoutPage.payment.securityCodeTooltip":
+      "3místný bezpečnostní kód obvykle nalezený na zadní straně karty. Karty American Express mají 4místný kód umístěný na přední straně.",
+    "checkoutPage.payment.errors.cardNumber": "Zadejte číslo karty",
+    "checkoutPage.payment.errors.expiry": "Zadejte platné datum expirace",
+    "checkoutPage.payment.errors.cvc":
+      "Zadejte CVV nebo bezpečnostní kód z vaší karty",
+    "checkoutPage.payment.errors.name":
+      "Zadejte své jméno přesně tak, jak je napsáno na kartě",
+    "checkoutPage.delivery.contact": "Kontakt",
+    "checkoutPage.delivery.email": "E-mail",
+    "checkoutPage.delivery.emailNews":
+      "Zasílejte mi novinky a nabídky e-mailem",
+    "checkoutPage.delivery.title": "Dodání",
+    "checkoutPage.delivery.countryRegion": "Země/Region",
+    "checkoutPage.delivery.selectCountry": "Vyberte zemi",
+    "checkoutPage.delivery.firstName": "Jméno",
+    "checkoutPage.delivery.lastName": "Příjmení",
+    "checkoutPage.delivery.company": "Firma (volitelné)",
+    "checkoutPage.delivery.address": "Adresa",
+    "checkoutPage.delivery.apartment": "Byt, apartmá atd. (volitelné)",
+    "checkoutPage.delivery.zipCode": "PSČ",
+    "checkoutPage.delivery.city": "Město",
+    "checkoutPage.delivery.phone": "Telefon (volitelné)",
+    "checkoutPage.delivery.phoneTooltip":
+      "V případě, že Vás budeme potřebovat kontaktovat ohledně objednávky.",
+    "checkoutPage.delivery.errors.email": "Zadejte e-mail",
+    "checkoutPage.delivery.errors.country": "Zadejte zemi",
+    "checkoutPage.delivery.errors.firstName": "Zadejte jméno",
+    "checkoutPage.delivery.errors.lastName": "Zadejte příjmení",
+    "checkoutPage.delivery.errors.company": "Zadejte název firmy",
+    "checkoutPage.delivery.errors.address": "Zadejte adresu",
+    "checkoutPage.delivery.errors.apartment": "Zadejte byt, apartmá atd.",
+    "checkoutPage.delivery.errors.zip": "Zadejte PSČ",
+    "checkoutPage.delivery.errors.city": "Zadejte město",
+    "checkoutPage.delivery.errors.phone": "Zadejte telefonní číslo",
   },
 };

@@ -88,8 +88,8 @@ export default function CheckoutSummery() {
       setPromoCode("");
       setPromoErrorKey(null);
     } else {
-      // Invalid promo code
-      setAppliedPromo(null);
+      // Invalid promo code - just show error, don't clear appliedPromo
+      // This prevents the useEffect from triggering and clearing the error
       setPromoErrorKey("promoCode.invalid");
     }
   };
@@ -201,10 +201,13 @@ export default function CheckoutSummery() {
             </button>
           </div>
           {promoErrorKey && (
-            <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-sm text-red-600 font-medium">
+            <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center">
+              <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center mr-2">
+                <span className="text-white text-xs">x</span>
+              </div>
+              <span className="text-sm text-red-600 font-medium flex items-center">
                 {t(promoErrorKey)}
-              </p>
+              </span>
             </div>
           )}
           {appliedPromo && (

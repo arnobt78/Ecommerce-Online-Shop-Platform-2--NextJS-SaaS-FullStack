@@ -305,7 +305,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                     placeholder=" "
                     autoComplete="off"
                     className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md ${
-                      errors.cardNumber ? "border-red-500" : "border-gray-300"
+                      errors.cardNumber && !watchedValues.cardNumber
+                        ? "border-red-500"
+                        : "border-gray-300"
                     }`}
                     maxLength={19}
                   />
@@ -329,7 +331,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                       placeholder=" "
                       autoComplete="off"
                       className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md ${
-                        errors.expiry ? "border-red-500" : "border-gray-300"
+                        errors.expiry && !watchedValues.expiry
+                          ? "border-red-500"
+                          : "border-gray-300"
                       }`}
                       maxLength={5}
                       onChange={(e) => {
@@ -365,7 +369,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                       placeholder=" "
                       autoComplete="off"
                       className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-8 text-gray-900 text-md ${
-                        errors.cvc ? "border-red-500" : "border-gray-300"
+                        errors.cvc && !watchedValues.cvc
+                          ? "border-red-500"
+                          : "border-gray-300"
                       }`}
                       maxLength={4}
                     />
@@ -414,7 +420,9 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
                     placeholder=" "
                     autoComplete="off"
                     className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 pr-10 text-gray-900 text-md ${
-                      errors.name ? "border-red-500" : "border-gray-300"
+                      errors.name && !watchedValues.name
+                        ? "border-red-500"
+                        : "border-gray-300"
                     }`}
                   />
                   {/* Floating Label */}
@@ -680,7 +688,7 @@ const PaymentMethods = forwardRef<PaymentMethodsRef, PaymentMethodsProps>(
         </button>
 
         {/* Legal Text */}
-        <div className="mt-4 text-sm text-gray-600 leading-relaxed text-justify">
+        <div className="mt-4 text-sm text-gray-600 leading-relaxed text-left sm:text-justify">
           <p>
             {t("checkoutPage.payment.legalText")}{" "}
             <a

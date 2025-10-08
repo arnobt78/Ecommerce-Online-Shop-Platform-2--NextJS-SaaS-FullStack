@@ -142,7 +142,7 @@ export default function CartSidebarLayout() {
               </div> */}
               <button
                 type="button"
-                className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-blue-600 shadow-sm rounded-md relative transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mx-auto mt-4"
+                className="max-w-sm w-full flex flex-row justify-center items-center py-3 px-6 bg-blue-600 shadow-sm rounded-md relative transition-all duration-200 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 mx-auto mt-4"
                 style={{ minHeight: 40, borderRadius: 6 }}
                 onClick={() => {
                   setCartOpen(false);

@@ -96,8 +96,8 @@ const CartPageComponents = () => {
       setPromoCode("");
       setPromoErrorKey(null);
     } else {
-      // Invalid promo code
-      setAppliedPromo(null);
+      // Invalid promo code - just show error, don't clear appliedPromo
+      // This prevents the useEffect from triggering and clearing the error
       setPromoErrorKey("promoCode.invalid");
     }
   };
@@ -381,7 +381,7 @@ const CartPageComponents = () => {
               </div>
 
               <Link href="/checkout" passHref legacyBehavior>
-                <a className="max-w-sm w-full flex flex-row justify-center items-center py-[10px] px-6 bg-blue-500 shadow-sm rounded-md relative transition-all duration-300 hover:bg-blue-600 active:bg-blue-700 mx-auto mt-4 text-white font-semibold text-base">
+                <a className="max-w-sm w-full flex flex-row justify-center items-center py-3 px-6 bg-blue-500 shadow-sm rounded-md relative transition-all duration-200 hover:bg-blue-600 active:bg-blue-700 mx-auto mt-4 text-white font-semibold text-base">
                   <Lock className="w-5 h-5 mr-2" />{" "}
                   {t("cartPage.secureCheckout")}
                 </a>
@@ -450,7 +450,7 @@ const CartPageComponents = () => {
                     />
                     <button
                       onClick={applyPromoCode}
-                      className="bg-gray-300 hover:bg-blue-400 text-gray-900 hover:text-white text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-blue-700"
+                      className="bg-gray-300 hover:bg-blue-400 text-gray-900 hover:text-white text-sm sm:text-base font-semibold px-4 sm:px-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 active:bg-blue-700 disabled:opacity-50  disabled:hover:bg-gray-300 disabled:hover:text-gray-900"
                       type="button"
                       disabled={!promoCode}
                     >
@@ -458,10 +458,13 @@ const CartPageComponents = () => {
                     </button>
                   </div>
                   {promoErrorKey && (
-                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-sm text-red-600 font-medium">
+                    <div className="mt-2 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center">
+                      <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center mr-2">
+                        <span className="text-white text-xs">x</span>
+                      </div>
+                      <span className="text-sm text-red-600 font-medium flex items-center">
                         {t(promoErrorKey)}
-                      </p>
+                      </span>
                     </div>
                   )}
                   {appliedPromo && (

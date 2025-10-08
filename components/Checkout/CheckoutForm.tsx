@@ -150,7 +150,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                   placeholder=" "
                   autoComplete="off"
                   className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                    errors.email ? "border-red-500" : "border-gray-300"
+                    errors.email && !watchedValues.email
+                      ? "border-red-500"
+                      : "border-gray-300"
                   }`}
                 />
                 {/* Floating Label with Animation */}
@@ -185,7 +187,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               {...register("country")}
               autoComplete="off"
               className={`w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 appearance-none bg-white text-gray-900 text-md ${
-                errors.country ? "border-red-500" : "border-gray-300"
+                errors.country && !watchedValues.country
+                  ? "border-red-500"
+                  : "border-gray-300"
               }`}
             >
               <option value="">
@@ -291,7 +295,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                 placeholder=" "
                 autoComplete="off"
                 className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                  errors.firstName ? "border-red-500" : "border-gray-300"
+                  errors.firstName && !watchedValues.firstName
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
@@ -312,7 +318,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                 placeholder=" "
                 autoComplete="off"
                 className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                  errors.lastName ? "border-red-500" : "border-gray-300"
+                  errors.lastName && !watchedValues.lastName
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
@@ -357,7 +365,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
               placeholder=" "
               autoComplete="off"
               className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                errors.address ? "border-red-500" : "border-gray-300"
+                errors.address && !watchedValues.address
+                  ? "border-red-500"
+                  : "border-gray-300"
               }`}
             />
             {/* Floating Label */}
@@ -402,7 +412,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                 placeholder=" "
                 autoComplete="off"
                 className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                  errors.zip ? "border-red-500" : "border-gray-300"
+                  errors.zip && !watchedValues.zip
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}
@@ -422,7 +434,9 @@ const CheckoutForm = forwardRef<CheckoutFormRef, CheckoutFormProps>(
                 placeholder=" "
                 autoComplete="off"
                 className={`peer w-full border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#8EF7FB] focus:border-[#8EF7FB] px-3 pt-6 pb-2 text-gray-900 text-md ${
-                  errors.city ? "border-red-500" : "border-gray-300"
+                  errors.city && !watchedValues.city
+                    ? "border-red-500"
+                    : "border-gray-300"
                 }`}
               />
               {/* Floating Label */}

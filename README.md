@@ -1,15 +1,30 @@
+# Snuzz PRO - Modern E-Commerce Platform - Next.js Full Stack Project
 
-# Snuzz E-Commerce Platform - Next.js Resuable Components
+Production-ready Next.js 15 e-commerce platform with multi-language support, OTP authentication, and comprehensive documentation.
 
-![Screenshot 2025-07-10 at 15 16 30](https://github.com/user-attachments/assets/04d4e5b8-2c45-4887-afff-288a0cca4110)
-![Screenshot 2025-07-10 at 15 17 06](https://github.com/user-attachments/assets/c7594508-d07d-4b86-a397-8fce30c9827e)
-![Screenshot 2025-07-10 at 15 48 52](https://github.com/user-attachments/assets/95406d79-c391-427e-8c9b-8fb87e8cfdd7)
-![Screenshot 2025-07-10 at 15 49 21](https://github.com/user-attachments/assets/53e1598f-c9ed-4eb2-9ea5-e04d5a69b1bb)
-![Screenshot 2025-07-10 at 15 49 43](https://github.com/user-attachments/assets/9e7173f9-908d-4ee6-b1df-cbe9749ccf84)
-![Screenshot 2025-07-10 at 15 50 11](https://github.com/user-attachments/assets/64654463-a4a7-4568-b298-7842ea4b958c)
-![Screenshot 2025-07-10 at 15 50 36](https://github.com/user-attachments/assets/ee2d3bb0-4ac3-4162-b33d-4924ba265156)
-![Screenshot 2025-07-10 at 15 53 57](https://github.com/user-attachments/assets/98e51f1d-7552-42f5-9489-605e7c5cdd89)
-![Screenshot 2025-07-10 at 15 54 11](https://github.com/user-attachments/assets/1ca78a76-b617-4c0c-bc24-a7dff38b38c3)
+---
+
+## 📚 **Complete Documentation Available!**
+
+This project includes **150+ pages** of professional documentation:
+
+### **Quick Links:**
+
+- 🚀 **[Quick Start Guide](QUICK_START_GUIDE.md)** - Get running in 5 minutes
+- 🔧 **[Setup Guide](SETUP_GUIDE.md)** - Detailed first-time setup (DB, SMTP, etc.)
+- 📖 **[Complete Documentation](PROJECT_DOCUMENTATION.md)** - 115-page reference
+- 📡 **[API Reference](API_REFERENCE.md)** - All endpoints documented
+- 🗂️ **[Documentation Index](DOCUMENTATION_INDEX.md)** - Navigation hub
+- 🏗️ **[Visual Structure Guide](PROJECT_STRUCTURE_VISUAL.md)** - Architecture diagrams
+
+### **For New Developers:**
+
+1. Start with [DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md) (5 min)
+2. Follow [QUICK_START_GUIDE.md](QUICK_START_GUIDE.md) (10 min)
+3. Complete [SETUP_GUIDE.md](SETUP_GUIDE.md) (60 min)
+4. Reference [PROJECT_DOCUMENTATION.md](PROJECT_DOCUMENTATION.md) as needed
+
+**Total onboarding time: 2-3 hours to fully productive!**
 
 ---
 

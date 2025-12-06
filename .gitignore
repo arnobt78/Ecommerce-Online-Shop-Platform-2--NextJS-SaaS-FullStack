@@ -20,6 +20,7 @@ yarn-error.log*
 # env files
 .env
 .env.local
+.env.example
 
 # vercel
 .vercel
@@ -32,6 +33,7 @@ next-env.d.ts
 unused-deps.json
 
 .DS_Store
+.DS_Store/
 
 .vscode
 
@@ -40,3 +42,12 @@ unused-deps.json
 prisma/migrations
 
 .cursorignore
+
+# documentation
+DOCUMENTATION_INDEX.md
+DOCUMENTATION_SUMMARY.md
+QUICK_START_GUIDE.md
+SETUP_GUIDE.md
+PROJECT_DOCUMENTATION.md
+API_REFERENCE.md
+PROJECT_STRUCTURE_VISUAL.md

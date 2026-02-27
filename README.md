@@ -1,6 +1,8 @@
-# Snuzz PRO - Modern E-Commerce Platform - Next.js Full Stack Project
+# Snuzz PRO | Modern E-Commerce Online Shop Platform with SaaS Subscription System - Next.js, Typescript, PostgreSQL FullStack Project
 
 Production-ready Next.js 15 e-commerce platform with multi-language support, OTP authentication, and comprehensive documentation.
+
+- **Live-Demo:** [https://snuzz-pro.vercel.app/](https://snuzz-pro.vercel.app/)
 
 ---
 

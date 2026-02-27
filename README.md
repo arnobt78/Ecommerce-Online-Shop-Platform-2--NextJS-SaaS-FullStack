@@ -1,4 +1,4 @@
-# Snuzz PRO | E-Commerce Platform 2 - Next.js, Typescript, PostgreSQL FullStack Project (including Iframe Video Channel SaaS Subscription System)
+# Snuzz PRO | E-Commerce Platform 2 - Next.js, Typescript, PostgreSQL FullStack Project (including Iframe Educational Video SaaS Subscription System)
 
 Production-ready Next.js 15 e-commerce platform with multi-language support, OTP authentication, and comprehensive documentation.
 
